@@ -10,7 +10,7 @@ class Order extends React.Component {
   render() {
     return (
       dom.div(
-        null,
+        { className: 'order' },
         dom.div({ className: 'order-number' }, this.props.id),
         dom.div({ className: 'order-status' }, this.props.status)
       )
