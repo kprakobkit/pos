@@ -1,8 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Order from './Order';
 
 const dom = React.DOM;
 const order = React.createFactory(Order);
+
+function mapStateToProps(state) {
+  return {
+    orders: state.get('orders')
+  };
+}
 
 class Orders extends React.Component {
   constructor(props) {
@@ -13,8 +20,8 @@ class Orders extends React.Component {
     return (
       dom.div(
         null,
-        dom.h1(null, 'Orders'),
-        this.props.orders.map(orderData => {
+        dom.h1({ className: 'orders-title' }, 'Orders'),
+        this.props.orders.toJS().map(orderData => {
           return order(Object.assign(orderData, { key: orderData.id }));
         })
       )
@@ -23,3 +30,4 @@ class Orders extends React.Component {
 }
 
 export default Orders;
+export const OrdersContainer = connect(mapStateToProps)(Orders);
