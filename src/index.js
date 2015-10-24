@@ -7,8 +7,6 @@ import reducer             from './reducer';
 import App                 from './components/App';
 import { OrdersContainer } from './components/Orders';
 import Hello               from './components/Hello';
-import Voting              from './components/Voting';
-import Results             from './components/Results';
 
 require('./style.css');
 
