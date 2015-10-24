@@ -6,7 +6,7 @@ class App extends React.Component {
   }
 
   render() {
-    return React.cloneElement(this.props.children, null);
+    return this.props.children;
   }
 }
 
