@@ -13,15 +13,23 @@ function mapStateToProps(state) {
 }
 
 class Orders extends React.Component {
+  renderOrder(orderData) {
+    return order(
+      Object.assign(
+        {},
+        orderData,
+        { key: orderData.id, toggleOrder: this.props.toggleOrder }
+      )
+    );
+  }
+
   render() {
     return (
       dom.div(
         null,
         dom.h1({ className: 'orders-title' }, 'Orders'),
         this.props.orders && this.props.orders.size ?
-          this.props.orders.toJS().map((orderData) => {
-            return order(Object.assign(orderData, { key: orderData.id, toggleOrder: this.props.toggleOrder }));
-          }) :
+          this.props.orders.toJS().map(this.renderOrder.bind(this)) :
           dom.div({ className: 'orders-message' }, 'There are currently no orders.')
       )
     );
