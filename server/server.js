@@ -21,5 +21,22 @@ app.listen(port, () => {
 io.on('connection', (socket) => {
   console.log('connected!');
   socket.emit('connected', 'hello from the server');
+  socket.emit('state', store.getState().toJS());
+  socket.on('action', store.dispatch.bind(store));
 });
+
+store.subscribe(
+  () => io.emit('state', store.getState().toJS())
+);
+
+const initialState = {
+  type:  'SET_STATE',
+  state: {
+    orders: [
+      { id: 1, status: 'open' },
+      { id: 2, status: 'closed' }
+    ]
+  }
+}
+store.dispatch(initialState);
 
