@@ -31,4 +31,11 @@ describe('Orders', () => {
 
     expect(children.length).to.equal(3);
   });
+
+  it('renders message if there are no orders', () => {
+    const component = renderIntoDocument(orders({ orders: List() }));
+    const ordersComponent = findRenderedDOMComponentWithClass(component, 'orders-message');
+
+    expect(ordersComponent.textContent).to.equal('There are currently no orders.');
+  });
 });
