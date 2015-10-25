@@ -39,4 +39,3 @@ const initialState = {
   }
 }
 store.dispatch(initialState);
-
