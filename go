@@ -8,6 +8,7 @@ setup() {
 
 startClient() {
   echo "Starting client"
+  webpack
   webpack-dev-server --port 8081
 }
 
