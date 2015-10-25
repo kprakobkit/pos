@@ -3,15 +3,15 @@
 setup() {
   echo "Setting up app"
   npm install
-  webpack
 }
 
-startClient() {
+client() {
   echo "Starting client"
+  webpack
   webpack-dev-server --port 8081
 }
 
-startServer() {
+server() {
   echo "Starting server"
   npm run watch
 }
