@@ -13,7 +13,13 @@ class Order extends React.Component {
         { className: 'order' },
         dom.div({ className: 'order-number' }, this.props.id),
         dom.div({ className: 'order-status' }, this.props.status),
-        dom.button({ className: 'order-status-toggle' }, 'Toggle')
+        dom.button(
+          {
+            className: 'order-status-toggle',
+            onClick:   () => this.props.toggleOrder(this.props.id)
+          },
+          'Toggle'
+        )
       )
     );
   }
