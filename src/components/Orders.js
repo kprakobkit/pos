@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Order from './Order';
+import * as actionCreators from '../action_creators';
 
 const dom = React.DOM;
 const order = React.createFactory(Order);
@@ -12,8 +13,14 @@ function mapStateToProps(state) {
 }
 
 class Orders extends React.Component {
-  constructor(props) {
-    super(props);
+  renderOrder(orderData) {
+    return order(
+      Object.assign(
+        {},
+        orderData,
+        { key: orderData.id, toggleOrder: this.props.toggleOrder }
+      )
+    );
   }
 
   render() {
@@ -22,9 +29,7 @@ class Orders extends React.Component {
         null,
         dom.h1({ className: 'orders-title' }, 'Orders'),
         this.props.orders && this.props.orders.size ?
-          this.props.orders.toJS().map((orderData) => {
-            return order(Object.assign(orderData, { key: orderData.id }));
-          }) :
+          this.props.orders.toJS().map(this.renderOrder.bind(this)) :
           dom.div({ className: 'orders-message' }, 'There are currently no orders.')
       )
     );
@@ -32,4 +37,7 @@ class Orders extends React.Component {
 }
 
 export default Orders;
-export const OrdersContainer = connect(mapStateToProps)(Orders);
+export const OrdersContainer = connect(
+  mapStateToProps,
+  actionCreators
+)(Orders);
