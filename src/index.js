@@ -17,8 +17,10 @@ const route    = React.createFactory(Route);
 const provider = React.createFactory(Provider);
 
 const store = createStore(reducer);
-
-const socket = io(`${location.protocol}//${location.hostname}:8090`);
+const thisDocument = window.document;
+const port = thisDocument.location.hostname === 'localhost' ? ':3000' : '';
+const location = `${thisDocument.location.protocol}//${thisDocument.location.hostname}${port}`;
+const socket = io.connect(location);
 socket.on('connected', (data) => console.log(data));
 socket.on('state', (state) => store.dispatch(setState(state)));
 
