@@ -21,9 +21,11 @@ class Orders extends React.Component {
       dom.div(
         null,
         dom.h1({ className: 'orders-title' }, 'Orders'),
-        this.props.orders.toJS().map((orderData) => {
-          return order(Object.assign(orderData, { key: orderData.id }));
-        })
+        this.props.orders && this.props.orders.size ?
+          this.props.orders.toJS().map((orderData) => {
+            return order(Object.assign(orderData, { key: orderData.id }));
+          }) :
+          dom.div({ className: 'orders-message' }, 'There are currently no orders.')
       )
     );
   }
