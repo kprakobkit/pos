@@ -4,3 +4,10 @@ export function setState(state) {
     state
   };
 }
+
+export function toggleOrder(orderId) {
+  return {
+    type: 'TOGGLE_ORDER',
+    orderId: orderId
+  };
+}
