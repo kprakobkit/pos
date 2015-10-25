@@ -13,10 +13,6 @@ function mapStateToProps(state) {
 }
 
 class Orders extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       dom.div(
