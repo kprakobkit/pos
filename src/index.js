@@ -7,7 +7,7 @@ import reducer             from './reducer';
 import App                 from './components/App';
 import { OrdersContainer } from './components/Orders';
 import Hello               from './components/Hello';
-import io                from 'socket.io-client';
+import io                  from 'socket.io-client';
 
 require('./style.css');
 
