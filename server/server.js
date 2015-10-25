@@ -1,12 +1,14 @@
 import Server from 'socket.io';
 import express from 'express';
 import path from 'path';
+import makeStore from './store';
 
 var app = express();
 const isProduction = process.env.NODE_ENV === 'production';
 var port = isProduction ? process.env.PORT : 3000;
 const distPath = path.resolve(__dirname, 'dist');
 const io = new Server().attach(8090);
+const store = makeStore();
 
 console.log('Server running...');
 
