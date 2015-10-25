@@ -12,7 +12,8 @@ class Order extends React.Component {
       dom.div(
         { className: 'order' },
         dom.div({ className: 'order-number' }, this.props.id),
-        dom.div({ className: 'order-status' }, this.props.status)
+        dom.div({ className: 'order-status' }, this.props.status),
+        dom.button({ className: 'order-status-toggle' }, 'Toggle')
       )
     );
   }
