@@ -2,12 +2,16 @@ import Server from 'socket.io';
 import express from 'express';
 import path from 'path';
 import makeStore from './store';
+import mongoose from 'mongoose';
+import Order from '../models/order';
 
 const app = express();
 const isProduction = process.env.NODE_ENV === 'production';
 const port = isProduction ? process.env.PORT : 3000;
 const distPath = path.resolve(__dirname, '..', 'dist');
 const store = makeStore();
+
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost');
 
 console.log('Server running...');
 
