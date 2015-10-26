@@ -3,6 +3,14 @@
 setup() {
   echo "Setting up app"
   npm install
+
+  if [ ! -d ./data ]; then
+    echo "Setting up path for mongo"
+    mkdir data && mkdir data/db
+    node_modules/babel/bin/babel-node.js setup.js
+  fi
+
+  echo "Setup Done!"
 }
 
 client() {
@@ -14,6 +22,11 @@ client() {
 server() {
   echo "Starting server"
   npm run watch
+}
+
+mongo() {
+  echo "Starting mongo"
+  mongod --dbpath ./data/db/
 }
 
 if [ "$(type -t "$1")" == "function" ]; then

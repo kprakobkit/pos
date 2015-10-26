@@ -39,3 +39,6 @@ public/js/*
 
 # Webpack bundlejs
 **/bundle.js
+
+# Mongodb
+data/
