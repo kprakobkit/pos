@@ -3,9 +3,9 @@ import express from 'express';
 import path from 'path';
 import makeStore from './store';
 
-var app = express();
+const app = express();
 const isProduction = process.env.NODE_ENV === 'production';
-var port = isProduction ? process.env.PORT : 3000;
+const port = isProduction ? process.env.PORT : 3000;
 const distPath = path.resolve(__dirname, '..', 'dist');
 const store = makeStore();
 
@@ -13,7 +13,7 @@ console.log('Server running...');
 
 app.use(express.static(distPath));
 
-var server = app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
@@ -38,5 +38,5 @@ const initialState = {
       { id: 2, status: 'closed' }
     ]
   }
-}
+};
 store.dispatch(initialState);
