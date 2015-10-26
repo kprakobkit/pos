@@ -3,7 +3,6 @@ import express from 'express';
 import path from 'path';
 import makeStore from './store';
 import mongoose from 'mongoose';
-import Order from '../models/order';
 
 const app = express();
 const isProduction = process.env.NODE_ENV === 'production';
