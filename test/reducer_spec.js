@@ -70,22 +70,4 @@ describe('reducer', () => {
       }));
     });
   });
-
-  describe('TOGGLE_ORDER', () => {
-    it('is handled', () => {
-      const order = Map({ id: 1, status: 'open' });
-      const initialState = Map({
-        orders: List.of(order)
-      });
-      const action = {
-        type: 'TOGGLE_ORDER',
-        orderId: 1
-      };
-      const nextState = reducer(initialState, action);
-
-      expect(nextState).to.equal(fromJS({
-        orders: [{ id: 1, status: 'closed' }]
-      }));
-    });
-  });
 });
