@@ -17,12 +17,15 @@ const router   = React.createFactory(Router);
 const route    = React.createFactory(Route);
 const provider = React.createFactory(Provider);
 
-const createStoreWithMiddleware = applyMiddleware(remoteActionMiddleware)(createStore);
-const store = createStoreWithMiddleware(reducer);
 const thisDocument = window.document;
 const port = thisDocument.location.hostname === 'localhost' ? ':3000' : '';
 const location = `${thisDocument.location.protocol}//${thisDocument.location.hostname}${port}`;
 const socket = io.connect(location);
+const createStoreWithMiddleware = applyMiddleware(
+  remoteActionMiddleware(socket)
+)(createStore);
+const store = createStoreWithMiddleware(reducer);
+
 socket.on('connected', (data) => console.log(data));
 socket.on('state', (state) => store.dispatch(setState(state)));
 
