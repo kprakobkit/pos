@@ -7,6 +7,7 @@ export function setState(state) {
 
 export function toggleOrder(orderId) {
   return {
+    meta: { remote: true },
     type: 'TOGGLE_ORDER',
     orderId: orderId
   };
