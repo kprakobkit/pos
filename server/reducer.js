@@ -6,10 +6,10 @@ function setState(state, newState) {
   return state.merge(newState);
 }
 
-function toggleOrder(state, orderId) {
+function toggleOrder(state, id) {
   const orders = state.get('orders');
   const orderIndex = orders.findIndex((order) => {
-    return order.get('id') === orderId;
+    return order.get('id') === id;
   });
 
   return state.updateIn(
@@ -30,7 +30,7 @@ export default function reducer(state = INITIAL_STATE, action) {
   case 'SET_STATE':
     return setState(state, action.state);
   case 'TOGGLE_ORDER':
-    return toggleOrder(state, action.orderId);
+    return toggleOrder(state, action.id);
   }
   return state;
 }

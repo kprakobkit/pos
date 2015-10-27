@@ -5,10 +5,10 @@ export function setState(state) {
   };
 }
 
-export function toggleOrder(orderId) {
+export function toggleOrder(id) {
   return {
     meta: { remote: true },
     type: 'TOGGLE_ORDER',
-    orderId: orderId
+    id
   };
 }
