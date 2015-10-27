@@ -1,4 +1,4 @@
-import { Component, DOM as dom } from 'react';
+import { Component, PropTypes, DOM as dom } from 'react';
 
 class Order extends Component {
   render() {
@@ -18,5 +18,11 @@ class Order extends Component {
     );
   }
 }
+
+Order.propTypes = {
+  id:          PropTypes.number.isRequired,
+  status:      PropTypes.string.isRequired,
+  toggleOrder: PropTypes.func.isRequired
+};
 
 export default Order;

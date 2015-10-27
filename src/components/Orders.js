@@ -1,7 +1,8 @@
-import { Component, DOM as dom, createFactory } from 'react';
+import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import { connect } from 'react-redux';
 import OrderComponent from './Order';
 import * as actionCreators from '../action_creators';
+import { List } from 'immutable';
 
 const Order = createFactory(OrderComponent);
 
@@ -39,6 +40,11 @@ class Orders extends Component {
     );
   }
 }
+
+Orders.propTypes = {
+  orders:      PropTypes.instanceOf(List),
+  toggleOrder: PropTypes.func.isRequired
+};
 
 export default Orders;
 export const OrdersContainer = connect(
