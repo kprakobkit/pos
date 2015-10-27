@@ -30,7 +30,7 @@ class Orders extends Component {
       dom.div(
         null,
         dom.h1({ className: 'orders-title' }, 'Orders'),
-        this.props.orders && this.props.orders.length ?
+        this.props.orders.length ?
           this.props.orders.map(this.renderOrder) :
           dom.div({ className: 'orders-message' }, 'There are currently no orders.')
       )
@@ -41,6 +41,10 @@ class Orders extends Component {
 Orders.propTypes = {
   orders:      PropTypes.array.isRequired,
   toggleOrder: PropTypes.func.isRequired
+};
+
+Orders.defaultProps = {
+  orders: []
 };
 
 export default Orders;
