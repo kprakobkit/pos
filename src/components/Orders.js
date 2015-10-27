@@ -1,9 +1,9 @@
 import { Component, DOM as dom, createFactory } from 'react';
 import { connect } from 'react-redux';
-import Order from './Order';
+import OrderComponent from './Order';
 import * as actionCreators from '../action_creators';
 
-const order = createFactory(Order);
+const Order = createFactory(OrderComponent);
 
 function mapStateToProps(state) {
   return {
@@ -17,12 +17,12 @@ class Orders extends Component {
     this.renderOrder = this.renderOrder.bind(this);
   }
 
-  renderOrder(orderData) {
-    return order(
+  renderOrder(order) {
+    return Order(
       Object.assign(
         {},
-        orderData,
-        { key: orderData.id, toggleOrder: this.props.toggleOrder }
+        order,
+        { key: order.id, toggleOrder: this.props.toggleOrder }
       )
     );
   }
