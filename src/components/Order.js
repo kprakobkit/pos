@@ -1,8 +1,6 @@
-import React from 'react';
+import { Component, DOM as dom } from 'react';
 
-const dom = React.DOM;
-
-class Order extends React.Component {
+class Order extends Component {
   render() {
     return (
       dom.div(

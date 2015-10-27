@@ -1,10 +1,9 @@
-import React from 'react';
+import { Component, DOM as dom, createFactory } from 'react';
 import { connect } from 'react-redux';
 import Order from './Order';
 import * as actionCreators from '../action_creators';
 
-const dom = React.DOM;
-const order = React.createFactory(Order);
+const order = createFactory(Order);
 
 function mapStateToProps(state) {
   return {
@@ -12,7 +11,7 @@ function mapStateToProps(state) {
   };
 }
 
-class Orders extends React.Component {
+class Orders extends Component {
   renderOrder(orderData) {
     return order(
       Object.assign(
