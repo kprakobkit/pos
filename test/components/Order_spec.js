@@ -21,7 +21,7 @@ describe('Order', () => {
     const component = renderIntoDocument(order(orderProps));
     const orderId = findRenderedDOMComponentWithClass(component, 'order-number');
 
-    expect(orderId.textContent).to.equal(id.toString());
+    expect(orderId.textContent).to.contain(id.toString());
   });
 
   it('renders status', () => {
@@ -29,7 +29,7 @@ describe('Order', () => {
     const component = renderIntoDocument(order(orderProps));
     const orderStatus = findRenderedDOMComponentWithClass(component, 'order-status');
 
-    expect(orderStatus.textContent).to.equal(status);
+    expect(orderStatus.textContent).to.contain(status);
   });
 
   it('calls callback when button clicked', () => {
