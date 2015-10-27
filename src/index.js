@@ -8,6 +8,7 @@ import { setState } from './action_creators';
 import remoteActionMiddleware from './remote_action_middleware';
 import App from './components/App';
 import { OrdersContainer } from './components/Orders';
+import OrderDetails from './components/OrderDetails';
 import Home from './components/Home';
 import io from 'socket.io-client';
 
@@ -31,6 +32,7 @@ socket.on('state', (state) => store.dispatch(setState(state)));
 
 const routes = route(
   { component: App },
+  route({ path: '/orders/:id', component: OrderDetails }),
   route({ path: '/orders', component: OrdersContainer }),
   route({ path: '/', component: Home })
 );
