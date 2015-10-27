@@ -25,12 +25,12 @@ const io = Server.listen(server);
 io.on('connection', (socket) => {
   console.log('connected!');
   socket.emit('connected', 'hello from the server');
-  socket.emit('state', store.getState().toJS());
+  socket.emit('state', store.getState());
   socket.on('action', store.dispatch.bind(store));
 });
 
 store.subscribe(
-  () => io.emit('state', store.getState().toJS())
+  () => io.emit('state', store.getState())
 );
 
 const initialState = {

@@ -1,9 +1,7 @@
-import { Map } from 'immutable';
-
-const INITIAL_STATE = Map();
+const INITIAL_STATE = {};
 
 function setState(state, newState) {
-  return state.merge(newState);
+  return Object.assign({}, state, newState);
 }
 
 export default function reducer(state = INITIAL_STATE, action) {

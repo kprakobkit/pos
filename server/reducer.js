@@ -1,28 +1,24 @@
-import { Map } from 'immutable';
-
-const INITIAL_STATE = Map();
+const INITIAL_STATE = {};
 
 function setState(state, newState) {
-  return state.merge(newState);
+  return Object.assign({}, state, newState);
 }
 
 function toggleOrder(state, id) {
-  const orders = state.get('orders');
+  const orders = state.orders;
   const orderIndex = orders.findIndex((order) => {
-    return order.get('id') === id;
+    return order.id === id;
   });
+  const order = orders[orderIndex];
+  const status = order.status === 'open' ? 'closed' : 'open';
 
-  return state.updateIn(
-    ['orders'],
-    orders,
-    (orders) => orders.update(
-      orderIndex,
-      (order) => order.updateIn(
-        ['status'],
-        'open',
-        (status) => status === 'open' ? 'closed' : 'open'
-      )
-    ));
+  return Object.assign({}, state, {
+    orders: [
+      ...orders.slice(0, orderIndex),
+      Object.assign({}, orders[orderIndex], { status }),
+      ...orders.slice(orderIndex + 1)
+    ]
+  });
 }
 
 export default function reducer(state = INITIAL_STATE, action) {
