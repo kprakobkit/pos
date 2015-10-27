@@ -1,8 +1,6 @@
-import React from 'react';
+import { Component, DOM as dom } from 'react';
 
-const dom = React.DOM;
-
-class Hello extends React.Component {
+class Hello extends Component {
   render() {
     return (
       dom.h1(null, 'hello there')

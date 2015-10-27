@@ -1,15 +1,15 @@
-import React                            from 'react';
-import ReactDOM                         from 'react-dom';
-import { Router, Route }                from 'react-router';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Router, Route } from 'react-router';
 import { createStore, applyMiddleware } from 'redux';
-import { Provider }                     from 'react-redux';
-import reducer                          from './reducer';
-import { setState }                     from './action_creators';
-import remoteActionMiddleware           from './remote_action_middleware';
-import App                              from './components/App';
-import { OrdersContainer }              from './components/Orders';
-import Hello                            from './components/Hello';
-import io                               from 'socket.io-client';
+import { Provider } from 'react-redux';
+import reducer from './reducer';
+import { setState } from './action_creators';
+import remoteActionMiddleware from './remote_action_middleware';
+import App from './components/App';
+import { OrdersContainer } from './components/Orders';
+import Hello from './components/Hello';
+import io from 'socket.io-client';
 
 require('./style.css');
 

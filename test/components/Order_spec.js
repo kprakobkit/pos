@@ -14,9 +14,10 @@ const order = React.createFactory(Order);
 describe('Order', () => {
   const id = 1;
   const status = 'open';
+  const toggleOrder = () => {};
 
   it('renders id', () => {
-    const orderProps = { id: id, status: status };
+    const orderProps = { id: id, status: status, toggleOrder: toggleOrder };
     const component = renderIntoDocument(order(orderProps));
     const orderId = findRenderedDOMComponentWithClass(component, 'order-number');
 
@@ -24,7 +25,7 @@ describe('Order', () => {
   });
 
   it('renders status', () => {
-    const orderProps = { id: id, status: status };
+    const orderProps = { id: id, status: status, toggleOrder: toggleOrder };
     const component = renderIntoDocument(order(orderProps));
     const orderStatus = findRenderedDOMComponentWithClass(component, 'order-status');
 
@@ -33,8 +34,8 @@ describe('Order', () => {
 
   it('calls callback when button clicked', () => {
     let toggleOrderCalled = false;
-    const toggleOrder = () => toggleOrderCalled = true;
-    const orderProps = { id: id, status: status, toggleOrder: toggleOrder };
+    const toggleOrderStub = () => toggleOrderCalled = true;
+    const orderProps = { id: id, status: status, toggleOrder: toggleOrderStub };
     const component = renderIntoDocument(order(orderProps));
     const button = findRenderedDOMComponentWithClass(component, 'order-status-toggle');
 

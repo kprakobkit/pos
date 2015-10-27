@@ -1,10 +1,10 @@
-import React from 'react';
+import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import { connect } from 'react-redux';
-import Order from './Order';
+import OrderComponent from './Order';
 import * as actionCreators from '../action_creators';
+import { List } from 'immutable';
 
-const dom = React.DOM;
-const order = React.createFactory(Order);
+const Order = createFactory(OrderComponent);
 
 function mapStateToProps(state) {
   return {
@@ -12,13 +12,18 @@ function mapStateToProps(state) {
   };
 }
 
-class Orders extends React.Component {
-  renderOrder(orderData) {
-    return order(
+class Orders extends Component {
+  constructor(props) {
+    super(props);
+    this.renderOrder = this.renderOrder.bind(this);
+  }
+
+  renderOrder(order) {
+    return Order(
       Object.assign(
         {},
-        orderData,
-        { key: orderData.id, toggleOrder: this.props.toggleOrder }
+        order,
+        { key: order.id, toggleOrder: this.props.toggleOrder }
       )
     );
   }
@@ -29,12 +34,17 @@ class Orders extends React.Component {
         null,
         dom.h1({ className: 'orders-title' }, 'Orders'),
         this.props.orders && this.props.orders.size ?
-          this.props.orders.toJS().map(this.renderOrder.bind(this)) :
+          this.props.orders.toJS().map(this.renderOrder) :
           dom.div({ className: 'orders-message' }, 'There are currently no orders.')
       )
     );
   }
 }
+
+Orders.propTypes = {
+  orders:      PropTypes.instanceOf(List),
+  toggleOrder: PropTypes.func.isRequired
+};
 
 export default Orders;
 export const OrdersContainer = connect(
