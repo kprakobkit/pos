@@ -12,6 +12,11 @@ function mapStateToProps(state) {
 }
 
 class Orders extends Component {
+  constructor(props) {
+    super(props);
+    this.renderOrder = this.renderOrder.bind(this);
+  }
+
   renderOrder(orderData) {
     return order(
       Object.assign(
@@ -28,7 +33,7 @@ class Orders extends Component {
         null,
         dom.h1({ className: 'orders-title' }, 'Orders'),
         this.props.orders && this.props.orders.size ?
-          this.props.orders.toJS().map(this.renderOrder.bind(this)) :
+          this.props.orders.toJS().map(this.renderOrder) :
           dom.div({ className: 'orders-message' }, 'There are currently no orders.')
       )
     );
