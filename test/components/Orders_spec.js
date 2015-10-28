@@ -24,9 +24,9 @@ describe('Orders', () => {
   });
 
   it('renders Order component for each order in props', () => {
-    const order1 = { id: 1, status: 'open' };
-    const order2 = { id: 2, status: 'open' };
-    const order3 = { id: 3, status: 'open' };
+    const order1 = { id: '1', status: 'open' };
+    const order2 = { id: '2', status: 'open' };
+    const order3 = { id: '3', status: 'open' };
     const ordersProp = [order1, order2, order3];
     const component = renderIntoDocument(Orders({ orders: ordersProp, toggleOrder, loadOrders }));
     const children = scryRenderedDOMComponentsWithClass(component, 'order');
