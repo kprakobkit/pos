@@ -4,6 +4,7 @@ import path from 'path';
 import mongoose from 'mongoose';
 import makeStore from './store';
 import socketEvents from './socket_events';
+import Order from '../models/order';
 
 const app = express();
 const isProduction = process.env.NODE_ENV === 'production';
@@ -37,13 +38,21 @@ store.subscribe(
   () => io.emit('state', store.getState())
 );
 
-const initialState = {
-  type:  'SET_STATE',
-  state: {
-    orders: [
-      { id: 1, status: 'open' },
-      { id: 2, status: 'closed' }
-    ]
-  }
-};
-store.dispatch(initialState);
+// seeding for dev
+function seedData() {
+  Order.remove({}, () => {
+    console.log('Orders collection dropped');
+  });
+
+  new Order({
+    id: '15',
+    status: 'closed'
+  }).save();
+
+  new Order({
+    id: '16',
+    status: 'open'
+  }).save();
+}
+
+seedData();
