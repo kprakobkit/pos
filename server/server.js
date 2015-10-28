@@ -53,6 +53,16 @@ function seedData() {
     id: '16',
     status: 'open'
   }).save();
+
+  new Order({
+    id: '17',
+    status: 'open'
+  }).save();
+
+  new Order({
+    id: '18',
+    status: 'closed'
+  }).save();
 }
 
 seedData();
