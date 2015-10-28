@@ -1,1 +1,2 @@
 --reporter progress
+--compilers js:babel-core/register

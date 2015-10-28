@@ -5,5 +5,6 @@ export default {
   OPEN: 'OPEN',
   CLOSED: 'CLOSED',
   READY_FOR_BILL: 'READY_FOR_BILL',
+  ADD_ORDER: 'ADD_ORDER',
   ALL: 'ALL'
 };
