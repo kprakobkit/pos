@@ -1,12 +1,21 @@
-import { Component, PropTypes, DOM as dom } from 'react';
+import { Component, PropTypes, DOM as dom, createFactory } from 'react';
+import { Link as LinkComponent } from 'react-router';
+
+const Link = createFactory(LinkComponent);
 
 class Order extends Component {
   render() {
     return (
       dom.div(
         { className: 'order' },
-        dom.div({ className: 'order-number' }, this.props.id),
-        dom.div({ className: 'order-status' }, this.props.status),
+        Link(
+          {
+            to:        '/orders/' + this.props.id,
+            className: 'order-number'
+          },
+          'Order ' + this.props.id
+        ),
+        dom.div({ className: 'order-status' }, 'Status: ' + this.props.status),
         dom.button(
           {
             className: 'order-status-toggle',
