@@ -18,14 +18,10 @@ export function toggleOrder(id) {
 
 export function loadOrders() {
   return (dispatch) => {
-    return Order.find({}, (err, response) => {
-      let orders = response.map((order) => {
-        return {
-          id: order.id,
-          status: order.status
-        };
+    return Order.find()
+      .then((response) => {
+        const orders = response.map(({ id, status }) => { return { id, status }; });
+        dispatch(setState({ orders }));
       });
-      dispatch(setState({ orders }));
-    });
   };
 }
