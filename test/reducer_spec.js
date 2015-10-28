@@ -1,6 +1,4 @@
 import { expect } from 'chai';
-import { List, Map, fromJS } from 'immutable';
-
 import reducer from '../src/reducer';
 
 describe('reducer', () => {
@@ -9,65 +7,36 @@ describe('reducer', () => {
     const item2 = '28 Days Later';
 
     it('handles SET_STATE', () => {
-      const initialState = Map();
-      const action = {
-        type: 'SET_STATE',
-        state: Map({
-          vote: Map({
-            pair:  List.of(item1, item2),
-            tally: Map({ Trainspotting: 1 })
-          })
-        })
-      };
-      const nextState = reducer(initialState, action);
-
-      expect(nextState).to.equal(fromJS({
+      const initialState = {};
+      const newState = {
         vote: {
           pair:  [item1, item2],
           tally: { Trainspotting: 1 }
         }
-      }));
-    });
-
-    it('handles SET_STATE with plain JS payload', () => {
-      const initialState = Map();
+      };
       const action = {
         type: 'SET_STATE',
-        state: {
-          vote: {
-            pair:  [item1, item2],
-            tally: { Trainspotting: 1 }
-          }
-        }
+        state: newState
       };
       const nextState = reducer(initialState, action);
 
-      expect(nextState).to.equal(fromJS({
-        vote: {
-          pair:  [item1, item2],
-          tally: { Trainspotting: 1 }
-        }
-      }));
+      expect(nextState).to.deep.equal(newState);
     });
 
     it('handles SET_STATE without initial state', () => {
-      const action = {
-        type: 'SET_STATE',
-        state: {
-          vote: {
-            pair:  [item1, item2],
-            tally: { Trainspotting: 1 }
-          }
-        }
-      };
-      const nextState = reducer(undefined, action);
-
-      expect(nextState).to.equal(fromJS({
+      const newState = {
         vote: {
           pair:  [item1, item2],
           tally: { Trainspotting: 1 }
         }
-      }));
+      };
+      const action = {
+        type: 'SET_STATE',
+        state: newState
+      };
+      const nextState = reducer(undefined, action);
+
+      expect(nextState).to.deep.equal(newState);
     });
   });
 });
