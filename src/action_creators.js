@@ -1,6 +1,8 @@
+import * as constants from '../src/constants';
+
 export function setState(state) {
   return {
-    type: 'SET_STATE',
+    type: constants.SET_STATE,
     state
   };
 }
@@ -8,7 +10,7 @@ export function setState(state) {
 export function toggleOrder(id) {
   return {
     meta: { remote: true },
-    type: 'TOGGLE_ORDER',
+    type: constants.TOGGLE_ORDER,
     id
   };
 }
