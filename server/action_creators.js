@@ -1,4 +1,13 @@
+import mongoose from 'mongoose';
 import * as constants from '../src/constants';
+import Order from '../models/order';
+
+export function setState(state) {
+  return {
+    type: constants.SET_STATE,
+    state
+  };
+}
 
 export function toggleOrder(id) {
   return {
@@ -10,9 +19,14 @@ export function toggleOrder(id) {
 
 export function loadOrders() {
   return (dispatch, getState) => {
-    setTimeout(() => dispatch(toggleOrder(2)), 1000);
-    // return Order.find({}, (err, orders) => {
-    //   dispatch(setState({ orders }));
-    // });
+    return Order.find({}, (err, response) => {
+      let orders = response.map((order) => {
+        return {
+          id: order.id,
+          status: order.status
+        };
+      });
+      dispatch(setState({ orders }));
+    });
   };
 }
