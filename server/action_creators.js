@@ -25,3 +25,9 @@ export function loadOrders() {
       });
   };
 }
+
+export default {
+  setState,
+  toggleOrder,
+  loadOrders
+};
