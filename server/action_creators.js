@@ -1,12 +1,5 @@
 import * as constants from '../src/constants';
 
-export function setState(state) {
-  return {
-    type: constants.SET_STATE,
-    state
-  };
-}
-
 export function toggleOrder(id) {
   return {
     meta: { remote: true },
@@ -16,8 +9,10 @@ export function toggleOrder(id) {
 }
 
 export function loadOrders() {
-  return {
-    meta: { remote: true },
-    type: constants.LOAD_ORDERS
+  return (dispatch, getState) => {
+    setTimeout(() => dispatch(toggleOrder(2)), 1000);
+    // return Order.find({}, (err, orders) => {
+    //   dispatch(setState({ orders }));
+    // });
   };
 }
