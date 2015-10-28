@@ -14,3 +14,19 @@ export function toggleOrder(id) {
     id
   };
 }
+
+export function loadOrders() {
+  return {
+    meta: { remote: true },
+    type: constants.LOAD_ORDERS
+  };
+}
+
+export function getOrders() {
+  return (dispatch, getState) => {
+    setTimeout(() => dispatch(toggleOrder(2)), 1000);
+    // return Order.find({}, (err, orders) => {
+    //   dispatch(setState({ orders }));
+    // });
+  };
+}

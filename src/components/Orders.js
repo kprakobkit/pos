@@ -16,6 +16,10 @@ class Orders extends Component {
     this.renderOrder = this.renderOrder.bind(this);
   }
 
+  componentWillMount() {
+    this.props.loadOrders();
+  }
+
   renderOrder(order) {
     return Order(
       Object.assign({}, order, {
