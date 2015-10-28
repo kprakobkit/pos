@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
-var orderSchema = new mongoose.Schema({
+let orderSchema = new mongoose.Schema({
+  id: String,
   status: String
 });
 
