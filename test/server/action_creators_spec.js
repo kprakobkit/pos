@@ -1,6 +1,9 @@
 import { expect } from 'chai';
 import proxyquire from 'proxyquire';
-import * as constants from '../../src/constants';
+import constants from '../../src/constants';
+import mongoose from 'mongoose';
+
+mongoose.models = {};
 
 const Order = {
   find: () => {

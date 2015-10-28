@@ -1,7 +1,7 @@
 import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import { connect } from 'react-redux';
 import OrderComponent from './Order';
-import * as actions from '../action_creators';
+import actions from '../action_creators';
 const Order = createFactory(OrderComponent);
 
 function mapStateToProps(state) {

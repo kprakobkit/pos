@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import * as constants from '../src/constants';
+import constants from '../src/constants';
 import Order from '../models/order';
 
 export function setState(state) {
