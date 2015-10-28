@@ -1,7 +1,7 @@
 import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import { connect } from 'react-redux';
 import OrderComponent from './Order';
-import * as actionCreators from '../action_creators';
+import * as actions from '../action_creators';
 const Order = createFactory(OrderComponent);
 
 function mapStateToProps(state) {
@@ -14,6 +14,10 @@ class Orders extends Component {
   constructor(props) {
     super(props);
     this.renderOrder = this.renderOrder.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.loadOrders();
   }
 
   renderOrder(order) {
@@ -50,5 +54,5 @@ Orders.defaultProps = {
 export default Orders;
 export const OrdersContainer = connect(
   mapStateToProps,
-  actionCreators
+  actions
 )(Orders);

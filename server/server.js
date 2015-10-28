@@ -1,8 +1,9 @@
 import Server from 'socket.io';
 import express from 'express';
 import path from 'path';
-import makeStore from './store';
 import mongoose from 'mongoose';
+import makeStore from './store';
+import socketEvents from './socket_events';
 
 const app = express();
 const isProduction = process.env.NODE_ENV === 'production';
@@ -22,12 +23,15 @@ const server = app.listen(port, () => {
 
 const io = Server.listen(server);
 
+const attachSocketEvents = socketEvents(store);
+
 io.on('connection', (socket) => {
   console.log('connected!');
   socket.emit('connected', 'hello from the server');
   socket.emit('state', store.getState());
-  socket.on('action', store.dispatch.bind(store));
 });
+
+io.on('connection', attachSocketEvents);
 
 store.subscribe(
   () => io.emit('state', store.getState())

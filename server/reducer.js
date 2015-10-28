@@ -1,3 +1,5 @@
+import * as constants from '../src/constants';
+
 const INITIAL_STATE = {};
 
 function setState(state, newState) {
@@ -23,9 +25,9 @@ function toggleOrder(state, id) {
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case 'SET_STATE':
+  case constants.SET_STATE:
     return setState(state, action.state);
-  case 'TOGGLE_ORDER':
+  case constants.TOGGLE_ORDER:
     return toggleOrder(state, action.id);
   }
   return state;

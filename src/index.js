@@ -22,9 +22,7 @@ const thisDocument = window.document;
 const port = thisDocument.location.hostname === 'localhost' ? ':3000' : '';
 const location = `${thisDocument.location.protocol}//${thisDocument.location.hostname}${port}`;
 const socket = io.connect(location);
-const createStoreWithMiddleware = applyMiddleware(
-  remoteActionMiddleware(socket)
-)(createStore);
+const createStoreWithMiddleware = applyMiddleware(remoteActionMiddleware(socket))(createStore);
 const store = createStoreWithMiddleware(reducer);
 
 socket.on('connected', (data) => console.log(data));
