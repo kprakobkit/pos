@@ -8,6 +8,10 @@ mongoose.models = {};
 const Order = {
   find: () => {
     return Promise.resolve([]);
+  },
+
+  findOneAndUpdate: ({ id }, { status }) => {
+    return Promise.resolve({ id, status });
   }
 };
 
@@ -25,23 +29,48 @@ describe('server action creators', () => {
   });
 
   it('toggleOrder', () => {
-    const id = 1;
+    let dispatched;
+    const orders = [
+      { id: 1, status: 'closed' },
+      { id: 2, status: 'open' },
+      { id: 3, status: 'closed' }
+    ];
+    function dispatch(action) {
+      dispatched = action;
+    }
+    function getState() {
+      return { orders };
+    }
     const expected = {
-      type: constants.TOGGLE_ORDER,
-      id
+      type: constants.SET_STATE,
+      state: {
+        orders: [
+          { id: 1, status: 'closed' },
+          { id: 2, status: 'closed' },
+          { id: 3, status: 'closed' }
+        ]
+      }
     };
 
-    expect(actions.toggleOrder(id)).to.deep.equal(expected);
+    actions.toggleOrder(2)(dispatch, getState).then(() => {
+      expect(dispatched).to.deep.equal(expected);
+      done();
+    });
   });
 
-  it('loadOrders', () => {
-    let called = false;
-    function dispatch() {
-      called = true;
+  it('loadOrders', (done) => {
+    let dispatched;
+    function dispatch(action) {
+      dispatched = action;
     }
+    const expected = {
+      type: constants.SET_STATE,
+      state: { orders: [] }
+    };
 
     actions.loadOrders()(dispatch).then(() => {
-      expect(called).to.be.true;
+      expect(dispatched).to.deep.equal(expected);
+      done();
     });
   });
 });
