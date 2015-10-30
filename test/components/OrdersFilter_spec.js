@@ -17,7 +17,7 @@ const OrdersFilter = React.createFactory(OrdersFilterComponent);
 describe('OrdersFilter', () => {
   it('renders three filter options', () => {
     const filterOrders = () => {};
-    const component = renderIntoDocument(OrdersFilter( { filterOrders }));
+    const component = renderIntoDocument(OrdersFilter({ filterOrders }));
     const filters = scryRenderedDOMComponentsWithClass(component, 'orders-filter-option');
 
     expect(filters.length).to.equal(3);
