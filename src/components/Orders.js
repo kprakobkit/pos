@@ -52,6 +52,7 @@ class Orders extends Component {
       dom.div(
         null,
         dom.h1({ className: 'orders-title' }, 'Orders'),
+        OrdersFilter({ filterOrders: this.filterOrders }),
         this.props.orders.length ?
           this.getFilteredOrders().map(this.renderOrder) :
           dom.div({ className: 'orders-message' }, 'There are currently no orders.')
