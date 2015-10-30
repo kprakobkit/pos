@@ -1,8 +1,12 @@
 import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import { connect } from 'react-redux';
-import OrderComponent from './Order';
 import actions from '../action_creators';
+import constants from '../constants';
+import OrderComponent from './Order';
+import OrdersFilterComponent from './OrdersFilter';
+
 const Order = createFactory(OrderComponent);
+const OrdersFilter = createFactory(OrdersFilterComponent);
 
 function mapStateToProps(state) {
   return {
@@ -13,11 +17,25 @@ function mapStateToProps(state) {
 class Orders extends Component {
   constructor(props) {
     super(props);
+    this.filterOrders = this.filterOrders.bind(this);
     this.renderOrder = this.renderOrder.bind(this);
+    this.state = { filter: constants.ALL };
   }
 
   componentWillMount() {
     this.props.loadOrders();
+  }
+
+  filterOrders(filter) {
+    this.setState({ filter });
+  }
+
+  getFilteredOrders() {
+    if (this.state.filter === constants.ALL) {
+      return this.props.orders;
+    } else {
+      return this.props.orders.filter((order) => order.status === this.state.filter);
+    }
   }
 
   renderOrder(order) {
@@ -34,8 +52,9 @@ class Orders extends Component {
       dom.div(
         null,
         dom.h1({ className: 'orders-title' }, 'Orders'),
+        OrdersFilter({ filterOrders: this.filterOrders }),
         this.props.orders.length ?
-          this.props.orders.map(this.renderOrder) :
+          this.getFilteredOrders().map(this.renderOrder) :
           dom.div({ className: 'orders-message' }, 'There are currently no orders.')
       )
     );

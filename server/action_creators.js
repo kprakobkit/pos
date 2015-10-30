@@ -14,14 +14,14 @@ export function toggleOrder(id) {
     const orders = getState().orders;
     const orderIndex = orders.findIndex((order) => order.id === id);
     const order = orders[orderIndex];
-    const status = order.status === 'open' ? 'closed' : 'open';
+    const status = order.status === constants.OPEN ? constants.CLOSED : constants.OPEN;
 
     return Order.findOneAndUpdate({ id }, { status }, { new: true })
       .then((response) => {
         const updatedOrders = [
-            ...orders.slice(0, orderIndex),
-            toOrder(response),
-            ...orders.slice(orderIndex + 1)
+          ...orders.slice(0, orderIndex),
+          toOrder(response),
+          ...orders.slice(orderIndex + 1)
         ];
         dispatch(setState({ orders: updatedOrders }));
       });
