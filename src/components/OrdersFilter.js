@@ -1,4 +1,4 @@
-import { Component, PropTypes, DOM as dom, createFactory } from 'react';
+import { Component, PropTypes, DOM as dom } from 'react';
 import actions from '../action_creators';
 import constants from '../constants';
 
@@ -33,5 +33,8 @@ class OrdersFilter extends Component {
   }
 }
 
-export default OrdersFilter;
+OrdersFilter.propTypes = {
+  filterOrders: PropTypes.func.isRequired
+};
 
+export default OrdersFilter;
