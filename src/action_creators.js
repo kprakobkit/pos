@@ -1,4 +1,4 @@
-import * as constants from '../src/constants';
+import constants from '../src/constants';
 
 export function setState(state) {
   return {
@@ -21,3 +21,9 @@ export function loadOrders() {
     type: constants.LOAD_ORDERS
   };
 }
+
+export default {
+  setState,
+  toggleOrder,
+  loadOrders
+};

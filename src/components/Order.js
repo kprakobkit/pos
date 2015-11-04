@@ -29,7 +29,7 @@ class Order extends Component {
 }
 
 Order.propTypes = {
-  id:          PropTypes.number.isRequired,
+  id:          PropTypes.string.isRequired,
   status:      PropTypes.string.isRequired,
   toggleOrder: PropTypes.func.isRequired
 };

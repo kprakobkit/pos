@@ -12,7 +12,7 @@ const {
 const Order = React.createFactory(OrderComponent);
 
 describe('Order', () => {
-  const id = 1;
+  const id = '1';
   const status = 'open';
   const toggleOrder = () => {};
 

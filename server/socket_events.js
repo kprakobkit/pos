@@ -1,5 +1,5 @@
-import * as actions from './action_creators';
-import * as constants from '../src/constants';
+import actions from './action_creators';
+import constants from '../src/constants';
 
 export default (store) => (socket) => {
   socket.on(constants.TOGGLE_ORDER, (action) => store.dispatch(actions.toggleOrder(action.id)));
