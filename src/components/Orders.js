@@ -4,9 +4,11 @@ import actions from '../action_creators';
 import constants from '../constants';
 import OrderComponent from './Order';
 import OrdersFilterComponent from './OrdersFilter';
+import { Link as LinkComponent } from 'react-router';
 
 const Order = createFactory(OrderComponent);
 const OrdersFilter = createFactory(OrdersFilterComponent);
+const Link = createFactory(LinkComponent);
 
 function mapStateToProps(state) {
   return {
@@ -52,6 +54,10 @@ class Orders extends Component {
       dom.div(
         null,
         dom.h1({ className: 'orders-title' }, 'Orders'),
+        Link(
+          { to: '/orders/new' },
+          'New Order'
+        ),
         OrdersFilter({ filterOrders: this.filterOrders }),
         this.props.orders.length ?
           this.getFilteredOrders().map(this.renderOrder) :

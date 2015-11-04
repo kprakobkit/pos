@@ -27,7 +27,7 @@ export function addOrder(order) {
     meta: { remote: true },
     type: constants.ADD_ORDER,
     order: order
-  }
+  };
 }
 
 export default {

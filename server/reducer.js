@@ -24,7 +24,7 @@ function toggleOrder(state, id) {
 }
 
 function addOrder(state, order) {
-  var newState = {
+  const newState = {
     orders: state.orders.concat(order)
   };
 
