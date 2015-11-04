@@ -6,6 +6,7 @@ import makeStore from './store';
 import socketEvents from './socket_events';
 import constants from '../src/constants';
 import Order from '../models/order';
+import Item from '../models/item';
 
 const app = express();
 const isProduction = process.env.NODE_ENV === 'production';
@@ -45,6 +46,10 @@ function seedData() {
     console.log('Orders collection dropped');
   });
 
+  Item.remove({}, () => {
+    console.log('Items collection dropped');
+  });
+
   new Order({
     id: '15',
     status: constants.CLOSED
@@ -63,6 +68,16 @@ function seedData() {
   new Order({
     id: '18',
     status: constants.CLOSED
+  }).save();
+
+  new Item({
+    name: 'Pho',
+    price: 1050
+  }).save();
+
+  new Item({
+    name: 'Bun Bo Hue',
+    price: 1125
   }).save();
 }
 

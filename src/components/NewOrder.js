@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import * as actions from '../action_creators';
 
 const mapStateToProps = function (state) { return {
-    orders: state.orders
+    orders: state.orders,
+    items: state.items
   };
 };
 
@@ -12,14 +13,10 @@ class NewOrder extends Component {
     return dom.div(
       { className: 'container' },
       dom.h1(null, 'New Order Page'),
-      dom.input({ placeholder: 'Item name' }),
       dom.button({
           className: 'btn btn-default',
           onClick: () => {
-            this.props.addOrder({
-              id: 'foo',
-              status: 'open'
-            });
+            this.props.addOrder();
           }
         }, 'Submit')
     );
