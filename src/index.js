@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route } from 'react-router';
+import createHistory from 'history/lib/createHashHistory';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import loggerMiddleware from 'redux-logger';
@@ -40,10 +41,12 @@ const routes = route(
   route({ path: '/', component: Home })
 );
 
+const history = createHistory({ queryKey: false });
+
 ReactDOM.render(
   provider(
     { store: store },
-    router(null, routes)
+    router({ history }, routes)
   ),
   document.getElementById('app')
 );
