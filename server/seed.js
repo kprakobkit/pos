@@ -42,9 +42,9 @@ function createItems(cb) {
 
 function createOrders(items, cb) {
   async.parallel([
-    async.apply(createOrder, '15', constants.OPEN, items),
+    async.apply(createOrder, '15', constants.OPEN, items[0]),
     async.apply(createOrder, '16', constants.CLOSED, items),
-    async.apply(createOrder, '17', constants.READY_FOR_BILL, items),
+    async.apply(createOrder, '17', constants.READY_FOR_BILL, items[1]),
     async.apply(createOrder, '18', constants.OPEN, items)
   ], cb);
 }
