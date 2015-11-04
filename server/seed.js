@@ -6,12 +6,12 @@ import async from 'async';
 function removeData(next) {
   async.parallel([
     () => {
-      Order.remove({}, () => {
+      Order.remove({}, (err, res) => {
         console.log('Orders collection dropped');
       });
     },
     () => {
-      Item.remove({}, () => {
+      Item.remove({}, (err, res) => {
         console.log('Items collection dropped');
       });
     }
@@ -20,34 +20,32 @@ function removeData(next) {
   next();
 }
 
-function createItem(itemAttr, cb) {
-  Item({
-    name: itemAttr.name,
-    price: itemAttr.price
-  }).save(cb);
+function createItem(name, price, cb) {
+  Item({ name, price }).save((err, result) => {
+    cb(err, result);
+  });
 }
 
-function createOrder(orderAttr, cb) {
-  Order({
-    id: orderAttr.id,
-    status: orderAttr.status,
-    items: orderAttr.items._id
-  }).save(cb);
+function createOrder(id, status, items, cb) {
+  const order = Order({ id, status });
+  order.items = [].concat(items);
+
+  order.save();
 }
 
 function createItems(cb) {
   async.parallel([
-    async.apply(createItem, { name: 'Pho', price: 1050 }),
-    async.apply(createItem, { name: 'Rice', price: 925 })
+    async.apply(createItem, 'Pho', 1050),
+    async.apply(createItem, 'Rice', 925)
   ], cb);
 }
 
 function createOrders(items, cb) {
   async.parallel([
-    async.apply(createOrder, { id: '15', status: constants.OPEN, items: items[0][0] }),
-    async.apply(createOrder, { id: '16', status: constants.CLOSED, items: items[1][0] }),
-    async.apply(createOrder, { id: '17', status: constants.READY_FOR_BILL, items: items[0][0] }),
-    async.apply(createOrder, { id: '18', status: constants.OPEN, items: items[1][0] })
+    async.apply(createOrder, '15', constants.OPEN, items),
+    async.apply(createOrder, '16', constants.CLOSED, items),
+    async.apply(createOrder, '17', constants.READY_FOR_BILL, items),
+    async.apply(createOrder, '18', constants.OPEN, items)
   ], cb);
 }
 
