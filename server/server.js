@@ -50,35 +50,40 @@ function seedData() {
     console.log('Items collection dropped');
   });
 
-  new Order({
-    id: '15',
-    status: constants.CLOSED
-  }).save();
-
-  new Order({
-    id: '16',
-    status: constants.OPEN
-  }).save();
-
-  new Order({
-    id: '17',
-    status: constants.READY_FOR_BILL
-  }).save();
-
-  new Order({
-    id: '18',
-    status: constants.CLOSED
-  }).save();
-
-  new Item({
+  Item({
     name: 'Pho',
     price: 1050
-  }).save();
+  }).save((err, item) => {
+    Order({
+      id: '18',
+      status: constants.CLOSED,
+      items: item._id
+    }).save();
+  });
 
-  new Item({
+  Item({
     name: 'Bun Bo Hue',
     price: 1125
-  }).save();
+  }).save((err, item) => {
+    Order({
+      id: '15',
+      status: constants.CLOSED,
+      items: item._id
+    }).save();
+
+    Order({
+      id: '16',
+      status: constants.OPEN,
+      items: item._id
+    }).save();
+
+    Order({
+      id: '17',
+      status: constants.READY_FOR_BILL,
+      items: item._id
+    }).save();
+  });
+
 }
 
 seedData();
