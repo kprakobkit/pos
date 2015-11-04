@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
+import constants from '../../src/constants';
 import OrderComponent from '../../src/components/Order';
 
 const {
@@ -13,7 +14,7 @@ const Order = React.createFactory(OrderComponent);
 
 describe('Order', () => {
   const id = '1';
-  const status = 'open';
+  const status = constants.OPEN;
   const toggleOrder = () => {};
 
   it('renders id', () => {

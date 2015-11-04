@@ -4,6 +4,7 @@ import path from 'path';
 import mongoose from 'mongoose';
 import makeStore from './store';
 import socketEvents from './socket_events';
+import constants from '../src/constants';
 import Order from '../models/order';
 
 const app = express();
@@ -46,22 +47,22 @@ function seedData() {
 
   new Order({
     id: '15',
-    status: 'closed'
+    status: constants.CLOSED
   }).save();
 
   new Order({
     id: '16',
-    status: 'open'
+    status: constants.OPEN
   }).save();
 
   new Order({
     id: '17',
-    status: 'open'
+    status: constants.READY_FOR_BILL
   }).save();
 
   new Order({
     id: '18',
-    status: 'closed'
+    status: constants.CLOSED
   }).save();
 }
 

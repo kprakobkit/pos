@@ -31,9 +31,9 @@ describe('server action creators', () => {
   it('toggleOrder', () => {
     let dispatched;
     const orders = [
-      { id: 1, status: 'closed' },
-      { id: 2, status: 'open' },
-      { id: 3, status: 'closed' }
+      { id: 1, status: constants.CLOSED },
+      { id: 2, status: constants.OPEN },
+      { id: 3, status: constants.CLOSED }
     ];
     function dispatch(action) {
       dispatched = action;
@@ -45,9 +45,9 @@ describe('server action creators', () => {
       type: constants.SET_STATE,
       state: {
         orders: [
-          { id: 1, status: 'closed' },
-          { id: 2, status: 'closed' },
-          { id: 3, status: 'closed' }
+          { id: 1, status: constants.CLOSED },
+          { id: 2, status: constants.CLOSED },
+          { id: 3, status: constants.CLOSED }
         ]
       }
     };
