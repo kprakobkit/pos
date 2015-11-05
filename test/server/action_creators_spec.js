@@ -19,7 +19,16 @@ const Order = {
   }
 };
 
-const actions = proxyquire('../../server/action_creators', { '../models/order': Order });
+const Item = {
+  find: () => {
+    return Promise.resolve([]);
+  }
+};
+
+const actions = proxyquire('../../server/action_creators', {
+  '../models/order': Order,
+  '../models/item': Item
+});
 
 describe('server action creators', () => {
   it('setState', () => {
@@ -69,7 +78,10 @@ describe('server action creators', () => {
     }
     const expected = {
       type: constants.SET_STATE,
-      state: { orders: [] }
+      state: {
+        orders: [],
+        items: []
+      }
     };
 
     actions.loadOrders()(dispatch).then(() => {
