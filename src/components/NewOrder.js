@@ -18,7 +18,7 @@ class NewOrder extends Component {
     };
   }
 
-  componentWillMount(event) {
+  componentWillMount() {
     this.props.loadItems();
   }
 
@@ -29,8 +29,8 @@ class NewOrder extends Component {
     this.setState({ items });
   }
 
-  selectItem(event) {
-    this.state.selectedItem = event.target.value;
+  selectItem(e) {
+    this.state.selectedItem = e.target.value;
   }
 
   render() {
