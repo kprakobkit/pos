@@ -7,7 +7,11 @@ mongoose.models = {};
 
 const Order = {
   find: () => {
-    return Promise.resolve([]);
+    return {
+      populate: () => {
+        return Promise.resolve([]);
+      }
+    };
   },
 
   findOneAndUpdate: ({ id }, { status }) => {
