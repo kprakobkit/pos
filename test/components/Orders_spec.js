@@ -52,9 +52,10 @@ describe('Orders', () => {
     const filter = findRenderedDOMComponentWithClass(component, 'orders-filter-open');
     Simulate.click(filter);
     const children = scryRenderedDOMComponentsWithClass(component, 'order');
+    const expectedStatus = constants.OPEN.toLowerCase();
 
     expect(children.length).to.equal(2);
-    expect(children[0].textContent).to.contain(constants.OPEN);
-    expect(children[1].textContent).to.contain(constants.OPEN);
+    expect(children[0].textContent).to.contain(expectedStatus);
+    expect(children[1].textContent).to.contain(expectedStatus);
   });
 });

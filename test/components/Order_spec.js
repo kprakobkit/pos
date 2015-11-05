@@ -14,7 +14,7 @@ const Order = React.createFactory(OrderComponent);
 
 describe('Order', () => {
   const id = '1';
-  const status = constants.OPEN;
+  const status = constants.OPEN.toLowerCase();
   const toggleOrder = () => {};
 
   it('renders id', () => {
