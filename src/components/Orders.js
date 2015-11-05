@@ -1,4 +1,4 @@
- import { Component, PropTypes, DOM as dom, createFactory } from 'react';
+import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import { connect } from 'react-redux';
 import actions from '../action_creators';
 import constants from '../constants';
