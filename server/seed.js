@@ -30,7 +30,7 @@ function createOrder(id, status, items, cb) {
   const order = Order({ id, status });
   order.items = [].concat(items);
 
-  order.save();
+  order.save(cb);
 }
 
 function createItems(cb) {
