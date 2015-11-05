@@ -43,8 +43,7 @@ class Orders extends Component {
   renderOrder(order) {
     return Order(
       Object.assign({}, order, {
-        key: order.id,
-        toggleOrder: this.props.toggleOrder
+        key: order.id
       })
     );
   }

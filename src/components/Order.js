@@ -15,23 +15,15 @@ class Order extends Component {
           },
           'Order ' + this.props.id
         ),
-        dom.div({ className: 'order-status' }, 'Status: ' + this.props.status),
-        dom.button(
-          {
-            className: 'order-status-toggle',
-            onClick:   () => this.props.toggleOrder(this.props.id)
-          },
-          'Toggle'
-        )
+        dom.div({ className: 'order-status' }, 'Status: ' + this.props.status)
       )
     );
   }
 }
 
 Order.propTypes = {
-  id:          PropTypes.string.isRequired,
-  status:      PropTypes.string.isRequired,
-  toggleOrder: PropTypes.func.isRequired
+  id:     PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired
 };
 
 export default Order;

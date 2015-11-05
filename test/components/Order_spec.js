@@ -32,16 +32,4 @@ describe('Order', () => {
 
     expect(orderStatus.textContent).to.contain(status);
   });
-
-  it('calls callback when button clicked', () => {
-    let toggleOrderCalled = false;
-    const toggleOrderStub = () => toggleOrderCalled = true;
-    const props = { id, status, toggleOrder: toggleOrderStub };
-    const component = renderIntoDocument(Order(props));
-    const button = findRenderedDOMComponentWithClass(component, 'order-status-toggle');
-
-    Simulate.click(button);
-
-    expect(toggleOrderCalled).to.be.true;
-  });
 });
