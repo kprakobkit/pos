@@ -24,7 +24,9 @@ class NewOrder extends Component {
 
   addOrderItem() {
     const defaultValue = this.props.items[0] && this.props.items[0].id;
-    this.state.items.push(this.state.selectedItem || defaultValue);
+    const items = this.state.items.concat(this.state.selectedItem || defaultValue);
+
+    this.setState({ items });
   }
 
   selectItem(event) {
@@ -41,14 +43,25 @@ class NewOrder extends Component {
           return dom.option({ value: item.id }, item.name);
         })
       ),
-      dom.button({
+      dom.button(
+        {
           className: 'btn btn-default',
           onClick: this.addOrderItem
-        }, 'Add Item'),
+        },
+        'Add Item'
+      ),
       dom.br(),
-      dom.button({
-          className: 'btn btn-primary'
-        }, 'Submit')
+      dom.div(
+        null,
+        dom.ul(
+          null,
+          this.state.items.map((item) => dom.li(null, item))
+        )
+      ),
+      dom.button(
+        { className: 'btn btn-primary' },
+        'Submit'
+      )
     );
   }
 }
