@@ -36,14 +36,21 @@ export function loadOrders() {
     .then((response) => {
       const orders = response.map(toOrder);
 
-      Item.find().then((response) => {
-        const items = response.map(toItem);
+      dispatch(setState({
+        orders
+      }));
+    });
+  };
+}
 
-        dispatch(setState({
-          orders,
-          items
-        }));
-      });
+export function loadItems() {
+  return (dispatch) => {
+    return Item.find().then((response) => {
+      const items = response.map(toItem);
+
+      dispatch(setState({
+        items
+      }));
     });
   };
 }

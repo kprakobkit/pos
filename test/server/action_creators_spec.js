@@ -79,12 +79,29 @@ describe('server action creators', () => {
     const expected = {
       type: constants.SET_STATE,
       state: {
-        orders: [],
-        items: []
+        orders: []
       }
     };
 
     actions.loadOrders()(dispatch).then(() => {
+      expect(dispatched).to.deep.equal(expected);
+      done();
+    });
+  });
+
+  it('loadItems', (done) => {
+    let dispatched;
+    function dispatch(action) {
+      dispatched = action;
+    }
+    const expected = {
+      type: constants.SET_STATE,
+      state: {
+        items: []
+      }
+    };
+
+    actions.loadItems()(dispatch).then(() => {
       expect(dispatched).to.deep.equal(expected);
       done();
     });
