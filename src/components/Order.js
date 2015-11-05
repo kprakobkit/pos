@@ -10,12 +10,12 @@ class Order extends Component {
         { className: 'order' },
         Link(
           {
-            to:        '/orders/' + this.props.id,
+            to:        `/orders/${this.props.id}`,
             className: 'order-number'
           },
-          'Order ' + this.props.id
+          `Order ${this.props.id}`
         ),
-        dom.div({ className: 'order-status' }, 'Status: ' + this.props.status)
+        dom.div({ className: 'order-status' }, `Status: ${this.props.status}`)
       )
     );
   }
