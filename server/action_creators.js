@@ -63,8 +63,8 @@ function toOrder({ id, status, items }) {
   };
 }
 
-function toItem({ name, price }) {
-  return { name, price };
+function toItem({ _id, name, price }) {
+  return { id: _id, name, price };
 }
 
 export default {
