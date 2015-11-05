@@ -70,5 +70,6 @@ function toItem({ name, price }) {
 export default {
   setState,
   toggleOrder,
-  loadOrders
+  loadOrders,
+  loadItems
 };

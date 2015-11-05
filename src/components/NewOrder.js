@@ -10,6 +10,10 @@ const mapStateToProps = function (state) {
 };
 
 class NewOrder extends Component {
+  componentWillMount() {
+    this.props.loadItems();
+  }
+
   render() {
     return dom.div(
       null,
