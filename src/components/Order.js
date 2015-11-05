@@ -4,10 +4,6 @@ import { Link as LinkComponent } from 'react-router';
 const Link = createFactory(LinkComponent);
 
 class Order extends Component {
-  printStatus() {
-    return this.props.status.replace(/_/g, ' ').toLowerCase();
-  }
-
   render() {
     return (
       Link(
@@ -25,7 +21,7 @@ class Order extends Component {
             {
               className: 'order-status col-xs-6 text-capitalize text-center'
             },
-            this.printStatus()
+            this.props.printOrderStatus(this.props.status)
           )
         )
       )

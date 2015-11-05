@@ -1,4 +1,4 @@
-import { Component, PropTypes, DOM as dom, createFactory } from 'react';
+ import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import { connect } from 'react-redux';
 import actions from '../action_creators';
 import constants from '../constants';
@@ -40,10 +40,15 @@ class Orders extends Component {
     }
   }
 
+  printOrderStatus(status) {
+    return status.replace(/_/g, ' ').toLowerCase();
+  }
+
   renderOrder(order) {
     return Order(
       Object.assign({}, order, {
-        key: order.id
+        key: order.id,
+        printOrderStatus: this.printOrderStatus
       })
     );
   }
@@ -57,7 +62,13 @@ class Orders extends Component {
           { to: '/orders/new' },
           'New Order'
         ),
-        OrdersFilter({ filterOrders: this.filterOrders }),
+        OrdersFilter(
+          {
+            filter: this.state.filter,
+            filterOrders: this.filterOrders,
+            printOrderStatus: this.printOrderStatus
+          }
+        ),
         this.props.orders.length ?
           this.getFilteredOrders().map(this.renderOrder) :
           dom.div({ className: 'orders-message' }, 'There are currently no orders.')
