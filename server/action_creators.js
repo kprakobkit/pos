@@ -40,7 +40,15 @@ export function loadOrders() {
 }
 
 function toOrder({ id, status, items }) {
-  return { id, status, items };
+  return {
+    id,
+    status,
+    items: items.map(toItem)
+  };
+}
+
+function toItem({ name, price }) {
+  return { name, price };
 }
 
 export default {
