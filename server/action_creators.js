@@ -31,6 +31,7 @@ export function toggleOrder(id) {
 export function loadOrders() {
   return (dispatch) => {
     return Order.find()
+      .populate('items')
       .then((response) => {
         const orders = response.map(toOrder);
         dispatch(setState({ orders }));
@@ -38,8 +39,8 @@ export function loadOrders() {
   };
 }
 
-function toOrder({ id, status }) {
-  return { id, status };
+function toOrder({ id, status, items }) {
+  return { id, status, items };
 }
 
 export default {
