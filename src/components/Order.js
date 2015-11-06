@@ -6,22 +6,23 @@ const Link = createFactory(LinkComponent);
 class Order extends Component {
   render() {
     return (
-      dom.div(
-        { className: 'order' },
-        Link(
-          {
-            to:        '/orders/' + this.props.id,
-            className: 'order-number'
-          },
-          'Order ' + this.props.id
-        ),
-        dom.div({ className: 'order-status' }, 'Status: ' + this.props.status),
-        dom.button(
-          {
-            className: 'order-status-toggle',
-            onClick:   () => this.props.toggleOrder(this.props.id)
-          },
-          'Toggle'
+      Link(
+        {
+          to:        `/orders/${this.props.id}`,
+          className: 'order'
+        },
+        dom.div(
+          { className: 'row' },
+          dom.div(
+            { className: 'order-number col-xs-6' },
+            `Order ${this.props.id}`
+          ),
+          dom.div(
+            {
+              className: 'order-status col-xs-6 text-capitalize text-center'
+            },
+            this.props.printOrderStatus(this.props.status)
+          )
         )
       )
     );
@@ -29,9 +30,8 @@ class Order extends Component {
 }
 
 Order.propTypes = {
-  id:          PropTypes.string.isRequired,
-  status:      PropTypes.string.isRequired,
-  toggleOrder: PropTypes.func.isRequired
+  id:     PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired
 };
 
 export default Order;

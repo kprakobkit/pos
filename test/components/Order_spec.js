@@ -14,11 +14,11 @@ const Order = React.createFactory(OrderComponent);
 
 describe('Order', () => {
   const id = '1';
-  const status = constants.OPEN;
-  const toggleOrder = () => {};
+  const status = constants.OPEN.toLowerCase();
+  const printOrderStatus = (status) => status;
 
   it('renders id', () => {
-    const props = { id, status, toggleOrder };
+    const props = { id, status, printOrderStatus };
     const component = renderIntoDocument(Order(props));
     const orderId = findRenderedDOMComponentWithClass(component, 'order-number');
 
@@ -26,22 +26,10 @@ describe('Order', () => {
   });
 
   it('renders status', () => {
-    const props = { id, status, toggleOrder };
+    const props = { id, status, printOrderStatus };
     const component = renderIntoDocument(Order(props));
     const orderStatus = findRenderedDOMComponentWithClass(component, 'order-status');
 
     expect(orderStatus.textContent).to.contain(status);
-  });
-
-  it('calls callback when button clicked', () => {
-    let toggleOrderCalled = false;
-    const toggleOrderStub = () => toggleOrderCalled = true;
-    const props = { id, status, toggleOrder: toggleOrderStub };
-    const component = renderIntoDocument(Order(props));
-    const button = findRenderedDOMComponentWithClass(component, 'order-status-toggle');
-
-    Simulate.click(button);
-
-    expect(toggleOrderCalled).to.be.true;
   });
 });

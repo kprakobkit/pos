@@ -15,9 +15,11 @@ const {
 const OrdersFilter = React.createFactory(OrdersFilterComponent);
 
 describe('OrdersFilter', () => {
+  const printOrderStatus = (status) => {};
+
   it('renders three filter options', () => {
     const filterOrders = () => {};
-    const component = renderIntoDocument(OrdersFilter({ filterOrders }));
+    const component = renderIntoDocument(OrdersFilter({ filterOrders, printOrderStatus }));
     const filters = scryRenderedDOMComponentsWithClass(component, 'orders-filter-option');
 
     expect(filters.length).to.equal(3);
@@ -40,7 +42,7 @@ describe('OrdersFilter', () => {
         calledWithReady = true;
       }
     };
-    const component = renderIntoDocument(OrdersFilter({ filterOrders }));
+    const component = renderIntoDocument(OrdersFilter({ filterOrders, printOrderStatus }));
     const filters = scryRenderedDOMComponentsWithClass(component, 'orders-filter-option');
     Simulate.click(filters[0]);
     Simulate.click(filters[1]);

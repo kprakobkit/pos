@@ -12,7 +12,7 @@ const mapStateToProps = function (state) {
 class NewOrder extends Component {
   render() {
     return dom.div(
-      { className: 'container' },
+      null,
       dom.h1(null, 'New Order Page'),
       dom.button({
           className: 'btn btn-default',

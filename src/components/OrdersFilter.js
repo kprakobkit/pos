@@ -3,31 +3,37 @@ import actions from '../action_creators';
 import constants from '../constants';
 
 class OrdersFilter extends Component {
+  constructor(props) {
+    super(props);
+    this.renderFilter = this.renderFilter.bind(this);
+  }
+
+  isSelectedFilter(filter) {
+    return this.props.filter === filter ? 'btn-primary' : 'btn-default';
+  }
+
+  renderFilter(filter) {
+    const normalized = filter.toLowerCase().split('_')[0];
+    return (
+      dom.button(
+        {
+          key: filter,
+          className: [
+            `orders-filter-option orders-filter-${normalized}`,
+            `btn ${this.isSelectedFilter(filter)} text-capitalize`
+          ].join(' '),
+          onClick: () => this.props.filterOrders(filter)
+        },
+        this.props.printOrderStatus(filter)
+      )
+    );
+  }
+
   render() {
     return (
       dom.div(
-        null,
-        dom.button(
-          {
-            className: 'orders-filter-option orders-filter-all',
-            onClick:   () => this.props.filterOrders(constants.ALL)
-          },
-          'All'
-        ),
-        dom.button(
-          {
-            className: 'orders-filter-option orders-filter-open',
-            onClick:   () => this.props.filterOrders(constants.OPEN)
-          },
-          'Open'
-        ),
-        dom.button(
-          {
-            className: 'orders-filter-option orders-filter-ready',
-            onClick:   () => this.props.filterOrders(constants.READY_FOR_BILL)
-          },
-          'Ready for Bill'
-        ),
+        { className: 'text-center' },
+        [constants.ALL, constants.OPEN, constants.READY_FOR_BILL].map(this.renderFilter)
       )
     );
   }
