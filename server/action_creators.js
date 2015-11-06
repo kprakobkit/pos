@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import constants from '../src/constants';
 import Order from '../models/order';
 import Item from '../models/item';
+import faker from 'faker';
 
 export function setState(state) {
   return {
@@ -58,7 +59,7 @@ export function loadItems() {
 export function addOrder(items) {
   return (dispatch, getState) => {
     Order({
-      id: 'foo', // need auto generated id...
+      id: faker.random.number(), // need auto generated id...
       status: constants.OPEN,
       items: items.map((item) => mongoose.Types.ObjectId(item.id))
     }).save((err, newOrder) => {
