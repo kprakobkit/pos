@@ -1,6 +1,7 @@
 import { Component, DOM as dom } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../action_creators';
+import _ from 'underscore';
 
 const mapStateToProps = function (state) {
   return {
@@ -23,14 +24,16 @@ class NewOrder extends Component {
   }
 
   addOrderItem() {
-    const defaultValue = this.props.items[0] && this.props.items[0].id;
+    const defaultValue = this.props.items[0];
     const items = this.state.items.concat(this.state.selectedItem || defaultValue);
 
     this.setState({ items });
   }
 
   selectItem(e) {
-    this.state.selectedItem = e.target.value;
+    const itemId = e.target.value;
+    const selectedItem = _.find(this.props.items, (item) => item.id === itemId);
+    this.state.selectedItem = selectedItem;
   }
 
   render() {
@@ -50,12 +53,11 @@ class NewOrder extends Component {
         },
         'Add Item'
       ),
-      dom.br(),
       dom.div(
         null,
         dom.ul(
           null,
-          this.state.items.map((item) => dom.li({ className: 'addedItem' }, item))
+          this.state.items.map((item) => dom.li({ className: 'addedItem' }, item.name))
         )
       ),
       dom.button(

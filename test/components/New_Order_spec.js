@@ -27,7 +27,7 @@ describe('New Order', () => {
     expect(options.length).to.equal(items.length);
   });
 
-  it('it adds an item to the list each time', () => {
+  it('adds an item to the list each time', () => {
     const item = { id: '1', name: 'food' };
     const component = renderIntoDocument(NewOrder({ items: [item], loadItems }));
     const addItemBtn = findRenderedDOMComponentWithClass(component, 'add-item');
@@ -37,5 +37,9 @@ describe('New Order', () => {
 
     const addedItems = scryRenderedDOMComponentsWithClass(component, 'addedItem');
     expect(addedItems.length).to.equal(2);
+    expect(addedItems[0].textContent).to.equal('food');
+  });
+
+  it('calls adds order on submit', () => {
   });
 });
