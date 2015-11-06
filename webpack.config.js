@@ -25,8 +25,13 @@ module.exports = {
     publicPath: '/',
     filename:   'bundle.js'
   },
+  devtool: 'inline-source-map',
   devServer: {
-    contentBase: './dist'
+    hot: true,
+    proxy: {
+      '*': 'http://localhost:' + (process.env.PORT || 3000)
+    },
+    host: 'localhost'
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin()
