@@ -9,7 +9,6 @@ import createLocation from 'history/lib/createLocation';
 import mongoose from 'mongoose';
 import makeStore from './store';
 import socketEvents from './socket_events';
-import seedData from './seed';
 import routes from '../src/routes';
 
 const app = express();
@@ -84,5 +83,3 @@ io.on('connection', attachSocketEvents);
 store.subscribe(
   () => io.emit('state', store.getState())
 );
-
-seedData();

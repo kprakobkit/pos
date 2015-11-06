@@ -39,22 +39,4 @@ describe('reducer', () => {
       expect(nextState).to.deep.equal(newState);
     });
   });
-
-  describe('ADD_ORDER', () => {
-    it('adds an order', () => {
-      const initialState = {
-        orders: [
-          { id: 1, status: 'open' }
-        ]
-      };
-      const newOrder = { id: 2, status: 'status' };
-      const action = {
-        type: 'ADD_ORDER',
-        order: newOrder
-      };
-      const newState = reducer(initialState, action);
-
-      expect(newState.orders).to.contain(newOrder);
-    });
-  });
 });

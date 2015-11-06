@@ -79,12 +79,53 @@ describe('server action creators', () => {
     const expected = {
       type: constants.SET_STATE,
       state: {
-        orders: [],
-        items: []
+        orders: []
       }
     };
 
     actions.loadOrders()(dispatch).then(() => {
+      expect(dispatched).to.deep.equal(expected);
+      done();
+    });
+  });
+
+  it('loadItems', (done) => {
+    let dispatched;
+    function dispatch(action) {
+      dispatched = action;
+    }
+    const expected = {
+      type: constants.SET_STATE,
+      state: {
+        items: []
+      }
+    };
+
+    actions.loadItems()(dispatch).then(() => {
+      expect(dispatched).to.deep.equal(expected);
+      done();
+    });
+  });
+
+  xit('addOrder', () => {
+    let dispatched;
+    function dispatch(action) {
+      dispatched = action;
+    }
+    const getState = () => {
+      return { orders: [] };
+    };
+    const items = [{ name: 'food' }];
+    const expected = {
+      type: constants.SET_STATE,
+      state: {
+        orders: [
+          { id: 1, status: constants.OPEN, items }
+        ]
+      }
+    };
+
+    actions.addOrder(items)(dispatch).then(() => {
       expect(dispatched).to.deep.equal(expected);
       done();
     });
