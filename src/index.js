@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route } from 'react-router';
-import createHistory from 'history/lib/createHashHistory';
+import createHistory from 'history/lib/createBrowserHistory';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import loggerMiddleware from 'redux-logger';
@@ -43,7 +43,7 @@ const routes = route(
   route({ path: '/', component: Home })
 );
 
-const history = createHistory({ queryKey: false });
+const history = createHistory();
 
 ReactDOM.render(
   provider(
