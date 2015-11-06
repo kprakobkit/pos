@@ -31,6 +31,7 @@ export function loadItems() {
 
 export function addOrder(items) {
   return {
+    meta: { remote: true },
     type: constants.ADD_ORDER,
     items: items
   };

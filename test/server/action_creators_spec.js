@@ -106,4 +106,28 @@ describe('server action creators', () => {
       done();
     });
   });
+
+  xit('addOrder', () => {
+    let dispatched;
+    function dispatch(action) {
+      dispatched = action;
+    }
+    const getState = () => {
+      return { orders: [] };
+    };
+    const items = [{ name: 'food' }];
+    const expected = {
+      type: constants.SET_STATE,
+      state: {
+        orders: [
+          { id: 1, status: constants.OPEN, items }
+        ]
+      }
+    };
+
+    actions.addOrder(items)(dispatch).then(() => {
+      expect(dispatched).to.deep.equal(expected);
+      done();
+    });
+  });
 });

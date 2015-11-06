@@ -55,6 +55,22 @@ export function loadItems() {
   };
 }
 
+export function addOrder(items) {
+  return (dispatch, getState) => {
+    Order({
+      id: 'foo', // need auto generated id...
+      status: constants.OPEN,
+      items: items.map((item) => mongoose.Types.ObjectId(item.id))
+    }).save((err, newOrder) => {
+      const updatedOrders = getState().orders.concat(newOrder);
+
+      dispatch(setState({
+        orders: updatedOrders
+      }));
+    });
+  };
+}
+
 function toOrder({ id, status, items }) {
   return {
     id,
@@ -71,5 +87,6 @@ export default {
   setState,
   toggleOrder,
   loadOrders,
-  loadItems
+  loadItems,
+  addOrder
 };
