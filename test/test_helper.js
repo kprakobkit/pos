@@ -1,5 +1,6 @@
 import jsdom from 'jsdom';
 import chai from 'chai';
+import spies from 'chai-spies';
 import chaiImmutable from 'chai-immutable';
 
 const doc = jsdom.jsdom('<!doctype html><html><body></body></html>');
@@ -15,3 +16,4 @@ Object.keys(window).forEach((key) => {
 });
 
 chai.use(chaiImmutable);
+chai.use(spies);
