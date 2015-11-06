@@ -2,6 +2,9 @@ import constants from '../src/constants';
 import Order from '../models/order';
 import Item from '../models/item';
 import async from 'async';
+import mongoose from 'mongoose';
+
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost');
 
 function removeData(next) {
   async.parallel([
@@ -55,8 +58,14 @@ function seedData() {
     async.apply(createItems),
     async.apply(createOrders)
   ], function (err, results) {
-    console.log('Completed seeding data...');
+    if(err) {
+      console.log('Error seeding database, plese try again.');
+      process.exit(1);
+    }
+
+    console.log('Completed seeding database...');
+    process.exit(0);
   });
 }
 
-export default seedData;
+seedData();
