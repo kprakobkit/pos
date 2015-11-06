@@ -61,7 +61,7 @@ class NewOrder extends Component {
         )
       ),
       dom.button(
-        { className: 'btn btn-primary' },
+        { className: 'btn btn-primary submit-order', onClick: this.props.addOrder },
         'Submit'
       )
     );
