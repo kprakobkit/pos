@@ -17,13 +17,12 @@ const NewOrder = React.createFactory(NewOrderComponent);
 
 describe('New Order', () => {
   const loadItems = () => {};
-  const addOrder = () => {};
 
   it('renders an option for each item in props', () => {
     const item1 = { id: '1', name: 'food' };
     const item2 = { id: '2', name: 'burger' };
     const items = [item1, item2];
-    const component = renderIntoDocument(NewOrder({ items, loadItems, addOrder }));
+    const component = renderIntoDocument(NewOrder({ items, loadItems }));
     const options = scryRenderedDOMComponentsWithClass(component, 'option');
 
     expect(options.length).to.equal(items.length);
@@ -31,7 +30,7 @@ describe('New Order', () => {
 
   it('adds an item to the list each time', () => {
     const item = { id: '1', name: 'food' };
-    const component = renderIntoDocument(NewOrder({ items: [item], loadItems, addOrder }));
+    const component = renderIntoDocument(NewOrder({ items: [item], loadItems }));
     const addItemBtn = findRenderedDOMComponentWithClass(component, 'add-item');
 
     Simulate.click(addItemBtn);
@@ -44,11 +43,15 @@ describe('New Order', () => {
 
   it('calls adds order on submit', () => {
     const addOrder = chai.spy();
-    const component = renderIntoDocument(NewOrder({ items: [], loadItems, addOrder }));
+    const item = { id: '1', name: 'food' };
+    const items = [item];
+    const component = renderIntoDocument(NewOrder({ items: items, loadItems, addOrder }));
+    const addItemBtn = findRenderedDOMComponentWithClass(component, 'add-item');
     const submitOrderBtn = findRenderedDOMComponentWithClass(component, 'submit-order');
 
+    Simulate.click(addItemBtn);
     Simulate.click(submitOrderBtn);
 
-    expect(addOrder).to.been.called();
+    expect(addOrder.__spy.calls[0][0]).to.deep.equal(items);
   });
 });

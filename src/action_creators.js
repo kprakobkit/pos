@@ -29,7 +29,11 @@ export function loadItems() {
   };
 }
 
-export function addOrder(order) {
+export function addOrder(items) {
+  return {
+    type: constants.ADD_ORDER,
+    items: items
+  };
 }
 
 export default {
