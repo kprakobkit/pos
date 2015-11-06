@@ -29,6 +29,11 @@ mongo() {
   mongod --dbpath ./data/db/
 }
 
+seed() {
+  echo "Seeding database"
+  node_modules/babel/bin/babel-node.js server/seed.js
+}
+
 if [ "$(type -t "$1")" == "function" ]; then
   "$@"
 else
