@@ -40,12 +40,12 @@ class NewOrder extends Component {
       dom.select(
         { id: 'item', onChange: this.selectItem },
         this.props.items.map((item) => {
-          return dom.option({ value: item.id }, item.name);
+          return dom.option({ className: 'option', value: item.id }, item.name);
         })
       ),
       dom.button(
         {
-          className: 'btn btn-default',
+          className: 'btn btn-default add-item',
           onClick: this.addOrderItem
         },
         'Add Item'
@@ -55,7 +55,7 @@ class NewOrder extends Component {
         null,
         dom.ul(
           null,
-          this.state.items.map((item) => dom.li(null, item))
+          this.state.items.map((item) => dom.li({ className: 'addedItem' }, item))
         )
       ),
       dom.button(
