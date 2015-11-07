@@ -42,7 +42,7 @@ class NewOrder extends Component {
       null,
       dom.h1(null, 'New Order Page'),
       dom.select(
-        { id: 'item', onChange: this.selectItem },
+        { className: 'select-items', onChange: this.selectItem },
         this.props.masterItems.map((item) => {
           return dom.option({ className: 'option', value: item.id }, item.name);
         })

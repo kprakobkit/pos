@@ -43,17 +43,20 @@ describe('New Order', () => {
 
   it('calls adds order on submit', () => {
     const addOrder = spy();
-    const item = { id: '1', name: 'food' };
-    const masterItems = [item];
+    const item1 = { id: '1', name: 'food' };
+    const item2 = { id: '2', name: 'burger' };
+    const masterItems = [item1, item2];
     const component = renderIntoDocument(NewOrder({ masterItems, loadItems, addOrder }));
     const addItemBtn = findRenderedDOMComponentWithClass(component, 'add-item');
+    const selectItems = findRenderedDOMComponentWithClass(component, 'select-items');
     const submitOrderBtn = findRenderedDOMComponentWithClass(component, 'submit-order');
 
     Simulate.click(addItemBtn);
+    Simulate.change(selectItems, { target: { value: item2.id } });
     Simulate.click(addItemBtn);
     Simulate.click(submitOrderBtn);
 
+    expect(addOrder).to.have.been.called.with(masterItems);
     expect(addOrder.__spy.calls[0][0].length).to.equal(2);
-    expect(addOrder.__spy.calls[0][0]).to.deep.equal([item, item]);
   });
 });
