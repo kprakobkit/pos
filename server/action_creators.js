@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import constants from '../src/constants';
 import Order from '../models/order';
 import Item from '../models/item';
+import faker from 'faker';
 
 export function setState(state) {
   return {
@@ -36,14 +37,36 @@ export function loadOrders() {
     .then((response) => {
       const orders = response.map(toOrder);
 
-      Item.find().then((response) => {
-        const items = response.map(toItem);
+      dispatch(setState({
+        orders
+      }));
+    });
+  };
+}
 
-        dispatch(setState({
-          orders,
-          items
-        }));
-      });
+export function loadItems() {
+  return (dispatch) => {
+    return Item.find().then((response) => {
+      const items = response.map(toItem);
+
+      dispatch(setState({
+        items
+      }));
+    });
+  };
+}
+
+export function addOrder(items) {
+  return (dispatch, getState) => {
+    Order({
+      id: faker.random.number(), // need auto generated id...
+      items: items.map((item) => mongoose.Types.ObjectId(item.id))
+    }).save((err, newOrder) => {
+      const updatedOrders = getState().orders.concat(newOrder);
+
+      dispatch(setState({
+        orders: updatedOrders
+      }));
     });
   };
 }
@@ -56,12 +79,14 @@ function toOrder({ id, status, items }) {
   };
 }
 
-function toItem({ name, price }) {
-  return { name, price };
+function toItem({ _id, name, price }) {
+  return { id: _id, name, price };
 }
 
 export default {
   setState,
   toggleOrder,
-  loadOrders
+  loadOrders,
+  loadItems,
+  addOrder
 };

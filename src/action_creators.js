@@ -22,11 +22,18 @@ export function loadOrders() {
   };
 }
 
-export function addOrder(order) {
+export function loadItems() {
+  return {
+    meta: { remote: true },
+    type: constants.LOAD_ITEMS
+  };
+}
+
+export function addOrder(items) {
   return {
     meta: { remote: true },
     type: constants.ADD_ORDER,
-    order: order
+    items: items
   };
 }
 
@@ -34,5 +41,6 @@ export default {
   setState,
   toggleOrder,
   loadOrders,
+  loadItems,
   addOrder
 };
