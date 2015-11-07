@@ -13,7 +13,7 @@ class NewOrder extends Component {
   constructor(props) {
     super(props);
     this.selectItem = this.selectItem.bind(this);
-    this.addOrderItem = this.addOrderItem.bind(this);
+    this.addEntry = this.addEntry.bind(this);
     this.state = {
       items: []
     };
@@ -23,7 +23,7 @@ class NewOrder extends Component {
     this.props.loadItems();
   }
 
-  addOrderItem() {
+  addEntry() {
     const defaultValue = this.props.masterItems[0];
     const items = this.state.items.concat(this.state.selectedItem || defaultValue);
 
@@ -59,7 +59,7 @@ class NewOrder extends Component {
       dom.p(
         null,
         dom.button(
-          { className: 'btn btn-default add-item btn-lg btn-block', onClick: this.addOrderItem },
+          { className: 'btn btn-default add-item btn-lg btn-block', onClick: this.addEntry },
           'Add Item'
         )
       ),
