@@ -2,17 +2,17 @@ import mongoose from 'mongoose';
 import { Schema } from 'mongoose';
 import constants  from '../src/constants';
 
-const Item = new Schema({
+const Entry = new Schema({
   item_id: { type: Schema.ObjectId, ref: 'Item' },
   status: { type: String, default: constants.OPEN },
   comments: String
 });
 
 
-let orderSchema = new Schema({
+const orderSchema = new Schema({
   id: String,
   status: { type: String, default: constants.OPEN },
-  items: [Item]
+  items: [Entry]
 });
 
 export default mongoose.model('Order', orderSchema);
