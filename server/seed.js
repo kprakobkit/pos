@@ -3,6 +3,8 @@ import Order from '../models/order';
 import Item from '../models/item';
 import async from 'async';
 import mongoose from 'mongoose';
+import faker from 'faker';
+import _ from 'underscore';
 
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost');
 
@@ -31,7 +33,11 @@ function createItem(name, price, cb) {
 
 function createOrder(id, status, items, cb) {
   const order = Order({ id, status });
-  order.items = [].concat(items);
+
+  order.items = items.map((item) => ({
+    item_id: mongoose.Types.ObjectId(item.id),
+    comments: faker.lorem.sentence()
+  }));
 
   order.save(cb);
 }
@@ -39,16 +45,18 @@ function createOrder(id, status, items, cb) {
 function createItems(cb) {
   async.parallel([
     async.apply(createItem, 'Pho', 1050),
-    async.apply(createItem, 'Rice', 925)
+    async.apply(createItem, 'Burger', 925),
+    async.apply(createItem, 'Rice', 175),
+    async.apply(createItem, 'Dessert', 430)
   ], cb);
 }
 
 function createOrders(items, cb) {
   async.parallel([
-    async.apply(createOrder, '15', constants.OPEN, items[0]),
-    async.apply(createOrder, '16', constants.CLOSED, items),
-    async.apply(createOrder, '17', constants.READY_FOR_BILL, items[1]),
-    async.apply(createOrder, '18', constants.OPEN, items)
+    async.apply(createOrder, faker.random.number(), constants.OPEN, _.sample(items, 2)),
+    async.apply(createOrder, faker.random.number(), constants.CLOSED, _.sample(items, 2)),
+    async.apply(createOrder, faker.random.number(), constants.READY_FOR_BILL, _.sample(items, 2)),
+    async.apply(createOrder, faker.random.number(), constants.OPEN, _.sample(items, 2))
   ], cb);
 }
 
