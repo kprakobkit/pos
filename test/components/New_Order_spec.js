@@ -38,7 +38,7 @@ describe('New Order', () => {
 
     const addedItems = scryRenderedDOMComponentsWithClass(component, 'added-item');
     expect(addedItems.length).to.equal(2);
-    expect(addedItems[0].textContent).to.equal('food');
+    expect(addedItems[0].textContent).to.contain('food');
   });
 
   it('calls adds order on submit', () => {

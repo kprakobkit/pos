@@ -40,29 +40,39 @@ class NewOrder extends Component {
   render() {
     return dom.div(
       null,
-      dom.h1(null, 'New Order Page'),
-      dom.select(
-        { className: 'select-items', onChange: this.selectItem },
-        this.props.masterItems.map((item) => {
-          return dom.option({ className: 'option', value: item.id }, item.name);
-        })
+      dom.h1(null, 'New Order'),
+      dom.p(
+        null,
+        dom.select(
+          { className: 'select-items form-control input-lg', onChange: this.selectItem },
+          this.props.masterItems.map((item) => {
+            return dom.option({ className: 'option', value: item.id }, item.name);
+          })
+        )
       ),
-      dom.button(
-        {
-          className: 'btn btn-default add-item',
-          onClick: this.addOrderItem
-        },
-        'Add Item'
+      dom.p(
+        null,
+        dom.button(
+          { className: 'btn btn-default add-item btn-lg btn-block', onClick: this.addOrderItem },
+          'Add Item'
+        )
       ),
       dom.div(
         null,
-        dom.ul(
-          null,
-          this.state.items.map((item) => dom.li({ className: 'added-item' }, item.name))
+        dom.table(
+          { className: 'table table-striped' },
+          dom.tbody(
+            null,
+            this.state.items.map((item, i) => dom.tr(
+              { className: 'added-item' },
+              dom.td(null, dom.h2(null, i + 1)),
+              dom.td(null, dom.h2(null, item.name))
+            ))
+          )
         )
       ),
       dom.button(
-        { className: 'btn btn-primary submit-order', onClick: () => { this.props.addOrder(this.state.items); } },
+        { className: 'btn btn-primary submit-order btn-lg btn-block', onClick: () => { this.props.addOrder(this.state.items); } },
         'Submit'
       )
     );
