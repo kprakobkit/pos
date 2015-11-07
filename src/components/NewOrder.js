@@ -5,7 +5,7 @@ import _ from 'underscore';
 
 const mapStateToProps = function (state) {
   return {
-    items: state.items
+    masterItems: state.items
   };
 };
 
@@ -24,7 +24,7 @@ class NewOrder extends Component {
   }
 
   addOrderItem() {
-    const defaultValue = this.props.items[0];
+    const defaultValue = this.props.masterItems[0];
     const items = this.state.items.concat(this.state.selectedItem || defaultValue);
 
     this.setState({ items });
@@ -32,8 +32,9 @@ class NewOrder extends Component {
 
   selectItem(e) {
     const itemId = e.target.value;
-    const selectedItem = _.find(this.props.items, (item) => item.id === itemId);
-    this.state.selectedItem = selectedItem;
+    const selectedItem = _.find(this.props.masterItems, (item) => item.id === itemId);
+
+    this.setState({ selectedItem });
   }
 
   render() {
@@ -42,7 +43,7 @@ class NewOrder extends Component {
       dom.h1(null, 'New Order Page'),
       dom.select(
         { id: 'item', onChange: this.selectItem },
-        this.props.items.map((item) => {
+        this.props.masterItems.map((item) => {
           return dom.option({ className: 'option', value: item.id }, item.name);
         })
       ),
@@ -57,7 +58,7 @@ class NewOrder extends Component {
         null,
         dom.ul(
           null,
-          this.state.items.map((item) => dom.li({ className: 'addedItem' }, item.name))
+          this.state.items.map((item) => dom.li({ className: 'added-item' }, item.name))
         )
       ),
       dom.button(
@@ -69,7 +70,7 @@ class NewOrder extends Component {
 }
 
 NewOrder.defaultProps = {
-  items: []
+  masterItems: []
 };
 
 export default NewOrder;
