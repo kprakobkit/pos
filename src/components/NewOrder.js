@@ -52,6 +52,12 @@ class NewOrder extends Component {
       ),
       dom.p(
         null,
+        dom.input(
+          { className: 'add-comment input-lg form-control', placeholder: 'Comments' }
+        )
+      ),
+      dom.p(
+        null,
         dom.button(
           { className: 'btn btn-default add-item btn-lg btn-block', onClick: this.addOrderItem },
           'Add Item'
@@ -66,7 +72,8 @@ class NewOrder extends Component {
             this.state.items.map((item, i) => dom.tr(
               { className: 'added-item' },
               dom.td(null, dom.h2(null, i + 1)),
-              dom.td(null, dom.h2(null, item.name))
+              dom.td({ className: 'entry-name' }, dom.h2(null, item.name)),
+              dom.td({ className: 'entry-comment' }, dom.h3(null, 'comment'))
             ))
           )
         )

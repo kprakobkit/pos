@@ -32,13 +32,17 @@ describe('New Order', () => {
     const item = { id: '1', name: 'food' };
     const component = renderIntoDocument(NewOrder({ masterItems: [item], loadItems }));
     const addItemBtn = findRenderedDOMComponentWithClass(component, 'add-item');
+    const addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
 
-    Simulate.click(addItemBtn);
+    Simulate.change(addCommentFld, { target: { value: 'comment' } });
     Simulate.click(addItemBtn);
 
     const addedItems = scryRenderedDOMComponentsWithClass(component, 'added-item');
-    expect(addedItems.length).to.equal(2);
-    expect(addedItems[0].textContent).to.contain('food');
+    const entryName = scryRenderedDOMComponentsWithClass(component, 'entry-name');
+    const entryComment = scryRenderedDOMComponentsWithClass(component, 'entry-comment');
+    expect(addedItems.length).to.equal(1);
+    expect(entryName[0].textContent).to.equal('food');
+    expect(entryComment[0].textContent).to.equal('comment');
   });
 
   it('calls adds order on submit', () => {
