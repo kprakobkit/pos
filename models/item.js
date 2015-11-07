@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-let itemSchema = new mongoose.Schema({
+const itemSchema = new mongoose.Schema({
   name: String,
   price: Number // apparently mongo doesn't support decimal so will have store dollar amount in cents...
 });
