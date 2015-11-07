@@ -15,10 +15,8 @@
     "node": "0.10.x"
   },
   "eslintConfig": {
-    {
-      "rules": {
-        "camelcase": [2, {"properties": "never"}]
-      }
+    "rules": {
+      "camelcase": [2, {"properties": "never"}]
     }
   },
   "pre-commit": [
