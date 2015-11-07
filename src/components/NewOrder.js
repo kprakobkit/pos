@@ -14,8 +14,10 @@ class NewOrder extends Component {
     super(props);
     this.selectItem = this.selectItem.bind(this);
     this.addEntry = this.addEntry.bind(this);
+    this.addComment = this.addComment.bind(this);
     this.state = {
-      items: []
+      items: [],
+      comment: ''
     };
   }
 
@@ -24,17 +26,24 @@ class NewOrder extends Component {
   }
 
   addEntry() {
-    const defaultValue = this.props.masterItems[0];
-    const items = this.state.items.concat(this.state.selectedItem || defaultValue);
+    const selectedItem = Object.assign({}, this.state.selectedItem || this.props.masterItems[0]);
+    selectedItem.comment = this.state.comment;
+    const items = this.state.items.concat(selectedItem);
 
     this.setState({ items });
   }
 
   selectItem(e) {
     const itemId = e.target.value;
-    const selectedItem = _.find(this.props.masterItems, (item) => item.id === itemId);
+    const selectedItem = Object.assign({}, _.find(this.props.masterItems, (item) => item.id === itemId));
 
     this.setState({ selectedItem });
+  }
+
+  addComment(e) {
+    const comment = e.target.value;
+
+    this.setState({ comment });
   }
 
   render() {
@@ -53,7 +62,7 @@ class NewOrder extends Component {
       dom.p(
         null,
         dom.input(
-          { className: 'add-comment input-lg form-control', placeholder: 'Comments' }
+          { className: 'add-comment input-lg form-control', placeholder: 'e.g. No meat, extra sauce', onChange: this.addComment }
         )
       ),
       dom.p(
@@ -73,7 +82,7 @@ class NewOrder extends Component {
               { className: 'added-item' },
               dom.td(null, dom.h2(null, i + 1)),
               dom.td({ className: 'entry-name' }, dom.h2(null, item.name)),
-              dom.td({ className: 'entry-comment' }, dom.h3(null, 'comment'))
+              dom.td({ className: 'entry-comment' }, dom.h3(null, item.comment))
             ))
           )
         )

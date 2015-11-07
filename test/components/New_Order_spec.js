@@ -34,21 +34,49 @@ describe('New Order', () => {
     const addItemBtn = findRenderedDOMComponentWithClass(component, 'add-item');
     const addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
 
-    Simulate.change(addCommentFld, { target: { value: 'comment' } });
     Simulate.click(addItemBtn);
 
     const addedItems = scryRenderedDOMComponentsWithClass(component, 'added-item');
     const entryName = scryRenderedDOMComponentsWithClass(component, 'entry-name');
-    const entryComment = scryRenderedDOMComponentsWithClass(component, 'entry-comment');
     expect(addedItems.length).to.equal(1);
     expect(entryName[0].textContent).to.equal('food');
-    expect(entryComment[0].textContent).to.equal('comment');
   });
 
-  it('calls adds order on submit', () => {
+  it('adds a new comment for each entry', () => {
+    const item = { id: '1', name: 'food' };
+    const component = renderIntoDocument(NewOrder({ masterItems: [item], loadItems }));
+    const addItemBtn = findRenderedDOMComponentWithClass(component, 'add-item');
+    const addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
+
+    Simulate.change(addCommentFld, { target: { value: 'comment' } });
+    Simulate.click(addItemBtn);
+    Simulate.change(addCommentFld, { target: { value: 'new comment' } });
+    Simulate.click(addItemBtn);
+
+    const entryComment = scryRenderedDOMComponentsWithClass(component, 'entry-comment');
+
+    expect(entryComment[0].textContent).to.equal('comment');
+    expect(entryComment[1].textContent).to.equal('new comment');
+  });
+
+  xit('clears the comment after adding an entry', () => {
+    const item = { id: '1', name: 'food' };
+    const component = renderIntoDocument(NewOrder({ masterItems: [item], loadItems }));
+    const addItemBtn = findRenderedDOMComponentWithClass(component, 'add-item');
+    const addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
+
+    Simulate.change(addCommentFld, { target: { value: 'goose' } });
+    const comment = document.getElementsByClassName('add-comment')[0].value;
+    Simulate.click(addItemBtn);
+
+    expect(comment).to.be.equal('');
+  });
+
+
+  it('adds order an on submit', () => {
     const addOrder = spy();
-    const item1 = { id: '1', name: 'food' };
-    const item2 = { id: '2', name: 'burger' };
+    const item1 = { id: '1', name: 'food', comment: '' };
+    const item2 = { id: '2', name: 'burger', comment: '' };
     const masterItems = [item1, item2];
     const component = renderIntoDocument(NewOrder({ masterItems, loadItems, addOrder }));
     const addItemBtn = findRenderedDOMComponentWithClass(component, 'add-item');
@@ -60,7 +88,7 @@ describe('New Order', () => {
     Simulate.click(addItemBtn);
     Simulate.click(submitOrderBtn);
 
-    expect(addOrder).to.have.been.called.with(masterItems);
+    expect(addOrder.__spy.calls[0][0]).to.deep.equal(masterItems);
     expect(addOrder.__spy.calls[0][0].length).to.equal(2);
   });
 });
