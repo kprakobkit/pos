@@ -30,9 +30,14 @@ class NewOrder extends Component {
     const selectedItem = Object.assign({}, this.state.selectedItem || this.props.masterItems[0]);
     selectedItem.comment = this.state.comment;
     const entries = this.state.entries.concat(selectedItem);
-    this.state.timestamp = new Date(); // Resets comment input field
+    this.clearCommentField();
 
     this.setState({ entries });
+  }
+
+  clearCommentField() {
+    this.state.timestamp = new Date(); // Resets comment input field
+    this.state.comment = '';
   }
 
   selectItem(e) {
