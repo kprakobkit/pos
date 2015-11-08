@@ -16,7 +16,7 @@ class NewOrder extends Component {
     this.addEntry = this.addEntry.bind(this);
     this.addComment = this.addComment.bind(this);
     this.state = {
-      items: [],
+      entries: [],
       comment: '',
       timestamp: new Date()
     };
@@ -29,10 +29,10 @@ class NewOrder extends Component {
   addEntry() {
     const selectedItem = Object.assign({}, this.state.selectedItem || this.props.masterItems[0]);
     selectedItem.comment = this.state.comment;
-    const items = this.state.items.concat(selectedItem);
+    const entries = this.state.entries.concat(selectedItem);
     this.state.timestamp = new Date(); // Resets comment input field
 
-    this.setState({ items });
+    this.setState({ entries });
   }
 
   selectItem(e) {
@@ -70,7 +70,7 @@ class NewOrder extends Component {
       dom.p(
         null,
         dom.button(
-          { className: 'btn btn-default add-item btn-lg btn-block', onClick: this.addEntry },
+          { className: 'btn btn-default add-entry btn-lg btn-block', onClick: this.addEntry },
           'Add Item'
         )
       ),
@@ -80,17 +80,17 @@ class NewOrder extends Component {
           { className: 'table table-striped' },
           dom.tbody(
             null,
-            this.state.items.map((item, i) => dom.tr(
-              { className: 'added-item' },
+            this.state.entries.map((entry, i) => dom.tr(
+              { className: 'entries' },
               dom.td(null, dom.h2(null, i + 1)),
-              dom.td({ className: 'entry-name' }, dom.h2(null, item.name)),
-              dom.td({ className: 'entry-comment' }, dom.h3(null, item.comment))
+              dom.td({ className: 'entry-name' }, dom.h2(null, entry.name)),
+              dom.td({ className: 'entry-comment' }, dom.h3(null, entry.comment))
             ))
           )
         )
       ),
       dom.button(
-        { className: 'btn btn-primary submit-order btn-lg btn-block', onClick: () => { this.props.addOrder(this.state.items); } },
+        { className: 'btn btn-primary submit-order btn-lg btn-block', onClick: () => { this.props.addOrder(this.state.entries); } },
         'Submit'
       )
     );

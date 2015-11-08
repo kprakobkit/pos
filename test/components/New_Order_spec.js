@@ -28,30 +28,30 @@ describe('New Order', () => {
     expect(options.length).to.equal(masterItems.length);
   });
 
-  it('adds an item to the list each time', () => {
+  it('adds an entry to the list each time', () => {
     const item = { id: '1', name: 'food' };
     const component = renderIntoDocument(NewOrder({ masterItems: [item], loadItems }));
-    const addItemBtn = findRenderedDOMComponentWithClass(component, 'add-item');
+    const addEntryBtn = findRenderedDOMComponentWithClass(component, 'add-entry');
     const addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
 
-    Simulate.click(addItemBtn);
+    Simulate.click(addEntryBtn);
 
-    const addedItems = scryRenderedDOMComponentsWithClass(component, 'added-item');
+    const entries = scryRenderedDOMComponentsWithClass(component, 'entries');
     const entryName = scryRenderedDOMComponentsWithClass(component, 'entry-name');
-    expect(addedItems.length).to.equal(1);
+    expect(entries.length).to.equal(1);
     expect(entryName[0].textContent).to.equal('food');
   });
 
   it('adds a new comment for each entry', () => {
     const item = { id: '1', name: 'food' };
     const component = renderIntoDocument(NewOrder({ masterItems: [item], loadItems }));
-    const addItemBtn = findRenderedDOMComponentWithClass(component, 'add-item');
+    const addEntryBtn = findRenderedDOMComponentWithClass(component, 'add-entry');
     const addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
 
     Simulate.change(addCommentFld, { target: { value: 'comment' } });
-    Simulate.click(addItemBtn);
+    Simulate.click(addEntryBtn);
     Simulate.change(addCommentFld, { target: { value: 'new comment' } });
-    Simulate.click(addItemBtn);
+    Simulate.click(addEntryBtn);
 
     const entryComment = scryRenderedDOMComponentsWithClass(component, 'entry-comment');
 
@@ -62,13 +62,13 @@ describe('New Order', () => {
   xit('clears the comment after adding an entry', () => {
     const item = { id: '1', name: 'food' };
     const component = renderIntoDocument(NewOrder({ masterItems: [item], loadItems }));
-    const addItemBtn = findRenderedDOMComponentWithClass(component, 'add-item');
+    const addEntryBtn = findRenderedDOMComponentWithClass(component, 'add-entry');
     let addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
 
     Simulate.change(addCommentFld, { target: { value: 'no meat' } });
     addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
     expect(addCommentFld.value).to.be.equal('no meat');
-    Simulate.click(addItemBtn);
+    Simulate.click(addEntryBtn);
 
     addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
     expect(addCommentFld.value).to.be.equal('');
@@ -81,13 +81,13 @@ describe('New Order', () => {
     const item2 = { id: '2', name: 'burger', comment: '' };
     const masterItems = [item1, item2];
     const component = renderIntoDocument(NewOrder({ masterItems, loadItems, addOrder }));
-    const addItemBtn = findRenderedDOMComponentWithClass(component, 'add-item');
+    const addEntryBtn = findRenderedDOMComponentWithClass(component, 'add-entry');
     const selectItems = findRenderedDOMComponentWithClass(component, 'select-items');
     const submitOrderBtn = findRenderedDOMComponentWithClass(component, 'submit-order');
 
-    Simulate.click(addItemBtn);
+    Simulate.click(addEntryBtn);
     Simulate.change(selectItems, { target: { value: item2.id } });
-    Simulate.click(addItemBtn);
+    Simulate.click(addEntryBtn);
     Simulate.click(submitOrderBtn);
 
     expect(addOrder.__spy.calls[0][0]).to.deep.equal(masterItems);
