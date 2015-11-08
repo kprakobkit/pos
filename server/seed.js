@@ -36,7 +36,7 @@ function createOrder(id, status, items, cb) {
 
   order.items = items.map((item) => ({
     item_id: mongoose.Types.ObjectId(item.id),
-    comments: faker.lorem.sentence()
+    comment: faker.lorem.sentence()
   }));
 
   order.save(cb);

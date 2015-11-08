@@ -58,9 +58,13 @@ export function loadItems() {
 
 export function addOrder(items) {
   return (dispatch, getState) => {
+    console.log(items);
     Order({
       id: faker.random.number(), // need auto generated id...
-      items: items.map((item) => mongoose.Types.ObjectId(item.id))
+      items: items.map((item) => ({
+        item_id: mongoose.Types.ObjectId(item.id),
+        comment: item.comment
+      }))
     }).save((err, newOrder) => {
       const updatedOrders = getState().orders.concat(newOrder);
 
