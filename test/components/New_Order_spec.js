@@ -63,13 +63,15 @@ describe('New Order', () => {
     const item = { id: '1', name: 'food' };
     const component = renderIntoDocument(NewOrder({ masterItems: [item], loadItems }));
     const addItemBtn = findRenderedDOMComponentWithClass(component, 'add-item');
-    const addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
+    let addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
 
-    Simulate.change(addCommentFld, { target: { value: 'goose' } });
-    const comment = document.getElementsByClassName('add-comment')[0].value;
+    Simulate.change(addCommentFld, { target: { value: 'no meat' } });
+    addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
+    expect(addCommentFld.value).to.be.equal('no meat');
     Simulate.click(addItemBtn);
 
-    expect(comment).to.be.equal('');
+    addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
+    expect(addCommentFld.value).to.be.equal('');
   });
 
 

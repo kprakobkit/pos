@@ -17,7 +17,8 @@ class NewOrder extends Component {
     this.addComment = this.addComment.bind(this);
     this.state = {
       items: [],
-      comment: ''
+      comment: '',
+      timestamp: new Date()
     };
   }
 
@@ -29,6 +30,7 @@ class NewOrder extends Component {
     const selectedItem = Object.assign({}, this.state.selectedItem || this.props.masterItems[0]);
     selectedItem.comment = this.state.comment;
     const items = this.state.items.concat(selectedItem);
+    this.state.timestamp = new Date(); // Resets comment input field
 
     this.setState({ items });
   }
@@ -62,7 +64,7 @@ class NewOrder extends Component {
       dom.p(
         null,
         dom.input(
-          { className: 'add-comment input-lg form-control', placeholder: 'e.g. No meat, extra sauce', onChange: this.addComment }
+          { key: this.state.timestamp, className: 'add-comment input-lg form-control', placeholder: 'e.g. No meat, extra sauce', onChange: this.addComment }
         )
       ),
       dom.p(
