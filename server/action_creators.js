@@ -58,7 +58,6 @@ export function loadItems() {
 
 export function addOrder(items) {
   return (dispatch, getState) => {
-    console.log(items);
     Order({
       id: faker.random.number(), // need auto generated id...
       items: items.map((item) => ({
