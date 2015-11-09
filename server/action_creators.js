@@ -3,6 +3,7 @@ import constants from '../src/constants';
 import Order from '../models/order';
 import Item from '../models/item';
 import faker from 'faker';
+import Promise from 'promise';
 
 export function setState(state) {
   return {
@@ -32,14 +33,14 @@ export function toggleOrder(id) {
 
 export function loadOrders() {
   return (dispatch) => {
-    return Order.find()
-    .populate('items')
-    .then((response) => {
-      const orders = response.map(toOrder);
-
-      dispatch(setState({
+    return getOrders()
+    .then(getItems)
+    .then((orders) => {
+      return dispatch(setState({
         orders
       }));
+    }).catch((e) => {
+      throw new Error(e.stack);
     });
   };
 }
@@ -74,20 +75,59 @@ export function addOrder(items) {
   };
 }
 
+function getOrders() {
+  return new Promise((resolve, reject) => {
+    Order.find().exec((err, orders) => {
+      if(err) {
+        reject(err);
+      }
+
+      resolve(orders.map(toOrder));
+    });
+  });
+}
+
+function getItem(order) {
+  return new Promise((resolve, reject) => {
+    Item.populate(order.items, [{ path: 'item_id', model: 'Item', select: 'name price -_id' }], (err, res) => {
+      if(err) {
+        reject(err);
+      }
+
+      resolve(res);
+    });
+  });
+}
+
+function getItems(orders) {
+  return Promise.all(orders.map(getItem)).then((items) => {
+    orders.forEach((order, index) => {
+      order.items = items[index].map(toItem);
+    });
+
+    return orders;
+  });
+}
+
 function toOrder({ id, status, items }) {
   return {
     id,
     status,
-    items: items.map(toEntry)
+    items: items
   };
-}
-
-function toEntry({ _id, comment, status }) {
-  return { id: _id, comment, status };
 }
 
 function toMasterItem({ _id, name, price }) {
   return { id: _id, name, price };
+}
+
+function toItem({ status, comment, item_id }) {
+  return {
+    status,
+    comment,
+    name: item_id.name,
+    price: item_id.price
+  };
 }
 
 export default {

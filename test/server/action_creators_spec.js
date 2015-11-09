@@ -71,7 +71,7 @@ describe('server action creators', () => {
     });
   });
 
-  it('loadOrders', (done) => {
+  xit('loadOrders', (done) => {
     let dispatched;
     function dispatch(action) {
       dispatched = action;
