@@ -1,6 +1,5 @@
 import { expect, spy } from 'chai';
 import React from 'react';
-import chai from 'chai';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import constants from '../../src/constants';
@@ -28,35 +27,69 @@ describe('New Order', () => {
     expect(options.length).to.equal(masterItems.length);
   });
 
-  it('adds an item to the list each time', () => {
+  it('adds an entry to the list each time', () => {
     const item = { id: '1', name: 'food' };
     const component = renderIntoDocument(NewOrder({ masterItems: [item], loadItems }));
-    const addItemBtn = findRenderedDOMComponentWithClass(component, 'add-item');
+    const addEntryBtn = findRenderedDOMComponentWithClass(component, 'add-entry');
+    const addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
 
-    Simulate.click(addItemBtn);
-    Simulate.click(addItemBtn);
+    Simulate.click(addEntryBtn);
 
-    const addedItems = scryRenderedDOMComponentsWithClass(component, 'added-item');
-    expect(addedItems.length).to.equal(2);
-    expect(addedItems[0].textContent).to.contain('food');
+    const entries = scryRenderedDOMComponentsWithClass(component, 'entries');
+    const entryName = scryRenderedDOMComponentsWithClass(component, 'entry-name');
+    expect(entries.length).to.equal(1);
+    expect(entryName[0].textContent).to.equal('food');
   });
 
-  it('calls adds order on submit', () => {
+  it('adds a new comment for each entry', () => {
+    const item = { id: '1', name: 'food' };
+    const component = renderIntoDocument(NewOrder({ masterItems: [item], loadItems }));
+    const addEntryBtn = findRenderedDOMComponentWithClass(component, 'add-entry');
+    const addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
+
+    Simulate.change(addCommentFld, { target: { value: 'comment' } });
+    Simulate.click(addEntryBtn);
+    Simulate.change(addCommentFld, { target: { value: 'new comment' } });
+    Simulate.click(addEntryBtn);
+
+    const entryComment = scryRenderedDOMComponentsWithClass(component, 'entry-comment');
+
+    expect(entryComment[0].textContent).to.equal('comment');
+    expect(entryComment[1].textContent).to.equal('new comment');
+  });
+
+  it('clears the comment after adding an entry', () => {
+    const item = { id: '1', name: 'food' };
+    const component = renderIntoDocument(NewOrder({ masterItems: [item], loadItems }));
+    const addEntryBtn = findRenderedDOMComponentWithClass(component, 'add-entry');
+    let addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
+
+    Simulate.change(addCommentFld, { target: { value: 'no meat' } });
+    addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
+    expect(addCommentFld.value).to.equal('no meat');
+    Simulate.click(addEntryBtn);
+
+    addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
+    expect(addCommentFld.value).to.equal('');
+  });
+
+
+  it('adds order an on submit', () => {
     const addOrder = spy();
-    const item1 = { id: '1', name: 'food' };
-    const item2 = { id: '2', name: 'burger' };
+    const item1 = { id: '1', name: 'food', comment: '' };
+    const item2 = { id: '2', name: 'burger', comment: '' };
     const masterItems = [item1, item2];
     const component = renderIntoDocument(NewOrder({ masterItems, loadItems, addOrder }));
-    const addItemBtn = findRenderedDOMComponentWithClass(component, 'add-item');
+    const addEntryBtn = findRenderedDOMComponentWithClass(component, 'add-entry');
     const selectItems = findRenderedDOMComponentWithClass(component, 'select-items');
     const submitOrderBtn = findRenderedDOMComponentWithClass(component, 'submit-order');
 
-    Simulate.click(addItemBtn);
+    Simulate.click(addEntryBtn);
     Simulate.change(selectItems, { target: { value: item2.id } });
-    Simulate.click(addItemBtn);
+    Simulate.click(addEntryBtn);
     Simulate.click(submitOrderBtn);
 
-    expect(addOrder).to.have.been.called.with(masterItems);
+    expect(addOrder.__spy.calls[0][0]).to.deep.equal(masterItems);
     expect(addOrder.__spy.calls[0][0].length).to.equal(2);
   });
 });

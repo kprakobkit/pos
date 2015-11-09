@@ -13,9 +13,11 @@ class NewOrder extends Component {
   constructor(props) {
     super(props);
     this.selectItem = this.selectItem.bind(this);
-    this.addOrderItem = this.addOrderItem.bind(this);
+    this.addEntry = this.addEntry.bind(this);
+    this.addComment = this.addComment.bind(this);
     this.state = {
-      items: []
+      entries: [],
+      comment: ''
     };
   }
 
@@ -23,18 +25,25 @@ class NewOrder extends Component {
     this.props.loadItems();
   }
 
-  addOrderItem() {
-    const defaultValue = this.props.masterItems[0];
-    const items = this.state.items.concat(this.state.selectedItem || defaultValue);
+  addEntry() {
+    const selectedItem = Object.assign({}, this.state.selectedItem || this.props.masterItems[0]);
+    selectedItem.comment = this.state.comment;
+    const entries = this.state.entries.concat(selectedItem);
 
-    this.setState({ items });
+    this.setState({ entries, comment: '' });
   }
 
   selectItem(e) {
     const itemId = e.target.value;
-    const selectedItem = _.find(this.props.masterItems, (item) => item.id === itemId);
+    const selectedItem = Object.assign({}, _.find(this.props.masterItems, (item) => item.id === itemId));
 
     this.setState({ selectedItem });
+  }
+
+  addComment(e) {
+    const comment = e.target.value;
+
+    this.setState({ comment });
   }
 
   render() {
@@ -45,15 +54,26 @@ class NewOrder extends Component {
         null,
         dom.select(
           { className: 'select-items form-control input-lg', onChange: this.selectItem },
-          this.props.masterItems.map((item) => {
-            return dom.option({ className: 'option', value: item.id }, item.name);
+          this.props.masterItems.map((item, i) => {
+            return dom.option({ className: 'option', value: item.id, key: i + 1 }, item.name);
           })
         )
       ),
       dom.p(
         null,
+        dom.input(
+          {
+            className: 'add-comment input-lg form-control',
+            value: this.state.comment,
+            placeholder: 'e.g. No meat, extra sauce',
+            onChange: this.addComment
+          }
+        )
+      ),
+      dom.p(
+        null,
         dom.button(
-          { className: 'btn btn-default add-item btn-lg btn-block', onClick: this.addOrderItem },
+          { className: 'btn btn-default add-entry btn-lg btn-block', onClick: this.addEntry },
           'Add Item'
         )
       ),
@@ -63,16 +83,16 @@ class NewOrder extends Component {
           { className: 'table table-striped' },
           dom.tbody(
             null,
-            this.state.items.map((item, i) => dom.tr(
-              { className: 'added-item' },
-              dom.td(null, dom.h2(null, i + 1)),
-              dom.td(null, dom.h2(null, item.name))
+            this.state.entries.map((entry, i) => dom.tr(
+              { className: 'entries', key: i + 1 },
+              dom.td({ className: 'entry-name' }, dom.h2(null, entry.name)),
+              dom.td({ className: 'entry-comment' }, dom.h3(null, entry.comment))
             ))
           )
         )
       ),
       dom.button(
-        { className: 'btn btn-primary submit-order btn-lg btn-block', onClick: () => { this.props.addOrder(this.state.items); } },
+        { className: 'btn btn-primary submit-order btn-lg btn-block', onClick: () => { this.props.addOrder(this.state.entries); } },
         'Submit'
       )
     );

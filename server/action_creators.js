@@ -47,7 +47,7 @@ export function loadOrders() {
 export function loadItems() {
   return (dispatch) => {
     return Item.find().then((response) => {
-      const items = response.map(toItem);
+      const items = response.map(toMasterItem);
 
       dispatch(setState({
         items
@@ -60,7 +60,10 @@ export function addOrder(items) {
   return (dispatch, getState) => {
     Order({
       id: faker.random.number(), // need auto generated id...
-      items: items.map((item) => mongoose.Types.ObjectId(item.id))
+      items: items.map((item) => ({
+        item_id: mongoose.Types.ObjectId(item.id),
+        comment: item.comment
+      }))
     }).save((err, newOrder) => {
       const updatedOrders = getState().orders.concat(newOrder);
 
@@ -75,11 +78,15 @@ function toOrder({ id, status, items }) {
   return {
     id,
     status,
-    items: items.map(toItem)
+    items: items.map(toEntry)
   };
 }
 
-function toItem({ _id, name, price }) {
+function toEntry({ _id, comment, status }) {
+  return { id: _id, comment, status };
+}
+
+function toMasterItem({ _id, name, price }) {
   return { id: _id, name, price };
 }
 
