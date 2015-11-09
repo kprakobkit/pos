@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import constants from '../src/constants';
-import { Order, toOrder } from '../models/order';
+import Order from '../models/order';
 import Item from '../models/item';
 import faker from 'faker';
 
@@ -32,8 +32,8 @@ export function toggleOrder(id) {
 
 export function loadOrders() {
   return (dispatch) => {
-    return Order.getOrders((orders) => {
-      return dispatch(setState({
+    return Order.getOrders().then((orders) => {
+      dispatch(setState({
         orders
       }));
     });
@@ -72,6 +72,14 @@ export function addOrder(entries) {
 
 function toMasterItem({ _id, name, price }) {
   return { id: _id, name, price };
+}
+
+function toOrder({ id, status, entries }) {
+  return {
+    id,
+    status,
+    entries: entries
+  };
 }
 
 export default {

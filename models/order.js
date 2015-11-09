@@ -16,10 +16,10 @@ const orderSchema = new Schema({
   entries: [Entry]
 });
 
-orderSchema.statics.getOrders = function(cb) {
-  getOrders.apply(this)
+orderSchema.statics.getOrders = function() {
+  return getOrders.apply(this)
   .then(getEntries)
-  .then(cb).catch((e) => {
+  .catch((e) => {
     throw new Error(e);
   });
 }
@@ -56,7 +56,7 @@ function getEntries(orders) {
       order.entries = entries[index].map(toEntry);
     });
 
-    return orders;
+    return Promise.resolve(orders);
   });
 }
 
@@ -69,7 +69,7 @@ function toEntry({ status, comment, item_id }) {
   };
 }
 
-export function toOrder({ id, status, entries }) {
+function toOrder({ id, status, entries }) {
   return {
     id,
     status,
@@ -77,4 +77,4 @@ export function toOrder({ id, status, entries }) {
   };
 }
 
-export const Order = mongoose.model('Order', orderSchema);
+export default mongoose.model('Order', orderSchema);

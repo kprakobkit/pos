@@ -14,6 +14,10 @@ const Order = {
     };
   },
 
+  getOrders: () => {
+    return Promise.resolve([]);
+  },
+
   findOneAndUpdate: ({ id }, { status }) => {
     return Promise.resolve({ id, status });
   }
@@ -71,7 +75,7 @@ describe('server action creators', () => {
     });
   });
 
-  xit('loadOrders', (done) => {
+  it('loadOrders', (done) => {
     let dispatched;
     function dispatch(action) {
       dispatched = action;
