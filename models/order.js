@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import { Schema } from 'mongoose';
 import constants  from '../src/constants';
-import Promise from 'promise';
 import Item from './item';
 
 const Entry = new Schema({
@@ -26,7 +25,8 @@ orderSchema.statics.getOrders = function(cb) {
 }
 
 function getOrders() {
-  let Order = this;
+  const Order = this;
+
   return new Promise((resolve, reject) => {
     Order.find().exec((err, orders) => {
       if(err) {

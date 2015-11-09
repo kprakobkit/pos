@@ -43,7 +43,6 @@
     "mongoose": "^4.2.3",
     "path": "^0.12.7",
     "pre-commit": "^1.1.2",
-    "promise": "^7.0.4",
     "react": "^0.14.0",
     "react-addons-test-utils": "^0.14.0",
     "react-dom": "^0.14.0",

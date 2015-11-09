@@ -3,7 +3,6 @@ import constants from '../src/constants';
 import { Order, toOrder } from '../models/order';
 import Item from '../models/item';
 import faker from 'faker';
-import Promise from 'promise';
 
 export function setState(state) {
   return {
