@@ -5,5 +5,5 @@ export default (store) => (socket) => {
   socket.on(constants.TOGGLE_ORDER, (action) => store.dispatch(actions.toggleOrder(action.id)));
   socket.on(constants.LOAD_ORDERS, (action) => store.dispatch(actions.loadOrders()));
   socket.on(constants.LOAD_ITEMS, (action) => store.dispatch(actions.loadItems()));
-  socket.on(constants.ADD_ORDER, (action) => store.dispatch(actions.addOrder(action.items)));
+  socket.on(constants.ADD_ORDER, (action) => store.dispatch(actions.addOrder(action.entries)));
 };

@@ -34,7 +34,7 @@ export function toggleOrder(id) {
 export function loadOrders() {
   return (dispatch) => {
     return getOrders()
-    .then(getItems)
+    .then(getEntries)
     .then((orders) => {
       return dispatch(setState({
         orders
@@ -57,11 +57,11 @@ export function loadItems() {
   };
 }
 
-export function addOrder(items) {
+export function addOrder(entries) {
   return (dispatch, getState) => {
     Order({
       id: faker.random.number(), // need auto generated id...
-      items: items.map((item) => ({
+      entries: entries.map((item) => ({
         item_id: mongoose.Types.ObjectId(item.id),
         comment: item.comment
       }))
@@ -87,9 +87,9 @@ function getOrders() {
   });
 }
 
-function getItem(order) {
+function populateEntries(order) {
   return new Promise((resolve, reject) => {
-    Item.populate(order.items, [{ path: 'item_id', model: 'Item', select: 'name price -_id' }], (err, res) => {
+    Item.populate(order.entries, [{ path: 'item_id', model: 'Item', select: 'name price -_id' }], (err, res) => {
       if(err) {
         reject(err);
       }
@@ -99,21 +99,21 @@ function getItem(order) {
   });
 }
 
-function getItems(orders) {
-  return Promise.all(orders.map(getItem)).then((items) => {
+function getEntries(orders) {
+  return Promise.all(orders.map(populateEntries)).then((entries) => {
     orders.forEach((order, index) => {
-      order.items = items[index].map(toItem);
+      order.entries = entries[index].map(toEntry);
     });
 
     return orders;
   });
 }
 
-function toOrder({ id, status, items }) {
+function toOrder({ id, status, entries }) {
   return {
     id,
     status,
-    items: items
+    entries: entries
   };
 }
 
@@ -121,7 +121,7 @@ function toMasterItem({ _id, name, price }) {
   return { id: _id, name, price };
 }
 
-function toItem({ status, comment, item_id }) {
+function toEntry({ status, comment, item_id }) {
   return {
     status,
     comment,

@@ -12,7 +12,7 @@ const Entry = new Schema({
 const orderSchema = new Schema({
   id: String,
   status: { type: String, default: constants.OPEN },
-  items: [Entry]
+  entries: [Entry]
 });
 
 export default mongoose.model('Order', orderSchema);
