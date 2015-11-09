@@ -17,8 +17,7 @@ class NewOrder extends Component {
     this.addComment = this.addComment.bind(this);
     this.state = {
       entries: [],
-      comment: '',
-      timestamp: new Date()
+      comment: ''
     };
   }
 
@@ -30,14 +29,8 @@ class NewOrder extends Component {
     const selectedItem = Object.assign({}, this.state.selectedItem || this.props.masterItems[0]);
     selectedItem.comment = this.state.comment;
     const entries = this.state.entries.concat(selectedItem);
-    this.clearCommentField();
 
-    this.setState({ entries });
-  }
-
-  clearCommentField() {
-    this.state.timestamp = new Date(); // Resets comment input field
-    this.state.comment = '';
+    this.setState({ entries, comment: '' });
   }
 
   selectItem(e) {
@@ -61,15 +54,20 @@ class NewOrder extends Component {
         null,
         dom.select(
           { className: 'select-items form-control input-lg', onChange: this.selectItem },
-          this.props.masterItems.map((item) => {
-            return dom.option({ className: 'option', value: item.id }, item.name);
+          this.props.masterItems.map((item, i) => {
+            return dom.option({ className: 'option', value: item.id, key: i + 1 }, item.name);
           })
         )
       ),
       dom.p(
         null,
         dom.input(
-          { key: this.state.timestamp, className: 'add-comment input-lg form-control', placeholder: 'e.g. No meat, extra sauce', onChange: this.addComment }
+          {
+            className: 'add-comment input-lg form-control',
+            value: this.state.comment,
+            placeholder: 'e.g. No meat, extra sauce',
+            onChange: this.addComment
+          }
         )
       ),
       dom.p(
@@ -86,7 +84,7 @@ class NewOrder extends Component {
           dom.tbody(
             null,
             this.state.entries.map((entry, i) => dom.tr(
-              { className: 'entries' },
+              { className: 'entries', key: i + 1 },
               dom.td({ className: 'entry-name' }, dom.h2(null, entry.name)),
               dom.td({ className: 'entry-comment' }, dom.h3(null, entry.comment))
             ))

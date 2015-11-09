@@ -1,6 +1,5 @@
 import { expect, spy } from 'chai';
 import React from 'react';
-import chai from 'chai';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import constants from '../../src/constants';
@@ -59,7 +58,7 @@ describe('New Order', () => {
     expect(entryComment[1].textContent).to.equal('new comment');
   });
 
-  xit('clears the comment after adding an entry', () => {
+  it('clears the comment after adding an entry', () => {
     const item = { id: '1', name: 'food' };
     const component = renderIntoDocument(NewOrder({ masterItems: [item], loadItems }));
     const addEntryBtn = findRenderedDOMComponentWithClass(component, 'add-entry');
@@ -67,11 +66,11 @@ describe('New Order', () => {
 
     Simulate.change(addCommentFld, { target: { value: 'no meat' } });
     addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
-    expect(addCommentFld.value).to.be.equal('no meat');
+    expect(addCommentFld.value).to.equal('no meat');
     Simulate.click(addEntryBtn);
 
     addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
-    expect(addCommentFld.value).to.be.equal('');
+    expect(addCommentFld.value).to.equal('');
   });
 
 
