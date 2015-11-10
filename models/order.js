@@ -2,13 +2,7 @@ import mongoose from 'mongoose';
 import { Schema } from 'mongoose';
 import constants  from '../src/constants';
 import Item from './item';
-
-const Entry = new Schema({
-  item_id: { type: Schema.ObjectId, ref: 'Item' },
-  status: { type: String, default: constants.OPEN },
-  comment: String
-});
-
+import Entry from './entry';
 
 const orderSchema = new Schema({
   id: String,
@@ -73,7 +67,7 @@ function toOrder({ id, status, entries }) {
   return {
     id,
     status,
-    entries: entries
+    entries
   };
 }
 
