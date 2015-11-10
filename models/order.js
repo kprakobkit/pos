@@ -32,6 +32,16 @@ function getOrders() {
   });
 }
 
+function getEntries(orders) {
+  return Promise.all(orders.map(populateEntries)).then((entries) => {
+    orders.forEach((order, index) => {
+      order.entries = entries[index];
+    });
+
+    return Promise.resolve(orders);
+  });
+}
+
 function populateEntries(order) {
   return new Promise((resolve, reject) => {
     Item.populate(order.entries, [{ path: 'item_id', model: 'Item', select: 'name price -_id' }], (err, res) => {
@@ -39,18 +49,8 @@ function populateEntries(order) {
         reject(err);
       }
 
-      resolve(res);
+      resolve(res.map(toEntry));
     });
-  });
-}
-
-function getEntries(orders) {
-  return Promise.all(orders.map(populateEntries)).then((entries) => {
-    orders.forEach((order, index) => {
-      order.entries = entries[index].map(toEntry);
-    });
-
-    return Promise.resolve(orders);
   });
 }
 
