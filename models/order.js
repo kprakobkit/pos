@@ -33,13 +33,7 @@ function getOrders() {
 }
 
 function getEntries(orders) {
-  return Promise.all(orders.map(populateEntries)).then((entries) => {
-    orders.forEach((order, index) => {
-      order.entries = entries[index];
-    });
-
-    return Promise.resolve(orders);
-  });
+  return Promise.all(orders.map(populateEntries));
 }
 
 function populateEntries(order) {
@@ -48,8 +42,9 @@ function populateEntries(order) {
       if(err) {
         reject(err);
       }
+      order.entries = res.map(toEntry);
 
-      resolve(res.map(toEntry));
+      resolve(order);
     });
   });
 }
