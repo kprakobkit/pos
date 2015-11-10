@@ -50,6 +50,5 @@ describe('OrderDetails', () => {
     expect(entryStatuses[0].textContent).to.contain('OPEN');
     expect(entryStatuses[1].textContent).to.contain('DELIVERED');
   });
-
 });
 
