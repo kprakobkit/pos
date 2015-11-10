@@ -50,6 +50,9 @@ class OrderDetails extends Component {
   }
 }
 
+OrderDetails.propTypes = {
+  orders: PropTypes.array.isRequired
+};
 
 OrderDetails.defaultProps = {
   orders: []

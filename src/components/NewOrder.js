@@ -1,4 +1,4 @@
-import { Component, DOM as dom } from 'react';
+import { Component, PropTypes, DOM as dom } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../action_creators';
 import _ from 'underscore';
@@ -98,6 +98,10 @@ class NewOrder extends Component {
     );
   }
 }
+
+NewOrder.propTypes = {
+  masterItems: PropTypes.array.isRequired
+};
 
 NewOrder.defaultProps = {
   masterItems: []
