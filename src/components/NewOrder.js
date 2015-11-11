@@ -46,6 +46,12 @@ class NewOrder extends Component {
     this.setState({ comment });
   }
 
+  removeEntry(i) {
+    const updatedEntries = [...this.state.entries.splice(0, i), ...this.state.entries.splice(i + 1)];
+
+    this.setState({ entries: updatedEntries });
+  }
+
   render() {
     return dom.div(
       null,
@@ -86,7 +92,8 @@ class NewOrder extends Component {
             this.state.entries.map((entry, i) => dom.tr(
               { className: 'entries', key: i + 1 },
               dom.td({ className: 'entry-name' }, dom.h2(null, entry.name)),
-              dom.td({ className: 'entry-comment' }, dom.h3(null, entry.comment))
+              dom.td({ className: 'entry-comment' }, dom.h3(null, entry.comment)),
+              dom.td({ className: 'entry-action' }, dom.button({ className: 'btn btn-small remove-entry', onClick: this.removeEntry.bind(this, i) }, 'remove'))
             ))
           )
         )

@@ -66,6 +66,7 @@ describe('New Order', () => {
 
     Simulate.change(addCommentFld, { target: { value: 'no meat' } });
     addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
+
     expect(addCommentFld.value).to.equal('no meat');
     Simulate.click(addEntryBtn);
 
@@ -89,7 +90,29 @@ describe('New Order', () => {
     Simulate.click(addEntryBtn);
     Simulate.click(submitOrderBtn);
 
-    expect(addOrder.__spy.calls[0][0]).to.deep.equal(masterItems);
     expect(addOrder.__spy.calls[0][0].length).to.equal(2);
+    expect(addOrder.__spy.calls[0][0]).to.deep.equal(masterItems);
+  });
+
+  it('removes an item from an order', () => {
+    const addOrder = spy();
+    const burger = { id: '1', name: 'burger', comment: '' };
+    const rice = { id: '2', name: 'rice', comment: '' };
+    const masterItems = [burger, rice];
+    const component = renderIntoDocument(NewOrder({ masterItems, loadItems, addOrder }));
+    const addEntryBtn = findRenderedDOMComponentWithClass(component, 'add-entry');
+    const selectItems = findRenderedDOMComponentWithClass(component, 'select-items');
+    const submitOrderBtn = findRenderedDOMComponentWithClass(component, 'submit-order');
+
+    Simulate.change(selectItems, { target: { value: burger.id } });
+    Simulate.click(addEntryBtn);
+    const removeEntryBtn = scryRenderedDOMComponentsWithClass(component, 'remove-entry');
+    Simulate.click(removeEntryBtn[0]);
+    Simulate.change(selectItems, { target: { value: rice.id } });
+    Simulate.click(addEntryBtn);
+    Simulate.click(submitOrderBtn);
+
+    expect(addOrder.__spy.calls[0][0].length).to.equal(1);
+    expect(addOrder.__spy.calls[0][0]).to.deep.equal([rice]);
   });
 });
