@@ -26,7 +26,7 @@ class NewOrder extends Component {
   }
 
   addEntry() {
-    const selectedItem = Object.assign({}, this.state.selectedItem || this.props.masterItems[0]);
+    const selectedItem = _.extend({}, this.state.selectedItem || this.props.masterItems[0]);
     selectedItem.comment = this.state.comment;
     const entries = this.state.entries.concat(selectedItem);
 
@@ -35,7 +35,7 @@ class NewOrder extends Component {
 
   selectItem(e) {
     const itemId = e.target.value;
-    const selectedItem = Object.assign({}, _.find(this.props.masterItems, (item) => item.id === itemId));
+    const selectedItem = _.extend({}, _.find(this.props.masterItems, (item) => item.id === itemId));
 
     this.setState({ selectedItem });
   }

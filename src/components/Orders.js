@@ -5,6 +5,7 @@ import constants from '../constants';
 import OrderComponent from './Order';
 import OrdersFilterComponent from './OrdersFilter';
 import { Link as LinkComponent } from 'react-router';
+import _ from 'underscore';
 
 const Order = createFactory(OrderComponent);
 const OrdersFilter = createFactory(OrdersFilterComponent);
@@ -46,7 +47,7 @@ class Orders extends Component {
 
   renderOrder(order) {
     return Order(
-      Object.assign({}, order, {
+      _.extend({}, order, {
         key: order.id,
         printOrderStatus: this.printOrderStatus
       })
