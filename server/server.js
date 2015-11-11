@@ -31,6 +31,7 @@ MongoDB.once('open', () => {
 
 console.log('Server running...');
 
+app.use(express.static(distPath));
 app.use((req, res) => {
   const location = createLocation(req.url);
 
@@ -63,7 +64,7 @@ app.use((req, res) => {
         </head>
         <body>
           <div id="app">${componentHTML}</div>
-          <script type="application/javascript" src="/bundle.js"></script>
+          <script type="application/javascript" src="bundle.js"></script>
         </body>
       </html>
     `;
