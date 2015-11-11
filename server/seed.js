@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 import faker from 'faker';
 import _ from 'underscore';
 
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost');
 
 function removeData(next) {
   async.parallel([
