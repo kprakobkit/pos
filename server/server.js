@@ -19,7 +19,15 @@ const store = makeStore();
 const RoutingContext = createFactory(RoutingContextComponent);
 const Provider = createFactory(ProviderComponent);
 
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost');
+const MongoDB = mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost').connection;
+MongoDB.on('error', (err) => {
+  console.log('Failed to connect go Mongo DB');
+  console.log(err.message);
+});
+
+MongoDB.once('open', () => {
+  console.log('Connected to Mongo DB');
+});
 
 console.log('Server running...');
 
