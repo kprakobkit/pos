@@ -34,7 +34,7 @@ function createItem(name, price, cb) {
 function createOrder(id, status, items, cb) {
   const order = Order({ id, status });
 
-  order.items = items.map((item) => ({
+  order.entries = items.map((item) => ({
     item_id: mongoose.Types.ObjectId(item.id),
     comment: faker.lorem.sentence()
   }));

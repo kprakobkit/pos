@@ -14,6 +14,10 @@ const Order = {
     };
   },
 
+  getOrders: () => {
+    return Promise.resolve([]);
+  },
+
   findOneAndUpdate: ({ id }, { status }) => {
     return Promise.resolve({ id, status });
   }

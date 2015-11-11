@@ -32,11 +32,7 @@ export function toggleOrder(id) {
 
 export function loadOrders() {
   return (dispatch) => {
-    return Order.find()
-    .populate('items')
-    .then((response) => {
-      const orders = response.map(toOrder);
-
+    return Order.getOrders().then((orders) => {
       dispatch(setState({
         orders
       }));
@@ -56,11 +52,11 @@ export function loadItems() {
   };
 }
 
-export function addOrder(items) {
+export function addOrder(entries) {
   return (dispatch, getState) => {
     Order({
       id: faker.random.number(), // need auto generated id...
-      items: items.map((item) => ({
+      entries: entries.map((item) => ({
         item_id: mongoose.Types.ObjectId(item.id),
         comment: item.comment
       }))
@@ -74,20 +70,16 @@ export function addOrder(items) {
   };
 }
 
-function toOrder({ id, status, items }) {
+function toMasterItem({ _id, name, price }) {
+  return { id: _id, name, price };
+}
+
+function toOrder({ id, status, entries }) {
   return {
     id,
     status,
-    items: items.map(toEntry)
+    entries: entries
   };
-}
-
-function toEntry({ _id, comment, status }) {
-  return { id: _id, comment, status };
-}
-
-function toMasterItem({ _id, name, price }) {
-  return { id: _id, name, price };
 }
 
 export default {
