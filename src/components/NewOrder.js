@@ -97,10 +97,15 @@ class NewOrder extends Component {
                 { className: 'entry-action' },
                 dom.button(
                   {
-                    className: 'btn btn-small remove-entry',
+                    className: 'btn btn-default remove-entry',
                     onClick: this.removeEntry.bind(this, entry)
                   },
-                  'remove'
+                  dom.span(
+                    {
+                      className: 'glyphicon glyphicon-remove',
+                      'aria-hidden': true
+                    }
+                  )
                 )
               )
             ))
