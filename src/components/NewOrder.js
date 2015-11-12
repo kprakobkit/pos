@@ -46,6 +46,12 @@ class NewOrder extends Component {
     this.setState({ comment });
   }
 
+  removeEntry(entry) {
+    const updatedEntries = _.without(this.state.entries, entry);
+
+    this.setState({ entries: updatedEntries });
+  }
+
   render() {
     return dom.div(
       null,
@@ -55,7 +61,7 @@ class NewOrder extends Component {
         dom.select(
           { className: 'select-items form-control input-lg', onChange: this.selectItem },
           this.props.masterItems.map((item, i) => {
-            return dom.option({ className: 'option', value: item.id, key: i + 1 }, item.name);
+            return dom.option({ className: 'option', value: item.id, key: i }, item.name);
           })
         )
       ),
@@ -84,9 +90,24 @@ class NewOrder extends Component {
           dom.tbody(
             null,
             this.state.entries.map((entry, i) => dom.tr(
-              { className: 'entries', key: i + 1 },
+              { className: 'entries', key: i },
               dom.td({ className: 'entry-name' }, dom.h2(null, entry.name)),
-              dom.td({ className: 'entry-comment' }, dom.h3(null, entry.comment))
+              dom.td({ className: 'entry-comment' }, dom.h3(null, entry.comment)),
+              dom.td(
+                { className: 'entry-action' },
+                dom.button(
+                  {
+                    className: 'btn btn-default remove-entry',
+                    onClick: this.removeEntry.bind(this, entry)
+                  },
+                  dom.span(
+                    {
+                      className: 'glyphicon glyphicon-remove',
+                      'aria-hidden': true
+                    }
+                  )
+                )
+              )
             ))
           )
         )
