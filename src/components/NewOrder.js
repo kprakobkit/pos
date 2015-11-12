@@ -90,7 +90,7 @@ class NewOrder extends Component {
           dom.tbody(
             null,
             this.state.entries.map((entry, i) => dom.tr(
-              { className: 'entries', key: i + 1 },
+              { className: 'entries', key: i },
               dom.td({ className: 'entry-name' }, dom.h2(null, entry.name)),
               dom.td({ className: 'entry-comment' }, dom.h3(null, entry.comment)),
               dom.td(
