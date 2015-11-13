@@ -49,8 +49,9 @@ function populateEntries(order) {
   });
 }
 
-function toEntry({ status, comment, item_id }) {
+function toEntry({ id, status, comment, item_id }) {
   return {
+    id,
     status,
     comment,
     name: item_id.name,
