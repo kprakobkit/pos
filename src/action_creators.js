@@ -40,6 +40,7 @@ export function addOrder(entries) {
 export function changeEntryStatus(orderId, entryId, status) {
   return {
     meta: { remote: true },
+    type: constants.CHANGE_ENTRY_STATUS,
     orderId,
     entryId,
     status
@@ -51,5 +52,6 @@ export default {
   toggleOrder,
   loadOrders,
   loadItems,
-  addOrder
+  addOrder,
+  changeEntryStatus
 };

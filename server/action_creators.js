@@ -122,5 +122,6 @@ export default {
   toggleOrder,
   loadOrders,
   loadItems,
-  addOrder
+  addOrder,
+  changeEntryStatus
 };

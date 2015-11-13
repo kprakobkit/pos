@@ -5,6 +5,16 @@ import constants from '../constants';
 import _ from 'underscore';
 
 class Entry extends Component {
+  constructor(props) {
+    super(props);
+    this.handleChangeStatus = this.handleChangeStatus.bind(this);
+  }
+
+  handleChangeStatus(e) {
+    const status = e.target.value;
+    this.props.changeEntryStatus(this.props.id, status);
+  }
+
   render() {
     return dom.tr(
       { className: 'order-entry' },
@@ -13,7 +23,11 @@ class Entry extends Component {
       dom.td(
         { className: 'entry-status' },
         dom.select(
-          { className: 'form-control input-lg', value: this.props.status },
+          {
+            className: 'form-control input-lg',
+            value: this.props.status,
+            onChange: this.handleChangeStatus
+          },
           dom.option({ value: constants.OPEN }, constants.OPEN),
           dom.option({ value: constants.DELIVERED }, constants.DELIVERED),
           dom.option({ value: constants.CANCELED }, constants.CANCELED)

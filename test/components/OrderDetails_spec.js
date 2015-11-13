@@ -12,10 +12,12 @@ const {
 const OrderDetails = React.createFactory(OrderDetailsComponent);
 
 describe('OrderDetails', () => {
+  const changeEntryStatus = () => {};
+
   it('renders title with correct order number from params', () => {
     const id = 1;
     const params = { id };
-    const props = { orders: [{ status: 'open', id: 1, entries: [] }], params };
+    const props = { orders: [{ status: 'open', id: 1, entries: [] }], params, changeEntryStatus };
     const component = renderIntoDocument(OrderDetails(props));
     const title = findRenderedDOMComponentWithClass(component, 'order-title');
 
@@ -23,7 +25,7 @@ describe('OrderDetails', () => {
   });
 
   it('renders the order status', () => {
-    const props = { orders: [{ status: 'open', id: 1, entries: [] }], params: { id: 1 } };
+    const props = { orders: [{ status: 'open', id: 1, entries: [] }], params: { id: 1 }, changeEntryStatus };
     const component = renderIntoDocument(OrderDetails(props));
     const status = findRenderedDOMComponentWithClass(component, 'order-status');
 
@@ -35,7 +37,7 @@ describe('OrderDetails', () => {
       { name: 'rice', price: 1050, comment: 'brown rice', status: 'OPEN' },
       { name: 'egg', price: 150, comment: 'sunny side up', status: 'DELIVERED' }
     ];
-    const props = { orders: [{ status: 'open', id: 1, entries }], params: { id: 1 } };
+    const props = { orders: [{ status: 'open', id: 1, entries }], params: { id: 1 }, changeEntryStatus };
     const component = renderIntoDocument(OrderDetails(props));
     const orderEntries = scryRenderedDOMComponentsWithClass(component, 'order-entry');
     const entryNames = scryRenderedDOMComponentsWithClass(component, 'entry-name');

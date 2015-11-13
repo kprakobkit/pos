@@ -31,7 +31,8 @@ class OrderDetails extends Component {
   renderEntry(entry, i) {
     return Entry(
       _.extend({}, entry, {
-        key: i
+        key: i,
+        changeEntryStatus: this.props.changeEntryStatus.bind(null, this.props.params.id)
       })
     );
   }
