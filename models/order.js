@@ -7,7 +7,7 @@ import Entry from './entry';
 const orderSchema = new Schema({
   id: String,
   status: { type: String, default: constants.OPEN },
-  entries: [Entry]
+  entries: [Entry.schema]
 });
 
 orderSchema.statics.getOrders = function() {
