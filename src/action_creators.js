@@ -37,6 +37,15 @@ export function addOrder(entries) {
   };
 }
 
+export function changeEntryStatus(orderId, entryId, status) {
+  return {
+    meta: { remote: true },
+    orderId,
+    entryId,
+    status
+  };
+}
+
 export default {
   setState,
   toggleOrder,

@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import constants from '../src/constants';
 import Order from '../models/order';
 import Item from '../models/item';
+import Entry from '../models/entry';
 import faker from 'faker';
 
 export function setState(state) {
@@ -19,14 +20,14 @@ export function toggleOrder(id) {
     const status = order.status === constants.OPEN ? constants.CLOSED : constants.OPEN;
 
     return Order.findOneAndUpdate({ id }, { status }, { new: true })
-    .then((response) => {
-      const updatedOrders = [
-        ...orders.slice(0, orderIndex),
-        toOrder(response),
-        ...orders.slice(orderIndex + 1)
-      ];
-      dispatch(setState({ orders: updatedOrders }));
-    });
+      .then((response) => {
+        const updatedOrders = [
+          ...orders.slice(0, orderIndex),
+          toOrder(response),
+          ...orders.slice(orderIndex + 1)
+        ];
+        dispatch(setState({ orders: updatedOrders }));
+      });
   };
 }
 
@@ -70,6 +71,36 @@ export function addOrder(entries) {
   };
 }
 
+export function changeEntryStatus(orderId, entryId, status) {
+  return (dispatch, getState) => {
+    const orders = getState().orders;
+    const orderIndex = orders.findIndex((order) => order.id === orderId);
+    const order = orders[orderIndex];
+    const entries = order.entries;
+    const entryIndex = entries.findIndex((entry) => entry.id === entryId);
+    const entry = entries[entryIndex];
+
+    return Entry.findOneAndUpdate({ id: entryId }, { status }, { new: true })
+      .then((response) => {
+        const updatedEntries = [
+          ...entries.slice(0, entryIndex),
+          toEntry(response),
+          ...entries.slice(entryIndex + 1)
+        ];
+
+        const updatedOrders = [
+          ...orders.slice(0, orderIndex),
+          _.extend({}, order, { entries: updatedEntries }),
+          ...orders.slice(orderIndex + 1)
+        ];
+
+        dispatch(setState({
+          orders: updatedOrders
+        }));
+      });
+  };
+}
+
 function toMasterItem({ _id, name, price }) {
   return { id: _id, name, price };
 }
@@ -80,6 +111,10 @@ function toOrder({ id, status, entries }) {
     status,
     entries: entries
   };
+}
+
+function toEntry({ id, name, status, comment }) {
+  return { id, name, status, comment };
 }
 
 export default {
