@@ -37,12 +37,12 @@ export function addOrder(entries) {
   };
 }
 
-export function changeEntryStatus(orderId, entryId, status) {
+export function changeEntryStatus(orderId, entryIndex, status) {
   return {
     meta: { remote: true },
     type: constants.CHANGE_ENTRY_STATUS,
     orderId,
-    entryId,
+    entryIndex,
     status
   };
 }

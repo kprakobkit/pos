@@ -72,26 +72,24 @@ export function addOrder(entries) {
   };
 }
 
-export function changeEntryStatus(orderId, entryId, status) {
+export function changeEntryStatus(orderId, entryIndex, status) {
   return (dispatch, getState) => {
     const orders = getState().orders;
     const orderIndex = orders.findIndex((order) => order.id === orderId);
     const order = orders[orderIndex];
     const entries = order.entries;
-    const entryIndex = entries.findIndex((entry) => entry.id === entryId);
     const entry = entries[entryIndex];
+    const updatedEntries = [
+      ...entries.slice(0, entryIndex),
+      _.extend({}, entry, { status }),
+      ...entries.slice(entryIndex + 1)
+    ];
 
-    return Entry.findOneAndUpdate({ id: entryId }, { status }, { new: true })
+    return Order.findOneAndUpdate({ id: orderId }, { entries: updatedEntries }, { new: true })
       .then((response) => {
-        const updatedEntries = [
-          ...entries.slice(0, entryIndex),
-          toEntry(response),
-          ...entries.slice(entryIndex + 1)
-        ];
-
         const updatedOrders = [
           ...orders.slice(0, orderIndex),
-          _.extend({}, order, { entries: updatedEntries }),
+          toOrder(response),
           ...orders.slice(orderIndex + 1)
         ];
 

@@ -12,7 +12,7 @@ class Entry extends Component {
 
   handleChangeStatus(e) {
     const status = e.target.value;
-    this.props.changeEntryStatus(this.props.id, status);
+    this.props.changeEntryStatus(this.props.index, status);
   }
 
   render() {
