@@ -1,10 +1,17 @@
 import constants from '../src/constants';
 import Order from '../models/order';
 import Item from '../models/item';
+import Entry from '../models/entry';
 import async from 'async';
 import mongoose from 'mongoose';
 import faker from 'faker';
 import _ from 'underscore';
+
+const orderStatuses = [
+  constants.OPEN,
+  constants.CLOSED,
+  constants.READY_FOR_BILL
+];
 
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost');
 
@@ -31,16 +38,20 @@ function createItem(name, price, cb) {
   });
 }
 
-function createOrder(id, status, items, cb) {
-  const order = Order({ id, status });
-
-  order.entries = items.map((item) => ({
+function createEntry(item, cb) {
+  Entry({
     id: faker.random.number(),
     item_id: mongoose.Types.ObjectId(item.id),
     comment: faker.lorem.sentence()
-  }));
+  }).save((err, result) => cb(err, result));
+}
 
-  order.save(cb);
+function createOrder(entries, cb) {
+  Order({
+    id: faker.random.number(),
+    status: _.sample(orderStatuses),
+    entries
+  }).save(cb);
 }
 
 function createItems(cb) {
@@ -52,12 +63,18 @@ function createItems(cb) {
   ], cb);
 }
 
-function createOrders(items, cb) {
+function createEntries(items, cb) {
+  async.parallel(items.concat(items).map((item) => {
+    return async.apply(createEntry, item);
+  }), cb);
+}
+
+function createOrders(entries, cb) {
   async.parallel([
-    async.apply(createOrder, faker.random.number(), constants.OPEN, _.sample(items, 2)),
-    async.apply(createOrder, faker.random.number(), constants.CLOSED, _.sample(items, 2)),
-    async.apply(createOrder, faker.random.number(), constants.READY_FOR_BILL, _.sample(items, 2)),
-    async.apply(createOrder, faker.random.number(), constants.OPEN, _.sample(items, 2))
+    async.apply(createOrder, entries.slice(0, 2)),
+    async.apply(createOrder, entries.slice(2, 4)),
+    async.apply(createOrder, entries.slice(4, 6)),
+    async.apply(createOrder, entries.slice(6, 8))
   ], cb);
 }
 
@@ -65,6 +82,7 @@ function seedData() {
   async.waterfall([
     async.apply(removeData),
     async.apply(createItems),
+    async.apply(createEntries),
     async.apply(createOrders)
   ], function (err, results) {
     if(err) {
