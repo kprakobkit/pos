@@ -38,19 +38,11 @@ function createItem(name, price, cb) {
   });
 }
 
-function createEntry(item, cb) {
-  Entry({
-    id: faker.random.number(),
-    item_id: mongoose.Types.ObjectId(item.id),
-    comment: faker.lorem.sentence()
-  }).save((err, result) => cb(err, result));
-}
-
-function createOrder(entries, cb) {
+function createOrder(items, cb) {
   Order({
     id: faker.random.number(),
     status: _.sample(orderStatuses),
-    entries
+    entries: items.map(toEntry)
   }).save(cb);
 }
 
@@ -63,18 +55,12 @@ function createItems(cb) {
   ], cb);
 }
 
-function createEntries(items, cb) {
-  async.parallel(items.concat(items).map((item) => {
-    return async.apply(createEntry, item);
-  }), cb);
-}
-
-function createOrders(entries, cb) {
+function createOrders(items, cb) {
   async.parallel([
-    async.apply(createOrder, entries.slice(0, 2)),
-    async.apply(createOrder, entries.slice(2, 4)),
-    async.apply(createOrder, entries.slice(4, 6)),
-    async.apply(createOrder, entries.slice(6, 8))
+    async.apply(createOrder, _.sample(items, 2)),
+    async.apply(createOrder, _.sample(items, 2)),
+    async.apply(createOrder, _.sample(items, 2)),
+    async.apply(createOrder, _.sample(items, 2))
   ], cb);
 }
 
@@ -82,7 +68,6 @@ function seedData() {
   async.waterfall([
     async.apply(removeData),
     async.apply(createItems),
-    async.apply(createEntries),
     async.apply(createOrders)
   ], function (err, results) {
     if(err) {
@@ -93,6 +78,14 @@ function seedData() {
     console.log('Completed seeding database...');
     process.exit(0);
   });
+}
+
+function toEntry(item) {
+  return {
+    id: faker.random.number(),
+    item_id: mongoose.Types.ObjectId(item.id),
+    comment: faker.lorem.sentence()
+  };
 }
 
 seedData();
