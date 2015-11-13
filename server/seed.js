@@ -82,7 +82,6 @@ function seedData() {
 
 function toEntry(item) {
   return {
-    id: faker.random.number(),
     item_id: mongoose.Types.ObjectId(item.id),
     comment: faker.lorem.sentence()
   };
