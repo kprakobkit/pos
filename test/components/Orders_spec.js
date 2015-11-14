@@ -15,11 +15,10 @@ const {
 const Orders = React.createFactory(OrdersComponent);
 
 describe('Orders', () => {
-  const toggleOrder = () => {};
   const loadOrders = () => {};
 
   it('renders title', () => {
-    const component = renderIntoDocument(Orders({ orders: [], toggleOrder, loadOrders }));
+    const component = renderIntoDocument(Orders({ orders: [], loadOrders }));
     const title = findRenderedDOMComponentWithClass(component, 'orders-title');
 
     expect(title.textContent).to.equal('Orders');
@@ -30,14 +29,14 @@ describe('Orders', () => {
     const order2 = { id: '2', status: constants.OPEN };
     const order3 = { id: '3', status: constants.OPEN };
     const orders = [order1, order2, order3];
-    const component = renderIntoDocument(Orders({ orders, toggleOrder, loadOrders }));
+    const component = renderIntoDocument(Orders({ orders, loadOrders }));
     const children = scryRenderedDOMComponentsWithClass(component, 'order');
 
     expect(children.length).to.equal(3);
   });
 
   it('renders message if there are no orders', () => {
-    const component = renderIntoDocument(Orders({ orders: [], toggleOrder, loadOrders }));
+    const component = renderIntoDocument(Orders({ orders: [], loadOrders }));
     const ordersComponent = findRenderedDOMComponentWithClass(component, 'orders-message');
 
     expect(ordersComponent.textContent).to.equal('There are currently no orders.');
@@ -48,7 +47,7 @@ describe('Orders', () => {
     const order2 = { id: '2', status: constants.OPEN };
     const order3 = { id: '3', status: constants.CLOSED };
     const orders = [order1, order2, order3];
-    const component = renderIntoDocument(Orders({ orders, toggleOrder, loadOrders }));
+    const component = renderIntoDocument(Orders({ orders, loadOrders }));
     const filter = findRenderedDOMComponentWithClass(component, 'orders-filter-open');
     Simulate.click(filter);
     const children = scryRenderedDOMComponentsWithClass(component, 'order');

@@ -79,8 +79,7 @@ class Orders extends Component {
 }
 
 Orders.propTypes = {
-  orders:      PropTypes.array.isRequired,
-  toggleOrder: PropTypes.func.isRequired
+  orders:      PropTypes.array.isRequired
 };
 
 Orders.defaultProps = {
