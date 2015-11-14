@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import constants from '../src/constants';
 import Order from '../models/order';
 import Item from '../models/item';
-import Entry from '../models/entry';
 import faker from 'faker';
 import _ from 'underscore';
 

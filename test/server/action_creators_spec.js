@@ -20,12 +20,18 @@ const Order = {
 
   findOneAndUpdate: ({ id }, { status }) => {
     return Promise.resolve({ id, status });
-  }
-};
+  },
 
-const Entry = {
-  findOneAndUpdate: ({ id }, { status }) => {
-    return Promise.resolve({ id, status, name: '', comment: '' });
+  updateEntry: (orderId, entryIndex, { status }) => {
+    return Promise.resolve(
+      [
+        {
+          id: orderId,
+          status: constants.OPEN,
+          entries: [{ status, name: '', comment: '' }]
+        }
+      ]
+    );
   }
 };
 
@@ -37,8 +43,7 @@ const Item = {
 
 const actions = proxyquire('../../server/action_creators', {
   '../models/order': Order,
-  '../models/item': Item,
-  '../models/entry': Entry
+  '../models/item': Item
 });
 
 describe('server action creators', () => {
@@ -142,7 +147,7 @@ describe('server action creators', () => {
     });
   });
 
-  it('changeEntryStatus', () => {
+  it('changeEntryStatus', (done) => {
     let dispatched;
     const orders = [
       {
@@ -173,7 +178,6 @@ describe('server action creators', () => {
             status: constants.OPEN,
             entries: [
               {
-                id: 2,
                 status: constants.DELIVERED,
                 name: '',
                 comment: ''
@@ -184,7 +188,7 @@ describe('server action creators', () => {
       }
     };
 
-    actions.changeEntryStatus(1, 2, constants.DELIVERED)(dispatch, getState).then(() => {
+    actions.changeEntryStatus(1, 0, constants.DELIVERED)(dispatch, getState).then(() => {
       expect(dispatched).to.deep.equal(expected);
       done();
     });
