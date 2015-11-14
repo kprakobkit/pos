@@ -76,26 +76,16 @@ export function changeEntryStatus(orderId, entryIndex, status) {
   return (dispatch, getState) => {
     const orders = getState().orders;
     const orderIndex = orders.findIndex((order) => order.id === orderId);
-    const order = orders[orderIndex];
-    const entries = order.entries;
-    const entry = entries[entryIndex];
-    const updatedEntries = [
-      ...entries.slice(0, entryIndex),
-      _.extend({}, entry, { status }),
-      ...entries.slice(entryIndex + 1)
-    ];
 
-    return Order.findOneAndUpdate({ id: orderId }, { entries: updatedEntries }, { new: true })
+    return Order.updateEntry(orderId, entryIndex, { status })
       .then((response) => {
         const updatedOrders = [
           ...orders.slice(0, orderIndex),
-          toOrder(response),
+          response[0],
           ...orders.slice(orderIndex + 1)
         ];
 
-        dispatch(setState({
-          orders: updatedOrders
-        }));
+        dispatch(setState({ orders: updatedOrders }));
       });
   };
 }
@@ -108,12 +98,8 @@ function toOrder({ id, status, entries }) {
   return {
     id,
     status,
-    entries: entries
+    entries
   };
-}
-
-function toEntry({ id, name, status, comment }) {
-  return { id, name, status, comment };
 }
 
 export default {

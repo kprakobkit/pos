@@ -11,6 +11,6 @@ export default (store) => (socket) => {
   socket.on(constants.ADD_ORDER, (action) => store.dispatch(actions.addOrder(action.entries)));
 
   socket.on(constants.CHANGE_ENTRY_STATUS, (action) => {
-    store.dispatch(actions.changeEntryStatus(action.orderId, action.entryId, action.status));
+    store.dispatch(actions.changeEntryStatus(action.orderId, action.entryIndex, action.status));
   });
 };
