@@ -1,10 +1,10 @@
 import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import { connect } from 'react-redux';
-import MasterItemsSelectComponent from './MasterItemsSelect';
+import MasterItemsComponent from './MasterItems';
 import * as actions from '../action_creators';
 import _ from 'underscore';
 
-const MasterItemsSelect = createFactory(MasterItemsSelectComponent);
+const MasterItems = createFactory(MasterItemsComponent);
 const mapStateToProps = function (state) {
   return {
     masterItems: state.items
@@ -14,12 +14,9 @@ const mapStateToProps = function (state) {
 class NewOrder extends Component {
   constructor(props) {
     super(props);
-    this.selectItem = this.selectItem.bind(this);
-    this.addEntry = this.addEntry.bind(this);
-    this.addComment = this.addComment.bind(this);
+    this.updateEntries = this.updateEntries.bind(this);
     this.state = {
-      entries: [],
-      comment: ''
+      entries: []
     };
   }
 
@@ -27,25 +24,9 @@ class NewOrder extends Component {
     this.props.loadItems();
   }
 
-  addEntry() {
-    const selectedItem = _.extend({}, this.state.selectedItem || this.props.masterItems[0]);
-    selectedItem.comment = this.state.comment;
-    const entries = this.state.entries.concat(selectedItem);
-
-    this.setState({ entries, comment: '' });
-  }
-
-  selectItem(itemId) {
-    const selectedItem = _.extend({}, _.find(this.props.masterItems, (item) => item.id === itemId));
-
-    this.setState({ selectedItem });
-  }
-
-  addComment(e) {
-    const comment = e.target.value;
-
-    this.setState({ comment });
-  }
+  updateEntries(entries) {
+    this.setState({ entries });
+  };
 
   removeEntry(entry) {
     const updatedEntries = _.without(this.state.entries, entry);
@@ -56,29 +37,11 @@ class NewOrder extends Component {
   render() {
     return dom.div(
       null,
-      dom.h1(null, 'New Order'),
-      MasterItemsSelect(_.extend({}, {
+      MasterItems(_.extend({}, {
         masterItems: this.props.masterItems,
-        onSelectMasterItem: this.selectItem
+        handleUpdateEntries: this.updateEntries,
+        entries: this.state.entries
       })),
-      dom.p(
-        null,
-        dom.input(
-          {
-            className: 'add-comment input-lg form-control',
-            value: this.state.comment,
-            placeholder: 'e.g. No meat, extra sauce',
-            onChange: this.addComment
-          }
-        )
-      ),
-      dom.p(
-        null,
-        dom.button(
-          { className: 'btn btn-default add-entry btn-lg btn-block', onClick: this.addEntry },
-          'Add Item'
-        )
-      ),
       dom.div(
         null,
         dom.table(
@@ -110,7 +73,7 @@ class NewOrder extends Component {
       ),
       dom.button(
         { className: 'btn btn-primary submit-order btn-lg btn-block', onClick: () => { this.props.addOrder(this.state.entries); } },
-        'Submit'
+          'Submit'
       )
     );
   }
