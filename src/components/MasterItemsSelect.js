@@ -1,6 +1,6 @@
 import { Component, PropTypes, DOM as dom } from 'react';
 
-class MasterItems extends Component {
+class MasterItemsSelect extends Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
@@ -26,13 +26,13 @@ class MasterItems extends Component {
   }
 }
 
-MasterItems.propTypes = {
+MasterItemsSelect.propTypes = {
   masterItems: PropTypes.array.isRequired
 };
 
-MasterItems.defaultProps = {
+MasterItemsSelect.defaultProps = {
   masterItems: []
 };
 
-export default MasterItems;
+export default MasterItemsSelect;
 

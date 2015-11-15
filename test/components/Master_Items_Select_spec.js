@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import constants from '../../src/constants';
-import MasterItemsComponent from '../../src/components/MasterItems';
+import MasterItemsSelectComponent from '../../src/components/MasterItemsSelect';
 
 const {
   renderIntoDocument,
@@ -12,7 +12,7 @@ const {
   Simulate
 } = TestUtils;
 
-const MasterItems = React.createFactory(MasterItemsComponent);
+const MasterItemsSelect = React.createFactory(MasterItemsSelectComponent);
 
 describe('Master Items', () => {
   const food = { id: '1', name: 'food' };
@@ -21,7 +21,7 @@ describe('Master Items', () => {
   const onSelectMasterItem = {};
 
   it('renders an option for items in the list', () => {
-    const component = renderIntoDocument(MasterItems({ masterItems, onSelectMasterItem }));
+    const component = renderIntoDocument(MasterItemsSelect({ masterItems, onSelectMasterItem }));
     const options = scryRenderedDOMComponentsWithClass(component, 'option');
 
     expect(options.length).to.equal(masterItems.length);

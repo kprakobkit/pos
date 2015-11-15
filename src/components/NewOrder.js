@@ -1,10 +1,10 @@
 import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import { connect } from 'react-redux';
-import MasterItemsComponent from './MasterItems';
+import MasterItemsSelectComponent from './MasterItemsSelect';
 import * as actions from '../action_creators';
 import _ from 'underscore';
 
-const MasterItems = createFactory(MasterItemsComponent);
+const MasterItemsSelect = createFactory(MasterItemsSelectComponent);
 const mapStateToProps = function (state) {
   return {
     masterItems: state.items
@@ -57,7 +57,7 @@ class NewOrder extends Component {
     return dom.div(
       null,
       dom.h1(null, 'New Order'),
-      MasterItems(_.extend({}, {
+      MasterItemsSelect(_.extend({}, {
         masterItems: this.props.masterItems,
         onSelectMasterItem: this.selectItem
       })),
