@@ -26,5 +26,13 @@ class MasterItems extends Component {
   }
 }
 
+MasterItems.propTypes = {
+  masterItems: PropTypes.array.isRequired
+};
+
+MasterItems.defaultProps = {
+  masterItems: []
+};
+
 export default MasterItems;
 
