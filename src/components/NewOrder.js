@@ -1,8 +1,10 @@
-import { Component, PropTypes, DOM as dom } from 'react';
+import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import { connect } from 'react-redux';
+import MasterItemsComponent from './MasterItems';
 import * as actions from '../action_creators';
 import _ from 'underscore';
 
+const MasterItems = createFactory(MasterItemsComponent);
 const mapStateToProps = function (state) {
   return {
     masterItems: state.items
@@ -33,8 +35,7 @@ class NewOrder extends Component {
     this.setState({ entries, comment: '' });
   }
 
-  selectItem(e) {
-    const itemId = e.target.value;
+  selectItem(itemId) {
     const selectedItem = _.extend({}, _.find(this.props.masterItems, (item) => item.id === itemId));
 
     this.setState({ selectedItem });
@@ -56,15 +57,10 @@ class NewOrder extends Component {
     return dom.div(
       null,
       dom.h1(null, 'New Order'),
-      dom.p(
-        null,
-        dom.select(
-          { className: 'select-items form-control input-lg', onChange: this.selectItem },
-          this.props.masterItems.map((item, i) => {
-            return dom.option({ className: 'option', value: item.id, key: i }, item.name);
-          })
-        )
-      ),
+      MasterItems(_.extend({}, {
+        masterItems: this.props.masterItems,
+        onSelectMasterItem: this.selectItem
+      })),
       dom.p(
         null,
         dom.input(

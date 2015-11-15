@@ -26,12 +26,6 @@ describe('New Order', () => {
     component = renderIntoDocument(NewOrder({ masterItems, loadItems, addOrder }));
   });
 
-  it('renders an option for each item in props', () => {
-    const options = scryRenderedDOMComponentsWithClass(component, 'option');
-
-    expect(options.length).to.equal(masterItems.length);
-  });
-
   it('adds an entry to the list each time', () => {
     const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry');
     const addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
