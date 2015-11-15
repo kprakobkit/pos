@@ -9,13 +9,13 @@ class MasterItems extends Component {
     super(props);
     this.selectItem = this.selectItem.bind(this);
     this.addComment = this.addComment.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleAddEntry = this.handleAddEntry.bind(this);
     this.state = {
       comment: ''
     };
   }
 
-  handleClick() {
+  handleAddEntry() {
     const selectedItem = _.extend({}, this.state.selectedItem || this.props.masterItems[0]);
     selectedItem.comment = this.state.comment;
     const entries = this.props.entries.concat(selectedItem);
@@ -58,7 +58,7 @@ class MasterItems extends Component {
       dom.p(
         null,
         dom.button(
-          { className: 'btn btn-default add-entry btn-lg btn-block', onClick: this.handleClick },
+          { className: 'btn btn-default add-entry btn-lg btn-block', onClick: this.handleAddEntry },
           'Add Item'
         )
       ),
