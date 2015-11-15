@@ -67,4 +67,3 @@ class MasterItems extends Component {
 }
 
 export default MasterItems;
-
