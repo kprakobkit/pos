@@ -25,7 +25,7 @@ class Entry extends Component {
         dom.select(
           {
             className: 'form-control input-lg',
-            defaultValue: this.props.status,
+            value: this.props.status,
             onChange: this.handleChangeStatus
           },
           dom.option({ value: constants.OPEN }, constants.OPEN),

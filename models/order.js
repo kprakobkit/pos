@@ -58,7 +58,7 @@ function updateEntry(orderId, entryIndex, update) {
         order.entries = updatedEntries;
         return order.save();
       })
-      .then(resolve);
+      .then((order) => resolve(toOrder(order)));
   });
 }
 
