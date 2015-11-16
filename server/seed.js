@@ -1,10 +1,17 @@
 import constants from '../src/constants';
 import Order from '../models/order';
 import Item from '../models/item';
+import Entry from '../models/entry';
 import async from 'async';
 import mongoose from 'mongoose';
 import faker from 'faker';
 import _ from 'underscore';
+
+const orderStatuses = [
+  constants.OPEN,
+  constants.CLOSED,
+  constants.READY_FOR_BILL
+];
 
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost');
 
@@ -31,15 +38,12 @@ function createItem(name, price, cb) {
   });
 }
 
-function createOrder(id, status, items, cb) {
-  const order = Order({ id, status });
-
-  order.entries = items.map((item) => ({
-    item_id: mongoose.Types.ObjectId(item.id),
-    comment: faker.lorem.sentence()
-  }));
-
-  order.save(cb);
+function createOrder(items, cb) {
+  Order({
+    id: faker.random.number(),
+    status: _.sample(orderStatuses),
+    entries: items.map(toEntry)
+  }).save(cb);
 }
 
 function createItems(cb) {
@@ -53,10 +57,10 @@ function createItems(cb) {
 
 function createOrders(items, cb) {
   async.parallel([
-    async.apply(createOrder, faker.random.number(), constants.OPEN, _.sample(items, 2)),
-    async.apply(createOrder, faker.random.number(), constants.CLOSED, _.sample(items, 2)),
-    async.apply(createOrder, faker.random.number(), constants.READY_FOR_BILL, _.sample(items, 2)),
-    async.apply(createOrder, faker.random.number(), constants.OPEN, _.sample(items, 2))
+    async.apply(createOrder, _.sample(items, 2)),
+    async.apply(createOrder, _.sample(items, 2)),
+    async.apply(createOrder, _.sample(items, 2)),
+    async.apply(createOrder, _.sample(items, 2))
   ], cb);
 }
 
@@ -74,6 +78,13 @@ function seedData() {
     console.log('Completed seeding database...');
     process.exit(0);
   });
+}
+
+function toEntry(item) {
+  return {
+    item_id: mongoose.Types.ObjectId(item.id),
+    comment: faker.lorem.sentence()
+  };
 }
 
 seedData();

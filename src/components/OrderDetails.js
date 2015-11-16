@@ -2,6 +2,9 @@ import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import { connect } from 'react-redux';
 import actions from '../action_creators';
 import _ from 'underscore';
+import EntryComponent from './Entry';
+
+const Entry = createFactory(EntryComponent);
 
 function mapStateToProps(state) {
   return {
@@ -12,6 +15,7 @@ function mapStateToProps(state) {
 class OrderDetails extends Component {
   constructor(props) {
     super(props);
+    this.renderEntry = this.renderEntry.bind(this);
     this.state = {
       order: {
         entries: {}
@@ -22,6 +26,21 @@ class OrderDetails extends Component {
   componentWillMount() {
     const order = _.find(this.props.orders, { id: this.props.params.id });
     this.setState({ order });
+  }
+
+  componentWillReceiveProps(props) {
+    const order = _.find(props.orders, { id: this.props.params.id });
+    this.setState({ order });
+  }
+
+  renderEntry(entry, i) {
+    return Entry(
+      _.extend({}, entry, {
+        key: i,
+        index: i,
+        changeEntryStatus: this.props.changeEntryStatus.bind(null, this.props.params.id)
+      })
+    );
   }
 
   render() {
@@ -36,12 +55,7 @@ class OrderDetails extends Component {
             { className: 'table table-striped' },
             dom.tbody(
               null,
-              this.state.order.entries.map((entry, i) => dom.tr(
-                { className: 'order-entry', key: i + 1 },
-                dom.td({ className: 'entry-name' }, dom.h2(null, entry.name)),
-                dom.td({ className: 'entry-comment' }, dom.h3(null, entry.comment)),
-                dom.td({ className: 'entry-status' }, dom.h3(null, entry.status))
-              ))
+              this.state.order.entries.map(this.renderEntry)
             )
           )
         )

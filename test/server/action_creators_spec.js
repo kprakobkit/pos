@@ -20,6 +20,18 @@ const Order = {
 
   findOneAndUpdate: ({ id }, { status }) => {
     return Promise.resolve({ id, status });
+  },
+
+  updateEntry: (orderId, entryIndex, { status }) => {
+    return Promise.resolve(
+      [
+        {
+          id: orderId,
+          status: constants.OPEN,
+          entries: [{ status, name: '', comment: '' }]
+        }
+      ]
+    );
   }
 };
 
@@ -130,6 +142,53 @@ describe('server action creators', () => {
     };
 
     actions.addOrder(items)(dispatch).then(() => {
+      expect(dispatched).to.deep.equal(expected);
+      done();
+    });
+  });
+
+  it('changeEntryStatus', (done) => {
+    let dispatched;
+    const orders = [
+      {
+        id: 1,
+        status: constants.OPEN,
+        entries: [
+          {
+            id: 2,
+            status: constants.OPEN,
+            name: '',
+            comment: ''
+          }
+        ]
+      }
+    ];
+    function dispatch(action) {
+      dispatched = action;
+    }
+    function getState() {
+      return { orders };
+    }
+    const expected = {
+      type: constants.SET_STATE,
+      state: {
+        orders: [
+          {
+            id: 1,
+            status: constants.OPEN,
+            entries: [
+              {
+                status: constants.DELIVERED,
+                name: '',
+                comment: ''
+              }
+            ]
+          }
+        ]
+      }
+    };
+
+    actions.changeEntryStatus(1, 0, constants.DELIVERED)(dispatch, getState).then(() => {
       expect(dispatched).to.deep.equal(expected);
       done();
     });

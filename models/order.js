@@ -3,11 +3,12 @@ import { Schema } from 'mongoose';
 import constants  from '../src/constants';
 import Item from './item';
 import Entry from './entry';
+import _ from 'underscore';
 
 const orderSchema = new Schema({
   id: String,
   status: { type: String, default: constants.OPEN },
-  entries: [Entry]
+  entries: [Entry.schema]
 });
 
 orderSchema.statics.getOrders = function() {
@@ -16,6 +17,14 @@ orderSchema.statics.getOrders = function() {
   .catch((e) => {
     throw new Error(e);
   });
+}
+
+orderSchema.statics.updateEntry = function(orderId, entryIndex, update) {
+  return updateEntry.call(this, orderId, entryIndex, update)
+    .then((order) => getEntries([order]))
+    .catch((e) => {
+      throw new Error(e);
+    });
 }
 
 function getOrders() {
@@ -29,6 +38,27 @@ function getOrders() {
 
       resolve(orders.map(toOrder));
     });
+  });
+}
+
+function updateEntry(orderId, entryIndex, update) {
+  const Order = this;
+
+  return new Promise((resolve, reject) => {
+    Order.findOne({ id: orderId })
+      .then((order) => {
+        const entries = order.entries;
+        const entry = entries[entryIndex];
+        const updatedEntries = [
+          ...entries.slice(0, entryIndex),
+          _.extend(entry, update),
+          ...entries.slice(entryIndex + 1)
+        ];
+
+        order.entries = updatedEntries;
+        return order.save();
+      })
+      .then((order) => resolve(toOrder(order)));
   });
 }
 

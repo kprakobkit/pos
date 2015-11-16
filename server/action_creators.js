@@ -3,6 +3,7 @@ import constants from '../src/constants';
 import Order from '../models/order';
 import Item from '../models/item';
 import faker from 'faker';
+import _ from 'underscore';
 
 export function setState(state) {
   return {
@@ -19,14 +20,14 @@ export function toggleOrder(id) {
     const status = order.status === constants.OPEN ? constants.CLOSED : constants.OPEN;
 
     return Order.findOneAndUpdate({ id }, { status }, { new: true })
-    .then((response) => {
-      const updatedOrders = [
-        ...orders.slice(0, orderIndex),
-        toOrder(response),
-        ...orders.slice(orderIndex + 1)
-      ];
-      dispatch(setState({ orders: updatedOrders }));
-    });
+      .then((response) => {
+        const updatedOrders = [
+          ...orders.slice(0, orderIndex),
+          toOrder(response),
+          ...orders.slice(orderIndex + 1)
+        ];
+        dispatch(setState({ orders: updatedOrders }));
+      });
   };
 }
 
@@ -70,6 +71,24 @@ export function addOrder(entries) {
   };
 }
 
+export function changeEntryStatus(orderId, entryIndex, status) {
+  return (dispatch, getState) => {
+    const orders = getState().orders;
+    const orderIndex = orders.findIndex((order) => order.id === orderId);
+
+    return Order.updateEntry(orderId, entryIndex, { status })
+      .then((response) => {
+        const updatedOrders = [
+          ...orders.slice(0, orderIndex),
+          response[0],
+          ...orders.slice(orderIndex + 1)
+        ];
+
+        dispatch(setState({ orders: updatedOrders }));
+      });
+  };
+}
+
 function toMasterItem({ _id, name, price }) {
   return { id: _id, name, price };
 }
@@ -78,7 +97,7 @@ function toOrder({ id, status, entries }) {
   return {
     id,
     status,
-    entries: entries
+    entries
   };
 }
 
@@ -87,5 +106,6 @@ export default {
   toggleOrder,
   loadOrders,
   loadItems,
-  addOrder
+  addOrder,
+  changeEntryStatus
 };
