@@ -17,12 +17,19 @@ describe('Master Items', () => {
   const food = { id: '1', name: 'food' };
   const burger = { id: '2', name: 'burger' };
   const masterItems = [food, burger];
+  const title = 'title';
   let handleUpdateEntries;
   let component;
 
   beforeEach(() => {
     handleUpdateEntries = spy();
-    component = renderIntoDocument(MasterItems({ masterItems, handleUpdateEntries, entries: [] }));
+    component = renderIntoDocument(MasterItems({ masterItems, handleUpdateEntries, entries: [], title }));
+  });
+
+  it('should the title', () => {
+    const titleFld = findRenderedDOMComponentWithClass(component, 'title');
+
+    expect(titleFld.textContent).to.equal(title);
   });
 
   it('should clear comment after adding an entry', () => {

@@ -39,11 +39,11 @@ class MasterItems extends Component {
   render() {
     return dom.div(
       null,
-      dom.h1(null, 'New Order'),
-      MasterItemsSelect(_.extend({}, {
+      dom.h1({ className: 'title' }, this.props.title),
+      MasterItemsSelect({
         masterItems: this.props.masterItems,
         onSelectMasterItem: this.selectItem
-      })),
+      }),
       dom.p(
         null,
         dom.input(

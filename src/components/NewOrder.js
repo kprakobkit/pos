@@ -40,7 +40,8 @@ class NewOrder extends Component {
       MasterItems(_.extend({}, {
         masterItems: this.props.masterItems,
         handleUpdateEntries: this.updateEntries,
-        entries: this.state.entries
+        entries: this.state.entries,
+        title: 'New Order'
       })),
       dom.div(
         null,
