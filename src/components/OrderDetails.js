@@ -28,6 +28,11 @@ class OrderDetails extends Component {
     this.setState({ order });
   }
 
+  componentWillReceiveProps(props) {
+    const order = _.find(props.orders, { id: this.props.params.id });
+    this.setState({ order });
+  }
+
   renderEntry(entry, i) {
     return Entry(
       _.extend({}, entry, {
