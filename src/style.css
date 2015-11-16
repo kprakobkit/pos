@@ -10,3 +10,7 @@
 .order h3 {
   color: black;
 }
+
+.entry-action {
+  text-align: right;
+}
