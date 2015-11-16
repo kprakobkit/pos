@@ -1,4 +1,4 @@
-import { expect, spy } from 'chai';
+import { expect } from 'chai';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
@@ -22,7 +22,6 @@ describe('Master Items', () => {
   let component;
 
   beforeEach(() => {
-    handleUpdateEntries = spy();
     component = renderIntoDocument(MasterItems({ masterItems, handleUpdateEntries, entries: [], title }));
   });
 
@@ -55,10 +54,10 @@ describe('Master Items', () => {
     Simulate.change(addCommentFld, { target: { value: 'no meat' } });
     Simulate.click(addEntry);
 
-    const entries = handleUpdateEntries.__spy.calls[0][0];
-    expect(entries[0].name).to.equal(burger.name);
-    expect(entries[0].id).to.equal(burger.id);
-    expect(entries[0].comment).to.equal('no meat');
+    const entryName = findRenderedDOMComponentWithClass(component, 'entry-name');
+    const entryComment = findRenderedDOMComponentWithClass(component, 'entry-comment');
+    expect(entryName.textContent).to.equal(burger.name);
+    expect(entryComment.textContent).to.equal('no meat');
   });
 
   it('defaults to the first item in master items', () => {
@@ -66,7 +65,7 @@ describe('Master Items', () => {
 
     Simulate.click(addEntry);
 
-    const entries = handleUpdateEntries.__spy.calls[0][0];
-    expect(entries[0].name).to.equal(food.name);
+    const entryName = findRenderedDOMComponentWithClass(component, 'entry-name');
+    expect(entryName.textContent).to.equal(food.name);
   });
 });

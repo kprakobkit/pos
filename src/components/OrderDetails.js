@@ -3,12 +3,15 @@ import { connect } from 'react-redux';
 import actions from '../action_creators';
 import _ from 'underscore';
 import EntryComponent from './Entry';
+import MasterItemsComponent from './MasterItems';
 
 const Entry = createFactory(EntryComponent);
+const MasterItems = createFactory(MasterItemsComponent);
 
 function mapStateToProps(state) {
   return {
-    orders: state.orders
+    orders: state.orders,
+    masterItems: state.items
   };
 }
 
@@ -21,13 +24,14 @@ class OrderDetails extends Component {
       order: {
         entries: {}
       },
-      showForm: false
+      showAddEntry: false
     };
   }
 
   componentWillMount() {
     const order = _.find(this.props.orders, { id: this.props.params.id });
     this.setState({ order });
+    this.props.loadItems();
   }
 
   componentWillReceiveProps(props) {
@@ -36,7 +40,7 @@ class OrderDetails extends Component {
   }
 
   toggleForm() {
-    this.setState({ showForm: !this.state.showForm });
+    this.setState({ showAddEntry: !this.state.showAddEntry });
   }
 
   renderEntry(entry, i) {
@@ -66,18 +70,24 @@ class OrderDetails extends Component {
           )
         ),
         dom.button({ className: 'toggle-add-entry', onClick: this.toggleForm }, 'Add more entry'),
-        this.state.showForm ? dom.p({ className: 'add-more-entry' }, 'form') : null
+        this.state.showAddEntry ? MasterItems({
+          masterItems: this.props.masterItems,
+          handleSubmit: () => { console.log('submitting'); },
+          title: 'Add entry'
+        }) : null
       )
     );
   }
 }
 
 OrderDetails.propTypes = {
-  orders: PropTypes.array.isRequired
+  orders: PropTypes.array.isRequired,
+  masterItems: PropTypes.array.isRequired
 };
 
 OrderDetails.defaultProps = {
-  orders: []
+  orders: [],
+  masterItems: []
 };
 
 export default OrderDetails;
