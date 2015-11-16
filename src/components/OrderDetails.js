@@ -16,10 +16,12 @@ class OrderDetails extends Component {
   constructor(props) {
     super(props);
     this.renderEntry = this.renderEntry.bind(this);
+    this.toggleForm = this.toggleForm.bind(this);
     this.state = {
       order: {
         entries: {}
-      }
+      },
+      showForm: false
     };
   }
 
@@ -31,6 +33,10 @@ class OrderDetails extends Component {
   componentWillReceiveProps(props) {
     const order = _.find(props.orders, { id: this.props.params.id });
     this.setState({ order });
+  }
+
+  toggleForm() {
+    this.setState({ showForm: !this.state.showForm });
   }
 
   renderEntry(entry, i) {
@@ -58,7 +64,9 @@ class OrderDetails extends Component {
               this.state.order.entries.map(this.renderEntry)
             )
           )
-        )
+        ),
+        dom.button({ className: 'toggle-add-entry', onClick: this.toggleForm }, 'Add more entry'),
+        this.state.showForm ? dom.p({ className: 'add-more-entry' }, 'form') : null
       )
     );
   }

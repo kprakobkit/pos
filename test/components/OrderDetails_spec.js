@@ -7,7 +7,8 @@ import OrderDetailsComponent from '../../src/components/OrderDetails';
 const {
   renderIntoDocument,
   findRenderedDOMComponentWithClass,
-  scryRenderedDOMComponentsWithClass
+  scryRenderedDOMComponentsWithClass,
+  Simulate
 } = TestUtils;
 const OrderDetails = React.createFactory(OrderDetailsComponent);
 
@@ -51,6 +52,21 @@ describe('OrderDetails', () => {
     expect(entryComments[1].textContent).to.contain('sunny side up');
     expect(entryStatuses[0].textContent).to.contain('OPEN');
     expect(entryStatuses[1].textContent).to.contain('DELIVERED');
+  });
+
+  it('toggles add entry', () => {
+    const props = { orders: [{ status: 'open', id: 1, entries: [] }], params: { id: 1 }, changeEntryStatus };
+    const component = renderIntoDocument(OrderDetails(props));
+    const toggleForm = findRenderedDOMComponentWithClass(component, 'toggle-add-entry');
+    let addMoreEntry = scryRenderedDOMComponentsWithClass(component, 'add-more-entry');
+
+    expect(addMoreEntry.length).to.equal(0);
+
+    Simulate.click(toggleForm);
+
+    addMoreEntry = findRenderedDOMComponentWithClass(component, 'add-more-entry');
+
+    expect(addMoreEntry.textContent).to.equal('form');
   });
 });
 
