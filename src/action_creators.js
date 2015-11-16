@@ -7,14 +7,6 @@ export function setState(state) {
   };
 }
 
-export function toggleOrder(id) {
-  return {
-    meta: { remote: true },
-    type: constants.TOGGLE_ORDER,
-    id
-  };
-}
-
 export function loadOrders() {
   return {
     meta: { remote: true },
@@ -49,7 +41,6 @@ export function changeEntryStatus(orderId, entryIndex, status) {
 
 export default {
   setState,
-  toggleOrder,
   loadOrders,
   loadItems,
   addOrder,
