@@ -72,7 +72,13 @@ class MasterItems extends Component {
         null,
         dom.button(
           { className: 'btn btn-default add-entry btn-lg btn-block', onClick: this.handleAddEntry },
-          'Add Item'
+          dom.span(
+            {
+              className: 'glyphicon glyphicon-plus',
+              'aria-hidden': true
+            }
+          ),
+          ' Add Item',
         )
       ),
       dom.div(

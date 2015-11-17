@@ -64,7 +64,7 @@ class Orders extends Component {
           dom.p(
             null,
             dom.button(
-              { className: 'btn btn-primary btn-lg btn-block' },
+              { className: 'btn btn-success btn-lg btn-block' },
               'New Order'
             )
           )
