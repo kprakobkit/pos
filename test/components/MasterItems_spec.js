@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { expect, spy } from 'chai';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
@@ -18,11 +18,13 @@ describe('Master Items', () => {
   const burger = { id: '2', name: 'burger' };
   const masterItems = [food, burger];
   const title = 'title';
+  let handleSubmit;
   let handleUpdateEntries;
   let component;
 
   beforeEach(() => {
-    component = renderIntoDocument(MasterItems({ masterItems, handleUpdateEntries, entries: [], title }));
+  handleSubmit = spy();
+    component = renderIntoDocument(MasterItems({ masterItems, handleUpdateEntries, entries: [], title, handleSubmit }));
   });
 
   it('should render the title', () => {
@@ -67,5 +69,20 @@ describe('Master Items', () => {
 
     const entryName = findRenderedDOMComponentWithClass(component, 'entry-name');
     expect(entryName.textContent).to.equal(food.name);
+  });
+
+  it('calls the handle submit prop with entries', () => {
+    const submitOrder = findRenderedDOMComponentWithClass(component, 'submit-order');
+    const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry');
+    const selectItems = findRenderedDOMComponentWithClass(component, 'select-items');
+
+    Simulate.change(selectItems, { target: { value: burger.id } });
+    Simulate.click(addEntry);
+    Simulate.click(addEntry);
+    Simulate.click(submitOrder);
+
+    expect(handleSubmit.__spy.calls[0][0].length).to.equal(2);
+    expect(handleSubmit.__spy.calls[0][0][0].name).to.equal(burger.name);
+    expect(handleSubmit).to.have.been.called();
   });
 });
