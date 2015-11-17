@@ -1,6 +1,7 @@
 import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import { connect } from 'react-redux';
 import actions from '../action_creators';
+import constants from '../constants';
 import _ from 'underscore';
 import EntryComponent from './Entry';
 
@@ -34,13 +35,15 @@ class OrderDetails extends Component {
   }
 
   renderEntry(entry, i) {
-    return Entry(
-      _.extend({}, entry, {
-        key: i,
-        index: i,
-        changeEntryStatus: this.props.changeEntryStatus.bind(null, this.props.params.id)
-      })
-    );
+    return entry.status !== constants.CANCELED ?
+      Entry(
+        _.extend({}, entry, {
+          key: i,
+          index: i,
+          changeEntryStatus: this.props.changeEntryStatus.bind(null, this.props.params.id)
+        })
+      ) :
+      null;
   }
 
   render() {
