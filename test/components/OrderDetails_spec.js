@@ -35,9 +35,10 @@ describe('OrderDetails', () => {
     expect(status.textContent).to.contain('open');
   });
 
-  it('renders the order entries', () => {
+  it('renders the active order entries', () => {
     const entries = [
       { name: 'rice', price: 1050, comment: 'brown rice', status: 'OPEN' },
+      { name: 'pho', price: 850, comment: 'extra meat', status: 'CANCELED' },
       { name: 'egg', price: 150, comment: 'sunny side up', status: 'DELIVERED' }
     ];
     const props = { orders: [{ status: 'open', id: 1, entries }], params: { id: 1 }, changeEntryStatus, loadItems };
