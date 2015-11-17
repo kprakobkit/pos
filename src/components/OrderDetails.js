@@ -59,6 +59,15 @@ class OrderDetails extends Component {
         null,
         dom.h1({ className: 'order-title' }, `Order #${this.props.params.id}`),
         dom.h2({ className: 'order-status' }, `Status: ${this.state.order.status}`),
+        dom.button(
+          { className: 'toggle-add-entry btn btn-link btn-lg btn-block', onClick: this.toggleForm },
+          this.state.showAddEntry ? 'Close' : 'Add more items'
+        ),
+        this.state.showAddEntry ? MasterItems({
+          masterItems: this.props.masterItems,
+          handleSubmit: this.props.addEntriesToOrder.bind(null, this.props.params.id)
+        }) : null,
+        dom.br(null),
         dom.div(
           { className: 'order-entries' },
           dom.table(
@@ -68,13 +77,7 @@ class OrderDetails extends Component {
               this.state.order.entries.map(this.renderEntry)
             )
           )
-        ),
-        dom.button({ className: 'toggle-add-entry', onClick: this.toggleForm }, 'Add more entry'),
-        this.state.showAddEntry ? MasterItems({
-          masterItems: this.props.masterItems,
-          handleSubmit: this.props.addEntriesToOrder.bind(null, this.props.params.id),
-          title: 'Add entry'
-        }) : null
+        )
       )
     );
   }

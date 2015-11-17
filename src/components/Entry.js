@@ -19,7 +19,7 @@ class Entry extends Component {
     return dom.tr(
       { className: 'order-entry' },
       dom.td({ className: 'entry-name' }, dom.h2(null, this.props.name)),
-      dom.td({ className: 'entry-comment' }, dom.h3(null, this.props.comment)),
+      dom.td({ className: 'entry-comment' }, dom.h2(null, dom.small(null, this.props.comment))),
       dom.td(
         { className: 'entry-status' },
         dom.select(

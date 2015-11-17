@@ -84,7 +84,7 @@ class MasterItems extends Component {
             this.state.entries.map((entry, i) => dom.tr(
               { className: 'entries', key: i },
               dom.td({ className: 'entry-name' }, dom.h2(null, entry.name)),
-              dom.td({ className: 'entry-comment' }, dom.h3(null, entry.comment)),
+              dom.td({ className: 'entry-comment' }, dom.h2(null, dom.small(null, entry.comment))),
               dom.td(
                 { className: 'entry-action' },
                 dom.button(
