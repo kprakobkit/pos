@@ -10,6 +10,7 @@ import reducer from './reducer';
 import { setState } from './action_creators';
 import remoteActionMiddleware from './remote_action_middleware';
 import io from 'socket.io-client';
+import config from '../config';
 
 require('./style.css');
 
@@ -17,7 +18,12 @@ const router   = React.createFactory(Router);
 const provider = React.createFactory(Provider);
 
 const thisDocument = window.document;
-const port = thisDocument.location.hostname === 'localhost' ? ':3000' : '';
+let port = '';
+
+if (config.demoMode || thisDocument.location.hostname === 'localhost') {
+  port = ':3000';
+}
+
 const location = `${thisDocument.location.protocol}//${thisDocument.location.hostname}${port}`;
 const socket = io.connect(location);
 
