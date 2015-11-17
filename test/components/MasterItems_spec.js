@@ -25,7 +25,7 @@ describe('Master Items', () => {
     component = renderIntoDocument(MasterItems({ masterItems, handleUpdateEntries, entries: [], title }));
   });
 
-  it('should the title', () => {
+  it('should render the title', () => {
     const titleFld = findRenderedDOMComponentWithClass(component, 'title');
 
     expect(titleFld.textContent).to.equal(title);
