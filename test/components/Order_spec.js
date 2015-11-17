@@ -3,6 +3,7 @@ import { Component, DOM as dom, createFactory } from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import constants from '../../src/constants';
+import tableComponentFactory from './table_component_factory';
 import OrderComponent from '../../src/components/Order';
 
 const {
@@ -11,20 +12,7 @@ const {
   Simulate
 } = TestUtils;
 const Order = createFactory(OrderComponent);
-
-class TableComponent extends Component {
-  render() {
-    return dom.table(
-      null,
-      dom.tbody(
-        null,
-        Order(this.props)
-      )
-    );
-  };
-}
-
-const Table = createFactory(TableComponent);
+const Table = createFactory(tableComponentFactory(Order));
 
 describe('Order', () => {
   const id = '1';
