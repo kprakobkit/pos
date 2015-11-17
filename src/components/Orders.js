@@ -71,7 +71,13 @@ class Orders extends Component {
           }
         ),
         this.props.orders.length ?
-          this.getFilteredOrders().map(this.renderOrder) :
+          dom.table(
+            { className: 'table table-hover' },
+            dom.tbody(
+              null,
+              this.getFilteredOrders().map(this.renderOrder)
+            )
+          ) :
           dom.div({ className: 'orders-message' }, 'There are currently no orders.')
       )
     );
