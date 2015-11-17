@@ -81,7 +81,7 @@ class MasterItems extends Component {
           { className: 'table table-striped' },
           dom.tbody(
             null,
-            this.state.entries.map((entry, i) => dom.tr(
+            this.state.entries.length > 0 ? this.state.entries.map((entry, i) => dom.tr(
               { className: 'entries', key: i },
               dom.td({ className: 'entry-name' }, dom.h2(null, entry.name)),
               dom.td({ className: 'entry-comment' }, dom.h2(null, dom.small(null, entry.comment))),
@@ -100,7 +100,7 @@ class MasterItems extends Component {
                   )
                 )
               )
-            ))
+            )) : dom.tr({ className: 'no-entries' }, dom.td(null, dom.h2({ className: 'text-center text-danger lead' }, 'There is currently nothing to send to the kitchen.'))),
           )
         )
       ),
