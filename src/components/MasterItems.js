@@ -11,6 +11,7 @@ class MasterItems extends Component {
     this.addComment = this.addComment.bind(this);
     this.handleAddEntry = this.handleAddEntry.bind(this);
     this.removeEntry = this.removeEntry.bind(this);
+    this.handleOnClick = this.handleOnClick.bind(this);
     this.state = {
       comment: '',
       entries: []
@@ -41,6 +42,11 @@ class MasterItems extends Component {
     const updatedEntries = _.without(this.state.entries, entry);
 
     this.setState({ entries: updatedEntries });
+  }
+
+  handleOnClick() {
+    this.props.handleSubmit(this.state.entries);
+    this.setState({ entries: [] });
   }
 
   render() {
@@ -99,7 +105,7 @@ class MasterItems extends Component {
         )
       ),
       dom.button(
-        { className: 'btn btn-primary submit-order btn-lg btn-block', onClick: () => { this.props.handleSubmit(this.state.entries); } },
+        { className: 'btn btn-primary submit-order btn-lg btn-block', onClick: this.handleOnClick },
           'Submit'
       )
     );

@@ -85,4 +85,16 @@ describe('Master Items', () => {
     expect(handleSubmit.__spy.calls[0][0][0].name).to.equal(burger.name);
     expect(handleSubmit).to.have.been.called();
   });
+
+  it('clears the entries list after submit', () => {
+    const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry');
+    const submitOrder = findRenderedDOMComponentWithClass(component, 'submit-order');
+
+    Simulate.click(addEntry);
+    Simulate.click(submitOrder);
+
+    const entries = scryRenderedDOMComponentsWithClass(component, 'entries');
+
+    expect(entries.length).to.equal(0);
+  });
 });
