@@ -2,3 +2,11 @@
 .entries .entry-action {
   vertical-align: middle
 }
+
+.orders-filter {
+  margin-bottom: 40px;
+}
+
+.order h3 {
+  color: black;
+}

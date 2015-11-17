@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import React from 'react';
+import { Component, DOM as dom, createFactory } from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import constants from '../../src/constants';
@@ -10,7 +10,21 @@ const {
   findRenderedDOMComponentWithClass,
   Simulate
 } = TestUtils;
-const Order = React.createFactory(OrderComponent);
+const Order = createFactory(OrderComponent);
+
+class TableComponent extends Component {
+  render() {
+    return dom.table(
+      null,
+      dom.tbody(
+        null,
+        Order(this.props)
+      )
+    );
+  };
+}
+
+const Table = createFactory(TableComponent);
 
 describe('Order', () => {
   const id = '1';
@@ -19,7 +33,7 @@ describe('Order', () => {
 
   it('renders id', () => {
     const props = { id, status, printOrderStatus };
-    const component = renderIntoDocument(Order(props));
+    const component = renderIntoDocument(Table(props));
     const orderId = findRenderedDOMComponentWithClass(component, 'order-number');
 
     expect(orderId.textContent).to.contain(id.toString());
@@ -27,7 +41,7 @@ describe('Order', () => {
 
   it('renders status', () => {
     const props = { id, status, printOrderStatus };
-    const component = renderIntoDocument(Order(props));
+    const component = renderIntoDocument(Table(props));
     const orderStatus = findRenderedDOMComponentWithClass(component, 'order-status');
 
     expect(orderStatus.textContent).to.contain(status);
