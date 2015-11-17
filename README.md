@@ -1,3 +1,7 @@
+
+![Travis CI: Status](https://travis-ci.org/travis-ci/travis-web.svg?branch=web-on-v3
+)
+
 # To run the app, follow these steps:
 
 1. Run 'go setup'.
