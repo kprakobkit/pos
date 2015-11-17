@@ -60,15 +60,15 @@ describe('OrderDetails', () => {
     const props = { orders: [{ status: 'open', id: 1, entries: [] }], params: { id: 1 }, changeEntryStatus, loadItems, addEntriesToOrder };
     const component = renderIntoDocument(OrderDetails(props));
     const toggleForm = findRenderedDOMComponentWithClass(component, 'toggle-add-entry');
-    let addMoreEntry = scryRenderedDOMComponentsWithClass(component, 'add-more-entry');
+    let masterItems = scryRenderedDOMComponentsWithClass(component, 'master-items');
 
-    expect(addMoreEntry.length).to.equal(0);
+    expect(masterItems.length).to.equal(0);
 
     Simulate.click(toggleForm);
 
-    addMoreEntry = findRenderedDOMComponentWithClass(component, 'master-items');
+    masterItems = findRenderedDOMComponentWithClass(component, 'master-items');
 
-    expect(addMoreEntry).to.exist;
+    expect(masterItems).to.exist;
   });
 });
 
