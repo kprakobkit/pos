@@ -97,4 +97,15 @@ describe('Master Items', () => {
 
     expect(entries.length).to.equal(0);
   });
+
+  it('shows message when no entries', () => {
+    let noEntriesMsg = scryRenderedDOMComponentsWithClass(component, 'no-entries');
+    const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry');
+
+    expect(noEntriesMsg.length).to.be.above(0);
+    Simulate.click(addEntry);
+
+    noEntriesMsg = scryRenderedDOMComponentsWithClass(component, 'no-entries');
+    expect(noEntriesMsg.length).to.equal(0);
+  });
 });
