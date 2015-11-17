@@ -32,7 +32,7 @@ describe('OrderDetails', () => {
     expect(status.textContent).to.contain('open');
   });
 
-  it('renders the order entries', () => {
+  it('renders the active order entries', () => {
     const entries = [
       { name: 'rice', price: 1050, comment: 'brown rice', status: 'OPEN' },
       { name: 'pho', price: 850, comment: 'extra meat', status: 'CANCELED' },
