@@ -1,3 +1,7 @@
+a:hover {
+  text-decoration: none;
+}
+
 .order-entry .entry-status,
 .entries .entry-action {
   vertical-align: middle
@@ -9,4 +13,8 @@
 
 .order h3 {
   color: black;
+}
+
+.entry-action {
+  text-align: right;
 }

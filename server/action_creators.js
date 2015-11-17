@@ -70,6 +70,16 @@ export function changeEntryStatus(orderId, entryIndex, status) {
   };
 }
 
+export function addEntriesToOrder(orderId, newEntries) {
+  return (dispatch, getState) => {
+    return Order.addEntries(orderId, newEntries).then(() => {
+      return Order.getOrders();
+    }).then((orders) => {
+      dispatch(setState({ orders }));
+    });
+  };
+}
+
 function toMasterItem({ _id, name, price }) {
   return { id: _id, name, price };
 }
@@ -87,5 +97,6 @@ export default {
   loadOrders,
   loadItems,
   addOrder,
-  changeEntryStatus
+  changeEntryStatus,
+  addEntriesToOrder
 };

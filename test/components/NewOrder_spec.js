@@ -33,16 +33,11 @@ describe('New Order', () => {
 
     Simulate.change(selectItems, { target: { value: burger.id } });
     Simulate.click(addEntry);
-    const removeEntry = scryRenderedDOMComponentsWithClass(component, 'remove-entry');
-    Simulate.click(removeEntry[0]);
-    Simulate.change(selectItems, { target: { value: food.id } });
-    Simulate.click(addEntry);
-    Simulate.click(submitOrder);
+    const removeEntry = findRenderedDOMComponentWithClass(component, 'remove-entry');
+    Simulate.click(removeEntry);
 
     const entries = scryRenderedDOMComponentsWithClass(component, 'entries');
-    const entryName = scryRenderedDOMComponentsWithClass(component, 'entry-name');
-    expect(entries.length).to.equal(1);
-    expect(entryName[0].textContent).to.equal(food.name);
+    expect(entries.length).to.equal(0);
   });
 
   it('adds an order on submit', () => {

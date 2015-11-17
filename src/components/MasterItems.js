@@ -10,18 +10,20 @@ class MasterItems extends Component {
     this.selectItem = this.selectItem.bind(this);
     this.addComment = this.addComment.bind(this);
     this.handleAddEntry = this.handleAddEntry.bind(this);
+    this.removeEntry = this.removeEntry.bind(this);
+    this.handleOnClick = this.handleOnClick.bind(this);
     this.state = {
-      comment: ''
+      comment: '',
+      entries: []
     };
   }
 
   handleAddEntry() {
     const selectedItem = _.extend({}, this.state.selectedItem || this.props.masterItems[0]);
     selectedItem.comment = this.state.comment;
-    const entries = this.props.entries.concat(selectedItem);
+    const entries = this.state.entries.concat(selectedItem);
 
-    this.setState({ comment: '' });
-    this.props.handleUpdateEntries(entries);
+    this.setState({ entries, comment: '' });
   }
 
   selectItem(itemId) {
@@ -36,9 +38,20 @@ class MasterItems extends Component {
     this.setState({ comment });
   }
 
+  removeEntry(entry) {
+    const updatedEntries = _.without(this.state.entries, entry);
+
+    this.setState({ entries: updatedEntries });
+  }
+
+  handleOnClick() {
+    this.props.handleSubmit(this.state.entries);
+    this.setState({ entries: [] });
+  }
+
   render() {
     return dom.div(
-      null,
+      { className: 'master-items' },
       dom.h1({ className: 'title' }, this.props.title),
       MasterItemsSelect({
         masterItems: this.props.masterItems,
@@ -62,6 +75,42 @@ class MasterItems extends Component {
           'Add Item'
         )
       ),
+      dom.div(
+        null,
+        dom.table(
+          { className: 'table table-striped' },
+          dom.tbody(
+            null,
+            this.state.entries.map((entry, i) => dom.tr(
+              { className: 'entries', key: i },
+              dom.td({ className: 'entry-name' }, dom.h2(null, entry.name)),
+              dom.td({ className: 'entry-comment' }, dom.h2(null, dom.small(null, entry.comment))),
+              dom.td(
+                { className: 'entry-action' },
+                dom.button(
+                  {
+                    className: 'btn btn-default remove-entry',
+                    onClick: this.removeEntry.bind(this, entry)
+                  },
+                  dom.span(
+                    {
+                      className: 'glyphicon glyphicon-remove',
+                      'aria-hidden': true
+                    }
+                  )
+                )
+              )
+            ))
+          )
+        )
+      ),
+      dom.p(
+        null,
+        dom.button(
+          { className: 'btn btn-primary submit-order btn-lg btn-block', onClick: this.handleOnClick },
+          'Submit'
+        )
+      )
     );
   }
 }

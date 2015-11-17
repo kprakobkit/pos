@@ -18,15 +18,16 @@ describe('Master Items', () => {
   const burger = { id: '2', name: 'burger' };
   const masterItems = [food, burger];
   const title = 'title';
+  let handleSubmit;
   let handleUpdateEntries;
   let component;
 
   beforeEach(() => {
-    handleUpdateEntries = spy();
-    component = renderIntoDocument(MasterItems({ masterItems, handleUpdateEntries, entries: [], title }));
+  handleSubmit = spy();
+    component = renderIntoDocument(MasterItems({ masterItems, handleUpdateEntries, entries: [], title, handleSubmit }));
   });
 
-  it('should the title', () => {
+  it('should render the title', () => {
     const titleFld = findRenderedDOMComponentWithClass(component, 'title');
 
     expect(titleFld.textContent).to.equal(title);
@@ -55,10 +56,10 @@ describe('Master Items', () => {
     Simulate.change(addCommentFld, { target: { value: 'no meat' } });
     Simulate.click(addEntry);
 
-    const entries = handleUpdateEntries.__spy.calls[0][0];
-    expect(entries[0].name).to.equal(burger.name);
-    expect(entries[0].id).to.equal(burger.id);
-    expect(entries[0].comment).to.equal('no meat');
+    const entryName = findRenderedDOMComponentWithClass(component, 'entry-name');
+    const entryComment = findRenderedDOMComponentWithClass(component, 'entry-comment');
+    expect(entryName.textContent).to.equal(burger.name);
+    expect(entryComment.textContent).to.equal('no meat');
   });
 
   it('defaults to the first item in master items', () => {
@@ -66,7 +67,34 @@ describe('Master Items', () => {
 
     Simulate.click(addEntry);
 
-    const entries = handleUpdateEntries.__spy.calls[0][0];
-    expect(entries[0].name).to.equal(food.name);
+    const entryName = findRenderedDOMComponentWithClass(component, 'entry-name');
+    expect(entryName.textContent).to.equal(food.name);
+  });
+
+  it('calls the handle submit prop with entries', () => {
+    const submitOrder = findRenderedDOMComponentWithClass(component, 'submit-order');
+    const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry');
+    const selectItems = findRenderedDOMComponentWithClass(component, 'select-items');
+
+    Simulate.change(selectItems, { target: { value: burger.id } });
+    Simulate.click(addEntry);
+    Simulate.click(addEntry);
+    Simulate.click(submitOrder);
+
+    expect(handleSubmit.__spy.calls[0][0].length).to.equal(2);
+    expect(handleSubmit.__spy.calls[0][0][0].name).to.equal(burger.name);
+    expect(handleSubmit).to.have.been.called();
+  });
+
+  it('clears the entries list after submit', () => {
+    const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry');
+    const submitOrder = findRenderedDOMComponentWithClass(component, 'submit-order');
+
+    Simulate.click(addEntry);
+    Simulate.click(submitOrder);
+
+    const entries = scryRenderedDOMComponentsWithClass(component, 'entries');
+
+    expect(entries.length).to.equal(0);
   });
 });
