@@ -29,6 +29,16 @@ export function addOrder(entries) {
   };
 }
 
+export function addEntriesToOrder(orderId, entries) {
+  return {
+    meta: { remote: true },
+    type: constants.ADD_ENTRIES_TO_ORDER,
+    entries,
+    orderId
+  };
+}
+
+
 export function changeEntryStatus(orderId, entryIndex, status) {
   return {
     meta: { remote: true },
@@ -44,5 +54,6 @@ export default {
   loadOrders,
   loadItems,
   addOrder,
-  changeEntryStatus
+  changeEntryStatus,
+  addEntriesToOrder
 };

@@ -27,6 +27,19 @@ orderSchema.statics.updateEntry = function(orderId, entryIndex, update) {
     });
 }
 
+orderSchema.statics.addEntries = function(orderId, newEntries) {
+  return this.findOne({ id: orderId }).then((order) => {
+    const entries = order.entries;
+    const updatedEntries = newEntries.map((entry) => ({
+      item_id: mongoose.Types.ObjectId(entry.id),
+      comment: entry.comment
+    }));
+
+    order.entries = entries.concat(updatedEntries);
+    return order.save();
+  })
+}
+
 function getOrders() {
   const Order = this;
 

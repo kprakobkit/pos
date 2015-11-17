@@ -72,7 +72,7 @@ class OrderDetails extends Component {
         dom.button({ className: 'toggle-add-entry', onClick: this.toggleForm }, 'Add more entry'),
         this.state.showAddEntry ? MasterItems({
           masterItems: this.props.masterItems,
-          handleSubmit: () => { console.log('submitting'); },
+          handleSubmit: this.props.addEntriesToOrder.bind(null, this.props.params.id),
           title: 'Add entry'
         }) : null
       )

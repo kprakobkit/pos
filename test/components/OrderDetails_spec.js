@@ -15,6 +15,7 @@ const OrderDetails = React.createFactory(OrderDetailsComponent);
 describe('OrderDetails', () => {
   const changeEntryStatus = () => {};
   const loadItems = () => {};
+  const addEntriesToOrder = () => {};
 
   it('renders title with correct order number from params', () => {
     const id = 1;
@@ -56,7 +57,7 @@ describe('OrderDetails', () => {
   });
 
   it('toggles add entry', () => {
-    const props = { orders: [{ status: 'open', id: 1, entries: [] }], params: { id: 1 }, changeEntryStatus, loadItems };
+    const props = { orders: [{ status: 'open', id: 1, entries: [] }], params: { id: 1 }, changeEntryStatus, loadItems, addEntriesToOrder };
     const component = renderIntoDocument(OrderDetails(props));
     const toggleForm = findRenderedDOMComponentWithClass(component, 'toggle-add-entry');
     let addMoreEntry = scryRenderedDOMComponentsWithClass(component, 'add-more-entry');
