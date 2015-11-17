@@ -61,7 +61,13 @@ class Orders extends Component {
         dom.h1({ className: 'orders-title' }, 'Orders'),
         Link(
           { to: '/orders/new' },
-          'New Order'
+          dom.p(
+            null,
+            dom.button(
+              { className: 'btn btn-primary btn-lg btn-block' },
+              'New Order'
+            )
+          )
         ),
         OrdersFilter(
           {

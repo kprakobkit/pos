@@ -65,7 +65,7 @@ class OrderDetails extends Component {
         dom.h1({ className: 'order-title' }, `Order #${this.props.params.id}`),
         dom.h2({ className: 'order-status' }, `Status: ${this.state.order.status}`),
         dom.button(
-          { className: 'toggle-add-entry btn btn-link btn-lg btn-block', onClick: this.toggleForm },
+          { className: 'toggle-add-entry btn btn-info btn-lg btn-block', onClick: this.toggleForm },
           this.state.showAddEntry ? 'Close' : 'Add more items'
         ),
         this.state.showAddEntry ? MasterItems({
