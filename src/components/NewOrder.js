@@ -3,9 +3,12 @@ import { connect } from 'react-redux';
 import MasterItemsComponent from './MasterItems';
 import * as actions from '../action_creators';
 import _ from 'underscore';
+import { Link as LinkComponent } from 'react-router';
 
 const MasterItems = createFactory(MasterItemsComponent);
-const mapStateToProps = function (state) {
+const Link = createFactory(LinkComponent);
+
+function mapStateToProps(state) {
   return {
     masterItems: state.items
   };
@@ -24,6 +27,16 @@ class NewOrder extends Component {
         handleSubmit: this.props.addOrder,
         title: 'New Order'
       }),
+      Link(
+        { to: '/orders', className: 'orders-link' },
+        dom.p(
+          null,
+          dom.button(
+            { className: 'btn btn-danger btn-lg btn-block' },
+            'Back'
+          )
+        )
+      )
     );
   }
 }

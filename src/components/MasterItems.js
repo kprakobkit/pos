@@ -104,9 +104,12 @@ class MasterItems extends Component {
           )
         )
       ),
-      dom.button(
-        { className: 'btn btn-primary submit-order btn-lg btn-block', onClick: this.handleOnClick },
+      dom.p(
+        null,
+        dom.button(
+          { className: 'btn btn-primary submit-order btn-lg btn-block', onClick: this.handleOnClick },
           'Submit'
+        )
       )
     );
   }

@@ -4,9 +4,11 @@ import actions from '../action_creators';
 import _ from 'underscore';
 import EntryComponent from './Entry';
 import MasterItemsComponent from './MasterItems';
+import { Link as LinkComponent } from 'react-router';
 
 const Entry = createFactory(EntryComponent);
 const MasterItems = createFactory(MasterItemsComponent);
+const Link = createFactory(LinkComponent);
 
 function mapStateToProps(state) {
   return {
@@ -75,6 +77,16 @@ class OrderDetails extends Component {
             dom.tbody(
               null,
               this.state.order.entries.map(this.renderEntry)
+            )
+          )
+        ),
+        Link(
+          { to: '/orders', className: 'orders-link' },
+          dom.p(
+            null,
+            dom.button(
+              { className: 'btn btn-danger btn-lg btn-block' },
+              'Back'
             )
           )
         )
