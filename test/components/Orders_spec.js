@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import constants from '../../src/constants';
 import OrdersComponent from '../../src/components/Orders';
+import Generator from '../support/generator';
 
 const {
   renderIntoDocument,
@@ -25,14 +26,13 @@ describe('Orders', () => {
   });
 
   it('renders Order component for each order in props', () => {
-    const order1 = { id: '1', status: constants.OPEN };
-    const order2 = { id: '2', status: constants.OPEN };
-    const order3 = { id: '3', status: constants.OPEN };
-    const orders = [order1, order2, order3];
+    const order1 = Generator.order().build();
+    const order2 = Generator.order().build();
+    const orders = [order1, order2];
     const component = renderIntoDocument(Orders({ orders, loadOrders }));
     const children = scryRenderedDOMComponentsWithClass(component, 'order');
 
-    expect(children.length).to.equal(3);
+    expect(children.length).to.equal(2);
   });
 
   it('renders message if there are no orders', () => {
@@ -43,18 +43,16 @@ describe('Orders', () => {
   });
 
   it('displays orders based on filter', () => {
-    const order1 = { id: '1', status: constants.OPEN };
-    const order2 = { id: '2', status: constants.OPEN };
-    const order3 = { id: '3', status: constants.CLOSED };
-    const orders = [order1, order2, order3];
+    const order1 = Generator.order().status(constants.OPEN).build();
+    const order2 = Generator.order().status(constants.CLOSED).build();
+    const orders = [order1, order2];
     const component = renderIntoDocument(Orders({ orders, loadOrders }));
     const filter = findRenderedDOMComponentWithClass(component, 'orders-filter-open');
     Simulate.click(filter);
     const children = scryRenderedDOMComponentsWithClass(component, 'order');
     const expectedStatus = constants.OPEN.toLowerCase();
 
-    expect(children.length).to.equal(2);
+    expect(children.length).to.equal(1);
     expect(children[0].textContent).to.contain(expectedStatus);
-    expect(children[1].textContent).to.contain(expectedStatus);
   });
 });
