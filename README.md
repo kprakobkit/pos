@@ -1,6 +1,5 @@
 
-![Travis CI: Status](https://travis-ci.org/travis-ci/travis-web.svg?branch=web-on-v3
-)
+![Travis CI: Status](https://travis-ci.org/kprakobkit/pos.svg?branch=master)
 
 # To run the app, follow these steps:
 
