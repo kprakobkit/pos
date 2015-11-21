@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import config from '../config';
 
 process.env.NODE_ENV = 'test';
 
@@ -11,7 +12,7 @@ beforeEach((done) => {
   }
 
   if (mongoose.connection.readyState === 0) {
-    mongoose.connect('mongodb://localhost/testdb', (err) => {
+    mongoose.connect(config.testDB, (err) => {
       if (err) {
         throw err;
       }

@@ -10,6 +10,7 @@ import mongoose from 'mongoose';
 import makeStore from './store';
 import socketEvents from './socket_events';
 import routes from '../src/routes';
+import config from '../config';
 
 const app = express();
 const isProduction = process.env.NODE_ENV === 'production';
@@ -19,7 +20,7 @@ const store = makeStore();
 const RoutingContext = createFactory(RoutingContextComponent);
 const Provider = createFactory(ProviderComponent);
 
-const MongoDB = mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost').connection;
+const MongoDB = mongoose.connect(process.env.MONGOLAB_URI || config.developmentDB).connection;
 MongoDB.on('error', (err) => {
   console.log('Failed to connect go Mongo DB');
   console.log(err.message);

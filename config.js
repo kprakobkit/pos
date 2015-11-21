@@ -1,3 +1,5 @@
 export default {
-  demoMode: false
+  demoMode: false,
+  developmentDB: 'mongodb://localhost/development',
+  testDB:'mongodb://localhost/test'
 }
