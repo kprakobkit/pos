@@ -34,6 +34,22 @@ describe('Ready for Payment', () => {
 
     expect(btn.disabled).to.be.false;
   });
+
+  it('is disabled when there are no entries', () => {
+    const component = renderIntoDocument(ReadyForPaymentBtn({ entries: [] }));
+    const btn = findRenderedDOMComponentWithClass(component, 'ready-for-payment');
+
+    expect(btn.disabled).to.be.true;
+  });
+
+  it('is disabled when all orders are canceled', () => {
+    const canceled = Generator.entry().status(constants.CANCELED).build();
+    const entries = [canceled];
+    const component = renderIntoDocument(ReadyForPaymentBtn({ entries }));
+    const btn = findRenderedDOMComponentWithClass(component, 'ready-for-payment');
+
+    expect(btn.disabled).to.be.true;
+  });
 });
 
 

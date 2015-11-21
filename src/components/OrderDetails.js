@@ -5,10 +5,12 @@ import constants from '../constants';
 import _ from 'underscore';
 import EntryComponent from './Entry';
 import MasterItemsComponent from './MasterItems';
+import ReadyForPaymentBtnComponent from './ReadyForPaymentBtn';
 import { Link as LinkComponent } from 'react-router';
 
 const Entry = createFactory(EntryComponent);
 const MasterItems = createFactory(MasterItemsComponent);
+const ReadyForPaymentBtn = createFactory(ReadyForPaymentBtnComponent);
 const Link = createFactory(LinkComponent);
 
 function mapStateToProps(state) {
@@ -83,6 +85,7 @@ class OrderDetails extends Component {
             )
           )
         ),
+        ReadyForPaymentBtn({ entries: this.state.order.entries }),
         Link(
           { to: '/orders', className: 'orders-link' },
           dom.p(
