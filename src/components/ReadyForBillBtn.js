@@ -22,7 +22,7 @@ class ReadyForBillBtn extends Component {
         dom.button(
           {
             className: 'order-entries ready-for-bill btn btn-primary btn-lg btn-block',
-            disabled: this.shouldBeDisabled() ? true : false,
+            disabled: this.shouldBeDisabled(),
             onClick: this.props.handleOnClick
           },
           'Ready for Bill'
