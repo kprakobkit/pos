@@ -25,6 +25,22 @@ function orderBuilder() {
   };
 }
 
+function entryBuilder() {
+  const defaultEntry = {
+    name: 'rice',
+    price: 1050,
+    comment: 'brown rice',
+    status: _.sample(orderStatuses)
+  };
+
+  return {
+    build: function () {
+      return defaultEntry;
+    }
+  };
+}
+
 export default {
-  order: orderBuilder
+  order: orderBuilder,
+  entry: entryBuilder
 };
