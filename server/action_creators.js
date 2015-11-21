@@ -80,6 +80,19 @@ export function addEntriesToOrder(orderId, newEntries) {
   };
 }
 
+export function setReadyForPayment(orderId) {
+  return (dispatch, getState) => {
+    return Order.findOne({ id: orderId }).then((order) => {
+      order.status = constants.READY_FOR_BILL;
+      return order.save();
+    }).then(() => {
+      return Order.getOrders();
+    }).then((orders) => {
+      dispatch(setState({ orders }));
+    });
+  };
+}
+
 function toMasterItem({ _id, name, price }) {
   return { id: _id, name, price };
 }
@@ -98,5 +111,6 @@ export default {
   loadItems,
   addOrder,
   changeEntryStatus,
-  addEntriesToOrder
+  addEntriesToOrder,
+  setReadyForPayment
 };
