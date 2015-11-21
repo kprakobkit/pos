@@ -34,6 +34,10 @@ function entryBuilder() {
   };
 
   return {
+    status: function (status) {
+      defaultEntry.status = status;
+      return this;
+    },
     build: function () {
       return defaultEntry;
     }
