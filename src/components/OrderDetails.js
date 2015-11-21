@@ -85,7 +85,10 @@ class OrderDetails extends Component {
             )
           )
         ),
-        ReadyForPaymentBtn({ entries: this.state.order.entries }),
+        ReadyForPaymentBtn({
+          entries: this.state.order.entries,
+          handleOnClick: this.props.setReadyForPayment.bind(null, this.props.params.id)
+        }),
         Link(
           { to: '/orders', className: 'orders-link' },
           dom.p(
@@ -108,7 +111,8 @@ OrderDetails.propTypes = {
 
 OrderDetails.defaultProps = {
   orders: [],
-  masterItems: []
+  masterItems: [],
+  setReadyForPayment: () => {}
 };
 
 export default OrderDetails;
