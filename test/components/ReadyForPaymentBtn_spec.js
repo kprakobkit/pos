@@ -50,6 +50,17 @@ describe('Ready for Payment', () => {
 
     expect(btn.disabled).to.be.true;
   });
+
+  it('calls onClick handler', () => {
+    const handleOnClick = spy();
+    const delivered = Generator.entry().status(constants.DELIVERED).build();
+    const component = renderIntoDocument(ReadyForPaymentBtn({ entries: [delivered], handleOnClick }));
+    const btn = findRenderedDOMComponentWithClass(component, 'ready-for-payment');
+
+    Simulate.click(btn);
+
+    expect(handleOnClick).to.have.been.called();
+  });
 });
 
 

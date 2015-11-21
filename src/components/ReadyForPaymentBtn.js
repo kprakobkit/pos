@@ -22,7 +22,8 @@ class ReadyForPaymentBtn extends Component {
         dom.button(
           {
             className: 'order-entries ready-for-payment btn btn-primary btn-lg btn-block',
-            disabled: this.shouldBeDisabled() ? true : false
+            disabled: this.shouldBeDisabled() ? true : false,
+            onClick: this.props.handleOnClick
           },
           'Ready for Payment'
         )
