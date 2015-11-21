@@ -4,11 +4,11 @@ import _ from 'underscore';
 
 class ReadyForPaymentBtn extends Component {
   allEntriesAreCanceled() {
-    return _.all(this.props.entries, (entry) => (entry.status === constants.CANCELED));
+    return _.all(this.props.entries, (entry) => entry.status === constants.CANCELED);
   }
 
   thereAreOpenEntries() {
-    return _.some(this.props.entries, (entry) => (entry.status === constants.OPEN));
+    return _.some(this.props.entries, (entry) => entry.status === constants.OPEN);
   }
 
   shouldBeDisabled() {
