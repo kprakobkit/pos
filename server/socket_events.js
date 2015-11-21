@@ -12,5 +12,5 @@ export default (store) => (socket) => {
 
   socket.on(constants.ADD_ENTRIES_TO_ORDER, (action) => store.dispatch(actions.addEntriesToOrder(action.orderId, action.entries)));
 
-  socket.on(constants.SET_READY_FOR_PAYMENT, (action) => store.dispatch(actions.setReadyForPayment(action.orderId)));
+  socket.on(constants.SET_READY_FOR_BILL, (action) => store.dispatch(actions.setReadyForBill(action.orderId)));
 };

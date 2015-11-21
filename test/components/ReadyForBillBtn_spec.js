@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import constants from '../../src/constants';
-import ReadyForPaymentBtnComponent from '../../src/components/ReadyForPaymentBtn';
+import ReadyForBillBtnComponent from '../../src/components/ReadyForBillBtn';
 import Generator from '../support/generator';
 
 const {
@@ -13,15 +13,15 @@ const {
   Simulate
 } = TestUtils;
 
-const ReadyForPaymentBtn = React.createFactory(ReadyForPaymentBtnComponent);
+const ReadyForBillBtn = React.createFactory(ReadyForBillBtnComponent);
 
 describe('Ready for Payment', () => {
   it('is disabled when not all entries are delivered or canceled', () => {
     const delivered = Generator.entry().status(constants.DELIVERED).build();
     const open = Generator.entry().status(constants.OPEN).build();
     const entries = [open, delivered];
-    const component = renderIntoDocument(ReadyForPaymentBtn({ entries }));
-    const btn = findRenderedDOMComponentWithClass(component, 'ready-for-payment');
+    const component = renderIntoDocument(ReadyForBillBtn({ entries }));
+    const btn = findRenderedDOMComponentWithClass(component, 'ready-for-bill');
 
     expect(btn.disabled).to.be.true;
   });
@@ -29,15 +29,15 @@ describe('Ready for Payment', () => {
   it('is clickable when all entries are delivered or canceled', () => {
     const delivered = Generator.entry().status(constants.DELIVERED).build();
     const entries = [delivered];
-    const component = renderIntoDocument(ReadyForPaymentBtn({ entries }));
-    const btn = findRenderedDOMComponentWithClass(component, 'ready-for-payment');
+    const component = renderIntoDocument(ReadyForBillBtn({ entries }));
+    const btn = findRenderedDOMComponentWithClass(component, 'ready-for-bill');
 
     expect(btn.disabled).to.be.false;
   });
 
   it('is disabled when there are no entries', () => {
-    const component = renderIntoDocument(ReadyForPaymentBtn({ entries: [] }));
-    const btn = findRenderedDOMComponentWithClass(component, 'ready-for-payment');
+    const component = renderIntoDocument(ReadyForBillBtn({ entries: [] }));
+    const btn = findRenderedDOMComponentWithClass(component, 'ready-for-bill');
 
     expect(btn.disabled).to.be.true;
   });
@@ -45,8 +45,8 @@ describe('Ready for Payment', () => {
   it('is disabled when all orders are canceled', () => {
     const canceled = Generator.entry().status(constants.CANCELED).build();
     const entries = [canceled];
-    const component = renderIntoDocument(ReadyForPaymentBtn({ entries }));
-    const btn = findRenderedDOMComponentWithClass(component, 'ready-for-payment');
+    const component = renderIntoDocument(ReadyForBillBtn({ entries }));
+    const btn = findRenderedDOMComponentWithClass(component, 'ready-for-bill');
 
     expect(btn.disabled).to.be.true;
   });
@@ -54,8 +54,8 @@ describe('Ready for Payment', () => {
   it('calls onClick handler', () => {
     const handleOnClick = spy();
     const delivered = Generator.entry().status(constants.DELIVERED).build();
-    const component = renderIntoDocument(ReadyForPaymentBtn({ entries: [delivered], handleOnClick }));
-    const btn = findRenderedDOMComponentWithClass(component, 'ready-for-payment');
+    const component = renderIntoDocument(ReadyForBillBtn({ entries: [delivered], handleOnClick }));
+    const btn = findRenderedDOMComponentWithClass(component, 'ready-for-bill');
 
     Simulate.click(btn);
 

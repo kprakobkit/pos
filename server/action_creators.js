@@ -80,7 +80,7 @@ export function addEntriesToOrder(orderId, newEntries) {
   };
 }
 
-export function setReadyForPayment(orderId) {
+export function setReadyForBill(orderId) {
   return (dispatch, getState) => {
     return Order.findOne({ id: orderId }).then((order) => {
       order.status = constants.READY_FOR_BILL;
@@ -112,5 +112,5 @@ export default {
   addOrder,
   changeEntryStatus,
   addEntriesToOrder,
-  setReadyForPayment
+  setReadyForBill
 };

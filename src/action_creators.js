@@ -49,10 +49,10 @@ export function changeEntryStatus(orderId, entryIndex, status) {
   };
 }
 
-export function setReadyForPayment(orderId) {
+export function setReadyForBill(orderId) {
   return {
     meta: { remote: true },
-    type: constants.SET_READY_FOR_PAYMENT,
+    type: constants.SET_READY_FOR_BILL,
     orderId
   };
 }
@@ -64,5 +64,5 @@ export default {
   addOrder,
   changeEntryStatus,
   addEntriesToOrder,
-  setReadyForPayment
+  setReadyForBill
 };

@@ -2,7 +2,7 @@ import { Component, PropTypes, DOM as dom } from 'react';
 import constants from '../../src/constants';
 import _ from 'underscore';
 
-class ReadyForPaymentBtn extends Component {
+class ReadyForBillBtn extends Component {
   allEntriesAreCanceled() {
     return _.all(this.props.entries, (entry) => entry.status === constants.CANCELED);
   }
@@ -21,24 +21,24 @@ class ReadyForPaymentBtn extends Component {
         null,
         dom.button(
           {
-            className: 'order-entries ready-for-payment btn btn-primary btn-lg btn-block',
+            className: 'order-entries ready-for-bill btn btn-primary btn-lg btn-block',
             disabled: this.shouldBeDisabled() ? true : false,
             onClick: this.props.handleOnClick
           },
-          'Ready for Payment'
+          'Ready for Bill'
         )
       )
     );
   }
 }
 
-ReadyForPaymentBtn.propTypes = {
+ReadyForBillBtn.propTypes = {
   entries: PropTypes.array.isRequired
 };
 
-ReadyForPaymentBtn.defaultProps = {
+ReadyForBillBtn.defaultProps = {
   entries: []
 };
 
-export default ReadyForPaymentBtn;
+export default ReadyForBillBtn;
 
