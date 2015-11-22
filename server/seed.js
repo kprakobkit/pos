@@ -6,6 +6,7 @@ import async from 'async';
 import mongoose from 'mongoose';
 import faker from 'faker';
 import _ from 'underscore';
+import config from '../config';
 
 const orderStatuses = [
   constants.OPEN,
@@ -13,7 +14,7 @@ const orderStatuses = [
   constants.READY_FOR_BILL
 ];
 
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost');
+mongoose.connect(process.env.MONGOLAB_URI || config.developmentDB);
 
 function removeData(next) {
   async.parallel([
