@@ -82,10 +82,8 @@ export function addEntriesToOrder(orderId, newEntries) {
 
 export function setReadyForBill(orderId) {
   return (dispatch, getState) => {
-    return Order.findOne({ id: orderId }).then((order) => {
-      order.status = constants.READY_FOR_BILL;
-      return order.save();
-    }).then(() => {
+    return Order.findOneAndUpdate({ id: orderId }, { status: constants.READY_FOR_BILL })
+    .then(() => {
       return Order.getOrders();
     }).then((orders) => {
       dispatch(setState({ orders }));
