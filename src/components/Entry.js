@@ -34,7 +34,10 @@ class Entry extends Component {
             dom.option({ value: constants.CANCELED }, constants.CANCELED)
           )
         ) :
-        dom.td({ className: 'entry-price' }, dom.h2(null, `$${this.props.price / 100}`))
+        dom.td(
+          { className: 'entry-price' },
+          dom.h2(null, `$${(this.props.price / 100).toFixed(2)}`)
+        )
     );
   }
 }
