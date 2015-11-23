@@ -61,7 +61,7 @@ export function changeEntryStatus(orderId, entryIndex, status) {
       .then((response) => {
         const updatedOrders = [
           ...orders.slice(0, orderIndex),
-          response[0],
+          response,
           ...orders.slice(orderIndex + 1)
         ];
 

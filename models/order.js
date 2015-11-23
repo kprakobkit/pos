@@ -12,19 +12,26 @@ const orderSchema = new Schema({
 });
 
 orderSchema.statics.getOrders = function() {
-  return getOrders.apply(this)
-  .then(getEntries)
-  .catch((e) => {
-    throw new Error(e);
-  });
+  return this.find()
+    .then((orders) => orders.map(toOrder))
+    .then(getEntries);
 }
 
 orderSchema.statics.updateEntry = function(orderId, entryIndex, update) {
-  return updateEntry.call(this, orderId, entryIndex, update)
-    .then((order) => getEntries([order]))
-    .catch((e) => {
-      throw new Error(e);
-    });
+  return this.findOne({ id: orderId })
+    .then((order) => {
+      const entries = order.entries;
+      const entry = entries[entryIndex];
+      const updatedEntries = [
+        ...entries.slice(0, entryIndex),
+        _.extend(entry, update),
+        ...entries.slice(entryIndex + 1)
+      ];
+
+      order.entries = updatedEntries;
+      return order.save();
+    })
+    .then((order) => populateEntries(toOrder(order)));
 }
 
 orderSchema.statics.addEntries = function(orderId, newEntries) {
@@ -43,41 +50,6 @@ orderSchema.statics.addEntries = function(orderId, newEntries) {
 orderSchema.statics.updateStatus = function(orderId, status) {
   return this.findOneAndUpdate({ id: orderId }, { status }, { new: true }).then((order) => {
     return populateEntries(toOrder(order));
-  });
-}
-
-function getOrders() {
-  const Order = this;
-
-  return new Promise((resolve, reject) => {
-    Order.find().exec((err, orders) => {
-      if(err) {
-        reject(err);
-      }
-
-      resolve(orders.map(toOrder));
-    });
-  });
-}
-
-function updateEntry(orderId, entryIndex, update) {
-  const Order = this;
-
-  return new Promise((resolve, reject) => {
-    Order.findOne({ id: orderId })
-      .then((order) => {
-        const entries = order.entries;
-        const entry = entries[entryIndex];
-        const updatedEntries = [
-          ...entries.slice(0, entryIndex),
-          _.extend(entry, update),
-          ...entries.slice(entryIndex + 1)
-        ];
-
-        order.entries = updatedEntries;
-        return order.save();
-      })
-      .then((order) => resolve(toOrder(order)));
   });
 }
 
