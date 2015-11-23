@@ -72,11 +72,19 @@ export function changeEntryStatus(orderId, entryIndex, status) {
 
 export function addEntriesToOrder(orderId, newEntries) {
   return (dispatch, getState) => {
-    return Order.addEntries(orderId, newEntries).then(() => {
-      return Order.getOrders();
-    }).then((orders) => {
-      dispatch(setState({ orders }));
-    });
+    const orders = getState().orders;
+    const orderIndex = orders.findIndex((order) => order.id === orderId);
+
+    return Order.addEntries(orderId, newEntries)
+      .then((response) => {
+        const updatedOrders = [
+          ...orders.slice(0, orderIndex),
+          response,
+          ...orders.slice(orderIndex + 1)
+        ];
+
+        dispatch(setState({ orders: updatedOrders }));
+      });
   };
 }
 
