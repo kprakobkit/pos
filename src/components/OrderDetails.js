@@ -5,10 +5,12 @@ import constants from '../constants';
 import _ from 'underscore';
 import EntryComponent from './Entry';
 import MasterItemsComponent from './MasterItems';
+import ReadyForBillBtnComponent from './ReadyForBillBtn';
 import { Link as LinkComponent } from 'react-router';
 
 const Entry = createFactory(EntryComponent);
 const MasterItems = createFactory(MasterItemsComponent);
+const ReadyForBillBtn = createFactory(ReadyForBillBtnComponent);
 const Link = createFactory(LinkComponent);
 
 function mapStateToProps(state) {
@@ -83,6 +85,10 @@ class OrderDetails extends Component {
             )
           )
         ),
+        ReadyForBillBtn({
+          entries: this.state.order.entries,
+          handleOnClick: this.props.setReadyForBill.bind(null, this.props.params.id)
+        }),
         Link(
           { to: '/orders', className: 'orders-link' },
           dom.p(
@@ -105,7 +111,8 @@ OrderDetails.propTypes = {
 
 OrderDetails.defaultProps = {
   orders: [],
-  masterItems: []
+  masterItems: [],
+  setReadyForBill: () => {}
 };
 
 export default OrderDetails;
