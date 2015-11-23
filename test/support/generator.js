@@ -15,6 +15,10 @@ function orderBuilder() {
   };
 
   return {
+    entries: function (entries) {
+      defaultOrder.entries = entries;
+      return this;
+    },
     status: function (status) {
       defaultOrder.status = status;
       return this;
@@ -34,6 +38,10 @@ function entryBuilder() {
   };
 
   return {
+    name: function (name) {
+      defaultEntry.name = name;
+      return this;
+    },
     status: function (status) {
       defaultEntry.status = status;
       return this;
