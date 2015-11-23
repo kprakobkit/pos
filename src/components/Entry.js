@@ -43,6 +43,7 @@ Entry.propTypes = {
   name: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
   comment: PropTypes.string,
+  price: PropTypes.number,
   ofOpenOrder: PropTypes.bool.isRequired,
   changeEntryStatus: PropTypes.func
 };
