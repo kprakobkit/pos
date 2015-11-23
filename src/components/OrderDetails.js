@@ -5,11 +5,13 @@ import constants from '../constants';
 import _ from 'underscore';
 import EntryComponent from './Entry';
 import MasterItemsComponent from './MasterItems';
-import { Link as LinkComponent } from 'react-router';
+import OpenOrderComponent from './OpenOrder';
+import ProcessingOrderComponent from './ProcessingOrder';
 
 const Entry = createFactory(EntryComponent);
 const MasterItems = createFactory(MasterItemsComponent);
-const Link = createFactory(LinkComponent);
+const OpenOrder = createFactory(OpenOrderComponent);
+const ProcessingOrder = createFactory(ProcessingOrderComponent);
 
 function mapStateToProps(state) {
   return {
@@ -21,13 +23,10 @@ function mapStateToProps(state) {
 class OrderDetails extends Component {
   constructor(props) {
     super(props);
-    this.renderEntry = this.renderEntry.bind(this);
-    this.toggleForm = this.toggleForm.bind(this);
     this.state = {
       order: {
-        entries: {}
-      },
-      showAddEntry: false
+        entries: []
+      }
     };
   }
 
@@ -42,57 +41,22 @@ class OrderDetails extends Component {
     this.setState({ order });
   }
 
-  toggleForm() {
-    this.setState({ showAddEntry: !this.state.showAddEntry });
-  }
-
-  renderEntry(entry, i) {
-    return entry.status !== constants.CANCELED ?
-      Entry(
-        _.extend({}, entry, {
-          key: i,
-          index: i,
-          changeEntryStatus: this.props.changeEntryStatus.bind(null, this.props.params.id)
-        })
-      ) :
-      null;
-  }
-
   render() {
     return (
       dom.div(
         null,
         dom.h1({ className: 'order-title' }, `Order #${this.props.params.id}`),
         dom.h2({ className: 'order-status' }, `Status: ${this.state.order.status}`),
-        dom.button(
-          { className: 'toggle-add-entry btn btn-info btn-lg btn-block', onClick: this.toggleForm },
-          this.state.showAddEntry ? 'Close' : 'Add more items'
-        ),
-        this.state.showAddEntry ? MasterItems({
-          masterItems: this.props.masterItems,
-          handleSubmit: this.props.addEntriesToOrder.bind(null, this.props.params.id)
-        }) : null,
-        dom.br(null),
-        dom.div(
-          { className: 'order-entries' },
-          dom.table(
-            { className: 'table table-striped' },
-            dom.tbody(
-              null,
-              this.state.order.entries.map(this.renderEntry)
-            )
-          )
-        ),
-        Link(
-          { to: '/orders', className: 'orders-link' },
-          dom.p(
-            null,
-            dom.button(
-              { className: 'btn btn-danger btn-lg btn-block' },
-              'Back'
-            )
-          )
-        )
+        this.state.order.status == constants.OPEN ?
+          OpenOrder(
+            {
+              order: this.state.order,
+              masterItems: this.props.masterItems,
+              addEntriesToOrder: this.props.addEntriesToOrder.bind(null, this.props.params.id),
+              changeEntryStatus: this.props.changeEntryStatus.bind(null, this.props.params.id)
+            }
+          ) :
+          ProcessingOrder({ order: this.state.order })
       )
     );
   }
@@ -100,7 +64,10 @@ class OrderDetails extends Component {
 
 OrderDetails.propTypes = {
   orders: PropTypes.array.isRequired,
-  masterItems: PropTypes.array.isRequired
+  masterItems: PropTypes.array.isRequired,
+  loadItems: PropTypes.func.isRequired,
+  addEntriesToOrder: PropTypes.func.isRequired,
+  changeEntryStatus: PropTypes.func.isRequired
 };
 
 OrderDetails.defaultProps = {
