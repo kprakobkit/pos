@@ -16,11 +16,19 @@ describe('OrderDetails', () => {
   const changeEntryStatus = () => {};
   const loadItems = () => {};
   const addEntriesToOrder = () => {};
+  const setReadyForBill = () => {};
 
   it('renders title with correct order number from params', () => {
     const id = 1;
     const params = { id };
-    const props = { orders: [{ status: 'open', id: 1, entries: [] }], params, changeEntryStatus, loadItems };
+    const props = {
+      orders: [{ status: 'OPEN', id: 1, entries: [] }],
+      params,
+      changeEntryStatus,
+      loadItems,
+      addEntriesToOrder,
+      setReadyForBill
+    };
     const component = renderIntoDocument(OrderDetails(props));
     const title = findRenderedDOMComponentWithClass(component, 'order-title');
 
@@ -28,11 +36,18 @@ describe('OrderDetails', () => {
   });
 
   it('renders the order status', () => {
-    const props = { orders: [{ status: 'open', id: 1, entries: [] }], params: { id: 1 }, changeEntryStatus, loadItems };
+    const props = {
+      orders: [{ status: 'OPEN', id: 1, entries: [] }],
+      params: { id: 1 },
+      changeEntryStatus,
+      loadItems,
+      addEntriesToOrder,
+      setReadyForBill
+    };
     const component = renderIntoDocument(OrderDetails(props));
     const status = findRenderedDOMComponentWithClass(component, 'order-status');
 
-    expect(status.textContent).to.contain('open');
+    expect(status.textContent).to.contain('OPEN');
   });
 
   it('renders the active order entries', () => {
@@ -41,7 +56,14 @@ describe('OrderDetails', () => {
       { name: 'pho', price: 850, comment: 'extra meat', status: 'CANCELED' },
       { name: 'egg', price: 150, comment: 'sunny side up', status: 'DELIVERED' }
     ];
-    const props = { orders: [{ status: 'open', id: 1, entries }], params: { id: 1 }, changeEntryStatus, loadItems };
+    const props = {
+      orders: [{ status: 'OPEN', id: 1, entries }],
+      params: { id: 1 },
+      changeEntryStatus,
+      loadItems,
+      addEntriesToOrder,
+      setReadyForBill
+    };
     const component = renderIntoDocument(OrderDetails(props));
     const orderEntries = scryRenderedDOMComponentsWithClass(component, 'order-entry');
     const entryNames = scryRenderedDOMComponentsWithClass(component, 'entry-name');
@@ -55,21 +77,6 @@ describe('OrderDetails', () => {
     expect(entryComments[1].textContent).to.contain('sunny side up');
     expect(entryStatuses[0].textContent).to.contain('OPEN');
     expect(entryStatuses[1].textContent).to.contain('DELIVERED');
-  });
-
-  it('toggles add entry', () => {
-    const props = { orders: [{ status: 'open', id: 1, entries: [] }], params: { id: 1 }, changeEntryStatus, loadItems, addEntriesToOrder };
-    const component = renderIntoDocument(OrderDetails(props));
-    const toggleForm = findRenderedDOMComponentWithClass(component, 'toggle-add-entry');
-    let masterItems = scryRenderedDOMComponentsWithClass(component, 'master-items');
-
-    expect(masterItems.length).to.equal(0);
-
-    Simulate.click(toggleForm);
-
-    masterItems = findRenderedDOMComponentWithClass(component, 'master-items');
-
-    expect(masterItems).to.exist;
   });
 });
 
