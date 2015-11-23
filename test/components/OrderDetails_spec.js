@@ -78,27 +78,5 @@ describe('OrderDetails', () => {
     expect(entryStatuses[0].textContent).to.contain('OPEN');
     expect(entryStatuses[1].textContent).to.contain('DELIVERED');
   });
-
-  xit('toggles add entry', () => {
-    const props = {
-      orders: [{ status: 'open', id: 1, entries: [] }],
-      params: { id: 1 },
-      changeEntryStatus,
-      loadItems,
-      addEntriesToOrder,
-      setReadyForBill
-    };
-    const component = renderIntoDocument(OrderDetails(props));
-    const toggleForm = findRenderedDOMComponentWithClass(component, 'toggle-add-entry');
-    let masterItems = scryRenderedDOMComponentsWithClass(component, 'master-items');
-
-    expect(masterItems.length).to.equal(0);
-
-    Simulate.click(toggleForm);
-
-    masterItems = findRenderedDOMComponentWithClass(component, 'master-items');
-
-    expect(masterItems).to.exist;
-  });
 });
 
