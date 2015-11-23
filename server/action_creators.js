@@ -54,42 +54,48 @@ export function addOrder(entries) {
 
 export function changeEntryStatus(orderId, entryIndex, status) {
   return (dispatch, getState) => {
-    const orders = getState().orders;
-    const orderIndex = orders.findIndex((order) => order.id === orderId);
-
-    return Order.updateEntry(orderId, entryIndex, { status })
-      .then(dispatchUpdatedOrders.bind(null, dispatch, orders, orderIndex));
+    return transactAndDispatch(
+      dispatch,
+      getState().orders,
+      orderId,
+      Order.updateEntry(orderId, entryIndex, { status })
+    );
   };
 }
 
 export function addEntriesToOrder(orderId, newEntries) {
   return (dispatch, getState) => {
-    const orders = getState().orders;
-    const orderIndex = orders.findIndex((order) => order.id === orderId);
-
-    return Order.addEntries(orderId, newEntries)
-      .then(dispatchUpdatedOrders.bind(null, dispatch, orders, orderIndex));
+    return transactAndDispatch(
+      dispatch,
+      getState().orders,
+      orderId,
+      Order.addEntries(orderId, newEntries)
+    );
   };
 }
 
 export function setReadyForBill(orderId) {
   return (dispatch, getState) => {
-    const orders = getState().orders;
-    const orderIndex = orders.findIndex((order) => order.id === orderId);
-
-    return Order.updateStatus(orderId, constants.READY_FOR_BILL)
-      .then(dispatchUpdatedOrders.bind(null, dispatch, orders, orderIndex));
+    return transactAndDispatch(
+      dispatch,
+      getState().orders,
+      orderId,
+      Order.updateStatus(orderId, constants.READY_FOR_BILL)
+    );
   };
 }
 
-function dispatchUpdatedOrders(dispatch, orders, orderIndex, response) {
-  const updatedOrders = [
-    ...orders.slice(0, orderIndex),
-    response,
-    ...orders.slice(orderIndex + 1)
-  ];
+function transactAndDispatch(dispatch, orders, orderId, transaction) {
+  const orderIndex = orders.findIndex((order) => order.id === orderId);
+  return transaction.then((response) => {
+    const updatedOrders = [
+      ...orders.slice(0, orderIndex),
+      response,
+      ...orders.slice(orderIndex + 1)
+    ];
 
-  dispatch(setState({ orders: updatedOrders }));
+    dispatch(setState({ orders: updatedOrders }));
+  });
 }
 
 function toMasterItem({ _id, name, price }) {
