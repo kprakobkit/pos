@@ -13,4 +13,17 @@ describe('Order', () => {
       done();
     });
   });
+
+  it ('updateStatus', function (done) {
+    Order({
+      id: faker.random.number()
+    }).save((err, newOrder) => {
+      Order.updateStatus(newOrder.id, constants.READY_FOR_BILL).then(() => {
+        Order.findOne({ id: newOrder.id }).then((order) => {
+          expect(order.status).to.equal(constants.READY_FOR_BILL);
+          done();
+        });
+      });
+    });
+  });
 });

@@ -82,11 +82,18 @@ export function addEntriesToOrder(orderId, newEntries) {
 
 export function setReadyForBill(orderId) {
   return (dispatch, getState) => {
-    return Order.findOneAndUpdate({ id: orderId }, { status: constants.READY_FOR_BILL })
-    .then(() => {
-      return Order.getOrders();
-    }).then((orders) => {
-      dispatch(setState({ orders }));
+    const orders = getState().orders;
+    const orderIndex = orders.findIndex((order) => order.id === orderId);
+
+    return Order.updateStatus(orderId, constants.READY_FOR_BILL)
+    .then((response) => {
+      const updatedOrders = [
+        ...orders.slice(0, orderIndex),
+        response,
+        ...orders.slice(orderIndex + 1)
+      ];
+
+      dispatch(setState({ orders: updatedOrders }));
     });
   };
 }
