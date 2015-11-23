@@ -12,6 +12,12 @@ class ProcessingOrder extends Component {
     this.renderEntry = this.renderEntry.bind(this);
   }
 
+  subtotal() {
+    return this.props.order.entries
+      .filter((entry) => entry.status === constants.DELIVERED)
+      .reduce((sum, entry) => sum + entry.price / 100, 0);
+  }
+
   renderEntry(entry, i) {
     return entry.status !== constants.CANCELED ?
       Entry(
@@ -32,7 +38,13 @@ class ProcessingOrder extends Component {
           { className: 'table table-striped' },
           dom.tbody(
             null,
-            this.props.order.entries.map(this.renderEntry)
+            this.props.order.entries.map(this.renderEntry),
+            dom.tr(
+              { className: 'order-subtotal' },
+              dom.td(null, dom.h2(null, 'Subtotal')),
+              dom.td(),
+              dom.td(null, dom.h2(null, `$${this.subtotal().toFixed(2)}`))
+            )
           )
         )
       )
