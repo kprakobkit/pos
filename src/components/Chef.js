@@ -1,15 +1,17 @@
-import { Component, PropTypes, DOM as dom } from 'react';
+import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import { connect } from 'react-redux';
+import { Link as LinkComponent } from 'react-router';
 import actions from '../action_creators';
 import constants from '../constants';
 import _ from 'underscore';
+
+const Link = createFactory(LinkComponent);
 
 function mapStateToProps(state) {
   return {
     orders: state.orders
   };
 }
-
 
 class Chef extends Component {
   constructor(props) {
@@ -37,6 +39,7 @@ class Chef extends Component {
   render() {
     return dom.div(
       null,
+      dom.p(null, Link({ to: '/', className: 'orders-link' }, 'Home')),
       this.state.openEntries.map(
         (entry, i) => dom.div(
           { key: i, className: 'open-entry' },
