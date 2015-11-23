@@ -20,12 +20,15 @@ class Chef extends Component {
   }
 
   componentWillMount() {
+    this.props.loadOrders();
     const openEntries = _.filter(this.props.orders[0].entries, (entry) => entry.status === constants.OPEN);
+
     this.setState({ openEntries });
   }
 
   componentWillReceiveProps(props) {
     const openEntries = _.filter(this.props.orders[0].entries, (entry) => entry.status === constants.OPEN);
+
     this.setState({ openEntries });
   }
 
@@ -47,7 +50,7 @@ Chef.propTypes = {
 };
 
 Chef.defaultProps = {
-  orders: []
+  orders: [{}]
 };
 
 export default Chef;
