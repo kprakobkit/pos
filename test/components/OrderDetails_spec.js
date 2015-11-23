@@ -22,7 +22,7 @@ describe('OrderDetails', () => {
     const id = 1;
     const params = { id };
     const props = {
-      orders: [{ status: 'open', id: 1, entries: [] }],
+      orders: [{ status: 'OPEN', id: 1, entries: [] }],
       params,
       changeEntryStatus,
       loadItems,
@@ -37,7 +37,7 @@ describe('OrderDetails', () => {
 
   it('renders the order status', () => {
     const props = {
-      orders: [{ status: 'open', id: 1, entries: [] }],
+      orders: [{ status: 'OPEN', id: 1, entries: [] }],
       params: { id: 1 },
       changeEntryStatus,
       loadItems,
@@ -47,7 +47,7 @@ describe('OrderDetails', () => {
     const component = renderIntoDocument(OrderDetails(props));
     const status = findRenderedDOMComponentWithClass(component, 'order-status');
 
-    expect(status.textContent).to.contain('open');
+    expect(status.textContent).to.contain('OPEN');
   });
 
   it('renders the active order entries', () => {
@@ -57,7 +57,7 @@ describe('OrderDetails', () => {
       { name: 'egg', price: 150, comment: 'sunny side up', status: 'DELIVERED' }
     ];
     const props = {
-      orders: [{ status: 'open', id: 1, entries }],
+      orders: [{ status: 'OPEN', id: 1, entries }],
       params: { id: 1 },
       changeEntryStatus,
       loadItems,

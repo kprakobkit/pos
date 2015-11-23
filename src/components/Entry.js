@@ -20,19 +20,21 @@ class Entry extends Component {
       { className: 'order-entry' },
       dom.td({ className: 'entry-name' }, dom.h2(null, this.props.name)),
       dom.td({ className: 'entry-comment' }, dom.h2(null, dom.small(null, this.props.comment))),
-      dom.td(
-        { className: 'entry-status' },
-        dom.select(
-          {
-            className: 'form-control input-lg',
-            value: this.props.status,
-            onChange: this.handleChangeStatus
-          },
-          dom.option({ value: constants.OPEN }, constants.OPEN),
-          dom.option({ value: constants.DELIVERED }, constants.DELIVERED),
-          dom.option({ value: constants.CANCELED }, constants.CANCELED)
-        )
-      )
+      this.props.ofOpenOrder ?
+        dom.td(
+          { className: 'entry-status' },
+          dom.select(
+            {
+              className: 'form-control input-lg',
+              value: this.props.status,
+              onChange: this.handleChangeStatus
+            },
+            dom.option({ value: constants.OPEN }, constants.OPEN),
+            dom.option({ value: constants.DELIVERED }, constants.DELIVERED),
+            dom.option({ value: constants.CANCELED }, constants.CANCELED)
+          )
+        ) :
+        dom.td({ className: 'entry-price' }, dom.h2(null, `$${this.props.price / 100}`))
     );
   }
 }
@@ -40,11 +42,14 @@ class Entry extends Component {
 Entry.propTypes = {
   name: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
-  comment: PropTypes.string
+  comment: PropTypes.string,
+  ofOpenOrder: PropTypes.bool.isRequired,
+  changeEntryStatus: PropTypes.func
 };
 
 Entry.defaultProps = {
-  comment: ''
+  comment: '',
+  ofOpenOrder: true
 };
 
 export default Entry;

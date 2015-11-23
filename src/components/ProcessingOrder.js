@@ -18,7 +18,7 @@ class ProcessingOrder extends Component {
         _.extend({}, entry, {
           key: i,
           index: i,
-          changeEntryStatus: this.props.changeEntryStatus
+          ofOpenOrder: false
         })
       ) :
       null;
