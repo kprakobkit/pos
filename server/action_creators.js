@@ -53,41 +53,32 @@ export function addOrder(entries) {
 }
 
 export function changeEntryStatus(orderId, entryIndex, status) {
-  return transactAndDispatch.bind(
-    null,
-    orderId,
-    Order.updateEntry(orderId, entryIndex, { status })
-  );
+  return transactAndDispatch(orderId, Order.updateEntry(orderId, entryIndex, { status }));
 }
 
 export function addEntriesToOrder(orderId, newEntries) {
-  return transactAndDispatch.bind(
-    null,
-    orderId,
-    Order.addEntries(orderId, newEntries)
-  );
+  return transactAndDispatch(orderId, Order.addEntries(orderId, newEntries));
 }
 
 export function setReadyForBill(orderId) {
-  return transactAndDispatch.bind(
-    null,
-    orderId,
-    Order.updateStatus(orderId, constants.READY_FOR_BILL)
-  );
+  return transactAndDispatch(orderId, Order.updateStatus(orderId, constants.READY_FOR_BILL));
 }
 
-function transactAndDispatch(orderId, transaction, dispatch, getState) {
-  const orders = getState().orders;
-  const orderIndex = orders.findIndex((order) => order.id === orderId);
-  return transaction.then((response) => {
-    const updatedOrders = [
-      ...orders.slice(0, orderIndex),
-      response,
-      ...orders.slice(orderIndex + 1)
-    ];
+function transactAndDispatch(orderId, transaction) {
+  return (dispatch, getState) => {
+    const orders = getState().orders;
+    const orderIndex = orders.findIndex((order) => order.id === orderId);
 
-    dispatch(setState({ orders: updatedOrders }));
-  });
+    return transaction.then((response) => {
+      const updatedOrders = [
+        ...orders.slice(0, orderIndex),
+        response,
+        ...orders.slice(orderIndex + 1)
+      ];
+
+      dispatch(setState({ orders: updatedOrders }));
+    });
+  };
 }
 
 function toMasterItem({ _id, name, price }) {
