@@ -19,17 +19,19 @@ class Chef extends Component {
     };
   }
 
-  componentWillMount() {
-    this.props.loadOrders();
-    const openEntries = _.filter(this.props.orders[0].entries, (entry) => entry.status === constants.OPEN);
-
+  setOpenEntries(orders) {
+    const allEntries = _.reduce(orders, (entries, order) => entries.concat(order.entries), []);
+    const openEntries = _.filter(allEntries, (entry) => entry.status === constants.OPEN);
     this.setState({ openEntries });
   }
 
-  componentWillReceiveProps(props) {
-    const openEntries = _.filter(this.props.orders[0].entries, (entry) => entry.status === constants.OPEN);
+  componentWillMount() {
+    this.props.loadOrders();
+    this.setOpenEntries(this.props.orders);
+  }
 
-    this.setState({ openEntries });
+  componentWillReceiveProps(props) {
+    this.setOpenEntries(props.orders);
   }
 
   render() {
@@ -50,7 +52,9 @@ Chef.propTypes = {
 };
 
 Chef.defaultProps = {
-  orders: [{}]
+  orders: [{
+    entries: [{}]
+  }]
 };
 
 export default Chef;
