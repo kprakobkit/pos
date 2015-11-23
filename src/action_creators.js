@@ -49,11 +49,20 @@ export function changeEntryStatus(orderId, entryIndex, status) {
   };
 }
 
+export function setReadyForBill(orderId) {
+  return {
+    meta: { remote: true },
+    type: constants.SET_READY_FOR_BILL,
+    orderId
+  };
+}
+
 export default {
   setState,
   loadOrders,
   loadItems,
   addOrder,
   changeEntryStatus,
-  addEntriesToOrder
+  addEntriesToOrder,
+  setReadyForBill
 };

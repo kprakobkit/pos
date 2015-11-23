@@ -4,10 +4,12 @@ import constants from '../constants';
 import _ from 'underscore';
 import EntryComponent from './Entry';
 import MasterItemsComponent from './MasterItems';
+import ReadyForBillBtnComponent from './ReadyForBillBtn';
 import { Link as LinkComponent } from 'react-router';
 
 const Entry = createFactory(EntryComponent);
 const MasterItems = createFactory(MasterItemsComponent);
+const ReadyForBillBtn = createFactory(ReadyForBillBtnComponent);
 const Link = createFactory(LinkComponent);
 
 class OpenOrder extends Component {
@@ -57,6 +59,10 @@ class OpenOrder extends Component {
             )
           )
         ),
+        ReadyForBillBtn({
+          entries: this.props.order.entries,
+          handleOnClick: this.props.setReadyForBill
+        }),
         Link(
           { to: '/orders', className: 'orders-link' },
           dom.p(
@@ -76,7 +82,8 @@ OpenOrder.propTypes = {
   order: PropTypes.object.isRequired,
   masterItems: PropTypes.array.isRequired,
   addEntriesToOrder: PropTypes.func.isRequired,
-  changeEntryStatus: PropTypes.func.isRequired
+  changeEntryStatus: PropTypes.func.isRequired,
+  setReadyForBill: PropTypes.func.isRequired
 };
 
 OpenOrder.defaultProps = {

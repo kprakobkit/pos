@@ -80,6 +80,24 @@ export function addEntriesToOrder(orderId, newEntries) {
   };
 }
 
+export function setReadyForBill(orderId) {
+  return (dispatch, getState) => {
+    const orders = getState().orders;
+    const orderIndex = orders.findIndex((order) => order.id === orderId);
+
+    return Order.updateStatus(orderId, constants.READY_FOR_BILL)
+    .then((response) => {
+      const updatedOrders = [
+        ...orders.slice(0, orderIndex),
+        response,
+        ...orders.slice(orderIndex + 1)
+      ];
+
+      dispatch(setState({ orders: updatedOrders }));
+    });
+  };
+}
+
 function toMasterItem({ _id, name, price }) {
   return { id: _id, name, price };
 }
@@ -98,5 +116,6 @@ export default {
   loadItems,
   addOrder,
   changeEntryStatus,
-  addEntriesToOrder
+  addEntriesToOrder,
+  setReadyForBill
 };

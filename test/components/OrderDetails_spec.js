@@ -16,6 +16,7 @@ describe('OrderDetails', () => {
   const changeEntryStatus = () => {};
   const loadItems = () => {};
   const addEntriesToOrder = () => {};
+  const setReadyForBill = () => {};
 
   it('renders title with correct order number from params', () => {
     const id = 1;
@@ -25,7 +26,8 @@ describe('OrderDetails', () => {
       params,
       changeEntryStatus,
       loadItems,
-      addEntriesToOrder
+      addEntriesToOrder,
+      setReadyForBill
     };
     const component = renderIntoDocument(OrderDetails(props));
     const title = findRenderedDOMComponentWithClass(component, 'order-title');
@@ -39,7 +41,8 @@ describe('OrderDetails', () => {
       params: { id: 1 },
       changeEntryStatus,
       loadItems,
-      addEntriesToOrder
+      addEntriesToOrder,
+      setReadyForBill
     };
     const component = renderIntoDocument(OrderDetails(props));
     const status = findRenderedDOMComponentWithClass(component, 'order-status');
@@ -58,7 +61,8 @@ describe('OrderDetails', () => {
       params: { id: 1 },
       changeEntryStatus,
       loadItems,
-      addEntriesToOrder
+      addEntriesToOrder,
+      setReadyForBill
     };
     const component = renderIntoDocument(OrderDetails(props));
     const orderEntries = scryRenderedDOMComponentsWithClass(component, 'order-entry');
@@ -81,7 +85,8 @@ describe('OrderDetails', () => {
       params: { id: 1 },
       changeEntryStatus,
       loadItems,
-      addEntriesToOrder
+      addEntriesToOrder,
+      setReadyForBill
     };
     const component = renderIntoDocument(OrderDetails(props));
     const toggleForm = findRenderedDOMComponentWithClass(component, 'toggle-add-entry');
