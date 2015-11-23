@@ -41,11 +41,8 @@ orderSchema.statics.addEntries = function(orderId, newEntries) {
 }
 
 orderSchema.statics.updateStatus = function(orderId, status) {
-  return this.findOne({ id: orderId }).then((order) => {
-    order.status = status;
-    return order.save().then((order) => {
-      return populateEntries(toOrder(order));
-    });
+  return this.findOneAndUpdate({ id: orderId }, { status }, { new: true }).then((order) => {
+    return populateEntries(toOrder(order));
   });
 }
 
