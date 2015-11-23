@@ -53,39 +53,31 @@ export function addOrder(entries) {
 }
 
 export function changeEntryStatus(orderId, entryIndex, status) {
-  return (dispatch, getState) => {
-    return transactAndDispatch(
-      dispatch,
-      getState().orders,
-      orderId,
-      Order.updateEntry(orderId, entryIndex, { status })
-    );
-  };
+  return transactAndDispatch.bind(
+    null,
+    orderId,
+    Order.updateEntry(orderId, entryIndex, { status })
+  );
 }
 
 export function addEntriesToOrder(orderId, newEntries) {
-  return (dispatch, getState) => {
-    return transactAndDispatch(
-      dispatch,
-      getState().orders,
-      orderId,
-      Order.addEntries(orderId, newEntries)
-    );
-  };
+  return transactAndDispatch.bind(
+    null,
+    orderId,
+    Order.addEntries(orderId, newEntries)
+  );
 }
 
 export function setReadyForBill(orderId) {
-  return (dispatch, getState) => {
-    return transactAndDispatch(
-      dispatch,
-      getState().orders,
-      orderId,
-      Order.updateStatus(orderId, constants.READY_FOR_BILL)
-    );
-  };
+  return transactAndDispatch.bind(
+    null,
+    orderId,
+    Order.updateStatus(orderId, constants.READY_FOR_BILL)
+  );
 }
 
-function transactAndDispatch(dispatch, orders, orderId, transaction) {
+function transactAndDispatch(orderId, transaction, dispatch, getState) {
+  const orders = getState().orders;
   const orderIndex = orders.findIndex((order) => order.id === orderId);
   return transaction.then((response) => {
     const updatedOrders = [
