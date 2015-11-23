@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
+import Generator from '../support/generator';
 import constants from '../../src/constants';
 import ProcessingOrderComponent from '../../src/components/ProcessingOrder';
 
@@ -13,18 +14,19 @@ const ProcessingOrder = React.createFactory(ProcessingOrderComponent);
 
 describe('ProcessingOrder', () => {
   it('renders subtotal for all delivered entries', () => {
+    const price = 1025;
     const props = {
       order: {
         status: 'open', id: 1, entries: [
-          { name: 'Pho', status: constants.DELIVERED, price: 1025 },
-          { name: 'Rice', status: constants.CANCELED, price: 125 }
+          Generator.entry().status(constants.DELIVERED).price(price).build(),
+          Generator.entry().status(constants.CANCELED).price(100).build()
         ]
       }
     };
     const component = renderIntoDocument(ProcessingOrder(props));
     const subtotal = findRenderedDOMComponentWithClass(component, 'order-subtotal');
 
-    expect(subtotal.textContent).to.contain('$10.25');
+    expect(subtotal.textContent).to.contain(`$${(price / 100).toFixed(2)}`);
   });
 });
 

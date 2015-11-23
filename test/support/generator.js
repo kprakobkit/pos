@@ -38,6 +38,10 @@ function entryBuilder() {
       defaultEntry.status = status;
       return this;
     },
+    price: function (price) {
+      defaultEntry.price = price;
+      return this;
+    },
     build: function () {
       return defaultEntry;
     }
