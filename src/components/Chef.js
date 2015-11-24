@@ -6,6 +6,7 @@ import constants from '../constants';
 import _ from 'underscore';
 
 const Link = createFactory(LinkComponent);
+const displayMax = 6;
 
 function mapStateToProps(state) {
   return {
@@ -23,7 +24,7 @@ class Chef extends Component {
 
   setOpenEntries(orders) {
     const allEntries = _.reduce(orders, (entries, order) => entries.concat(order.entries), []);
-    const openEntries = _.filter(allEntries, (entry) => entry.status === constants.OPEN);
+    const openEntries = _.filter(allEntries, (entry) => entry.status === constants.OPEN).slice(0, displayMax);
     this.setState({ openEntries });
   }
 
