@@ -14,21 +14,29 @@ const {
   Simulate
 } = TestUtils;
 
-const Chef = React.createFactory(ChefComponent);
-const loadOrders = () => {};
+function setup({ orders } = {}) {
+  const Chef = React.createFactory(ChefComponent);
+  const loadOrders = () => {};
+  const entry1 = Generator.entry().status(constants.OPEN).build();
+  const entry2 = Generator.entry().status(constants.CLOSED).build();
+  const entries = [entry1, entry2];
+  const order1 = Generator.order().entries(entries).build();
+  const order2 = Generator.order().entries(entries).build();
+  const defaultOrders = [order1, order2];
+
+  const component = renderIntoDocument(Chef({ orders: orders || defaultOrders, loadOrders }));
+  const openEntries = scryRenderedDOMComponentsWithClass(component, 'open-entry');
+
+  return {
+    openEntries
+  };
+}
 
 describe('Chef', () => {
   it('should render open entries for all orders', () => {
-    const burger = Generator.entry().name('burger').status(constants.OPEN).build();
-    const pho = Generator.entry().name('pho').status(constants.CLOSED).build();
-    const entries = [burger, pho];
-    const order1 = Generator.order().entries(entries).build();
-    const order2 = Generator.order().entries(entries).build();
-    const orders = [order1, order2];
-    const component = renderIntoDocument(Chef({ orders, loadOrders }));
+    let { openEntries } = setup();
 
-    const openEntry = scryRenderedDOMComponentsWithClass(component, 'open-entry');
-    expect(openEntry.length).to.equal(2);
+    expect(openEntries.length).to.equal(2);
   });
 
   it('should display the first six entries', () => {
@@ -37,10 +45,8 @@ describe('Chef', () => {
       const entries = _.map(size, () => Generator.entry().status(constants.OPEN).build());
       return Generator.order().entries(entries).build();
     });
+    const { openEntries } = setup({ orders });
 
-    const component = renderIntoDocument(Chef({ orders, loadOrders }));
-
-    const openEntry = scryRenderedDOMComponentsWithClass(component, 'open-entry');
-    expect(openEntry.length).to.equal(6);
+    expect(openEntries.length).to.equal(6);
   });
 });
