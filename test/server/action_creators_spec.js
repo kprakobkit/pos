@@ -24,13 +24,11 @@ const Order = {
 
   updateEntry: (orderId, entryIndex, { status }) => {
     return Promise.resolve(
-      [
-        {
-          id: orderId,
-          status: constants.OPEN,
-          entries: [{ status, name: '', comment: '' }]
-        }
-      ]
+      {
+        id: orderId,
+        status: constants.OPEN,
+        entries: [{ status, name: '', comment: '' }]
+      }
     );
   }
 };
