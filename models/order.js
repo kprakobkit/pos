@@ -4,6 +4,7 @@ import constants  from '../src/constants';
 import Item from './item';
 import Entry from './entry';
 import _ from 'underscore';
+import faker from 'faker';
 
 const orderSchema = new Schema({
   id: String,
@@ -25,6 +26,20 @@ orderSchema.statics.updateEntry = function(orderId, entryIndex, update) {
     .catch((e) => {
       throw new Error(e);
     });
+}
+
+orderSchema.statics.addOrder = function(entries) {
+  return this({
+    id: faker.random.number(), // need auto generated id...
+    entries: entries.map((item) => ({
+      item_id: mongoose.Types.ObjectId(item.id),
+      comment: item.comment
+    }))
+  })
+  .save()
+  .then((order) => {
+    return populateEntries(toOrder(order));
+  });
 }
 
 orderSchema.statics.addEntries = function(orderId, newEntries) {
