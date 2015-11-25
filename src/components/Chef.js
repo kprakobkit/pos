@@ -44,7 +44,6 @@ class Chef extends Component {
   }
 
   componentWillReceiveProps(props) {
-    console.log(props.orders);
     this.setOpenEntries(props.orders);
   }
 
