@@ -15,6 +15,10 @@ function orderBuilder() {
   };
 
   return {
+    id: function (id) {
+      defaultOrder.id = id;
+      return this;
+    },
     entries: function (entries) {
       defaultOrder.entries = entries;
       return this;

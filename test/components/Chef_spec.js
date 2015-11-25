@@ -14,6 +14,8 @@ const {
   Simulate
 } = TestUtils;
 
+const changeEntryStatus = spy();
+
 function setup({ orders } = {}) {
   const Chef = React.createFactory(ChefComponent);
   const loadOrders = () => {};
@@ -24,7 +26,7 @@ function setup({ orders } = {}) {
   const order2 = Generator.order().entries(entries).build();
   const defaultOrders = [order1, order2];
 
-  const component = renderIntoDocument(Chef({ orders: orders || defaultOrders, loadOrders }));
+  const component = renderIntoDocument(Chef({ orders: orders || defaultOrders, loadOrders, changeEntryStatus }));
   const openEntries = scryRenderedDOMComponentsWithClass(component, 'open-entry');
 
   return {
@@ -48,5 +50,18 @@ describe('Chef', () => {
     const { openEntries } = setup({ orders });
 
     expect(openEntries.length).to.equal(6);
+  });
+
+  it('calls handle click with the entry index, order id, and "COMPLETED" status', () => {
+    const entry = Generator.entry().status(constants.OPEN).build();
+    const order = Generator.order().id('orderId').entries([entry]).build();
+    const { openEntries } = setup({ orders: [order] });
+
+    Simulate.click(openEntries[0]);
+
+    expect(changeEntryStatus).to.have.been.called();
+    expect(changeEntryStatus.__spy.calls[0][0]).to.equal('orderId');
+    expect(changeEntryStatus.__spy.calls[0][1]).to.equal(0);
+    expect(changeEntryStatus.__spy.calls[0][2]).to.equal(constants.COMPLETED);
   });
 });

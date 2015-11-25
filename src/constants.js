@@ -12,5 +12,6 @@ export default {
   CANCELED: 'CANCELED',
   CLOSED: 'CLOSED',
   READY_FOR_BILL: 'READY_FOR_BILL',
-  ALL: 'ALL'
+  ALL: 'ALL',
+  COMPLETED: 'COMPLETED'
 };
