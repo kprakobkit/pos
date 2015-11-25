@@ -42,12 +42,14 @@ export function addOrder(entries) {
         item_id: mongoose.Types.ObjectId(item.id),
         comment: item.comment
       }))
-    }).save((err, newOrder) => {
-      const updatedOrders = getState().orders.concat(newOrder);
-
-      dispatch(setState({
-        orders: updatedOrders
-      }));
+    })
+    .save()
+    .then(() => {
+      Order.getOrders().then((orders) => {
+        dispatch(setState({
+          orders: updatedOrders
+        }));
+      });
     });
   };
 }

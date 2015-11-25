@@ -25,18 +25,17 @@ function setup({ orders } = {}) {
   const order1 = Generator.order().entries(entries).build();
   const order2 = Generator.order().entries(entries).build();
   const defaultOrders = [order1, order2];
-
   const component = renderIntoDocument(Chef({ orders: orders || defaultOrders, loadOrders, changeEntryStatus }));
-  const openEntries = scryRenderedDOMComponentsWithClass(component, 'open-entry');
 
   return {
-    openEntries
+    openEntries: scryRenderedDOMComponentsWithClass(component, 'open-entry'),
+    component
   };
 }
 
 describe('Chef', () => {
   it('should render open entries for all orders', () => {
-    let { openEntries } = setup();
+    const { openEntries } = setup();
 
     expect(openEntries.length).to.equal(2);
   });
@@ -52,16 +51,52 @@ describe('Chef', () => {
     expect(openEntries.length).to.equal(6);
   });
 
-  it('calls handle click with the entry index, order id, and "COMPLETED" status', () => {
+  describe('on clicking an entry', () => {
     const entry = Generator.entry().status(constants.OPEN).build();
     const order = Generator.order().id('orderId').entries([entry]).build();
-    const { openEntries } = setup({ orders: [order] });
 
-    Simulate.click(openEntries[0]);
+    it('should display confirmation when an entry is clicked', () => {
+      const { openEntries, component } = setup({ orders: [order] });
 
-    expect(changeEntryStatus).to.have.been.called();
-    expect(changeEntryStatus.__spy.calls[0][0]).to.equal('orderId');
-    expect(changeEntryStatus.__spy.calls[0][1]).to.equal(0);
-    expect(changeEntryStatus.__spy.calls[0][2]).to.equal(constants.COMPLETED);
+      Simulate.click(openEntries[0]);
+
+      const comfirmation = findRenderedDOMComponentWithClass(component, 'confirmation');
+      expect(comfirmation.textContent).to.contain('Are you sure?');
+    });
+
+    it('should hide confirmation after submit', () => {
+      const { openEntries, component } = setup({ orders: [order] });
+
+      Simulate.click(openEntries[0]);
+      const submit = findRenderedDOMComponentWithClass(component, 'submit');
+      Simulate.click(submit);
+
+      const comfirmation = scryRenderedDOMComponentsWithClass(component, 'confirmation');
+      expect(comfirmation.length).to.equal(0);
+    });
+
+    it('should hide confirmation on cancel', () => {
+      const { openEntries, component } = setup({ orders: [order] });
+
+      Simulate.click(openEntries[0]);
+      const cancel = findRenderedDOMComponentWithClass(component, 'cancel');
+      Simulate.click(cancel);
+
+      const comfirmation = scryRenderedDOMComponentsWithClass(component, 'confirmation');
+      expect(comfirmation.length).to.equal(0);
+    });
+
+    it('calls handle click with the entry index, order id, and "COMPLETED" status', () => {
+      const { openEntries, component } = setup({ orders: [order] });
+
+      Simulate.click(openEntries[0]);
+      const submit = findRenderedDOMComponentWithClass(component, 'submit');
+      Simulate.click(submit);
+
+      expect(changeEntryStatus).to.have.been.called();
+      expect(changeEntryStatus.__spy.calls[0][0]).to.equal('orderId');
+      expect(changeEntryStatus.__spy.calls[0][1]).to.equal(0);
+      expect(changeEntryStatus.__spy.calls[0][2]).to.equal(constants.COMPLETED);
+    });
   });
 });

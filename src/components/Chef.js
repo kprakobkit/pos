@@ -24,9 +24,11 @@ function toOpenEntries(orderId, entry, entryIndex) {
 class Chef extends Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.cancel = this.cancel.bind(this);
     this.state = {
-      openEntries: []
+      openEntries: [],
+      selectedEntry: undefined
     };
   }
 
@@ -42,11 +44,18 @@ class Chef extends Component {
   }
 
   componentWillReceiveProps(props) {
+    console.log(props.orders);
     this.setOpenEntries(props.orders);
   }
 
-  handleClick(orderId, entryIndex) {
+  handleSubmit() {
+    const { orderId, entryIndex } = this.state.selectedEntry;
+    this.setState({ selectedEntry: undefined });
     this.props.changeEntryStatus(orderId, entryIndex, constants.COMPLETED);
+  }
+
+  cancel() {
+    this.setState({ selectedEntry: undefined });
   }
 
   render() {
@@ -54,15 +63,21 @@ class Chef extends Component {
       null,
       dom.p(null, Link({ to: '/', className: 'orders-link' }, 'Home')),
       this.state.openEntries.map(
-        ({ orderId, entry, entryIndex }, i) => dom.div(
+        (openEntry, i) => dom.div(
           {
             key: i,
             className: 'open-entry',
-            onClick: this.handleClick.bind(null, orderId, entryIndex, constants.COMPLETED)
+            onClick: () => { this.setState({ selectedEntry: openEntry }); }
           },
-          entry.name
+          openEntry.entry.name
         )
-      )
+      ),
+      this.state.selectedEntry ? dom.div(
+        { className: 'confirmation' },
+        dom.p({ className: 'confirmation-text' }, 'Are you sure?'),
+        dom.button({ className: 'submit', onClick: this.handleSubmit }, 'Mark as completed'),
+        dom.button({ className: 'cancel', onClick: this.cancel }, 'Cancel')
+      ) : null
     );
   }
 }
@@ -72,9 +87,7 @@ Chef.propTypes = {
 };
 
 Chef.defaultProps = {
-  orders: [{
-    entries: [{}]
-  }]
+  orders: []
 };
 
 export default Chef;
