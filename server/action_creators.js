@@ -69,15 +69,19 @@ function transactAndDispatch(orderId, transaction) {
     const orders = getState().orders;
     const orderIndex = orders.findIndex((order) => order.id === orderId);
 
-    return transaction.then((response) => {
-      const updatedOrders = [
-        ...orders.slice(0, orderIndex),
-        response,
-        ...orders.slice(orderIndex + 1)
-      ];
+    return transaction
+      .then((response) => {
+        const updatedOrders = [
+          ...orders.slice(0, orderIndex),
+          response,
+          ...orders.slice(orderIndex + 1)
+        ];
 
-      dispatch(setState({ orders: updatedOrders }));
-    });
+        dispatch(setState({ orders: updatedOrders }));
+      })
+      .catch((e) => {
+        throw new Error(e);
+      });;
   };
 }
 
