@@ -59,21 +59,25 @@ class Chef extends Component {
     return dom.div(
       null,
       dom.p(null, Link({ to: '/', className: 'orders-link' }, 'Home')),
-      this.getOpenEntries().map(
-        (openEntry, i) => dom.div(
-          {
-            key: i,
-            className: 'open-entry',
-            onClick: () => { this.setState({ selectedEntry: openEntry }); }
-          },
-          openEntry.entry.name
+      dom.div(
+        { className: 'row open-entries list-group' },
+        this.getOpenEntries().map(
+          (openEntry, i) => dom.div(
+            {
+              key: i,
+              className: 'open-entry col-md-4 col-sm-4 col-xs-4 list-group-item',
+              onClick: () => { this.setState({ selectedEntry: openEntry }); }
+            },
+            dom.h2(null, openEntry.entry.name),
+            dom.h3(null, `Order#: ${ openEntry.orderId }`),
+            dom.p({ className: 'lead' }, openEntry.entry.comment)
+          )
         )
       ),
       this.state.selectedEntry ? dom.div(
         { className: 'confirmation' },
-        dom.p({ className: 'confirmation-text' }, 'Are you sure?'),
-        dom.button({ className: 'submit', onClick: this.handleSubmit }, 'Mark as completed'),
-        dom.button({ className: 'cancel', onClick: this.unselectEntry }, 'Cancel')
+        dom.button({ className: 'submit btn btn-primary btn-lg btn-block', onClick: this.handleSubmit }, 'Mark as completed'),
+        dom.button({ className: 'cancel btn btn-danger btn-lg btn-block', onClick: this.unselectEntry }, 'Cancel')
       ) : null
     );
   }

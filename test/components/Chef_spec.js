@@ -76,7 +76,6 @@ describe('Chef', () => {
       Simulate.click(openEntries[0]);
 
       const comfirmation = findRenderedDOMComponentWithClass(component, 'confirmation');
-      expect(comfirmation.textContent).to.contain('Are you sure?');
     });
 
     it('should hide confirmation after submit', () => {

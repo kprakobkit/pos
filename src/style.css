@@ -18,3 +18,16 @@ a:hover {
 .entry-action {
   text-align: right;
 }
+
+.open-entries {
+  min-height: 100%;
+}
+
+.open-entry {
+  text-align: center;
+  height: 30vh;
+}
+
+.confirmation {
+  text-align: center;
+}
