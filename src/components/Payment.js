@@ -32,7 +32,7 @@ class Payment extends Component {
         { className: 'col-xs-6' },
         dom.input(
           {
-            className: 'form-control input-lg text-right',
+            className: 'payment-amount-input form-control input-lg text-right',
             type: 'number',
             onChange: this.calculateBalance
           }
@@ -57,7 +57,7 @@ class Payment extends Component {
             'Balance'
           ),
           dom.div(
-            { className: 'col-xs-6 h3 text-right' },
+            { className: 'payment-balance-amount col-xs-6 h3 text-right' },
             `$${this.state.balance.toFixed(2)}`
           )
         )
