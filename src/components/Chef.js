@@ -61,7 +61,7 @@ class Chef extends Component {
     if((openEntry && this.state.selectedEntry) && openEntry.orderId === this.state.selectedEntry.orderId && openEntry.entryIndex === this.state.selectedEntry.entryIndex) {
       return classes + ' list-group-item-success';
     } else {
-      return classes
+      return classes;
     }
   }
 
@@ -80,6 +80,7 @@ class Chef extends Component {
             },
             dom.h2(null, openEntry.entry.name),
             dom.h3(null, `Order#: ${ openEntry.orderId }`),
+            dom.p({ className: 'lead' }, openEntry.createdAt.fromNow()),
             dom.p({ className: 'lead' }, openEntry.entry.comment)
           )
         )
