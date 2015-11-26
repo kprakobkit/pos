@@ -37,9 +37,7 @@ orderSchema.statics.addOrder = function(entries) {
     }))
   })
   .save()
-  .then((order) => {
-    return populateEntries(toOrder(order));
-  });
+  .then((order) => populateEntries(toOrder(order)));
 }
 
 orderSchema.statics.addEntries = function(orderId, newEntries) {

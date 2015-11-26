@@ -13,47 +13,40 @@ function mapStateToProps(state) {
   };
 }
 
-function toOpenEntries(orderId, entry, entryIndex) {
-  return {
-    orderId,
+function toOpenEntries({ id, entries }) {
+  return entries.map((entry, entryIndex) => ({
+    orderId: id,
     entry,
     entryIndex
-  };
+  }));
 }
 
 class Chef extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.cancel = this.cancel.bind(this);
+    this.unselectEntry = this.unselectEntry.bind(this);
     this.state = {
-      openEntries: [],
       selectedEntry: undefined
     };
   }
 
-  setOpenEntries(orders) {
-    const allEntries = orders.reduce((entries, order) => entries.concat(order.entries.map(toOpenEntries.bind(null, order.id))), []);
-    const openEntries = allEntries.filter(({ entry }) => entry.status === constants.OPEN).slice(0, displayMax);
-    this.setState({ openEntries });
+  getOpenEntries() {
+    const allEntries = this.props.orders.reduce((entries, order) => entries.concat(toOpenEntries(order)), []);
+    return allEntries.filter(({ entry }) => entry.status === constants.OPEN).slice(0, displayMax);
   }
 
   componentWillMount() {
     this.props.loadOrders();
-    this.setOpenEntries(this.props.orders);
-  }
-
-  componentWillReceiveProps(props) {
-    this.setOpenEntries(props.orders);
   }
 
   handleSubmit() {
     const { orderId, entryIndex } = this.state.selectedEntry;
-    this.setState({ selectedEntry: undefined });
+    this.unselectEntry();
     this.props.changeEntryStatus(orderId, entryIndex, constants.COMPLETED);
   }
 
-  cancel() {
+  unselectEntry() {
     this.setState({ selectedEntry: undefined });
   }
 
@@ -61,7 +54,7 @@ class Chef extends Component {
     return dom.div(
       null,
       dom.p(null, Link({ to: '/', className: 'orders-link' }, 'Home')),
-      this.state.openEntries.map(
+      this.getOpenEntries().map(
         (openEntry, i) => dom.div(
           {
             key: i,
@@ -75,7 +68,7 @@ class Chef extends Component {
         { className: 'confirmation' },
         dom.p({ className: 'confirmation-text' }, 'Are you sure?'),
         dom.button({ className: 'submit', onClick: this.handleSubmit }, 'Mark as completed'),
-        dom.button({ className: 'cancel', onClick: this.cancel }, 'Cancel')
+        dom.button({ className: 'cancel', onClick: this.unselectEntry }, 'Cancel')
       ) : null
     );
   }
