@@ -6,6 +6,7 @@ import ChefComponent from '../../src/components/Chef';
 import Generator from '../support/generator';
 import constants from '../../src/constants';
 import _ from 'underscore';
+import moment from 'moment';
 
 const {
   renderIntoDocument,
@@ -19,25 +20,39 @@ const changeEntryStatus = spy();
 function setup({ orders } = {}) {
   const Chef = React.createFactory(ChefComponent);
   const loadOrders = () => {};
-  const entry1 = Generator.entry().status(constants.OPEN).build();
-  const entry2 = Generator.entry().status(constants.CLOSED).build();
+  const entry1 = Generator.entry().status(constants.CLOSED).build();
+  const entry2 = Generator.entry().status(constants.OPEN).build();
   const entries = [entry1, entry2];
-  const order1 = Generator.order().entries(entries).build();
-  const order2 = Generator.order().entries(entries).build();
+  const order1 = Generator.order().id('order1').entries(entries).build();
+  const order2 = Generator.order().id('order2').entries(entries).build();
   const defaultOrders = [order1, order2];
   const component = renderIntoDocument(Chef({ orders: orders || defaultOrders, loadOrders, changeEntryStatus }));
 
   return {
     openEntries: scryRenderedDOMComponentsWithClass(component, 'open-entry'),
+    entries,
     component
   };
 }
 
 describe('Chef', () => {
-  it('should render open entries for all orders', () => {
-    const { openEntries } = setup();
+  it('should render open entries with the order id for all orders', () => {
+    const { openEntries, entries } = setup();
 
     expect(openEntries.length).to.equal(2);
+    expect(openEntries[0].textContent).to.contain('order1');
+    expect(openEntries[1].textContent).to.contain('order2');
+  });
+
+  it('displays entries in order that it was created', () => {
+    const entry1 = Generator.entry().name('after').createdAt(moment(constants.NOW).add(1, 'days')).status(constants.OPEN).build();
+    const entry2 = Generator.entry().name('before').createdAt(moment(constants.NOW)).status(constants.OPEN).build();
+    const order1 = Generator.order().entries([entry1]).build();
+    const order2 = Generator.order().entries([entry2]).build();
+    const { openEntries } = setup({ orders: [order1, order2] });
+
+    expect(openEntries[0].textContent).to.contain(entry2.name);
+    expect(openEntries[1].textContent).to.contain(entry1.name);
   });
 
   it('should display the first six entries', () => {

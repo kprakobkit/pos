@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Link as LinkComponent } from 'react-router';
 import actions from '../action_creators';
 import constants from '../constants';
+import moment from 'moment';
+import _ from 'underscore';
 
 const Link = createFactory(LinkComponent);
 const displayMax = 6;
@@ -17,7 +19,8 @@ function toOpenEntries({ id, entries }) {
   return entries.map((entry, entryIndex) => ({
     orderId: id,
     entry,
-    entryIndex
+    entryIndex,
+    createdAt: moment(entry.created_at)
   }));
 }
 
@@ -33,7 +36,9 @@ class Chef extends Component {
 
   getOpenEntries() {
     const allEntries = this.props.orders.reduce((entries, order) => entries.concat(toOpenEntries(order)), []);
-    return allEntries.filter(({ entry }) => entry.status === constants.OPEN).slice(0, displayMax);
+    const sortedOpengEntries = _.sortBy(allEntries.filter(({ entry }) => entry.status === constants.OPEN), 'createdAt');
+
+    return sortedOpengEntries.slice(0, displayMax);
   }
 
   componentWillMount() {
