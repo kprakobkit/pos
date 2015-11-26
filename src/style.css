@@ -15,16 +15,8 @@ a:hover {
   color: black;
 }
 
-.entry-action {
-  text-align: right;
-}
-
 .payment-component {
   margin-top: 50px;
-}
-
-.payment-component input {
-  text-align: right;
 }
 
 .payment-component-heading {

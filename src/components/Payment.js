@@ -13,7 +13,7 @@ class Payment extends Component {
             dom.label({ className: 'control-label col-xs-6 h4' }, 'Cash'),
             dom.div(
               { className: 'col-xs-6' },
-              dom.input({ className: 'form-control input-lg', type: 'number' })
+              dom.input({ className: 'form-control input-lg text-right', type: 'number' })
             )
           ),
           dom.div(
@@ -21,7 +21,7 @@ class Payment extends Component {
             dom.label({ className: 'control-label col-xs-6 h4' }, 'Credit'),
             dom.div(
               { className: 'col-xs-6' },
-              dom.input({ className: 'form-control input-lg', type: 'number' })
+              dom.input({ className: 'form-control input-lg text-right', type: 'number' })
             )
           ),
           dom.div(
@@ -29,7 +29,7 @@ class Payment extends Component {
             dom.label({ className: 'control-label col-xs-6 h4' }, 'Tip in Credit'),
             dom.div(
               { className: 'col-xs-6' },
-              dom.input({ className: 'form-control input-lg', type: 'number' })
+              dom.input({ className: 'form-control input-lg text-right', type: 'number' })
             )
           )
         )
