@@ -1,5 +1,6 @@
 import utils from '../utils';
 import Order from '../../models/order';
+import Item from '../../models/item';
 import { expect } from 'chai';
 import faker from 'faker';
 import constants from '../../src/constants';
@@ -11,6 +12,24 @@ describe('Order', () => {
     }).save((err, newOrder) => {
       expect(newOrder.status).to.equal(constants.OPEN);
       done();
+    });
+  });
+
+  describe('get entries', (done) => {
+    beforeEach((done) => {
+      Item({
+        name: 'Rice',
+        price: 1000
+      }).save(done);
+    });
+
+    it('adds created_at to each entry', (done) => {
+      Item.findOne({ name: 'Rice' })
+      .then((item) => Order.addOrder([item]))
+      .then((order) => {
+        expect(order.entries[0].created_at).to.exist;
+        done();
+      });
     });
   });
 

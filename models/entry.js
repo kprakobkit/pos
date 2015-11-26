@@ -7,4 +7,6 @@ const entrySchema = new Schema({
   comment: String
 });
 
+
+
 export default mongoose.model('Entry', entrySchema);
