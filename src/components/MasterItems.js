@@ -92,7 +92,7 @@ class MasterItems extends Component {
               dom.td({ className: 'entry-name' }, dom.h2(null, entry.name)),
               dom.td({ className: 'entry-comment' }, dom.h2(null, dom.small(null, entry.comment))),
               dom.td(
-                { className: 'entry-action' },
+                { className: 'entry-action text-right' },
                 dom.button(
                   {
                     className: 'btn btn-default remove-entry',

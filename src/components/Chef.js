@@ -29,6 +29,7 @@ class Chef extends Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.unselectEntry = this.unselectEntry.bind(this);
+    this.renderOpenEntry = this.renderOpenEntry.bind(this);
     this.state = {
       selectedEntry: undefined
     };
@@ -56,7 +57,7 @@ class Chef extends Component {
   }
 
   getOpenEntryClass(openEntry) {
-    let classes =  'open-entry col-md-4 col-sm-4 col-xs-4 list-group-item';
+    let classes =  'open-entry col-md-4 col-sm-4 col-xs-4 list-group-item text-center';
 
     if((openEntry && this.state.selectedEntry) && openEntry.orderId === this.state.selectedEntry.orderId && openEntry.entryIndex === this.state.selectedEntry.entryIndex) {
       return classes + ' list-group-item-success';
@@ -65,25 +66,27 @@ class Chef extends Component {
     }
   }
 
+  renderOpenEntry(openEntry, i) {
+    return dom.div(
+      {
+        key: i,
+        className: this.getOpenEntryClass(openEntry),
+        onClick: () => { this.setState({ selectedEntry: openEntry }); }
+      },
+      dom.h2(null, openEntry.entry.name),
+      dom.h3(null, `Order#: ${ openEntry.orderId }`),
+      dom.p({ className: 'lead' }, openEntry.createdAt.fromNow()),
+      dom.p({ className: 'lead' }, openEntry.entry.comment)
+    );
+  }
+
   render() {
     return dom.div(
       null,
       dom.p(null, Link({ to: '/', className: 'orders-link' }, 'Home')),
       dom.div(
         { className: 'row open-entries list-group' },
-        this.getOpenEntries().map(
-          (openEntry, i) => dom.div(
-            {
-              key: i,
-              className: this.getOpenEntryClass(openEntry),
-              onClick: () => { this.setState({ selectedEntry: openEntry }); }
-            },
-            dom.h2(null, openEntry.entry.name),
-            dom.h3(null, `Order#: ${ openEntry.orderId }`),
-            dom.p({ className: 'lead' }, openEntry.createdAt.fromNow()),
-            dom.p({ className: 'lead' }, openEntry.entry.comment)
-          )
-        )
+        this.getOpenEntries().map(this.renderOpenEntry),
       ),
       this.state.selectedEntry ? dom.div(
         { className: 'confirmation' },
