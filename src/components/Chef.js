@@ -55,6 +55,16 @@ class Chef extends Component {
     this.setState({ selectedEntry: undefined });
   }
 
+  getOpenEntryClass(openEntry) {
+    let classes =  'open-entry col-md-4 col-sm-4 col-xs-4 list-group-item';
+
+    if((openEntry && this.state.selectedEntry) && openEntry.orderId === this.state.selectedEntry.orderId && openEntry.entryIndex === this.state.selectedEntry.entryIndex) {
+      return classes + ' list-group-item-success';
+    } else {
+      return classes
+    }
+  }
+
   render() {
     return dom.div(
       null,
@@ -65,7 +75,7 @@ class Chef extends Component {
           (openEntry, i) => dom.div(
             {
               key: i,
-              className: 'open-entry col-md-4 col-sm-4 col-xs-4 list-group-item',
+              className: this.getOpenEntryClass(openEntry),
               onClick: () => { this.setState({ selectedEntry: openEntry }); }
             },
             dom.h2(null, openEntry.entry.name),
