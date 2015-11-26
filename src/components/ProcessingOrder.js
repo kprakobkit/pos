@@ -49,7 +49,7 @@ class ProcessingOrder extends Component {
             )
           )
         ),
-        Payment()
+        Payment({ startingBalance: this.subtotal() })
       )
     );
   }
