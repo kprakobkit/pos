@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import constants from '../constants';
 import _ from 'underscore';
 import EntryComponent from './Entry';
+import PaymentComponent from './Payment';
 
 const Entry = createFactory(EntryComponent);
+const Payment = createFactory(PaymentComponent);
 
 class ProcessingOrder extends Component {
   constructor(props) {
@@ -46,7 +48,8 @@ class ProcessingOrder extends Component {
               dom.td(null, dom.h2(null, `$${this.subtotal().toFixed(2)}`))
             )
           )
-        )
+        ),
+        Payment()
       )
     );
   }

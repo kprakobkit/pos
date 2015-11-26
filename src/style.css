@@ -18,3 +18,24 @@ a:hover {
 .entry-action {
   text-align: right;
 }
+
+.payment-component {
+  margin-top: 50px;
+}
+
+.payment-component input {
+  text-align: right;
+}
+
+.payment-component-heading {
+  padding: 10px;
+  margin-bottom: 25px;
+  text-align: center;
+  background-color: #dff0d8;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
