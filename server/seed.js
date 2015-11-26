@@ -10,8 +10,7 @@ import config from '../config';
 
 const orderStatuses = [
   constants.OPEN,
-  constants.CLOSED,
-  constants.READY_FOR_BILL
+  constants.CLOSED
 ];
 
 mongoose.connect(process.env.MONGOLAB_URI || config.developmentDB);
