@@ -72,10 +72,9 @@ function transactAndDispatch(orderId, transaction) {
         ];
 
         dispatch(setState({ orders: updatedOrders }));
-      })
-      .catch((e) => {
+      }, (e) => {
         throw new Error(e);
-      });;
+      });
   };
 }
 
