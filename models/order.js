@@ -112,14 +112,14 @@ function populateEntries(order) {
 }
 
 function toEntry({ status, comment, item_id, _id}) {
-  const created_at = _id.getTimestamp();
+  const createdAt = _id.getTimestamp();
 
   return {
     status,
     comment,
     name: item_id.name,
     price: item_id.price,
-    created_at
+    createdAt
   };
 }
 

@@ -20,7 +20,7 @@ function toOpenEntries({ id, entries }) {
     orderId: id,
     entry,
     entryIndex,
-    createdAt: moment(entry.created_at)
+    createdAt: moment(entry.createdAt)
   }));
 }
 
@@ -37,9 +37,9 @@ class Chef extends Component {
 
   getOpenEntries() {
     const allEntries = this.props.orders.reduce((entries, order) => entries.concat(toOpenEntries(order)), []);
-    const sortedOpengEntries = _.sortBy(allEntries.filter(({ entry }) => entry.status === constants.OPEN), 'createdAt');
+    const sortedOpenEntries = _.sortBy(allEntries.filter(({ entry }) => entry.status === constants.OPEN), 'createdAt');
 
-    return sortedOpengEntries.slice(0, displayMax);
+    return sortedOpenEntries.slice(0, displayMax);
   }
 
   componentWillMount() {
@@ -57,9 +57,9 @@ class Chef extends Component {
   }
 
   getOpenEntryClass(openEntry) {
-    let classes =  'open-entry col-md-4 col-sm-4 col-xs-4 list-group-item text-center';
+    const classes =  'open-entry col-md-4 col-sm-4 col-xs-4 list-group-item text-center';
 
-    if((openEntry && this.state.selectedEntry) && openEntry.orderId === this.state.selectedEntry.orderId && openEntry.entryIndex === this.state.selectedEntry.entryIndex) {
+    if(JSON.stringify(openEntry) === JSON.stringify(this.state.selectedEntry)) {
       return classes + ' list-group-item-success';
     } else {
       return classes;

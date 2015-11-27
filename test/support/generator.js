@@ -40,7 +40,7 @@ function entryBuilder() {
     price: 1050,
     comment: 'brown rice',
     status: _.sample(orderStatuses),
-    created_at: moment(constants.now)
+    createdAt: moment(constants.now)
   };
 
   return {
@@ -57,7 +57,7 @@ function entryBuilder() {
       return this;
     },
     createdAt: function (createdAt) {
-      defaultEntry.created_at = createdAt;
+      defaultEntry.createdAt = createdAt;
       return this;
     },
     build: function () {

@@ -23,11 +23,11 @@ describe('Order', () => {
       }).save(done);
     });
 
-    it('adds created_at to each entry', (done) => {
+    it('adds createdAt to each entry', (done) => {
       Item.findOne({ name: 'Rice' })
       .then((item) => Order.addOrder([item]))
       .then((order) => {
-        expect(order.entries[0].created_at).to.exist;
+        expect(order.entries[0].createdAt).to.exist;
         done();
       });
     });
