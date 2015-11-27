@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import constants from '../src/constants';
 import Order from '../models/order';
 import Item from '../models/item';
-import faker from 'faker';
 import _ from 'underscore';
 
 export function setState(state) {
@@ -36,14 +35,9 @@ export function loadItems() {
 
 export function addOrder(entries) {
   return (dispatch, getState) => {
-    Order({
-      id: faker.random.number(), // need auto generated id...
-      entries: entries.map((item) => ({
-        item_id: mongoose.Types.ObjectId(item.id),
-        comment: item.comment
-      }))
-    }).save((err, newOrder) => {
-      const updatedOrders = getState().orders.concat(newOrder);
+    Order.addOrder(entries)
+    .then((order) => {
+      const updatedOrders = getState().orders.concat(order);
 
       dispatch(setState({
         orders: updatedOrders

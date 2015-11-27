@@ -31,6 +31,7 @@ class Entry extends Component {
             },
             dom.option({ value: constants.OPEN }, constants.OPEN),
             dom.option({ value: constants.DELIVERED }, constants.DELIVERED),
+            dom.option({ value: constants.COMPLETED }, constants.COMPLETED),
             dom.option({ value: constants.CANCELED }, constants.CANCELED)
           )
         ) :

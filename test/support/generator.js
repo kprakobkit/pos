@@ -1,6 +1,7 @@
 import constants from '../../src/constants';
 import faker from 'faker';
 import _ from 'underscore';
+import moment from 'moment';
 
 const orderStatuses = [
   constants.OPEN,
@@ -15,6 +16,14 @@ function orderBuilder() {
   };
 
   return {
+    id: function (id) {
+      defaultOrder.id = id;
+      return this;
+    },
+    entries: function (entries) {
+      defaultOrder.entries = entries;
+      return this;
+    },
     status: function (status) {
       defaultOrder.status = status;
       return this;
@@ -30,16 +39,25 @@ function entryBuilder() {
     name: 'rice',
     price: 1050,
     comment: 'brown rice',
-    status: _.sample(orderStatuses)
+    status: _.sample(orderStatuses),
+    createdAt: moment(constants.now)
   };
 
   return {
+    name: function (name) {
+      defaultEntry.name = name;
+      return this;
+    },
     status: function (status) {
       defaultEntry.status = status;
       return this;
     },
     price: function (price) {
       defaultEntry.price = price;
+      return this;
+    },
+    createdAt: function (createdAt) {
+      defaultEntry.createdAt = createdAt;
       return this;
     },
     build: function () {
