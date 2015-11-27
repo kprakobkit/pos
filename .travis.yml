@@ -10,4 +10,5 @@ deploy:
   app:
     master: jadeleaf-pos
   run:
+    - "./node_modules/webpack/bin/webpack.js --config ./webpack-prod.config.js --progress --color"
     - "babel-node server/seed.js"
