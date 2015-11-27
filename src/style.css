@@ -15,6 +15,10 @@ a:hover {
   color: black;
 }
 
-.entry-action {
-  text-align: right;
+.open-entries {
+  min-height: 100%;
+}
+
+.open-entry {
+  height: 30vh;
 }

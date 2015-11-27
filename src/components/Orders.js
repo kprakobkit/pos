@@ -58,6 +58,7 @@ class Orders extends Component {
     return (
       dom.div(
         null,
+        Link({ to: '/', className: 'orders-link' }, 'Home'),
         dom.h1({ className: 'orders-title' }, 'Orders'),
         Link(
           { to: '/orders/new' },
