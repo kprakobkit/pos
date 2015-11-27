@@ -8,7 +8,8 @@
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive",
     "test:watch": "npm run test -- --watch",
     "watch": "nodemon --exec babel-node server/server.js --ignore src/",
-    "lint": "eslint src server test"
+    "lint": "eslint src server test",
+    "postinstall": "./node_modules/webpack/bin/webpack.js --config ./webpack-prod.config.js --progress --color"
   },
   "engines": {
     "node": "0.10.x"
