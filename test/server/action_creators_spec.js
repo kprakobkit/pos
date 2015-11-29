@@ -138,19 +138,16 @@ describe('server action creators', () => {
       return { orders };
     }
     const expected = {
-      type: constants.SET_STATE,
-      state: {
-        orders: [
+      type: constants.UPDATE_ORDER,
+      orderId: 1,
+      order: {
+        id: 1,
+        status: constants.OPEN,
+        entries: [
           {
-            id: 1,
-            status: constants.OPEN,
-            entries: [
-              {
-                status: constants.DELIVERED,
-                name: '',
-                comment: ''
-              }
-            ]
+            status: constants.DELIVERED,
+            name: '',
+            comment: ''
           }
         ]
       }
@@ -158,7 +155,6 @@ describe('server action creators', () => {
 
     actions.changeEntryStatus(1, 0, constants.DELIVERED)(dispatch, getState).then(() => {
       expect(dispatched).to.deep.equal(expected);
-      done();
-    });
+    }).then(done, done);
   });
 });
