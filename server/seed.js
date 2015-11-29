@@ -30,11 +30,11 @@ function removeData(next) {
       });
     },
     () => {
-      console.log('Dropping orders collection');
+      console.log('Dropping items collection');
 
       Item.remove({}, (err, res) => {
         if(err) {
-          console.error(`Error dropping the orders colection. ${err}`);
+          console.error(`Error dropping the items colection. ${err}`);
         }
 
         console.log('Items collection dropped');
