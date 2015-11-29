@@ -47,6 +47,12 @@ function removeData(next) {
 
 function createItem(name, price, cb) {
   Item({ name, price }).save((err, result) => {
+    if(err) {
+      console.error(`Item name: ${name}`);
+      console.error(`Error creating item. ${err}`);
+    }
+
+    console.log(`Successfully created ${name}`);
     cb(err, result);
   });
 }
@@ -56,7 +62,14 @@ function createOrder(items, cb) {
     id: faker.random.number(),
     status: _.sample(orderStatuses),
     entries: items.map(toEntry)
-  }).save(cb);
+  }).save((err, result) => {
+    if(err) {
+      console.error(`Error creating order. ${err}`);
+    }
+
+    console.log('Successfully created order.');
+    cb(result);
+  });
 }
 
 function createItems(cb) {
