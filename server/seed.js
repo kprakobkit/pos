@@ -19,12 +19,24 @@ mongoose.connect(process.env.MONGOLAB_URI || config.developmentDB);
 function removeData(next) {
   async.parallel([
     () => {
+      console.log('Dropping orders collection');
+
       Order.remove({}, (err, res) => {
+        if(err) {
+          console.error(`Error dropping the orders colection. ${err}`);
+        }
+
         console.log('Orders collection dropped');
       });
     },
     () => {
+      console.log('Dropping orders collection');
+
       Item.remove({}, (err, res) => {
+        if(err) {
+          console.error(`Error dropping the orders colection. ${err}`);
+        }
+
         console.log('Items collection dropped');
       });
     }
