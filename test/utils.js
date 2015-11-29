@@ -1,30 +1,40 @@
 import mongoose from 'mongoose';
 import config from '../config';
+import _ from 'underscore';
 
 process.env.NODE_ENV = 'test';
 
-beforeEach((done) => {
-  function clearDB() {
-    for (let i in mongoose.connection.collections) {
-      mongoose.connection.collections[i].remove(() => {});
-    }
-    return done();
-  }
+function clearDB() {
+  const removeCollectionsPromise = _.map(mongoose.connection.collections, (collection) => {
+    return new Promise((resolve, reject) => {
+      collection.remove((err) => {
+        if(err) {
+          reject(err);
+        }
 
+        resolve();
+      });
+    });
+  });
+
+  return Promise.all(removeCollectionsPromise);
+}
+
+beforeEach((done) => {
   if (mongoose.connection.readyState === 0) {
     mongoose.connect(config.testDB, (err) => {
       if (err) {
         throw err;
       }
 
-      return clearDB();
+      clearDB().then(() => { done(); });
     });
   } else {
-    return clearDB();
+    clearDB().then(() => { done(); });
   }
 });
 
 afterEach((done) => {
   mongoose.disconnect();
-  return done();
+  done();
 });
