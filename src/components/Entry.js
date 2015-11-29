@@ -36,7 +36,7 @@ class Entry extends Component {
           )
         ) :
         dom.td(
-          { className: 'entry-price' },
+          { className: 'entry-price text-right' },
           dom.h2(null, `$${(this.props.price / 100).toFixed(2)}`)
         )
     );
