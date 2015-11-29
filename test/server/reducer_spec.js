@@ -39,4 +39,32 @@ describe('reducer', () => {
       expect(nextState).to.deep.equal(newState);
     });
   });
+
+  describe('UPDATE_ORDER', () => {
+    it('handles UPDATE_ORDER', () => {
+      const initialState = {
+        orders: [
+          { id: 1 },
+          { id: 2 }
+        ]
+      };
+      const newState = {
+        orders: [
+          { id: 1 },
+          { id: 2, foo: 'bar' }
+        ]
+      };
+      const action = {
+        type: 'UPDATE_ORDER',
+        orderId: 2,
+        order: {
+          id: 2,
+          foo: 'bar'
+        }
+      };
+      const nextState = reducer(initialState, action);
+
+      expect(nextState).to.deep.equal(newState);
+    });
+  });
 });

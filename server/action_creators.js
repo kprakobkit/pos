@@ -11,6 +11,14 @@ export function setState(state) {
   };
 }
 
+export function updateOrder(orderId, order) {
+  return {
+    type: constants.UPDATE_ORDER,
+    orderId,
+    order
+  };
+}
+
 export function loadOrders() {
   return (dispatch) => {
     return Order.getOrders().then((orders) => {
@@ -47,31 +55,22 @@ export function addOrder(entries) {
 }
 
 export function changeEntryStatus(orderId, entryIndex, status) {
-  return transactAndDispatch(orderId, Order.updateEntry(orderId, entryIndex, { status }));
+  return dispatchUpdateOrder(orderId, Order.updateEntry(orderId, entryIndex, { status }));
 }
 
 export function addEntriesToOrder(orderId, newEntries) {
-  return transactAndDispatch(orderId, Order.addEntries(orderId, newEntries));
+  return dispatchUpdateOrder(orderId, Order.addEntries(orderId, newEntries));
 }
 
 export function setReadyForBill(orderId) {
-  return transactAndDispatch(orderId, Order.updateStatus(orderId, constants.READY_FOR_BILL));
+  return dispatchUpdateOrder(orderId, Order.updateStatus(orderId, constants.READY_FOR_BILL));
 }
 
-function transactAndDispatch(orderId, transaction) {
+function dispatchUpdateOrder(orderId, transaction) {
   return (dispatch, getState) => {
-    const orders = getState().orders;
-    const orderIndex = orders.findIndex((order) => order.id === orderId);
-
     return transaction
-      .then((response) => {
-        const updatedOrders = [
-          ...orders.slice(0, orderIndex),
-          response,
-          ...orders.slice(orderIndex + 1)
-        ];
-
-        dispatch(setState({ orders: updatedOrders }));
+      .then((order) => {
+        dispatch(updateOrder(orderId, order));
       }, (e) => {
         throw new Error(e);
       });
