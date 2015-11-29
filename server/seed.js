@@ -42,12 +42,12 @@ function createItem(name, price, cb) {
         reject(err);
       }
 
-      resolve();
+      resolve(result);
     });
   });
 }
 
-function createOrder(items, i) {
+function createOrder(items) {
   return new Promise((resolve, reject) => {
     Order({
       id: faker.random.number(),
@@ -71,8 +71,9 @@ function createItems(cb) {
     createItem('Rice', 175),
     createItem('Dessert', 430)
   ])
-  .then(() => {
+  .then((items) => {
     console.log('Successfully created all items');
+    return items;
   });
 }
 
