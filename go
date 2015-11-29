@@ -20,8 +20,15 @@ client() {
 }
 
 server() {
-  echo "Starting server"
-  npm run watch
+  key="$1"
+  if [ $key == '-d' ] || [ $key == '--debug' ]
+  then
+    echo "Starting server - debug mode"
+    node_modules/iron-node/bin/run.js debug.js
+  else
+    echo "Starting server"
+    npm run watch
+  fi
 }
 
 mongo() {
