@@ -9,37 +9,45 @@ import PaymentComponent from '../../src/components/Payment';
 const {
   renderIntoDocument,
   findRenderedDOMComponentWithClass,
-  scryRenderedDOMComponentsWithClass,
   Simulate
 } = TestUtils;
 const Payment = React.createFactory(PaymentComponent);
 
-describe('Payment', () => {
-  it('renders balance remaining after entered amounts', () => {
-    const price = 20;
-    const props = { startingBalance: price };
-    const component = renderIntoDocument(Payment(props));
-    const balance = findRenderedDOMComponentWithClass(component, 'payment-balance-amount');
-    const input = scryRenderedDOMComponentsWithClass(component, 'payment-amount-input')[0];
+function setup() {
+  const startingBalance = 2000;
+  const setClosed = () => {};
+  const component = renderIntoDocument(Payment({ startingBalance, setClosed }));
 
-    expect(balance.textContent).to.contain(`$${(price).toFixed(2)}`);
+  return {
+    component,
+    startingBalance
+  };
+}
+
+describe('Payment', () => {
+  const setClosed = () => {};
+
+  it('renders balance remaining after entered amounts', () => {
+    const { component, startingBalance } = setup();
+    const balance = findRenderedDOMComponentWithClass(component, 'payment-balance-amount');
+    const input = findRenderedDOMComponentWithClass(component, 'cash-amount-input');
+
+    expect(balance.textContent).to.contain(`$${(startingBalance / 100).toFixed(2)}`);
 
     const amount = 5;
     input.value = amount;
     Simulate.change(input);
 
-    expect(balance.textContent).to.contain(`$${(price - amount).toFixed(2)}`);
+    expect(balance.textContent).to.contain(`$${((startingBalance - amount * 100) / 100).toFixed(2)}`);
   });
 
   it('does not include credit tip amount when calculating remaining balance', () => {
-    const price = 20;
-    const props = { startingBalance: price };
-    const component = renderIntoDocument(Payment(props));
+    const { component, startingBalance } = setup();
     const balance = findRenderedDOMComponentWithClass(component, 'payment-balance-amount');
-    const input = scryRenderedDOMComponentsWithClass(component, 'payment-amount-input')[0];
+    const input = findRenderedDOMComponentWithClass(component, 'cash-amount-input');
     const tipInput = findRenderedDOMComponentWithClass(component, 'tip-amount-input');
 
-    expect(balance.textContent).to.contain(`$${price.toFixed(2)}`);
+    expect(balance.textContent).to.contain(`$${(startingBalance / 100).toFixed(2)}`);
 
     const amount = 5;
     tipInput.value = amount;
@@ -48,7 +56,7 @@ describe('Payment', () => {
     input.value = 0;
     Simulate.change(input);
 
-    expect(balance.textContent).to.contain(`$${price.toFixed(2)}`);
+    expect(balance.textContent).to.contain(`$${(startingBalance / 100).toFixed(2)}`);
   });
 });
 

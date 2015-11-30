@@ -65,6 +65,15 @@ export function setOpen(orderId) {
   };
 }
 
+export function setClosed(orderId, amounts) {
+  return {
+    meta: { remote: true },
+    type: constants.SET_CLOSED,
+    orderId,
+    amounts
+  };
+}
+
 export default {
   setState,
   loadOrders,
@@ -73,5 +82,6 @@ export default {
   changeEntryStatus,
   addEntriesToOrder,
   setReadyForBill,
-  setOpen
+  setOpen,
+  setClosed
 };
