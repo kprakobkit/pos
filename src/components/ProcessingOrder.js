@@ -52,7 +52,7 @@ class ProcessingOrder extends Component {
         Payment(
           {
             startingBalance: this.subtotal(),
-            closeOrder: this.props.closeOrder
+            setClosed: this.props.setClosed
           }
         )
       )
@@ -62,7 +62,7 @@ class ProcessingOrder extends Component {
 
 ProcessingOrder.propTypes = {
   order: PropTypes.object.isRequired,
-  closeOrder: PropTypes.func.isRequired
+  setClosed: PropTypes.func.isRequired
 };
 
 export default ProcessingOrder;

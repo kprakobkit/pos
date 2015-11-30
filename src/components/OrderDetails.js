@@ -70,7 +70,7 @@ class OrderDetails extends Component {
           ProcessingOrder(
             {
               order: this.state.order,
-              closeOrder: this.props.closeOrder.bind(null, this.props.params.id)
+              setClosed: this.props.setClosed.bind(null, this.props.params.id)
             }
           )
       )
@@ -86,7 +86,7 @@ OrderDetails.propTypes = {
   changeEntryStatus: PropTypes.func.isRequired,
   setReadyForBill: PropTypes.func.isRequired,
   setOpen: PropTypes.func.isRequired,
-  closeOrder: PropTypes.func.isRequired
+  setClosed: PropTypes.func.isRequired
 };
 
 OrderDetails.defaultProps = {

@@ -19,7 +19,7 @@ function setup({ orders } = {}) {
   const loadItems = () => {};
   const addEntriesToOrder = () => {};
   const setReadyForBill = () => {};
-  const closeOrder = () => {};
+  const setClosed = () => {};
   const setOpen = spy();
   const id = 1;
   const params = { id };
@@ -31,7 +31,7 @@ function setup({ orders } = {}) {
     addEntriesToOrder,
     setReadyForBill,
     setOpen,
-    closeOrder
+    setClosed
   };
   const component = renderIntoDocument(OrderDetails(props));
   const title = findRenderedDOMComponentWithClass(component, 'order-title');

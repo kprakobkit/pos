@@ -81,7 +81,7 @@ class Payment extends Component {
         CloseOrderBtn(
           {
             shouldBeDisabled: this.state.balance !== 0,
-            handleClick: this.props.closeOrder.bind.apply(this.props.closeOrder, [null].concat(this.allInputAmounts()))
+            handleClick: this.props.setClosed.bind.apply(this.props.setClosed, [null].concat(this.allInputAmounts()))
           }
         )
       )
@@ -91,7 +91,7 @@ class Payment extends Component {
 
 Payment.propTypes = {
   startingBalance: PropTypes.number.isRequired,
-  closeOrder: PropTypes.func.isRequired
+  setClosed: PropTypes.func.isRequired
 };
 
 export default Payment;

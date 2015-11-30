@@ -15,11 +15,11 @@ const {
 const Payment = React.createFactory(PaymentComponent);
 
 describe('Payment', () => {
-  const closeOrder = () => {};
+  const setClosed = () => {};
 
   it('renders balance remaining after entered amounts', () => {
     const price = 20;
-    const props = { startingBalance: price, closeOrder };
+    const props = { startingBalance: price, setClosed };
     const component = renderIntoDocument(Payment(props));
     const balance = findRenderedDOMComponentWithClass(component, 'payment-balance-amount');
     const input = scryRenderedDOMComponentsWithClass(component, 'payment-amount-input')[0];
@@ -35,7 +35,7 @@ describe('Payment', () => {
 
   it('does not include credit tip amount when calculating remaining balance', () => {
     const price = 20;
-    const props = { startingBalance: price, closeOrder };
+    const props = { startingBalance: price, setClosed };
     const component = renderIntoDocument(Payment(props));
     const balance = findRenderedDOMComponentWithClass(component, 'payment-balance-amount');
     const input = scryRenderedDOMComponentsWithClass(component, 'payment-amount-input')[0];

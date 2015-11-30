@@ -65,10 +65,10 @@ export function setOpen(orderId) {
   };
 }
 
-export function closeOrder(orderId, cashAmount, creditAmount, creditTipAmount) {
+export function setClosed(orderId, cashAmount, creditAmount, creditTipAmount) {
   return {
     meta: { remote: true },
-    type: constants.CLOSE_ORDER,
+    type: constants.SET_CLOSED,
     orderId,
     cashAmount,
     creditAmount,
@@ -85,5 +85,5 @@ export default {
   addEntriesToOrder,
   setReadyForBill,
   setOpen,
-  closeOrder
+  setClosed
 };
