@@ -9,7 +9,7 @@ class CloseOrderBtn extends Component {
         null,
         dom.button(
           {
-            className: 'order-entries ready-for-bill btn btn-primary btn-lg btn-block',
+            className: 'order-entries close-order btn btn-primary btn-lg btn-block',
             disabled: this.props.shouldBeDisabled,
             onClick: this.props.handleClick
           },
