@@ -6,6 +6,7 @@ import constants from '../../src/constants';
 import tableComponentFactory from './table_component_factory';
 import EntryComponent from '../../src/components/Entry';
 import _ from 'underscore';
+import Generator from '../support/generator';
 
 const {
   renderIntoDocument,
@@ -16,24 +17,30 @@ const {
 const Entry = createFactory(EntryComponent);
 const Table = createFactory(tableComponentFactory(Entry));
 
-describe('Entry', () => {
-  const name = 'Pho';
+function setup({ ofOpenOrder } = {}) {
   const status = constants.OPEN;
-  const comment = 'extra soup';
-  const price = 1025;
-  const props = { name, status, comment, price };
+  const entry = Generator.entry().status(status).build();
+  const component = renderIntoDocument(Table(_.extend({}, entry, { ofOpenOrder })));
+
+  return {
+    component,
+    entry
+  };
+}
+
+describe('Entry', () => {
 
   it('renders name and comment', () => {
-    const component = renderIntoDocument(Table(props));
+    const { component, entry } = setup();
     const entryName = findRenderedDOMComponentWithClass(component, 'entry-name');
     const entryComment = findRenderedDOMComponentWithClass(component, 'entry-comment');
 
-    expect(entryName.textContent).to.equal(name);
-    expect(entryComment.textContent).to.equal(comment);
+    expect(entryName.textContent).to.equal(entry.name);
+    expect(entryComment.textContent).to.equal(entry.comment);
   });
 
   it('renders status and not price if under open order', () => {
-    const component = renderIntoDocument(Table(props));
+    const { component } = setup();
     const entryStatus = findRenderedDOMComponentWithClass(component, 'entry-status');
     const entryPrice = scryRenderedDOMComponentsWithClass(component, 'entry-price');
 
@@ -43,12 +50,17 @@ describe('Entry', () => {
 
   it('renders price and not status if under processing order', () => {
     const ofOpenOrder = false;
-    const component = renderIntoDocument(Table(_.extend({}, props, { ofOpenOrder })));
+    const { component, entry } = setup({ ofOpenOrder });
     const entryPrice = findRenderedDOMComponentWithClass(component, 'entry-price');
     const entryStatus = scryRenderedDOMComponentsWithClass(component, 'entry-status');
 
-    expect(entryPrice).to.exist;
-    expect(entryPrice.textContent).to.equal(`$${price / 100}`);
+    expect(entryPrice.textContent).to.equal(`$${(entry.price / 100).toFixed(2)}`);
     expect(entryStatus.length).to.equal(0);
+  });
+
+  describe('Open', () => {
+    const { component } = setup();
+    it('shows mark delivered delivered', () => {
+    });
   });
 });
