@@ -46,11 +46,17 @@ class OrderDetails extends Component {
       dom.div(
         null,
         dom.h1({ className: 'order-title' }, `Order #${this.props.params.id}`),
-        dom.h2({ className: 'order-status' }, `Status: ${this.state.order.status}`),
-        this.state.order.status === constants.READY_FOR_BILL ? dom.button({
-          className: 'back-to-open',
-          onClick: this.props.setOpen.bind(null, this.props.params.id)
-        }, 'Back to Open Status') : null,
+        dom.h2(
+          { className: 'order-status' },
+          `Status: ${this.state.order.status}`,
+          dom.small(
+            null,
+            this.state.order.status === constants.READY_FOR_BILL ? dom.button({
+              className: 'back-to-open btn btn-link',
+              onClick: this.props.setOpen.bind(null, this.props.params.id)
+            }, 'Back to "Open" Status') : null
+          ),
+        ),
         this.state.order.status === constants.OPEN ?
           OpenOrder(
             {
@@ -60,7 +66,7 @@ class OrderDetails extends Component {
               changeEntryStatus: this.props.changeEntryStatus.bind(null, this.props.params.id),
               setReadyForBill: this.props.setReadyForBill.bind(null, this.props.params.id)
             }
-          ) :
+        ) :
           ProcessingOrder({ order: this.state.order })
       )
     );
