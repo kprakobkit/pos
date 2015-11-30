@@ -23,29 +23,27 @@ class Entry extends Component {
       this.props.ofOpenOrder ?
         dom.td(
           { className: 'entry-status' },
-          dom.select(
+          this.props.status,
+          this.props.status === constants.OPEN ? dom.button(
             {
-              className: 'form-control input-lg',
-              value: this.props.status,
-              onChange: this.handleChangeStatus
-            },
-            dom.option({ value: constants.OPEN }, constants.OPEN),
-            dom.option({ value: constants.DELIVERED }, constants.DELIVERED),
-            dom.option({ value: constants.COMPLETED }, constants.COMPLETED),
-            dom.option({ value: constants.CANCELED }, constants.CANCELED)
-          ),
-          dom.button(
-            {
-              className: 'mark-delivered',
+              className: 'delivered',
               onClick: () => {
                 this.props.changeEntryStatus(this.props.index, constants.DELIVERED);
               }
             },
-            'Mark delivered'
+            'Delivered'
+          ) : dom.button(
+          {
+            className: 'mark-open',
+            onClick: () => {
+              this.props.changeEntryStatus(this.props.index, constants.OPEN);
+            }
+          },
+          'Mark Open'
           ),
           dom.button(
             {
-              className: 'mark-canceled',
+              className: 'canceled',
               onClick: () => {
                 this.props.changeEntryStatus(this.props.index, constants.CANCELED);
               }

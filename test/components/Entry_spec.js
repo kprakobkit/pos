@@ -17,21 +17,20 @@ const {
 const Entry = createFactory(EntryComponent);
 const Table = createFactory(tableComponentFactory(Entry));
 
-function setup({ ofOpenOrder } = {}) {
+function setup({ entry, ofOpenOrder } = {}) {
   const status = constants.OPEN;
-  const entry = Generator.entry().status(status).build();
+  const anEntry = entry || Generator.entry().status(status).build();
   const changeEntryStatus = spy();
-  const component = renderIntoDocument(Table(_.extend({}, entry, { ofOpenOrder }, { changeEntryStatus })));
+  const component = renderIntoDocument(Table(_.extend({}, anEntry, { ofOpenOrder }, { changeEntryStatus })));
 
   return {
     component,
-    entry,
+    entry: anEntry,
     changeEntryStatus
   };
 }
 
 describe('Entry', () => {
-
   it('renders name and comment', () => {
     const { component, entry } = setup();
     const entryName = findRenderedDOMComponentWithClass(component, 'entry-name');
@@ -63,23 +62,42 @@ describe('Entry', () => {
   describe('Open', () => {
     const { component, entry, changeEntryStatus } = setup();
 
-    it('shows mark delivered and cancel button', () => {
-      findRenderedDOMComponentWithClass(component, 'mark-delivered');
-      findRenderedDOMComponentWithClass(component, 'mark-canceled');
+    it('shows delivered and cancel button', () => {
+      findRenderedDOMComponentWithClass(component, 'delivered');
+      findRenderedDOMComponentWithClass(component, 'canceled');
     });
 
-    it('mark canceled - calls changeEntryStatus with CANCELED', () => {
-      const markCanceled = findRenderedDOMComponentWithClass(component, 'mark-canceled');
-      Simulate.click(markCanceled);
+    it('canceled - calls changeEntryStatus with CANCELED', () => {
+      const canceled = findRenderedDOMComponentWithClass(component, 'canceled');
+      Simulate.click(canceled);
 
       expect(changeEntryStatus).to.have.been.called.with(constants.CANCELED);
     });
 
-    it('mark delivered - calls changeEntryStatus with DELIVERED', () => {
-      const markDelivered = findRenderedDOMComponentWithClass(component, 'mark-delivered');
-      Simulate.click(markDelivered);
+    it('delivered - calls changeEntryStatus with DELIVERED', () => {
+      const delivered = findRenderedDOMComponentWithClass(component, 'delivered');
+      Simulate.click(delivered);
 
       expect(changeEntryStatus).to.have.been.called.with(constants.DELIVERED);
+    });
+  });
+
+  describe('Delivered', () => {
+    const deliveredEntry = Generator.entry().status(constants.DELIVERED).build();
+    const { component, entry, changeEntryStatus } = setup({ entry: deliveredEntry });
+
+    it('shows mark open button instead of delivered', () => {
+      findRenderedDOMComponentWithClass(component, 'mark-open');
+      const delivered = scryRenderedDOMComponentsWithClass(component, 'delivered');
+
+      expect(delivered.length).to.equal(0);
+    });
+
+    it('mark-open - calls changeEntryStatus with OPEN', () => {
+      const markOpen = findRenderedDOMComponentWithClass(component, 'mark-open');
+      Simulate.click(markOpen);
+
+      expect(changeEntryStatus).to.have.been.called.with(constants.OPEN);
     });
   });
 });
