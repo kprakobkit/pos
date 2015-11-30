@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import constants from '../src/constants';
 import Order from '../models/order';
 import Item from '../models/item';
+import Transaction from '../models/transaction';
 import _ from 'underscore';
 
 export function setState(state) {
@@ -70,6 +71,13 @@ export function setOpen(orderId) {
   return dispatchUpdateOrder(orderId, Order.updateStatus(orderId, constants.OPEN));
 }
 
+export function setClosed(orderId, amounts) {
+  const transaction = Transaction.addTransaction(orderId, amounts)
+    .then(() => Order.updateStatus(orderId, constants.CLOSED));
+
+  return dispatchUpdateOrder(orderId, transaction);
+}
+
 function dispatchUpdateOrder(orderId, transaction) {
   return (dispatch, getState) => {
     return transaction
@@ -101,5 +109,6 @@ export default {
   changeEntryStatus,
   addEntriesToOrder,
   setReadyForBill,
-  setOpen
+  setOpen,
+  setClosed
 };
