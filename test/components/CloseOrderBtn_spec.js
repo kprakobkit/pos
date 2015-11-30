@@ -16,9 +16,9 @@ function setup({ shouldBeDisabled } = {}) {
   const component = renderIntoDocument(CloseOrderBtn({ shouldBeDisabled, handleClick }));
 
   return {
+    component,
     button: findRenderedDOMComponentWithClass(component, 'close-order'),
-    handleClick,
-    component
+    handleClick
   };
 }
 
