@@ -17,7 +17,7 @@ class ProcessingOrder extends Component {
   subtotal() {
     return this.props.order.entries
       .filter((entry) => entry.status === constants.DELIVERED)
-      .reduce((sum, entry) => sum + entry.price / 100, 0);
+      .reduce((sum, entry) => sum + entry.price, 0);
   }
 
   renderEntry(entry, i) {
@@ -45,7 +45,7 @@ class ProcessingOrder extends Component {
               { className: 'order-subtotal' },
               dom.td(null, dom.h2(null, 'Subtotal')),
               dom.td(),
-              dom.td(null, dom.h2(null, `$${this.subtotal().toFixed(2)}`))
+              dom.td(null, dom.h2(null, `$${(this.subtotal() / 100).toFixed(2)}`))
             )
           )
         ),

@@ -6,55 +6,48 @@ const CloseOrderBtn = createFactory(CloseOrderBtnComponent);
 class Payment extends Component {
   constructor(props) {
     super(props);
-    this.calculateBalance = this.calculateBalance.bind(this);
-    this.setCreditTip = this.setCreditTip.bind(this);
+    this.updateBalance = this.updateBalance.bind(this);
     this.renderAmountField = this.renderAmountField.bind(this);
     this.state = {
-      balance: props.startingBalance,
-      amountInputs: [],
-      creditTip: 0
+      cash: 0,
+      credit: 0,
+      tip: 0
     };
   }
 
-  calculateBalance() {
-    const paid = this.state.amountInputs.reduce((total, input) => {
-      return total + parseFloat(input.value || 0);
-    }, 0);
-
-    this.setState({ balance: this.props.startingBalance - paid });
+  balance() {
+    return this.props.startingBalance - this.state.cash - this.state.credit;
   }
 
-  setCreditTip(e) {
-    this.setState({ creditTip: e.target.value });
+  updateBalance(field) {
+    return (e) => {
+      this.setState({ [field]: e.target.value * 100 });
+    }.bind(this);
   }
 
-  allInputAmounts() {
-    const amounts = this.state.amountInputs.map((input) => input.value).concat(this.state.creditTip);
-    return amounts;
+  labelForField(field) {
+    return {
+      cash: 'Cash',
+      credit: 'Credit',
+      tip: 'Tip in Credit'
+    }[field];
   }
 
-  componentDidMount() {
-    const amountInputs = Array.from(this.refs.form.querySelectorAll('.payment-amount-input'));
-    this.setState({ amountInputs });
-  }
-
-  renderAmountField(towardsBalance) {
-    return (label) => {
-      return dom.div(
-        { className: 'form-group', key: label },
-        dom.label({ className: 'control-label col-xs-6 h4' }, label),
-        dom.div(
-          { className: 'col-xs-6' },
-          dom.input(
-            {
-              className: `${towardsBalance ? 'payment' : 'tip'}-amount-input form-control input-lg text-right`,
-              type: 'number',
-              onChange: towardsBalance ? this.calculateBalance : this.setCreditTip
-            }
-          )
+  renderAmountField(field) {
+    return dom.div(
+      { className: 'form-group', key: field },
+      dom.label({ className: 'control-label col-xs-6 h4' }, this.labelForField(field)),
+      dom.div(
+        { className: 'col-xs-6' },
+        dom.input(
+          {
+            className: `${field}-amount-input form-control input-lg text-right`,
+            type: 'number',
+            onChange: this.updateBalance(field)
+          }
         )
-      );
-    };
+      )
+    );
   }
 
   render() {
@@ -64,7 +57,7 @@ class Payment extends Component {
         dom.h2({ className: 'payment-component-heading' }, 'Amounts Paid'),
         dom.form(
           { className: 'payment-form form-horizontal', ref: 'form' },
-          ['Cash', 'Credit'].map(this.renderAmountField(true)),
+          ['cash', 'credit'].map(this.renderAmountField),
           dom.div(
             { className: 'payment-balance' },
             dom.div(
@@ -73,15 +66,15 @@ class Payment extends Component {
             ),
             dom.div(
               { className: 'payment-balance-amount col-xs-6 h3 text-right' },
-              `$${this.state.balance.toFixed(2)}`
+              `$${(this.balance() / 100).toFixed(2)}`
             )
           ),
-          this.renderAmountField(false)('Tip in Credit')
+          this.renderAmountField('tip')
         ),
         CloseOrderBtn(
           {
-            shouldBeDisabled: this.state.balance !== 0,
-            handleClick: this.props.setClosed.bind.apply(this.props.setClosed, [null].concat(this.allInputAmounts()))
+            shouldBeDisabled: this.balance() !== 0,
+            handleClick: this.props.setClosed
           }
         )
       )
