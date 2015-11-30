@@ -21,8 +21,7 @@ client() {
 
 server() {
   key="$1"
-  if [ $key == '-d' ] || [ $key == '--debug' ]
-  then
+  if [ "$key" = "-d" ] || [ "$key" = "--debug" ]; then
     echo "Starting server - debug mode"
     node_modules/iron-node/bin/run.js debug.js
   else
