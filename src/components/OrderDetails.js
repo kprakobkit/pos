@@ -48,7 +48,8 @@ class OrderDetails extends Component {
         dom.h1({ className: 'order-title' }, `Order #${this.props.params.id}`),
         dom.h2({ className: 'order-status' }, `Status: ${this.state.order.status}`),
         this.state.order.status === constants.READY_FOR_BILL ? dom.button({
-          className: 'back-to-open'
+          className: 'back-to-open',
+          onClick: this.props.setOpen.bind(null, this.props.params.id)
         }, 'Back to Open Status') : null,
         this.state.order.status === constants.OPEN ?
           OpenOrder(
@@ -72,7 +73,8 @@ OrderDetails.propTypes = {
   loadItems: PropTypes.func.isRequired,
   addEntriesToOrder: PropTypes.func.isRequired,
   changeEntryStatus: PropTypes.func.isRequired,
-  setReadyForBill: PropTypes.func.isRequired
+  setReadyForBill: PropTypes.func.isRequired,
+  setOpen: PropTypes.func.isRequired
 };
 
 OrderDetails.defaultProps = {

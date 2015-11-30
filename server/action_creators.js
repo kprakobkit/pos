@@ -66,6 +66,10 @@ export function setReadyForBill(orderId) {
   return dispatchUpdateOrder(orderId, Order.updateStatus(orderId, constants.READY_FOR_BILL));
 }
 
+export function setOpen(orderId) {
+  return dispatchUpdateOrder(orderId, Order.updateStatus(orderId, constants.OPEN));
+}
+
 function dispatchUpdateOrder(orderId, transaction) {
   return (dispatch, getState) => {
     return transaction
@@ -96,5 +100,6 @@ export default {
   addOrder,
   changeEntryStatus,
   addEntriesToOrder,
-  setReadyForBill
+  setReadyForBill,
+  setOpen
 };

@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { expect, spy } from 'chai';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
@@ -19,6 +19,7 @@ function setup({ orders } = {}) {
   const loadItems = () => {};
   const addEntriesToOrder = () => {};
   const setReadyForBill = () => {};
+  const setOpen = spy();
   const id = 1;
   const params = { id };
   const props = {
@@ -27,7 +28,8 @@ function setup({ orders } = {}) {
     changeEntryStatus,
     loadItems,
     addEntriesToOrder,
-    setReadyForBill
+    setReadyForBill,
+    setOpen
   };
   const component = renderIntoDocument(OrderDetails(props));
   const title = findRenderedDOMComponentWithClass(component, 'order-title');
@@ -35,7 +37,8 @@ function setup({ orders } = {}) {
   return {
     component,
     title,
-    id
+    id,
+    setOpen
   };
 }
 
@@ -81,6 +84,15 @@ describe('OrderDetails', () => {
       const { component } = setup({ orders });
 
       const backToOpen = findRenderedDOMComponentWithClass(component, 'back-to-open');
+    });
+
+    it('calls setOpen wit orderId', () => {
+      const orders = [Generator.order().id(1).status(constants.READY_FOR_BILL).build()];
+      const { component, setOpen } = setup({ orders });
+      const backToOpen = findRenderedDOMComponentWithClass(component, 'back-to-open');
+      Simulate.click(backToOpen);
+
+      expect(setOpen).to.have.been.called.with(1);;
     });
   });
 });
