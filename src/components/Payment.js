@@ -20,25 +20,27 @@ class Payment extends Component {
   }
 
   componentDidMount() {
-    const amountInputs = Array.from(this.refs.form.querySelectorAll('input'));
+    const amountInputs = Array.from(this.refs.form.querySelectorAll('.payment-amount-input'));
     this.setState({ amountInputs });
   }
 
-  renderAmountField(label) {
-    return dom.div(
-      { className: 'form-group', key: label },
-      dom.label({ className: 'control-label col-xs-6 h4' }, label),
-      dom.div(
-        { className: 'col-xs-6' },
-        dom.input(
-          {
-            className: 'payment-amount-input form-control input-lg text-right',
-            type: 'number',
-            onChange: this.calculateBalance
-          }
+  renderAmountField(towardsBalance) {
+    return (label) => {
+      return dom.div(
+        { className: 'form-group', key: label },
+        dom.label({ className: 'control-label col-xs-6 h4' }, label),
+        dom.div(
+          { className: 'col-xs-6' },
+          dom.input(
+            {
+              className: `${towardsBalance ? 'payment' : 'tip'}-amount-input form-control input-lg text-right`,
+              type: 'number',
+              onChange: towardsBalance ? this.calculateBalance : null
+            }
+          )
         )
-      )
-    );
+      );
+    };
   }
 
   render() {

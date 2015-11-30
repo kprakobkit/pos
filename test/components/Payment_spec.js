@@ -30,6 +30,26 @@ describe('Payment', () => {
 
     expect(balance.textContent).to.contain(`$${(price - amount).toFixed(2)}`);
   });
+
+  it('does not include credit tip amount when calculating remaining balance', () => {
+    const price = 20;
+    const props = { startingBalance: price };
+    const component = renderIntoDocument(Payment(props));
+    const balance = findRenderedDOMComponentWithClass(component, 'payment-balance-amount');
+    const input = scryRenderedDOMComponentsWithClass(component, 'payment-amount-input')[0];
+    const tipInput = findRenderedDOMComponentWithClass(component, 'tip-amount-input');
+
+    expect(balance.textContent).to.contain(`$${price.toFixed(2)}`);
+
+    const amount = 5;
+    tipInput.value = amount;
+    Simulate.change(tipInput);
+
+    input.value = 0;
+    Simulate.change(input);
+
+    expect(balance.textContent).to.contain(`$${price.toFixed(2)}`);
+  });
 });
 
 
