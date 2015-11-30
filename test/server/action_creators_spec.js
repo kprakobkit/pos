@@ -30,6 +30,15 @@ const Order = {
         entries: [{ status, name: '', comment: '' }]
       }
     );
+  },
+  updateStatus: (orderId, status) => {
+    return Promise.resolve(
+      {
+        id: orderId,
+        status: status,
+        entries: []
+      }
+    );
   }
 };
 
@@ -154,6 +163,66 @@ describe('server action creators', () => {
     };
 
     actions.changeEntryStatus(1, 0, constants.DELIVERED)(dispatch, getState).then(() => {
+      expect(dispatched).to.deep.equal(expected);
+    }).then(done, done);
+  });
+
+  it('setReadyForBill', (done) => {
+    let dispatched;
+    const orders = [
+      {
+        id: 1,
+        status: constants.OPEN,
+        entries: []
+      }
+    ];
+    function dispatch(action) {
+      dispatched = action;
+    }
+    function getState() {
+      return { orders };
+    }
+    const expected = {
+      type: constants.UPDATE_ORDER,
+      orderId: 1,
+      order: {
+        id: 1,
+        status: constants.READY_FOR_BILL,
+        entries: []
+      }
+    };
+
+    actions.setReadyForBill(1)(dispatch, getState).then(() => {
+      expect(dispatched).to.deep.equal(expected);
+    }).then(done, done);
+  });
+
+  it('setOpen', (done) => {
+    let dispatched;
+    const orders = [
+      {
+        id: 1,
+        status: constants.READY_FOR_BILL,
+        entries: []
+      }
+    ];
+    function dispatch(action) {
+      dispatched = action;
+    }
+    function getState() {
+      return { orders };
+    }
+    const expected = {
+      type: constants.UPDATE_ORDER,
+      orderId: 1,
+      order: {
+        id: 1,
+        status: constants.OPEN,
+        entries: []
+      }
+    };
+
+    actions.setOpen(1)(dispatch, getState).then(() => {
       expect(dispatched).to.deep.equal(expected);
     }).then(done, done);
   });

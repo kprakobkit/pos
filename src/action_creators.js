@@ -57,6 +57,14 @@ export function setReadyForBill(orderId) {
   };
 }
 
+export function setOpen(orderId) {
+  return {
+    meta: { remote: true },
+    type: constants.SET_OPEN,
+    orderId
+  };
+}
+
 export default {
   setState,
   loadOrders,
@@ -64,5 +72,6 @@ export default {
   addOrder,
   changeEntryStatus,
   addEntriesToOrder,
-  setReadyForBill
+  setReadyForBill,
+  setOpen
 };
