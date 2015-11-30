@@ -226,4 +226,39 @@ describe('server action creators', () => {
       expect(dispatched).to.deep.equal(expected);
     }).then(done, done);
   });
+
+  it('setClosed', (done) => {
+    let dispatched;
+    const orders = [
+      {
+        id: 1,
+        status: constants.READY_FOR_BILL,
+        entries: []
+      }
+    ];
+    function dispatch(action) {
+      dispatched = action;
+    }
+    function getState() {
+      return { orders };
+    }
+    const expected = {
+      type: constants.UPDATE_ORDER,
+      orderId: 1,
+      order: {
+        id: 1,
+        status: constants.CLOSED,
+        entries: []
+      }
+    };
+    const amounts = {
+      cash: 1000,
+      credit: 1000,
+      tip: 500
+    };
+
+    actions.setClosed(1, amounts)(dispatch, getState).then(() => {
+      expect(dispatched).to.deep.equal(expected);
+    }).then(done, done);
+  });
 });
