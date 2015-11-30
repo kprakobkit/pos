@@ -48,22 +48,27 @@ class Payment extends Component {
         dom.h2({ className: 'payment-component-heading' }, 'Amounts Paid'),
         dom.form(
           { className: 'payment-form form-horizontal', ref: 'form' },
-          ['Cash', 'Credit'].map(this.renderAmountField),
-        ),
-        dom.div(
-          { className: 'payment-balance' },
+          ['Cash', 'Credit'].map(this.renderAmountField(true)),
           dom.div(
-            { className: 'payment-balance-label col-xs-6 h3' },
-            'Balance'
+            { className: 'payment-balance' },
+            dom.div(
+              { className: 'payment-balance-label col-xs-6 h3' },
+              'Balance'
+            ),
+            dom.div(
+              { className: 'payment-balance-amount col-xs-6 h3 text-right' },
+              `$${this.state.balance.toFixed(2)}`
+            )
           ),
-          dom.div(
-            { className: 'payment-balance-amount col-xs-6 h3 text-right' },
-            `$${this.state.balance.toFixed(2)}`
-          )
+          this.renderAmountField(false)('Tip in Credit')
         )
       )
     );
   }
 }
+
+Payment.propTypes = {
+  startingBalance: PropTypes.number.isRequired
+};
 
 export default Payment;
