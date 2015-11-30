@@ -57,6 +57,14 @@ export function setReadyForBill(orderId) {
   };
 }
 
+export function setOpen(orderId) {
+  return {
+    meta: { remote: true },
+    type: constants.SET_OPEN,
+    orderId
+  };
+}
+
 export function closeOrder(orderId, cashAmount, creditAmount, creditTipAmount) {
   return {
     meta: { remote: true },
@@ -76,5 +84,6 @@ export default {
   changeEntryStatus,
   addEntriesToOrder,
   setReadyForBill,
+  setOpen,
   closeOrder
 };
