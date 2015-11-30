@@ -17,6 +17,7 @@ describe('OrderDetails', () => {
   const loadItems = () => {};
   const addEntriesToOrder = () => {};
   const setReadyForBill = () => {};
+  const closeOrder = () => {};
 
   it('renders title with correct order number from params', () => {
     const id = 1;
@@ -27,7 +28,8 @@ describe('OrderDetails', () => {
       changeEntryStatus,
       loadItems,
       addEntriesToOrder,
-      setReadyForBill
+      setReadyForBill,
+      closeOrder
     };
     const component = renderIntoDocument(OrderDetails(props));
     const title = findRenderedDOMComponentWithClass(component, 'order-title');
@@ -42,7 +44,8 @@ describe('OrderDetails', () => {
       changeEntryStatus,
       loadItems,
       addEntriesToOrder,
-      setReadyForBill
+      setReadyForBill,
+      closeOrder
     };
     const component = renderIntoDocument(OrderDetails(props));
     const status = findRenderedDOMComponentWithClass(component, 'order-status');
@@ -62,7 +65,8 @@ describe('OrderDetails', () => {
       changeEntryStatus,
       loadItems,
       addEntriesToOrder,
-      setReadyForBill
+      setReadyForBill,
+      closeOrder
     };
     const component = renderIntoDocument(OrderDetails(props));
     const orderEntries = scryRenderedDOMComponentsWithClass(component, 'order-entry');

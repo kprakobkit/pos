@@ -49,14 +49,20 @@ class ProcessingOrder extends Component {
             )
           )
         ),
-        Payment({ startingBalance: this.subtotal() })
+        Payment(
+          {
+            startingBalance: this.subtotal(),
+            closeOrder: this.props.closeOrder
+          }
+        )
       )
     );
   }
 }
 
 ProcessingOrder.propTypes = {
-  order: PropTypes.object.isRequired
+  order: PropTypes.object.isRequired,
+  closeOrder: PropTypes.func.isRequired
 };
 
 export default ProcessingOrder;

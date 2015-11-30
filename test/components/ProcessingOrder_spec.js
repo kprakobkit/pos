@@ -23,7 +23,8 @@ describe('ProcessingOrder', () => {
           Generator.entry().status(constants.DELIVERED).price(price).build(),
           Generator.entry().status(constants.CANCELED).price(100).build()
         ]
-      }
+      },
+      closeOrder: () => {}
     };
     const component = renderIntoDocument(ProcessingOrder(props));
     const subtotal = findRenderedDOMComponentWithClass(component, 'order-subtotal');

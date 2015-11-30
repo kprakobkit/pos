@@ -70,7 +70,8 @@ class Payment extends Component {
 }
 
 Payment.propTypes = {
-  startingBalance: PropTypes.number.isRequired
+  startingBalance: PropTypes.number.isRequired,
+  closeOrder: PropTypes.func.isRequired
 };
 
 export default Payment;
