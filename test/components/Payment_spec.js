@@ -1,0 +1,35 @@
+import { expect } from 'chai';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
+import Generator from '../support/generator';
+import constants from '../../src/constants';
+import PaymentComponent from '../../src/components/Payment';
+
+const {
+  renderIntoDocument,
+  findRenderedDOMComponentWithClass,
+  scryRenderedDOMComponentsWithClass,
+  Simulate
+} = TestUtils;
+const Payment = React.createFactory(PaymentComponent);
+
+describe('Payment', () => {
+  it('renders balance remaining after entered amounts', () => {
+    const price = 20;
+    const props = { startingBalance: price };
+    const component = renderIntoDocument(Payment(props));
+    const balance = findRenderedDOMComponentWithClass(component, 'payment-balance-amount');
+    const input = scryRenderedDOMComponentsWithClass(component, 'payment-amount-input')[0];
+
+    expect(balance.textContent).to.contain(`$${(price).toFixed(2)}`);
+
+    const amount = 5;
+    input.value = amount;
+    Simulate.change(input);
+
+    expect(balance.textContent).to.contain(`$${(price - amount).toFixed(2)}`);
+  });
+});
+
+
