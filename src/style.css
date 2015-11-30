@@ -2,7 +2,7 @@ a:hover {
   text-decoration: none;
 }
 
-.order-entry td {
+.order-entry td, .entries .entry-action {
   vertical-align: middle
 }
 
