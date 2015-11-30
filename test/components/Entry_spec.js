@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { expect, spy } from 'chai';
 import { Component, DOM as dom, createFactory } from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
@@ -20,11 +20,13 @@ const Table = createFactory(tableComponentFactory(Entry));
 function setup({ ofOpenOrder } = {}) {
   const status = constants.OPEN;
   const entry = Generator.entry().status(status).build();
-  const component = renderIntoDocument(Table(_.extend({}, entry, { ofOpenOrder })));
+  const changeEntryStatus = spy();
+  const component = renderIntoDocument(Table(_.extend({}, entry, { ofOpenOrder }, { changeEntryStatus })));
 
   return {
     component,
-    entry
+    entry,
+    changeEntryStatus
   };
 }
 
@@ -59,8 +61,25 @@ describe('Entry', () => {
   });
 
   describe('Open', () => {
-    const { component } = setup();
-    it('shows mark delivered delivered', () => {
+    const { component, entry, changeEntryStatus } = setup();
+
+    it('shows mark delivered and cancel button', () => {
+      findRenderedDOMComponentWithClass(component, 'mark-delivered');
+      findRenderedDOMComponentWithClass(component, 'mark-canceled');
+    });
+
+    it('mark canceled - calls changeEntryStatus with CANCELED', () => {
+      const markCanceled = findRenderedDOMComponentWithClass(component, 'mark-canceled');
+      Simulate.click(markCanceled);
+
+      expect(changeEntryStatus).to.have.been.called.with(constants.CANCELED);
+    });
+
+    it('mark delivered - calls changeEntryStatus with DELIVERED', () => {
+      const markDelivered = findRenderedDOMComponentWithClass(component, 'mark-delivered');
+      Simulate.click(markDelivered);
+
+      expect(changeEntryStatus).to.have.been.called.with(constants.DELIVERED);
     });
   });
 });

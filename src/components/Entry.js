@@ -33,6 +33,24 @@ class Entry extends Component {
             dom.option({ value: constants.DELIVERED }, constants.DELIVERED),
             dom.option({ value: constants.COMPLETED }, constants.COMPLETED),
             dom.option({ value: constants.CANCELED }, constants.CANCELED)
+          ),
+          dom.button(
+            {
+              className: 'mark-delivered',
+              onClick: () => {
+                this.props.changeEntryStatus(this.props.index, constants.DELIVERED);
+              }
+            },
+            'Mark delivered'
+          ),
+          dom.button(
+            {
+              className: 'mark-canceled',
+              onClick: () => {
+                this.props.changeEntryStatus(this.props.index, constants.CANCELED);
+              }
+            },
+            'Cancel'
           )
         ) :
         dom.td(
