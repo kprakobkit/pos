@@ -1,13 +1,18 @@
 import { Component, PropTypes, DOM as dom, createFactory } from 'react';
+import CloseOrderBtnComponent from './CloseOrderBtn';
+
+const CloseOrderBtn = createFactory(CloseOrderBtnComponent);
 
 class Payment extends Component {
   constructor(props) {
     super(props);
     this.calculateBalance = this.calculateBalance.bind(this);
+    this.setCreditTip = this.setCreditTip.bind(this);
     this.renderAmountField = this.renderAmountField.bind(this);
     this.state = {
       balance: props.startingBalance,
-      amountInputs: []
+      amountInputs: [],
+      creditTip: 0
     };
   }
 
@@ -17,6 +22,15 @@ class Payment extends Component {
     }, 0);
 
     this.setState({ balance: this.props.startingBalance - paid });
+  }
+
+  setCreditTip(e) {
+    this.setState({ creditTip: e.target.value });
+  }
+
+  allInputAmounts() {
+    const amounts = this.state.amountInputs.map((input) => input.value).concat(this.state.creditTip);
+    return amounts;
   }
 
   componentDidMount() {
@@ -35,7 +49,7 @@ class Payment extends Component {
             {
               className: `${towardsBalance ? 'payment' : 'tip'}-amount-input form-control input-lg text-right`,
               type: 'number',
-              onChange: towardsBalance ? this.calculateBalance : null
+              onChange: towardsBalance ? this.calculateBalance : this.setCreditTip
             }
           )
         )
@@ -63,6 +77,12 @@ class Payment extends Component {
             )
           ),
           this.renderAmountField(false)('Tip in Credit')
+        ),
+        CloseOrderBtn(
+          {
+            shouldBeDisabled: this.state.balance !== 0,
+            handleClick: this.props.closeOrder.bind.apply(this.props.closeOrder, [null].concat(this.allInputAmounts()))
+          }
         )
       )
     );
