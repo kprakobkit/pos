@@ -14,36 +14,40 @@ class Entry extends Component {
     this.props.changeEntryStatus(this.props.index, status);
   }
 
+  renderActionButtons() {
+    return dom.td(
+      { className: 'entry-actions col-md-2' },
+      this.props.status === constants.OPEN ? dom.button(
+        {
+          className: 'btn btn-primary btn-block delivered',
+          onClick: this.handleChangeStatus.bind(null, constants.DELIVERED)
+        },
+        'Delivered'
+      ) : dom.button(
+      {
+        className: 'btn btn-primary btn-block open',
+        onClick: this.handleChangeStatus.bind(null, constants.OPEN)
+      },
+      'Reopen'
+      ),
+      dom.button(
+        {
+          className: 'btn btn-warning btn-block canceled',
+          onClick: this.handleChangeStatus.bind(null, constants.CANCELED)
+        },
+        'Cancel'
+      )
+    );
+  }
+
   render() {
     return dom.tr(
       { className: 'order-entry' },
       dom.td({ className: 'entry-name' }, dom.h2(null, this.props.name)),
       dom.td({ className: 'entry-comment' }, dom.h2(null, dom.small(null, this.props.comment))),
+      this.props.ofOpenOrder ? dom.td({ className: 'entry-status col-md-2' }, dom.h2(null, dom.small(null, this.props.status))) : null,
       this.props.ofOpenOrder ?
-        dom.td(
-          { className: 'entry-status' },
-          this.props.status,
-          this.props.status === constants.OPEN ? dom.button(
-            {
-              className: 'delivered',
-              onClick: this.handleChangeStatus.bind(null, constants.DELIVERED)
-            },
-            'Delivered'
-          ) : dom.button(
-          {
-            className: 'mark-open',
-            onClick: this.handleChangeStatus.bind(null, constants.OPEN)
-          },
-          'Mark Open'
-          ),
-          dom.button(
-            {
-              className: 'canceled',
-              onClick: this.handleChangeStatus.bind(null, constants.CANCELED)
-          },
-          'Cancel'
-          )
-        ) :
+        this.renderActionButtons() :
         dom.td(
           { className: 'entry-price text-right' },
           dom.h2(null, `$${(this.props.price / 100).toFixed(2)}`)

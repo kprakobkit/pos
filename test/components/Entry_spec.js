@@ -86,16 +86,16 @@ describe('Entry', () => {
     const deliveredEntry = Generator.entry().status(constants.DELIVERED).build();
     const { component, entry, changeEntryStatus } = setup({ entry: deliveredEntry });
 
-    it('shows mark open button instead of delivered', () => {
-      findRenderedDOMComponentWithClass(component, 'mark-open');
+    it('shows open button instead of delivered', () => {
+      findRenderedDOMComponentWithClass(component, 'open');
       const delivered = scryRenderedDOMComponentsWithClass(component, 'delivered');
 
       expect(delivered.length).to.equal(0);
     });
 
-    it('mark-open - calls changeEntryStatus with OPEN', () => {
-      const markOpen = findRenderedDOMComponentWithClass(component, 'mark-open');
-      Simulate.click(markOpen);
+    it('Open - calls changeEntryStatus with OPEN', () => {
+      const open = findRenderedDOMComponentWithClass(component, 'open');
+      Simulate.click(open);
 
       expect(changeEntryStatus).to.have.been.called.with(constants.OPEN);
     });
