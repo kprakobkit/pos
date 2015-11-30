@@ -10,8 +10,7 @@ class Entry extends Component {
     this.handleChangeStatus = this.handleChangeStatus.bind(this);
   }
 
-  handleChangeStatus(e) {
-    const status = e.target.value;
+  handleChangeStatus(status) {
     this.props.changeEntryStatus(this.props.index, status);
   }
 
@@ -27,28 +26,22 @@ class Entry extends Component {
           this.props.status === constants.OPEN ? dom.button(
             {
               className: 'delivered',
-              onClick: () => {
-                this.props.changeEntryStatus(this.props.index, constants.DELIVERED);
-              }
+              onClick: this.handleChangeStatus.bind(null, constants.DELIVERED)
             },
             'Delivered'
           ) : dom.button(
           {
             className: 'mark-open',
-            onClick: () => {
-              this.props.changeEntryStatus(this.props.index, constants.OPEN);
-            }
+            onClick: this.handleChangeStatus.bind(null, constants.OPEN)
           },
           'Mark Open'
           ),
           dom.button(
             {
               className: 'canceled',
-              onClick: () => {
-                this.props.changeEntryStatus(this.props.index, constants.CANCELED);
-              }
-            },
-            'Cancel'
+              onClick: this.handleChangeStatus.bind(null, constants.CANCELED)
+          },
+          'Cancel'
           )
         ) :
         dom.td(
