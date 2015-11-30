@@ -74,7 +74,7 @@ class Payment extends Component {
         CloseOrderBtn(
           {
             shouldBeDisabled: this.balance() !== 0,
-            handleClick: this.props.setClosed
+            handleClick: this.props.setClosed.bind(this, this.state)
           }
         )
       )

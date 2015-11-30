@@ -5,7 +5,7 @@ const transactionSchema = new Schema({
   total: Number,
   cash: Number,
   credit: Number,
-  creditTip: Number
+  tip: Number
 });
 
 export default mongoose.model('Transaction', transactionSchema);

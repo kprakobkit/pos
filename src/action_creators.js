@@ -65,14 +65,14 @@ export function setOpen(orderId) {
   };
 }
 
-export function setClosed(orderId, cashAmount, creditAmount, creditTipAmount) {
+export function setClosed(orderId, { cash, credit, tip }) {
   return {
     meta: { remote: true },
     type: constants.SET_CLOSED,
     orderId,
-    cashAmount,
-    creditAmount,
-    creditTipAmount
+    cash,
+    credit,
+    tip
   };
 }
 
