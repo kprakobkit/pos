@@ -3,6 +3,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import OrderDetailsComponent from '../../src/components/OrderDetails';
+import Generator from '../support/generator';
+import constants from '../../src/constants';
 
 const {
   renderIntoDocument,
@@ -77,6 +79,21 @@ describe('OrderDetails', () => {
     expect(entryComments[1].textContent).to.contain('sunny side up');
     expect(entryStatuses[0].textContent).to.contain('OPEN');
     expect(entryStatuses[1].textContent).to.contain('DELIVERED');
+  });
+
+  describe('Orders - Ready for Bill', () => {
+    it('renders back to open status button', () => {
+      const props = {
+        orders: [Generator.order().id(1).status(constants.READY_FOR_BILL).build()],
+        params: { id: 1 },
+        changeEntryStatus,
+        loadItems,
+        addEntriesToOrder,
+        setReadyForBill
+      };
+      const component = renderIntoDocument(OrderDetails(props));
+      const backToOpen = findRenderedDOMComponentWithClass(component, 'back-to-open');
+    });
   });
 });
 

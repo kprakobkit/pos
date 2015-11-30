@@ -47,7 +47,10 @@ class OrderDetails extends Component {
         null,
         dom.h1({ className: 'order-title' }, `Order #${this.props.params.id}`),
         dom.h2({ className: 'order-status' }, `Status: ${this.state.order.status}`),
-        this.state.order.status == constants.OPEN ?
+        this.state.order.status === constants.READY_FOR_BILL ? dom.button({
+          className: 'back-to-open'
+        }, 'Back to Open Status') : null,
+        this.state.order.status === constants.OPEN ?
           OpenOrder(
             {
               order: this.state.order,

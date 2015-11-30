@@ -12,7 +12,8 @@ const orderStatuses = [
 function orderBuilder() {
   const defaultOrder = {
     id: faker.random.number().toString(),
-    status: _.sample(orderStatuses)
+    status: _.sample(orderStatuses),
+    entries: [entryBuilder().build()]
   };
 
   return {
