@@ -30,28 +30,5 @@ describe('ProcessingOrder', () => {
 
     expect(subtotal.textContent).to.contain(`$${(price / 100).toFixed(2)}`);
   });
-
-  it('renders balance remaining after entered amounts', () => {
-    const price = 1025;
-    const props = {
-      order: {
-        status: 'open', id: 1, entries: [
-          Generator.entry().status(constants.DELIVERED).price(price).build(),
-          Generator.entry().status(constants.CANCELED).price(100).build()
-        ]
-      }
-    };
-    const component = renderIntoDocument(ProcessingOrder(props));
-    const subtotal = findRenderedDOMComponentWithClass(component, 'payment-balance-amount');
-    const input = scryRenderedDOMComponentsWithClass(component, 'payment-amount-input')[0];
-
-    expect(subtotal.textContent).to.contain(`$${(price / 100).toFixed(2)}`);
-
-    const amount = 5;
-    input.value = amount;
-    Simulate.change(input);
-
-    expect(subtotal.textContent).to.contain(`$${((price - amount * 100) / 100).toFixed(2)}`);
-  });
 });
 
