@@ -2,6 +2,7 @@ import { Component, PropTypes, DOM as dom } from 'react';
 import { connect } from 'react-redux';
 import actions from '../action_creators';
 import constants from '../constants';
+import $ from '../money';
 import _ from 'underscore';
 
 class Entry extends Component {
@@ -50,7 +51,7 @@ class Entry extends Component {
         this.renderActionButtons()] :
           dom.td(
             { className: 'entry-price text-right' },
-            dom.h2(null, `$${(this.props.price / 100).toFixed(2)}`)
+            dom.h2(null, $.format(this.props.price))
         )
     );
   }

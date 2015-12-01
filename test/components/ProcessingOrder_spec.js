@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import Generator from '../support/generator';
 import constants from '../../src/constants';
+import $ from '../../src/money';
 import ProcessingOrderComponent from '../../src/components/ProcessingOrder';
 
 const {
@@ -29,7 +30,7 @@ describe('ProcessingOrder', () => {
     const component = renderIntoDocument(ProcessingOrder(props));
     const subtotal = findRenderedDOMComponentWithClass(component, 'order-subtotal');
 
-    expect(subtotal.textContent).to.contain(`$${(price / 100).toFixed(2)}`);
+    expect(subtotal.textContent).to.contain($.format(price));
   });
 });
 
