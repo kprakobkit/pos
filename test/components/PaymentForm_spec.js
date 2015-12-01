@@ -11,7 +11,7 @@ const {
 } = TestUtils;
 const PaymentForm = React.createFactory(PaymentFormComponent);
 
-function setup({ cash, credit, tip } = { cash: 0, credit: 0, tip: 0 }) {
+function setup({ cash = 0, credit = 0, tip = 0 } = {}) {
   const startingBalance = 2000;
   const setClosed = () => {};
   const component = renderIntoDocument(PaymentForm({

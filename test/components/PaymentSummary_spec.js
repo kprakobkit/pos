@@ -10,7 +10,7 @@ const {
 } = TestUtils;
 const PaymentSummary = React.createFactory(PaymentSummaryComponent);
 
-function setup({ cash, credit, tip } = { cash: 0, credit: 0, tip: 0 }) {
+function setup({ cash = 0, credit = 0, tip = 0 } = {}) {
   const component = renderIntoDocument(PaymentSummary({ cash, credit, tip }));
 
   return { component };
