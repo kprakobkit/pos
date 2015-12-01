@@ -6,7 +6,8 @@ import PaymentFormComponent from '../../src/components/PaymentForm';
 
 const {
   renderIntoDocument,
-  findRenderedDOMComponentWithClass
+  findRenderedDOMComponentWithClass,
+  Simulate
 } = TestUtils;
 const PaymentForm = React.createFactory(PaymentFormComponent);
 
@@ -29,6 +30,38 @@ function setup({ cash, credit, tip } = { cash: 0, credit: 0, tip: 0 }) {
 
 describe('PaymentForm', () => {
   const setClosed = () => {};
+
+  it('renders balance remaining after entered amounts', () => {
+    const { component, startingBalance } = setup();
+    const balance = findRenderedDOMComponentWithClass(component, 'payment-balance-amount');
+    const input = findRenderedDOMComponentWithClass(component, 'cash-amount-input');
+
+    expect(balance.textContent).to.contain($.format(startingBalance));
+
+    const amount = 5;
+    input.value = amount;
+    Simulate.change(input);
+
+    expect(balance.textContent).to.contain($.format(startingBalance - $.cents(amount)));
+  });
+
+  it('does not include credit tip amount when calculating remaining balance', () => {
+    const { component, startingBalance } = setup();
+    const balance = findRenderedDOMComponentWithClass(component, 'payment-balance-amount');
+    const input = findRenderedDOMComponentWithClass(component, 'cash-amount-input');
+    const tipInput = findRenderedDOMComponentWithClass(component, 'tip-amount-input');
+
+    expect(balance.textContent).to.contain($.format(startingBalance));
+
+    const amount = 5;
+    tipInput.value = amount;
+    Simulate.change(tipInput);
+
+    input.value = 0;
+    Simulate.change(input);
+
+    expect(balance.textContent).to.contain($.format(startingBalance));
+  });
 
   it('prefills input fields with zero if no existing transaction amounts', () => {
     const { component } = setup();
