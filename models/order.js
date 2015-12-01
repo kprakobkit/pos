@@ -3,12 +3,14 @@ import { Schema } from 'mongoose';
 import constants  from '../src/constants';
 import Item from './item';
 import Entry from './entry';
+import Transaction from './transaction';
 import _ from 'underscore';
 import faker from 'faker';
 
 const orderSchema = new Schema({
   id: String,
   status: { type: String, default: constants.OPEN },
+  transaction: { type: Schema.ObjectId, ref: 'Transaction' },
   entries: [Entry.schema]
 });
 
