@@ -27,6 +27,7 @@ function setup() {
     addEntry: findRenderedDOMComponentWithClass(component, 'add-entry'),
     selectItems: findRenderedDOMComponentWithClass(component, 'select-items'),
     submitOrder: findRenderedDOMComponentWithClass(component, 'submit-order'),
+    selectTableNumber: findRenderedDOMComponentWithClass(component, 'table-numbers'),
     addOrder,
     burger,
     food
@@ -46,12 +47,14 @@ describe('New Order', () => {
   });
 
   it('adds an order on submit', () => {
-    const { selectItems, component, addEntry, submitOrder, addOrder, food } = setup();
+    const { selectItems, component, addEntry, submitOrder, addOrder, food, selectTableNumber } = setup();
+    Simulate.change(selectTableNumber, { target: { value: 2 } });
     Simulate.change(selectItems, { target: { value: food.id } });
     Simulate.click(addEntry);
     Simulate.click(submitOrder);
 
-    expect(addOrder.__spy.calls[0][0].length).to.equal(1);
-    expect(addOrder.__spy.calls[0][0]).to.deep.equal([{ name: food.name, id: food.id, comment: '' }]);
+    expect(addOrder.__spy.calls[0][0]).to.equal(2);
+    expect(addOrder.__spy.calls[0][1].length).to.equal(1);
+    expect(addOrder.__spy.calls[0][1]).to.deep.equal([{ name: food.name, id: food.id, comment: '' }]);
   });
 });

@@ -7,6 +7,7 @@ import { Link as LinkComponent } from 'react-router';
 
 const MasterItems = createFactory(MasterItemsComponent);
 const Link = createFactory(LinkComponent);
+const tableNumbers = _.range(1, 31);
 
 function mapStateToProps(state) {
   return {
@@ -17,15 +18,28 @@ function mapStateToProps(state) {
 class NewOrder extends Component {
   componentWillMount() {
     this.props.loadItems();
+    this.setTableNumber = this.setTableNumber.bind(this);
+    this.state = {
+      tableNumber: 1
+    };
+  }
+
+  setTableNumber(e) {
+    const value = e.target.value;
+    this.setState({ tableNumber: value });
   }
 
   render() {
     return dom.div(
       null,
       dom.h1({ className: 'title' }, 'New Order'),
+      dom.select(
+        { className: 'table-numbers', value: this.state.tableNumber, onChange: this.setTableNumber },
+        tableNumbers.map((num) => dom.option({ key: num, className: 'table-number', value: num }, num))
+      ),
       MasterItems({
         masterItems: this.props.masterItems,
-        handleSubmit: this.props.addOrder
+        handleSubmit: this.props.addOrder.bind(null, this.state.tableNumber)
       }),
       Link(
         { to: '/orders', className: 'orders-link' },
