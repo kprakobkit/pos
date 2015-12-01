@@ -11,6 +11,7 @@ const orderSchema = new Schema({
   id: String,
   status: { type: String, default: constants.OPEN },
   transaction: { type: Schema.ObjectId, ref: 'Transaction' },
+  tableNumber: String,
   entries: [Entry.schema]
 });
 
@@ -37,9 +38,10 @@ orderSchema.statics.updateEntry = function(orderId, entryIndex, update) {
     .then((order) => populateEntries(toOrder(order)));
 }
 
-orderSchema.statics.addOrder = function(entries) {
+orderSchema.statics.addOrder = function(tableNumber, entries) {
   return this({
     id: faker.random.number(), // need auto generated id...
+    tableNumber,
     entries: entries.map((item) => ({
       item_id: mongoose.Types.ObjectId(item.id),
       comment: item.comment
@@ -134,12 +136,13 @@ function toTransaction({ cash, credit, tip }) {
   };
 }
 
-function toOrder({ id, status, transaction, entries }) {
+function toOrder({ id, status, transaction, entries, tableNumber }) {
   return {
     id,
     status,
     transaction,
-    entries
+    entries,
+    tableNumber
   };
 }
 
