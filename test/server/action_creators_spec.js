@@ -99,8 +99,7 @@ describe('server action creators', () => {
 
     actions.loadOrders()(dispatch).then(() => {
       expect(dispatched).to.deep.equal(expected);
-      done();
-    });
+    }).then(done, done);
   });
 
   it('loadItems', (done) => {
