@@ -6,6 +6,7 @@ import constants from '../../src/constants';
 import tableComponentFactory from './table_component_factory';
 import EntryComponent from '../../src/components/Entry';
 import _ from 'underscore';
+import $ from '../../src/money';
 import Generator from '../support/generator';
 
 const {
@@ -55,7 +56,7 @@ describe('Entry', () => {
     const entryPrice = findRenderedDOMComponentWithClass(component, 'entry-price');
     const entryStatus = scryRenderedDOMComponentsWithClass(component, 'entry-status');
 
-    expect(entryPrice.textContent).to.equal(`$${(entry.price / 100).toFixed(2)}`);
+    expect(entryPrice.textContent).to.equal($.format(entry.price));
     expect(entryStatus.length).to.equal(0);
   });
 
