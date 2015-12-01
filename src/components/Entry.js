@@ -16,7 +16,7 @@ class Entry extends Component {
 
   renderActionButtons() {
     return dom.td(
-      { className: 'entry-actions col-md-2' },
+      { key: 'enntry-actions', className: 'entry-actions col-md-2' },
       this.props.status === constants.OPEN ? dom.button(
         {
           className: 'btn btn-primary btn-block delivered',
@@ -45,12 +45,12 @@ class Entry extends Component {
       { className: 'order-entry' },
       dom.td({ className: 'entry-name' }, dom.h2(null, this.props.name)),
       dom.td({ className: 'entry-comment' }, dom.h2(null, dom.small(null, this.props.comment))),
-      this.props.ofOpenOrder ? dom.td({ className: 'entry-status col-md-2' }, dom.h2(null, dom.small(null, this.props.status))) : null,
-      this.props.ofOpenOrder ?
-        this.renderActionButtons() :
-        dom.td(
-          { className: 'entry-price text-right' },
-          dom.h2(null, `$${(this.props.price / 100).toFixed(2)}`)
+      this.props.ofOpenOrder ? [
+        dom.td({ key: 'entry-status', className: 'entry-status col-md-2' }, dom.h2(null, dom.small(null, this.props.status))),
+        this.renderActionButtons()] :
+          dom.td(
+            { className: 'entry-price text-right' },
+            dom.h2(null, `$${(this.props.price / 100).toFixed(2)}`)
         )
     );
   }
