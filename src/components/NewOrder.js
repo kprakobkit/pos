@@ -22,10 +22,10 @@ class NewOrder extends Component {
   render() {
     return dom.div(
       null,
+      dom.h1({ className: 'title' }, 'New Order'),
       MasterItems({
         masterItems: this.props.masterItems,
-        handleSubmit: this.props.addOrder,
-        title: 'New Order'
+        handleSubmit: this.props.addOrder
       }),
       Link(
         { to: '/orders', className: 'orders-link' },
