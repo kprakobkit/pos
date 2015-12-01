@@ -14,6 +14,29 @@ describe('Order', () => {
     });
   });
 
+  it('getOrders', () => {
+    const tableNumber = '10';
+    const entryName = 'Rice';
+    const entryPrice = 1000;
+    const transactionAmounts = {
+      cash: 1500,
+      credit: 2000,
+      tip: 800
+    };
+
+    return Item({ name: entryName, price: entryPrice }).save()
+      .then((item) => Order.addOrder(tableNumber, [item]))
+      .then((order) => Transaction.addTransaction(order.id, transactionAmounts))
+      .then((transaction) => Order.setClosed(transaction.orderId, transaction._id))
+      .then(() => Order.getOrders())
+      .then((orders) => {
+        const order = orders[0];
+        expect(order.entries[0].name).to.equal(entryName);
+        expect(order.entries[0].price).to.equal(entryPrice);
+        expect(order.transaction).to.deep.equal(transactionAmounts);
+      });
+  });
+
   describe('add order', () => {
     beforeEach(() => {
       return Item({
