@@ -14,6 +14,13 @@ const Order = {
     };
   },
 
+  addOrder: (tableNumber, entries) => {
+    return Promise.resolve({
+      tableNumber,
+      entries
+    });
+  },
+
   getOrders: () => {
     return Promise.resolve([]);
   },
@@ -114,28 +121,27 @@ describe('server action creators', () => {
     });
   });
 
-  xit('addOrder', () => {
+  it('addOrder', (done) => {
     let dispatched;
     function dispatch(action) {
       dispatched = action;
     }
     const getState = () => {
-      return { orders: [] };
+      return { orders: []  };
     };
-    const items = [{ name: 'food' }];
+    const entries = [{ name: 'food' }];
     const expected = {
       type: constants.SET_STATE,
       state: {
         orders: [
-          { id: 1, status: constants.OPEN, items }
+          { entries, tableNumber: '14' }
         ]
       }
     };
 
-    actions.addOrder(items)(dispatch).then(() => {
+    actions.addOrder('14', entries)(dispatch, getState).then(() => {
       expect(dispatched).to.deep.equal(expected);
-      done();
-    });
+    }).then(done, done);
   });
 
   it('changeEntryStatus', (done) => {
