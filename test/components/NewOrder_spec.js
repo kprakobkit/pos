@@ -14,42 +14,47 @@ const {
 
 const NewOrder = React.createFactory(NewOrderComponent);
 
-describe('New Order', () => {
+function setup() {
   const food = { id: '1', name: 'food' };
   const burger = { id: '2', name: 'burger' };
   const masterItems = [food, burger];
   const loadItems = () => {};
   const addOrder = spy();
-  let component;
+  const component = renderIntoDocument(NewOrder({ masterItems, loadItems, addOrder }));
 
-  beforeEach(() => {
-    component = renderIntoDocument(NewOrder({ masterItems, loadItems, addOrder }));
-  });
+  return {
+    component,
+    addEntry: findRenderedDOMComponentWithClass(component, 'add-entry'),
+    selectItems: findRenderedDOMComponentWithClass(component, 'select-items'),
+    submitOrder: findRenderedDOMComponentWithClass(component, 'submit-order'),
+    selectTableNumber: findRenderedDOMComponentWithClass(component, 'table-numbers'),
+    addOrder,
+    burger,
+    food
+  };
+}
 
+describe('New Order', () => {
   it('removes an item from an order', () => {
-    const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry');
-    const selectItems = findRenderedDOMComponentWithClass(component, 'select-items');
-    const submitOrder = findRenderedDOMComponentWithClass(component, 'submit-order');
-
+    const { selectItems, component, addEntry, burger } = setup();
     Simulate.change(selectItems, { target: { value: burger.id } });
     Simulate.click(addEntry);
     const removeEntry = findRenderedDOMComponentWithClass(component, 'remove-entry');
     Simulate.click(removeEntry);
-
     const entries = scryRenderedDOMComponentsWithClass(component, 'entries');
+
     expect(entries.length).to.equal(0);
   });
 
   it('adds an order on submit', () => {
-    const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry');
-    const selectItems = findRenderedDOMComponentWithClass(component, 'select-items');
-    const submitOrder = findRenderedDOMComponentWithClass(component, 'submit-order');
-
+    const { selectItems, component, addEntry, submitOrder, addOrder, food, selectTableNumber } = setup();
+    Simulate.change(selectTableNumber, { target: { value: 2 } });
     Simulate.change(selectItems, { target: { value: food.id } });
     Simulate.click(addEntry);
     Simulate.click(submitOrder);
 
-    expect(addOrder.__spy.calls[0][0].length).to.equal(1);
-    expect(addOrder.__spy.calls[0][0]).to.deep.equal([{ name: food.name, id: food.id, comment: '' }]);
+    expect(addOrder.__spy.calls[0][0]).to.equal(2);
+    expect(addOrder.__spy.calls[0][1].length).to.equal(1);
+    expect(addOrder.__spy.calls[0][1]).to.deep.equal([{ name: food.name, id: food.id, comment: '' }]);
   });
 });

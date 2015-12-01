@@ -21,11 +21,12 @@ export function loadItems() {
   };
 }
 
-export function addOrder(entries) {
+export function addOrder(tableNumber, entries) {
   return {
     meta: { remote: true },
     type: constants.ADD_ORDER,
-    entries: entries
+    entries,
+    tableNumber
   };
 }
 

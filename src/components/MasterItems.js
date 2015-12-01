@@ -52,7 +52,6 @@ class MasterItems extends Component {
   render() {
     return dom.div(
       { className: 'master-items' },
-      dom.h1({ className: 'title' }, this.props.title),
       MasterItemsSelect({
         masterItems: this.props.masterItems,
         onSelectMasterItem: this.selectItem

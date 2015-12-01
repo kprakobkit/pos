@@ -13,7 +13,8 @@ function orderBuilder() {
   const defaultOrder = {
     id: faker.random.number().toString(),
     status: _.sample(orderStatuses),
-    entries: [entryBuilder().build()]
+    entries: [entryBuilder().build()],
+    tableNumber: faker.random.number().toString().slice(0, 1)
   };
 
   return {
@@ -27,6 +28,10 @@ function orderBuilder() {
     },
     status: function (status) {
       defaultOrder.status = status;
+      return this;
+    },
+    tableNumber: function (tableNumber) {
+      defaultOrder.tableNumber = tableNumber;
       return this;
     },
     build: function () {
