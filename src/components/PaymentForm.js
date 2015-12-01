@@ -1,6 +1,7 @@
 import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import CloseOrderBtnComponent from './CloseOrderBtn';
 import $ from '../money';
+import util from '../util';
 
 const CloseOrderBtn = createFactory(CloseOrderBtnComponent);
 
@@ -26,18 +27,10 @@ class PaymentForm extends Component {
     }.bind(this);
   }
 
-  labelForField(field) {
-    return {
-      cash: 'Cash',
-      credit: 'Credit',
-      tip: 'Tip in Credit'
-    }[field];
-  }
-
   renderAmountField(field) {
     return dom.div(
       { className: 'form-group', key: field },
-      dom.label({ className: 'control-label col-xs-6 h4' }, this.labelForField(field)),
+      dom.label({ className: 'control-label col-xs-6 h4' }, util.labelForField(field)),
       dom.div(
         { className: 'col-xs-6' },
         dom.input(

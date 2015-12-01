@@ -1,5 +1,6 @@
 import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import $ from '../money';
+import util from '../util';
 
 class PaymentSummary extends Component {
   constructor(props) {
@@ -7,18 +8,10 @@ class PaymentSummary extends Component {
     this.renderPaymentAmount = this.renderPaymentAmount.bind(this);
   }
 
-  labelForField(field) {
-    return {
-      cash: 'Cash',
-      credit: 'Credit',
-      tip: 'Tip in Credit'
-    }[field];
-  }
-
   renderPaymentAmount(field) {
     return dom.tr(
       { className: 'form-group', key: field },
-      dom.td(null, dom.h3(null, this.labelForField(field))),
+      dom.td(null, dom.h3(null, util.labelForField(field))),
       dom.td(
         { className: `${field}-amount-paid text-right` },
         dom.h3(null, $.format(this.props[field]))
