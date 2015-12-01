@@ -39,7 +39,7 @@ describe('Payment', () => {
     input.value = amount;
     Simulate.change(input);
 
-    expect(balance.textContent).to.contain($.format(startingBalance - amount * 100));
+    expect(balance.textContent).to.contain($.format(startingBalance - $.cents(amount)));
   });
 
   it('does not include credit tip amount when calculating remaining balance', () => {
