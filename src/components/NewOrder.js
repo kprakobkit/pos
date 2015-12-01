@@ -33,9 +33,13 @@ class NewOrder extends Component {
     return dom.div(
       null,
       dom.h1({ className: 'title' }, 'New Order'),
-      dom.select(
-        { className: 'table-numbers', value: this.state.tableNumber, onChange: this.setTableNumber },
-        tableNumbers.map((num) => dom.option({ key: num, className: 'table-number', value: num }, num))
+      dom.div(
+        { className: 'form-group' },
+        dom.label(null, 'Table #'),
+        dom.select(
+          { className: 'table-numbers input-lg form-control', value: this.state.tableNumber, onChange: this.setTableNumber },
+          tableNumbers.map((num) => dom.option({ key: num, className: 'table-number', value: num }, num))
+        )
       ),
       MasterItems({
         masterItems: this.props.masterItems,
