@@ -8,8 +8,7 @@ import _ from 'underscore';
 import config from '../config';
 
 const orderStatuses = [
-  constants.OPEN,
-  constants.CLOSED
+  constants.OPEN
 ];
 
 mongoose.connect(process.env.MONGOLAB_URI || config.developmentDB);

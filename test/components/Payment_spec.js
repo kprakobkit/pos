@@ -1,8 +1,6 @@
 import { expect } from 'chai';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
-import Generator from '../support/generator';
 import constants from '../../src/constants';
 import $ from '../../src/money';
 import PaymentComponent from '../../src/components/Payment';
@@ -14,10 +12,10 @@ const {
 } = TestUtils;
 const Payment = React.createFactory(PaymentComponent);
 
-function setup() {
+function setup({ orderStatus } = { orderStatus: constants.READY_FOR_BILL }) {
   const startingBalance = 2000;
   const setClosed = () => {};
-  const component = renderIntoDocument(Payment({ startingBalance, setClosed }));
+  const component = renderIntoDocument(Payment({ startingBalance, orderStatus, setClosed }));
 
   return {
     component,
@@ -26,39 +24,17 @@ function setup() {
 }
 
 describe('Payment', () => {
-  const setClosed = () => {};
+  it('renders payment form when order is ready for bill', () => {
+    const { component } = setup({ orderStatus: constants.READY_FOR_BILL });
+    const paymentForm = findRenderedDOMComponentWithClass(component, 'payment-form');
 
-  it('renders balance remaining after entered amounts', () => {
-    const { component, startingBalance } = setup();
-    const balance = findRenderedDOMComponentWithClass(component, 'payment-balance-amount');
-    const input = findRenderedDOMComponentWithClass(component, 'cash-amount-input');
-
-    expect(balance.textContent).to.contain($.format(startingBalance));
-
-    const amount = 5;
-    input.value = amount;
-    Simulate.change(input);
-
-    expect(balance.textContent).to.contain($.format(startingBalance - $.cents(amount)));
+    expect(paymentForm).to.exist;
   });
 
-  it('does not include credit tip amount when calculating remaining balance', () => {
-    const { component, startingBalance } = setup();
-    const balance = findRenderedDOMComponentWithClass(component, 'payment-balance-amount');
-    const input = findRenderedDOMComponentWithClass(component, 'cash-amount-input');
-    const tipInput = findRenderedDOMComponentWithClass(component, 'tip-amount-input');
+  it('renders payment summary when order is closed', () => {
+    const { component } = setup({ orderStatus: constants.CLOSED });
+    const paymentForm = findRenderedDOMComponentWithClass(component, 'payment-summary');
 
-    expect(balance.textContent).to.contain($.format(startingBalance));
-
-    const amount = 5;
-    tipInput.value = amount;
-    Simulate.change(tipInput);
-
-    input.value = 0;
-    Simulate.change(input);
-
-    expect(balance.textContent).to.contain($.format(startingBalance));
+    expect(paymentForm).to.exist;
   });
 });
-
-

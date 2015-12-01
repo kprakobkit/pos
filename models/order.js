@@ -18,7 +18,8 @@ const orderSchema = new Schema({
 orderSchema.statics.getOrders = function() {
   return this.find()
     .then((orders) => orders.map(toOrder))
-    .then(getEntries);
+    .then(getEntries)
+    .then(getTransactions);
 }
 
 orderSchema.statics.updateEntry = function(orderId, entryIndex, update) {
@@ -101,18 +102,26 @@ function populateEntries(order) {
   });
 }
 
+function getTransactions(orders) {
+  return Promise.all(orders.map(populateTransaction));
+}
+
 function populateTransaction(order) {
   return new Promise((resolve, reject) => {
-    Transaction.populate(order, {
-      path: 'transaction',
-      model: 'Transaction',
-      select: 'cash credit tip -_id'
-    }, (err, res) => {
-      if (err) reject(err);
+    if (order.transaction) {
+      Transaction.populate(order, {
+        path: 'transaction',
+        model: 'Transaction',
+        select: 'cash credit tip -_id'
+      }, (err, res) => {
+        if (err) reject(err);
 
-      order.transaction = toTransaction(res.transaction);
+        order.transaction = toTransaction(res.transaction);
+        resolve(order);
+      });
+    } else {
       resolve(order);
-    });
+    }
   });
 }
 
