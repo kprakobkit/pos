@@ -10,9 +10,34 @@ class Entry extends Component {
     this.handleChangeStatus = this.handleChangeStatus.bind(this);
   }
 
-  handleChangeStatus(e) {
-    const status = e.target.value;
+  handleChangeStatus(status) {
     this.props.changeEntryStatus(this.props.index, status);
+  }
+
+  renderActionButtons() {
+    return dom.td(
+      { key: 'enntry-actions', className: 'entry-actions col-md-2' },
+      this.props.status === constants.OPEN ? dom.button(
+        {
+          className: 'btn btn-primary btn-block delivered',
+          onClick: this.handleChangeStatus.bind(null, constants.DELIVERED)
+        },
+        'Delivered'
+      ) : dom.button(
+      {
+        className: 'btn btn-primary btn-block open',
+        onClick: this.handleChangeStatus.bind(null, constants.OPEN)
+      },
+      'Reopen'
+      ),
+      dom.button(
+        {
+          className: 'btn btn-warning btn-block canceled',
+          onClick: this.handleChangeStatus.bind(null, constants.CANCELED)
+        },
+        'Cancel'
+      )
+    );
   }
 
   render() {
@@ -20,24 +45,12 @@ class Entry extends Component {
       { className: 'order-entry' },
       dom.td({ className: 'entry-name' }, dom.h2(null, this.props.name)),
       dom.td({ className: 'entry-comment' }, dom.h2(null, dom.small(null, this.props.comment))),
-      this.props.ofOpenOrder ?
-        dom.td(
-          { className: 'entry-status' },
-          dom.select(
-            {
-              className: 'form-control input-lg',
-              value: this.props.status,
-              onChange: this.handleChangeStatus
-            },
-            dom.option({ value: constants.OPEN }, constants.OPEN),
-            dom.option({ value: constants.DELIVERED }, constants.DELIVERED),
-            dom.option({ value: constants.COMPLETED }, constants.COMPLETED),
-            dom.option({ value: constants.CANCELED }, constants.CANCELED)
-          )
-        ) :
-        dom.td(
-          { className: 'entry-price text-right' },
-          dom.h2(null, `$${(this.props.price / 100).toFixed(2)}`)
+      this.props.ofOpenOrder ? [
+        dom.td({ key: 'entry-status', className: 'entry-status col-md-2' }, dom.h2(null, dom.small(null, this.props.status))),
+        this.renderActionButtons()] :
+          dom.td(
+            { className: 'entry-price text-right' },
+            dom.h2(null, `$${(this.props.price / 100).toFixed(2)}`)
         )
     );
   }
