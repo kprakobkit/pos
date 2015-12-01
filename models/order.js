@@ -105,7 +105,9 @@ function populateTransaction(order) {
       path: 'transaction',
       model: 'Transaction',
       select: 'cash credit tip -_id'
-    }).then((res) => {
+    }, (err, res) => {
+      if (err) reject(err);
+
       order.transaction = toTransaction(res.transaction);
       resolve(order);
     });
