@@ -39,6 +39,20 @@ const Order = {
         entries: []
       }
     );
+  },
+  setClosed: (orderId, transaction) => {
+    return Promise.resolve(
+      {
+        id: orderId,
+        status: constants.CLOSED,
+        transaction: {
+          cash: 1000,
+          credit: 1000,
+          tip: 500
+        },
+        entries: []
+      }
+    );
   }
 };
 
@@ -229,6 +243,7 @@ describe('server action creators', () => {
 
   it('setClosed', (done) => {
     let dispatched;
+
     const orders = [
       {
         id: 1,
@@ -236,25 +251,30 @@ describe('server action creators', () => {
         entries: []
       }
     ];
+
     function dispatch(action) {
       dispatched = action;
     }
+
     function getState() {
       return { orders };
     }
+
+    const amounts = {
+      cash: 1000,
+      credit: 1000,
+      tip: 500
+    };
+
     const expected = {
       type: constants.UPDATE_ORDER,
       orderId: 1,
       order: {
         id: 1,
         status: constants.CLOSED,
+        transaction: amounts,
         entries: []
       }
-    };
-    const amounts = {
-      cash: 1000,
-      credit: 1000,
-      tip: 500
     };
 
     actions.setClosed(1, amounts)(dispatch, getState).then(() => {

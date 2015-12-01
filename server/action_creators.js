@@ -73,7 +73,7 @@ export function setOpen(orderId) {
 
 export function setClosed(orderId, amounts) {
   const transaction = Transaction.addTransaction(orderId, amounts)
-    .then(() => Order.updateStatus(orderId, constants.CLOSED));
+    .then((transaction) => Order.setClosed(orderId, transaction._id));
 
   return dispatchUpdateOrder(orderId, transaction);
 }

@@ -1,6 +1,7 @@
 import utils from '../utils';
 import Order from '../../models/order';
 import Item from '../../models/item';
+import Transaction from '../../models/transaction';
 import { expect } from 'chai';
 import faker from 'faker';
 import constants from '../../src/constants';
@@ -37,5 +38,20 @@ describe('Order', () => {
     .then((order) => {
       expect(order.status).to.equal(constants.READY_FOR_BILL);
     });
+  });
+
+  it ('setClosed', function () {
+    const amounts = {
+      cash: 1500,
+      credit: 2000,
+      tip: 800
+    };
+
+    return Order({ id: 1 }).save()
+      .then((order) => Transaction.addTransaction(order.id, amounts))
+      .then((transaction) => Order.setClosed(1, transaction._id))
+      .then((order) => {
+        expect(order.transaction).to.deep.equal(amounts);
+      });
   });
 });

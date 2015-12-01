@@ -3,12 +3,14 @@ import { Schema } from 'mongoose';
 import constants  from '../src/constants';
 import Item from './item';
 import Entry from './entry';
+import Transaction from './transaction';
 import _ from 'underscore';
 import faker from 'faker';
 
 const orderSchema = new Schema({
   id: String,
   status: { type: String, default: constants.OPEN },
+  transaction: { type: Schema.ObjectId, ref: 'Transaction' },
   entries: [Entry.schema]
 });
 
@@ -68,6 +70,18 @@ orderSchema.statics.updateStatus = function(orderId, status) {
   });
 }
 
+orderSchema.statics.setClosed = function(orderId, transactionId) {
+  const status = constants.CLOSED;
+  const transaction = transactionId;
+  return this.findOneAndUpdate(
+    { id: orderId },
+    { status, transaction },
+    { new: true }
+  )
+    .then((order) => populateEntries(toOrder(order)))
+    .then(populateTransaction);
+}
+
 function getEntries(orders) {
   return Promise.all(orders.map(populateEntries));
 }
@@ -85,6 +99,21 @@ function populateEntries(order) {
   });
 }
 
+function populateTransaction(order) {
+  return new Promise((resolve, reject) => {
+    Transaction.populate(order, {
+      path: 'transaction',
+      model: 'Transaction',
+      select: 'cash credit tip -_id'
+    }, (err, res) => {
+      if (err) reject(err);
+
+      order.transaction = toTransaction(res.transaction);
+      resolve(order);
+    });
+  });
+}
+
 function toEntry({ status, comment, item_id, _id}) {
   const createdAt = _id.getTimestamp();
 
@@ -97,10 +126,19 @@ function toEntry({ status, comment, item_id, _id}) {
   };
 }
 
-function toOrder({ id, status, entries }) {
+function toTransaction({ cash, credit, tip }) {
+  return {
+    cash,
+    credit,
+    tip
+  };
+}
+
+function toOrder({ id, status, transaction, entries }) {
   return {
     id,
     status,
+    transaction,
     entries
   };
 }
