@@ -14,7 +14,7 @@ describe('Order', () => {
     });
   });
 
-  describe('get entries', () => {
+  describe('add order', () => {
     beforeEach(() => {
       return Item({
         name: 'Rice',
@@ -22,11 +22,14 @@ describe('Order', () => {
       }).save();
     });
 
-    it('adds createdAt to each entry', () => {
+    it('saves table number and entries', () => {
+      const tableNumber = '10';
       return Item.findOne({ name: 'Rice' })
-      .then((item) => Order.addOrder([item]))
+      .then((item) => Order.addOrder(tableNumber, [item]))
       .then((order) => {
+        expect(order.tableNumber).to.equal(tableNumber);
         expect(order.entries[0].createdAt).to.exist;
+        expect(order.entries[0].name).to.equal('Rice');
       });
     });
   });

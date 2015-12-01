@@ -24,7 +24,7 @@ function setup({ orders } = {}) {
   const id = 1;
   const params = { id };
   const props = {
-    orders: orders || [Generator.order().id(id).status(constants.OPEN).build()],
+    orders: orders || [Generator.order().id(id).status(constants.OPEN).tableNumber('14').build()],
     params,
     changeEntryStatus,
     loadItems,
@@ -51,11 +51,13 @@ describe('OrderDetails', () => {
     expect(title.textContent).to.contain(id.toString());
   });
 
-  it('renders the order status', () => {
+  it('renders the order status and table number', () => {
     const { title, component } = setup();
     const status = findRenderedDOMComponentWithClass(component, 'order-status');
+    const tableNumber = findRenderedDOMComponentWithClass(component, 'order-table-number');
 
     expect(status.textContent).to.contain('OPEN');
+    expect(tableNumber.textContent).to.contain('14');
   });
 
   it('renders the active order entries', () => {

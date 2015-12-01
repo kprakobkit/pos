@@ -1,66 +1,11 @@
 import { expect } from 'chai';
 import proxyquire from 'proxyquire';
 import constants from '../../src/constants';
+import Order from '../support/stubs/OrderStub';
+import Item from '../support/stubs/ItemStub';
 import mongoose from 'mongoose';
 
 mongoose.models = {};
-
-const Order = {
-  find: () => {
-    return {
-      populate: () => {
-        return Promise.resolve([]);
-      }
-    };
-  },
-
-  getOrders: () => {
-    return Promise.resolve([]);
-  },
-
-  findOneAndUpdate: ({ id }, { status }) => {
-    return Promise.resolve({ id, status });
-  },
-
-  updateEntry: (orderId, entryIndex, { status }) => {
-    return Promise.resolve(
-      {
-        id: orderId,
-        status: constants.OPEN,
-        entries: [{ status, name: '', comment: '' }]
-      }
-    );
-  },
-  updateStatus: (orderId, status) => {
-    return Promise.resolve(
-      {
-        id: orderId,
-        status: status,
-        entries: []
-      }
-    );
-  },
-  setClosed: (orderId, transaction) => {
-    return Promise.resolve(
-      {
-        id: orderId,
-        status: constants.CLOSED,
-        transaction: {
-          cash: 1000,
-          credit: 1000,
-          tip: 500
-        },
-        entries: []
-      }
-    );
-  }
-};
-
-const Item = {
-  find: () => {
-    return Promise.resolve([]);
-  }
-};
 
 const actions = proxyquire('../../server/action_creators', {
   '../models/order': Order,
@@ -92,8 +37,7 @@ describe('server action creators', () => {
 
     actions.loadOrders()(dispatch).then(() => {
       expect(dispatched).to.deep.equal(expected);
-      done();
-    });
+    }).then(done, done);
   });
 
   it('loadItems', (done) => {
@@ -114,28 +58,27 @@ describe('server action creators', () => {
     });
   });
 
-  xit('addOrder', () => {
+  it('addOrder', (done) => {
     let dispatched;
     function dispatch(action) {
       dispatched = action;
     }
     const getState = () => {
-      return { orders: [] };
+      return { orders: []  };
     };
-    const items = [{ name: 'food' }];
+    const entries = [{ name: 'food' }];
     const expected = {
       type: constants.SET_STATE,
       state: {
         orders: [
-          { id: 1, status: constants.OPEN, items }
+          { entries, tableNumber: '14' }
         ]
       }
     };
 
-    actions.addOrder(items)(dispatch).then(() => {
+    actions.addOrder('14', entries)(dispatch, getState).then(() => {
       expect(dispatched).to.deep.equal(expected);
-      done();
-    });
+    }).then(done, done);
   });
 
   it('changeEntryStatus', (done) => {

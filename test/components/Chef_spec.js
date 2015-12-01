@@ -23,8 +23,8 @@ function setup({ orders } = {}) {
   const entry1 = Generator.entry().status(constants.CLOSED).build();
   const entry2 = Generator.entry().status(constants.OPEN).build();
   const entries = [entry1, entry2];
-  const order1 = Generator.order().id('order1').entries(entries).build();
-  const order2 = Generator.order().id('order2').entries(entries).build();
+  const order1 = Generator.order().id('order1').entries(entries).tableNumber('14').build();
+  const order2 = Generator.order().id('order2').entries(entries).tableNumber('15').build();
   const defaultOrders = [order1, order2];
   const component = renderIntoDocument(Chef({ orders: orders || defaultOrders, loadOrders, changeEntryStatus }));
 
@@ -36,12 +36,12 @@ function setup({ orders } = {}) {
 }
 
 describe('Chef', () => {
-  it('should render open entries with the order id for all orders', () => {
+  it('should render open entries with the table number for all orders', () => {
     const { openEntries, entries } = setup();
 
     expect(openEntries.length).to.equal(2);
-    expect(openEntries[0].textContent).to.contain('order1');
-    expect(openEntries[1].textContent).to.contain('order2');
+    expect(openEntries[0].textContent).to.contain('14');
+    expect(openEntries[1].textContent).to.contain('15');
   });
 
   it('displays entries in order that it was created', () => {

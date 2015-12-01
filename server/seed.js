@@ -51,6 +51,7 @@ function createOrder(items) {
     Order({
       id: faker.random.number(),
       status: _.sample(orderStatuses),
+      tableNumber: faker.random.number().toString().slice(0, 2),
       entries: items.map(toEntry)
     }).save((err, result) => {
       if(err) {

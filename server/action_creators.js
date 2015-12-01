@@ -42,9 +42,9 @@ export function loadItems() {
   };
 }
 
-export function addOrder(entries) {
+export function addOrder(tableNumber, entries) {
   return (dispatch, getState) => {
-    Order.addOrder(entries)
+    return Order.addOrder(tableNumber, entries)
     .then((order) => {
       const updatedOrders = getState().orders.concat(order);
 

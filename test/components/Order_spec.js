@@ -14,22 +14,28 @@ const {
 const Order = createFactory(OrderComponent);
 const Table = createFactory(tableComponentFactory(Order));
 
-describe('Order', () => {
-  const id = '1';
-  const status = constants.OPEN.toLowerCase();
+function setup({ tableNumber = '10', status = 'open' }) {
   const printOrderStatus = (status) => status;
+  const props = { status, printOrderStatus, tableNumber };
+  const component = renderIntoDocument(Table(props));
 
-  it('renders id', () => {
-    const props = { id, status, printOrderStatus };
-    const component = renderIntoDocument(Table(props));
-    const orderId = findRenderedDOMComponentWithClass(component, 'order-number');
+  return {
+    component
+  };
+}
 
-    expect(orderId.textContent).to.contain(id.toString());
+describe('Order', () => {
+
+  it('renders table number', () => {
+    const { component } = setup({ tableNumber: '14' });
+    const tableNumber = findRenderedDOMComponentWithClass(component, 'table-number');
+
+    expect(tableNumber.textContent).to.contain('14');
   });
 
   it('renders status', () => {
-    const props = { id, status, printOrderStatus };
-    const component = renderIntoDocument(Table(props));
+    const status = constants.OPEN.toLowerCase();
+    const { component } = setup({ status });
     const orderStatus = findRenderedDOMComponentWithClass(component, 'order-status');
 
     expect(orderStatus.textContent).to.contain(status);

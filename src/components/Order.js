@@ -15,8 +15,8 @@ class Order extends Component {
             dom.div(
               { className: 'row' },
               dom.div(
-                { className: 'order-number col-xs-6' },
-                dom.h3(null, `Order ${this.props.id}`)
+                { className: 'table-number col-xs-6' },
+                dom.h3(null, `Table# ${this.props.tableNumber}`)
               ),
               dom.div(
                 {
@@ -33,7 +33,7 @@ class Order extends Component {
 }
 
 Order.propTypes = {
-  id:     PropTypes.string.isRequired,
+  tableNumber:     PropTypes.string.isRequired,
   status: PropTypes.string.isRequired
 };
 

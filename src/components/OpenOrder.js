@@ -44,6 +44,7 @@ class OpenOrder extends Component {
           { className: 'toggle-add-entry btn btn-info btn-lg btn-block', onClick: this.toggleForm },
           this.state.showAddEntry ? 'Close' : 'Add more items'
         ),
+        dom.br(null),
         this.state.showAddEntry ? MasterItems({
           masterItems: this.props.masterItems,
           handleSubmit: this.props.addEntriesToOrder
