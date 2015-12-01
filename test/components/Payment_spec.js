@@ -11,14 +11,13 @@ const {
 } = TestUtils;
 const Payment = React.createFactory(PaymentComponent);
 
-function setup({ transaction } = {}) {
+function setup() {
   const startingBalance = 2000;
   const setClosed = () => {};
-  const component = renderIntoDocument(Payment({ startingBalance, transaction, setClosed }));
+  const component = renderIntoDocument(Payment({ startingBalance, setClosed }));
 
   return {
     component,
-    transaction,
     startingBalance
   };
 }
