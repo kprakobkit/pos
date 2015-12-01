@@ -57,6 +57,7 @@ class OrderDetails extends Component {
             }, 'Back to "Open" Status') : null
           ),
         ),
+        dom.h2({ className: 'order-table-number' }, this.state.order.tableNumber),
         this.state.order.status === constants.OPEN ?
           OpenOrder(
             {
