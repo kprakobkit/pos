@@ -15,10 +15,11 @@ function mapStateToProps(state) {
   };
 }
 
-function toOpenEntries({ id, entries }) {
+function toOpenEntries({ id, entries, tableNumber }) {
   return entries.map((entry, entryIndex) => ({
     orderId: id,
     entry,
+    tableNumber,
     entryIndex,
     createdAt: moment(entry.createdAt)
   }));
@@ -74,7 +75,7 @@ class Chef extends Component {
         onClick: () => { this.setState({ selectedEntry: openEntry }); }
       },
       dom.h2(null, openEntry.entry.name),
-      dom.h3(null, `Order#: ${ openEntry.orderId }`),
+      dom.h3(null, `Table#: ${ openEntry.tableNumber }`),
       dom.p({ className: 'lead' }, openEntry.createdAt.fromNow()),
       dom.p({ className: 'lead' }, openEntry.entry.comment)
     );
