@@ -1,73 +1,11 @@
 import { expect } from 'chai';
 import proxyquire from 'proxyquire';
 import constants from '../../src/constants';
+import Order from '../support/stubs/OrderStub';
+import Item from '../support/stubs/ItemStub';
 import mongoose from 'mongoose';
 
 mongoose.models = {};
-
-const Order = {
-  find: () => {
-    return {
-      populate: () => {
-        return Promise.resolve([]);
-      }
-    };
-  },
-
-  addOrder: (tableNumber, entries) => {
-    return Promise.resolve({
-      tableNumber,
-      entries
-    });
-  },
-
-  getOrders: () => {
-    return Promise.resolve([]);
-  },
-
-  findOneAndUpdate: ({ id }, { status }) => {
-    return Promise.resolve({ id, status });
-  },
-
-  updateEntry: (orderId, entryIndex, { status }) => {
-    return Promise.resolve(
-      {
-        id: orderId,
-        status: constants.OPEN,
-        entries: [{ status, name: '', comment: '' }]
-      }
-    );
-  },
-  updateStatus: (orderId, status) => {
-    return Promise.resolve(
-      {
-        id: orderId,
-        status: status,
-        entries: []
-      }
-    );
-  },
-  setClosed: (orderId, transaction) => {
-    return Promise.resolve(
-      {
-        id: orderId,
-        status: constants.CLOSED,
-        transaction: {
-          cash: 1000,
-          credit: 1000,
-          tip: 500
-        },
-        entries: []
-      }
-    );
-  }
-};
-
-const Item = {
-  find: () => {
-    return Promise.resolve([]);
-  }
-};
 
 const actions = proxyquire('../../server/action_creators', {
   '../models/order': Order,
