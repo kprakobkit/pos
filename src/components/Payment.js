@@ -9,11 +9,7 @@ class Payment extends Component {
     super(props);
     this.updateBalance = this.updateBalance.bind(this);
     this.renderAmountField = this.renderAmountField.bind(this);
-    this.state = {
-      cash: 0,
-      credit: 0,
-      tip: 0
-    };
+    this.state = this.props.transaction;
   }
 
   balance() {
@@ -44,6 +40,7 @@ class Payment extends Component {
           {
             className: `${field}-amount-input form-control input-lg text-right`,
             type: 'number',
+            defaultValue: $.dollars(this.state[field]),
             onChange: this.updateBalance(field)
           }
         )
@@ -85,7 +82,16 @@ class Payment extends Component {
 
 Payment.propTypes = {
   startingBalance: PropTypes.number.isRequired,
+  transaction: PropTypes.object,
   setClosed: PropTypes.func.isRequired
+};
+
+Payment.defaultProps = {
+  transaction: {
+    cash: 0,
+    credit: 0,
+    tip: 0
+  }
 };
 
 export default Payment;
