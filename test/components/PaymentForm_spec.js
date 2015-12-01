@@ -24,6 +24,10 @@ function setup({ cash = 0, credit = 0, tip = 0 } = {}) {
 
   return {
     component,
+    balance: findRenderedDOMComponentWithClass(component, 'payment-balance-amount'),
+    cashInput: findRenderedDOMComponentWithClass(component, 'cash-amount-input'),
+    creditInput: findRenderedDOMComponentWithClass(component, 'credit-amount-input'),
+    tipInput: findRenderedDOMComponentWithClass(component, 'tip-amount-input'),
     startingBalance
   };
 }
@@ -32,24 +36,19 @@ describe('PaymentForm', () => {
   const setClosed = () => {};
 
   it('renders balance remaining after entered amounts', () => {
-    const { component, startingBalance } = setup();
-    const balance = findRenderedDOMComponentWithClass(component, 'payment-balance-amount');
-    const input = findRenderedDOMComponentWithClass(component, 'cash-amount-input');
+    const { component, balance, cashInput, startingBalance } = setup();
 
     expect(balance.textContent).to.contain($.format(startingBalance));
 
     const amount = 5;
-    input.value = amount;
-    Simulate.change(input);
+    cashInput.value = amount;
+    Simulate.change(cashInput);
 
     expect(balance.textContent).to.contain($.format(startingBalance - $.cents(amount)));
   });
 
   it('does not include credit tip amount when calculating remaining balance', () => {
-    const { component, startingBalance } = setup();
-    const balance = findRenderedDOMComponentWithClass(component, 'payment-balance-amount');
-    const input = findRenderedDOMComponentWithClass(component, 'cash-amount-input');
-    const tipInput = findRenderedDOMComponentWithClass(component, 'tip-amount-input');
+    const { component, balance, cashInput, tipInput, startingBalance } = setup();
 
     expect(balance.textContent).to.contain($.format(startingBalance));
 
@@ -57,18 +56,14 @@ describe('PaymentForm', () => {
     tipInput.value = amount;
     Simulate.change(tipInput);
 
-    input.value = 0;
-    Simulate.change(input);
+    cashInput.value = 0;
+    Simulate.change(cashInput);
 
     expect(balance.textContent).to.contain($.format(startingBalance));
   });
 
   it('prefills input fields with zero if no existing transaction amounts', () => {
-    const { component } = setup();
-    const balance = findRenderedDOMComponentWithClass(component, 'payment-balance-amount');
-    const cashInput = findRenderedDOMComponentWithClass(component, 'cash-amount-input');
-    const creditInput = findRenderedDOMComponentWithClass(component, 'credit-amount-input');
-    const tipInput = findRenderedDOMComponentWithClass(component, 'tip-amount-input');
+    const { component, balance, cashInput, creditInput, tipInput } = setup();
 
     expect(cashInput.value).to.eq($.dollars(0));
     expect(creditInput.value).to.eq($.dollars(0));
@@ -80,11 +75,7 @@ describe('PaymentForm', () => {
     const credit = 2000;
     const tip = 500;
     const existing = { cash, credit, tip };
-    const { component, startingBalance } = setup(existing);
-    const balance = findRenderedDOMComponentWithClass(component, 'payment-balance-amount');
-    const cashInput = findRenderedDOMComponentWithClass(component, 'cash-amount-input');
-    const creditInput = findRenderedDOMComponentWithClass(component, 'credit-amount-input');
-    const tipInput = findRenderedDOMComponentWithClass(component, 'tip-amount-input');
+    const { component, balance, cashInput, creditInput, tipInput, startingBalance } = setup(existing);
 
     expect(cashInput.value).to.eq($.dollars(cash));
     expect(creditInput.value).to.eq($.dollars(credit));
