@@ -14,7 +14,7 @@ import config from '../config';
 
 const app = express();
 const isProduction = process.env.NODE_ENV === 'production';
-const port = isProduction ? process.env.PORT : 3000;
+const port = isProduction ? process.env.PORT : 3210;
 const distPath = path.resolve(__dirname, '..', 'dist');
 const store = makeStore();
 const RoutingContext = createFactory(RoutingContextComponent);
