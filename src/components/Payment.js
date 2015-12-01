@@ -1,5 +1,6 @@
 import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import CloseOrderBtnComponent from './CloseOrderBtn';
+import $ from '../money';
 
 const CloseOrderBtn = createFactory(CloseOrderBtnComponent);
 
@@ -21,7 +22,7 @@ class Payment extends Component {
 
   updateBalance(field) {
     return (e) => {
-      this.setState({ [field]: e.target.value * 100 });
+      this.setState({ [field]: $.cents(e.target.value) });
     }.bind(this);
   }
 
@@ -66,7 +67,7 @@ class Payment extends Component {
             ),
             dom.div(
               { className: 'payment-balance-amount col-xs-6 h3 text-right' },
-              `$${(this.balance() / 100).toFixed(2)}`
+              $.format(this.balance())
             )
           ),
           this.renderAmountField('tip')

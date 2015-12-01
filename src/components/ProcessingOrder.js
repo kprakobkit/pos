@@ -1,6 +1,7 @@
 import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import { connect } from 'react-redux';
 import constants from '../constants';
+import $ from '../money';
 import _ from 'underscore';
 import EntryComponent from './Entry';
 import PaymentComponent from './Payment';
@@ -45,7 +46,7 @@ class ProcessingOrder extends Component {
               { className: 'order-subtotal' },
               dom.td(null, dom.h2(null, 'Subtotal')),
               dom.td(),
-              dom.td(null, dom.h2(null, `$${(this.subtotal() / 100).toFixed(2)}`))
+              dom.td({ className: 'text-right' }, dom.h2(null, $.format(this.subtotal())))
             )
           )
         ),
