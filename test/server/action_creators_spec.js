@@ -220,7 +220,7 @@ describe('server action creators', () => {
       }
     };
 
-    actions.setClosed(1, amounts)(dispatch, getState).then(() => {
+    actions.setClosed(1, 1, amounts)(dispatch, getState).then(() => {
       expect(dispatched).to.deep.equal(expected);
     }).then(done, done);
   });
