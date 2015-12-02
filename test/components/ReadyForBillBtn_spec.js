@@ -18,8 +18,8 @@ const ReadyForBillBtn = React.createFactory(ReadyForBillBtnComponent);
 describe('Ready for Payment', () => {
   it('is disabled when not all entries are delivered or canceled', () => {
     const delivered = Generator.entry().status(constants.DELIVERED).build();
-    const open = Generator.entry().status(constants.OPEN).build();
-    const entries = [open, delivered];
+    const completed = Generator.entry().status(constants.COMPLETED).build();
+    const entries = [delivered, completed];
     const component = renderIntoDocument(ReadyForBillBtn({ entries }));
     const btn = findRenderedDOMComponentWithClass(component, 'ready-for-bill');
 

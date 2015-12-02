@@ -15,10 +15,14 @@ class Entry extends Component {
     this.props.changeEntryStatus(this.props.index, status);
   }
 
+  showDelivered() {
+    return this.props.status === constants.OPEN || this.props.status === constants.COMPLETED;
+  }
+
   renderActionButtons() {
     return dom.td(
       { key: 'enntry-actions', className: 'entry-actions col-md-2' },
-      this.props.status === constants.OPEN ? dom.button(
+      this.showDelivered() ? dom.button(
         {
           className: 'btn btn-primary btn-block delivered',
           onClick: this.handleChangeStatus.bind(null, constants.DELIVERED)

@@ -101,4 +101,16 @@ describe('Entry', () => {
       expect(changeEntryStatus).to.have.been.called.with(constants.OPEN);
     });
   });
+
+  describe('Completed', () => {
+    const completedEntry = Generator.entry().status(constants.COMPLETED).build();
+    const { component, entry, changeEntryStatus } = setup({ entry: completedEntry });
+
+    it('shows delivered button', () => {
+      findRenderedDOMComponentWithClass(component, 'delivered');
+      const open = scryRenderedDOMComponentsWithClass(component, 'open');
+
+      expect(open.length).to.equal(0);
+    });
+  });
 });
