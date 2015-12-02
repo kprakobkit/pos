@@ -7,7 +7,7 @@ import faker from 'faker';
 import constants from '../../src/constants';
 
 describe('Order', () => {
-  it ('defautls to OPEN status', function () {
+  it ('defautls to OPEN status', () => {
     return Order().save()
     .then((newOrder) => {
       expect(newOrder.status).to.equal(constants.OPEN);
@@ -59,7 +59,7 @@ describe('Order', () => {
     });
   });
 
-  it ('updateStatus', function () {
+  it ('updateStatus', () => {
     return Order({ id: 1 }).save()
     .then(() => Order.updateStatus(1, constants.READY_FOR_BILL))
     .then(() => Order.findOne({ id: 1 }))
@@ -68,7 +68,7 @@ describe('Order', () => {
     });
   });
 
-  it ('setClosed', function () {
+  it ('setClosed', () => {
     const amounts = {
       cash: 1500,
       credit: 2000,

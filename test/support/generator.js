@@ -18,23 +18,23 @@ function orderBuilder() {
   };
 
   return {
-    id: function (id) {
+    id: function(id) {
       defaultOrder.id = id;
       return this;
     },
-    entries: function (entries) {
+    entries: function(entries) {
       defaultOrder.entries = entries;
       return this;
     },
-    status: function (status) {
+    status: function(status) {
       defaultOrder.status = status;
       return this;
     },
-    tableNumber: function (tableNumber) {
+    tableNumber: function(tableNumber) {
       defaultOrder.tableNumber = tableNumber;
       return this;
     },
-    build: function () {
+    build: function() {
       return defaultOrder;
     }
   };

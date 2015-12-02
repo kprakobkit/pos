@@ -3,7 +3,7 @@ import utils from '../utils';
 import Transaction from '../../models/transaction';
 
 describe('Transaction', () => {
-  it ('saves with cash, credit, and tip amounts', function () {
+  it ('saves with cash, credit, and tip amounts', () => {
     const orderId = '12345';
     const cash = 1000;
     const credit = 2000;
