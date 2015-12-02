@@ -9,6 +9,21 @@ const orderStatuses = [
   constants.READY_FOR_BILL
 ];
 
+function builderFromDefault(defaultObject) {
+  let builder = {
+    build: () => defaultObject
+  };
+
+  Object.keys(defaultObject).forEach((prop) => {
+    builder[prop] = (override) => {
+      defaultObject[prop] = override;
+      return builder;
+    };
+  });
+
+  return builder;
+}
+
 function orderBuilder() {
   const defaultOrder = {
     id: faker.random.number().toString(),
@@ -18,27 +33,7 @@ function orderBuilder() {
     tableNumber: faker.random.number().toString().slice(0, 1)
   };
 
-  return {
-    id: function(id) {
-      defaultOrder.id = id;
-      return this;
-    },
-    entries: function(entries) {
-      defaultOrder.entries = entries;
-      return this;
-    },
-    status: function(status) {
-      defaultOrder.status = status;
-      return this;
-    },
-    tableNumber: function(tableNumber) {
-      defaultOrder.tableNumber = tableNumber;
-      return this;
-    },
-    build: function() {
-      return defaultOrder;
-    }
-  };
+  return builderFromDefault(defaultOrder);
 }
 
 function entryBuilder() {
@@ -50,27 +45,7 @@ function entryBuilder() {
     createdAt: moment(constants.now)
   };
 
-  return {
-    name: function(name) {
-      defaultEntry.name = name;
-      return this;
-    },
-    status: function(status) {
-      defaultEntry.status = status;
-      return this;
-    },
-    price: function(price) {
-      defaultEntry.price = price;
-      return this;
-    },
-    createdAt: function(createdAt) {
-      defaultEntry.createdAt = createdAt;
-      return this;
-    },
-    build: function() {
-      return defaultEntry;
-    }
-  };
+  return builderFromDefault(defaultEntry);;
 }
 
 function transactionBuilder() {
@@ -81,27 +56,7 @@ function transactionBuilder() {
     tip: 500
   };
 
-  return {
-    orderId: function(orderId) {
-      defaultTransaction.orderId = orderId;
-      return this;
-    },
-    cash: function(cash) {
-      defaultTransaction.cash = cash;
-      return this;
-    },
-    credit: function(credit) {
-      defaultTransaction.credit = credit;
-      return this;
-    },
-    tip: function(tip) {
-      defaultTransaction.tip = tip;
-      return this;
-    },
-    build: function() {
-      return defaultTransaction;
-    }
-  };
+  return builderFromDefault(defaultTransaction);
 }
 
 export default {
