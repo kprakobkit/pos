@@ -25,7 +25,7 @@ class ReadyForBillBtn extends Component {
             disabled: !this.props.overrideDisable && this.shouldBeDisabled(),
             onClick: this.props.handleOnClick
           },
-          'Ready for Bill'
+          this.props.text
         )
       )
     );
@@ -34,12 +34,14 @@ class ReadyForBillBtn extends Component {
 
 ReadyForBillBtn.propTypes = {
   entries: PropTypes.array.isRequired,
-  overrideDisable: PropTypes.bool
+  overrideDisable: PropTypes.bool,
+  text: PropTypes.string
 };
 
 ReadyForBillBtn.defaultProps = {
   entries: [],
-  overrideDisable: false
+  overrideDisable: false,
+  text: 'Ready for Bill'
 };
 
 export default ReadyForBillBtn;
