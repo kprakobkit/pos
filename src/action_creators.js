@@ -66,11 +66,12 @@ export function setOpen(orderId) {
   };
 }
 
-export function setClosed(orderId, amounts) {
+export function setClosed(orderId, transactionId, amounts) {
   return {
     meta: { remote: true },
     type: constants.SET_CLOSED,
     orderId,
+    transactionId,
     amounts
   };
 }

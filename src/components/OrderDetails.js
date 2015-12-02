@@ -71,7 +71,11 @@ class OrderDetails extends Component {
           ProcessingOrder(
             {
               order: this.state.order,
-              setClosed: this.props.setClosed.bind(null, this.props.params.id, this.state.order.transaction.id)
+              setClosed: this.props.setClosed.bind(
+                null,
+                this.props.params.id,
+                this.state.order.transaction && this.state.order.transaction.id
+              )
             }
           )
       )
