@@ -21,7 +21,7 @@ const thisDocument = window.document;
 let port = '';
 
 if (config.demoMode || thisDocument.location.hostname === 'localhost') {
-  port = ':3000';
+  port = ':3210';
 }
 
 const location = `${thisDocument.location.protocol}//${thisDocument.location.hostname}${port}`;

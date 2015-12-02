@@ -29,7 +29,7 @@ module.exports = {
   devServer: {
     hot: true,
     proxy: {
-      '*': 'http://localhost:' + (process.env.PORT || 3000)
+      '*': 'http://localhost:' + (process.env.PORT || 3210)
     },
     host: 'localhost'
   },
