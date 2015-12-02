@@ -33,7 +33,9 @@ describe('Order', () => {
         const order = orders[0];
         expect(order.entries[0].name).to.equal(entryName);
         expect(order.entries[0].price).to.equal(entryPrice);
-        expect(order.transaction).to.deep.equal(transactionAmounts);
+        expect(order.transaction.cash).to.equal(transactionAmounts.cash);
+        expect(order.transaction.credit).to.equal(transactionAmounts.credit);
+        expect(order.transaction.tip).to.equal(transactionAmounts.tip);
       });
   });
 
@@ -77,7 +79,9 @@ describe('Order', () => {
       .then((order) => Transaction.addTransaction(order.id, amounts))
       .then((transaction) => Order.setClosed(1, transaction._id))
       .then((order) => {
-        expect(order.transaction).to.deep.equal(amounts);
+        expect(order.transaction.cash).to.equal(amounts.cash);
+        expect(order.transaction.credit).to.equal(amounts.credit);
+        expect(order.transaction.tip).to.equal(amounts.tip);
       });
   });
 });
