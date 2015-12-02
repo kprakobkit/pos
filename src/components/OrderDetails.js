@@ -75,7 +75,8 @@ class OrderDetails extends Component {
                 null,
                 this.props.params.id,
                 this.state.order.transaction && this.state.order.transaction.id
-              )
+              ),
+              setReadyForBill: this.props.setReadyForBill.bind(null, this.props.params.id)
             }
           )
       )

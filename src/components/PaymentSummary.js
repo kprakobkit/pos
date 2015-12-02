@@ -35,7 +35,8 @@ class PaymentSummary extends Component {
 PaymentSummary.propTypes = {
   cash: PropTypes.number.isRequired,
   credit: PropTypes.number.isRequired,
-  tip: PropTypes.number.isRequired
+  tip: PropTypes.number.isRequired,
+  setReadyForBill: PropTypes.func.isRequired
 };
 
 export default PaymentSummary;

@@ -11,7 +11,8 @@ const {
 const PaymentSummary = React.createFactory(PaymentSummaryComponent);
 
 function setup({ cash = 0, credit = 0, tip = 0 } = {}) {
-  const component = renderIntoDocument(PaymentSummary({ cash, credit, tip }));
+  const setReadyForBill = () => {};
+  const component = renderIntoDocument(PaymentSummary({ cash, credit, tip, setReadyForBill }));
 
   return { component };
 }
