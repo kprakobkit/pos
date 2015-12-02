@@ -71,8 +71,12 @@ export function setOpen(orderId) {
   return dispatchUpdateOrder(orderId, Order.updateStatus(orderId, constants.OPEN));
 }
 
-export function setClosed(orderId, amounts) {
-  const transaction = Transaction.addTransaction(orderId, amounts)
+export function setClosed(orderId, transactionId, amounts) {
+  const addOrUpdateTransaction = transactionId ?
+    Transaction.findOneAndUpdate(transactionId, amounts, { new: true }) :
+    Transaction.addTransaction(orderId, amounts);
+
+  const transaction = addOrUpdateTransaction
     .then((transaction) => Order.setClosed(orderId, transaction._id));
 
   return dispatchUpdateOrder(orderId, transaction);

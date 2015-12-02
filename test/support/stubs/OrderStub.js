@@ -48,6 +48,7 @@ const OrderStub = {
         id: orderId,
         status: constants.CLOSED,
         transaction: {
+          id: '1234',
           cash: 1000,
           credit: 1000,
           tip: 500

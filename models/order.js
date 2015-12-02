@@ -69,7 +69,8 @@ orderSchema.statics.addEntries = function(orderId, newEntries) {
 
 orderSchema.statics.updateStatus = function(orderId, status) {
   return this.findOneAndUpdate({ id: orderId }, { status }, { new: true }).then((order) => {
-    return populateEntries(toOrder(order));
+    return populateEntries(toOrder(order))
+      .then(populateTransaction);
   });
 }
 
@@ -112,7 +113,7 @@ function populateTransaction(order) {
       Transaction.populate(order, {
         path: 'transaction',
         model: 'Transaction',
-        select: 'cash credit tip -_id'
+        select: '_id cash credit tip'
       }, (err, res) => {
         if (err) reject(err);
 
@@ -137,8 +138,9 @@ function toEntry({ status, comment, item_id, _id}) {
   };
 }
 
-function toTransaction({ cash, credit, tip }) {
+function toTransaction({ _id, cash, credit, tip }) {
   return {
+    id: _id.toString(),
     cash,
     credit,
     tip

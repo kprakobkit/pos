@@ -19,7 +19,9 @@ class Payment extends Component {
             setClosed: this.props.setClosed,
             startingBalance: this.props.startingBalance
           })) :
-          PaymentSummary(this.props.transaction)
+          PaymentSummary(_.extend({}, this.props.transaction, {
+            setReadyForBill: this.props.setReadyForBill
+          }))
       )
     );
   }
@@ -29,7 +31,8 @@ Payment.propTypes = {
   startingBalance: PropTypes.number.isRequired,
   transaction: PropTypes.object,
   orderStatus: PropTypes.string.isRequired,
-  setClosed: PropTypes.func.isRequired
+  setClosed: PropTypes.func.isRequired,
+  setReadyForBill: PropTypes.func.isRequired
 };
 
 Payment.defaultProps = {

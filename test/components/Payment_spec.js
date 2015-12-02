@@ -15,7 +15,8 @@ const Payment = React.createFactory(PaymentComponent);
 function setup({ orderStatus } = { orderStatus: constants.READY_FOR_BILL }) {
   const startingBalance = 2000;
   const setClosed = () => {};
-  const component = renderIntoDocument(Payment({ startingBalance, orderStatus, setClosed }));
+  const setReadyForBill = () => {};
+  const component = renderIntoDocument(Payment({ startingBalance, orderStatus, setClosed, setReadyForBill }));
 
   return {
     component,

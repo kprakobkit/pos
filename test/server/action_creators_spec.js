@@ -3,13 +3,15 @@ import proxyquire from 'proxyquire';
 import constants from '../../src/constants';
 import Order from '../support/stubs/OrderStub';
 import Item from '../support/stubs/ItemStub';
+import Transaction from '../support/stubs/TransactionStub';
 import mongoose from 'mongoose';
 
 mongoose.models = {};
 
 const actions = proxyquire('../../server/action_creators', {
   '../models/order': Order,
-  '../models/item': Item
+  '../models/item': Item,
+  '../models/transaction': Transaction
 });
 
 describe('server action creators', () => {
@@ -191,6 +193,7 @@ describe('server action creators', () => {
       {
         id: 1,
         status: constants.READY_FOR_BILL,
+        transaction: transaction,
         entries: []
       }
     ];
@@ -203,7 +206,8 @@ describe('server action creators', () => {
       return { orders };
     }
 
-    const amounts = {
+    const transaction = {
+      id: '1234',
       cash: 1000,
       credit: 1000,
       tip: 500
@@ -215,12 +219,12 @@ describe('server action creators', () => {
       order: {
         id: 1,
         status: constants.CLOSED,
-        transaction: amounts,
+        transaction: transaction,
         entries: []
       }
     };
 
-    actions.setClosed(1, amounts)(dispatch, getState).then(() => {
+    actions.setClosed(1, '1234', transaction)(dispatch, getState).then(() => {
       expect(dispatched).to.deep.equal(expected);
     }).then(done, done);
   });

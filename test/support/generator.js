@@ -13,28 +13,29 @@ function orderBuilder() {
   const defaultOrder = {
     id: faker.random.number().toString(),
     status: _.sample(orderStatuses),
+    transaction: transactionBuilder().build(),
     entries: [entryBuilder().build()],
     tableNumber: faker.random.number().toString().slice(0, 1)
   };
 
   return {
-    id: function (id) {
+    id: function(id) {
       defaultOrder.id = id;
       return this;
     },
-    entries: function (entries) {
+    entries: function(entries) {
       defaultOrder.entries = entries;
       return this;
     },
-    status: function (status) {
+    status: function(status) {
       defaultOrder.status = status;
       return this;
     },
-    tableNumber: function (tableNumber) {
+    tableNumber: function(tableNumber) {
       defaultOrder.tableNumber = tableNumber;
       return this;
     },
-    build: function () {
+    build: function() {
       return defaultOrder;
     }
   };
@@ -50,24 +51,55 @@ function entryBuilder() {
   };
 
   return {
-    name: function (name) {
+    name: function(name) {
       defaultEntry.name = name;
       return this;
     },
-    status: function (status) {
+    status: function(status) {
       defaultEntry.status = status;
       return this;
     },
-    price: function (price) {
+    price: function(price) {
       defaultEntry.price = price;
       return this;
     },
-    createdAt: function (createdAt) {
+    createdAt: function(createdAt) {
       defaultEntry.createdAt = createdAt;
       return this;
     },
-    build: function () {
+    build: function() {
       return defaultEntry;
+    }
+  };
+}
+
+function transactionBuilder() {
+  const defaultTransaction = {
+    orderId: '1',
+    cash: 1500,
+    credit: 1000,
+    tip: 500
+  };
+
+  return {
+    orderId: function(orderId) {
+      defaultTransaction.orderId = orderId;
+      return this;
+    },
+    cash: function(cash) {
+      defaultTransaction.cash = cash;
+      return this;
+    },
+    credit: function(credit) {
+      defaultTransaction.credit = credit;
+      return this;
+    },
+    tip: function(tip) {
+      defaultTransaction.tip = tip;
+      return this;
+    },
+    build: function() {
+      return defaultTransaction;
     }
   };
 }
