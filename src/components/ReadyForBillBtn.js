@@ -22,7 +22,7 @@ class ReadyForBillBtn extends Component {
         dom.button(
           {
             className: 'order-entries ready-for-bill btn btn-primary btn-lg btn-block',
-            disabled: this.shouldBeDisabled(),
+            disabled: !this.props.overrideDisable && this.shouldBeDisabled(),
             onClick: this.props.handleOnClick
           },
           'Ready for Bill'
@@ -33,11 +33,13 @@ class ReadyForBillBtn extends Component {
 }
 
 ReadyForBillBtn.propTypes = {
-  entries: PropTypes.array.isRequired
+  entries: PropTypes.array.isRequired,
+  overrideDisable: PropTypes.bool
 };
 
 ReadyForBillBtn.defaultProps = {
-  entries: []
+  entries: [],
+  overrideDisable: false
 };
 
 export default ReadyForBillBtn;

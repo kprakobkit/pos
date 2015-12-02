@@ -1,6 +1,9 @@
 import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import $ from '../money';
 import util from '../util';
+import ReadyForBillBtnComponent from './ReadyForBillBtn';
+
+const ReadyForBillBtn = createFactory(ReadyForBillBtnComponent);
 
 class PaymentSummary extends Component {
   constructor(props) {
@@ -21,12 +24,20 @@ class PaymentSummary extends Component {
 
   render() {
     return (
-      dom.table(
-        { className: 'payment-summary table table-striped' },
-        dom.tbody(
-          null,
-          ['cash', 'credit', 'tip'].map(this.renderPaymentAmount)
-        )
+      dom.div(
+        null,
+        dom.table(
+          { className: 'payment-summary table table-striped' },
+          dom.tbody(
+            null,
+            ['cash', 'credit', 'tip'].map(this.renderPaymentAmount)
+          )
+        ),
+        ReadyForBillBtn({
+          entries: [],
+          overrideDisable: true,
+          handleOnClick: this.props.setReadyForBill
+        })
       )
     );
   }
