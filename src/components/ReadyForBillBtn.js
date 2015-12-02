@@ -3,16 +3,18 @@ import constants from '../../src/constants';
 import _ from 'underscore';
 
 class ReadyForBillBtn extends Component {
-  allEntriesAreCanceled() {
+  allEntriesCanceled() {
     return _.all(this.props.entries, (entry) => entry.status === constants.CANCELED);
   }
 
-  thereAreOpenEntries() {
-    return _.some(this.props.entries, (entry) => entry.status === constants.OPEN);
+  openOrCompletedEntries() {
+    return _.some(this.props.entries, (entry) => {
+      return entry.status === constants.OPEN || entry.status === constants.COMPLETED;
+    });
   }
 
   shouldBeDisabled() {
-    return this.thereAreOpenEntries() || this.allEntriesAreCanceled();
+    return this.openOrCompletedEntries() || this.allEntriesCanceled();
   }
 
   render() {
