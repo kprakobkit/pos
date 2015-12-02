@@ -3,7 +3,7 @@ import utils from '../utils';
 import Transaction from '../../models/transaction';
 
 describe('Transaction', () => {
-  it ('saves with cash, credit, tip, and total amounts', function () {
+  it ('saves with cash, credit, and tip amounts', function () {
     const orderId = '12345';
     const cash = 1000;
     const credit = 2000;
@@ -16,7 +16,6 @@ describe('Transaction', () => {
         expect(transaction.cash).to.equal(cash);
         expect(transaction.credit).to.equal(credit);
         expect(transaction.tip).to.equal(tip);
-        expect(transaction.total).to.equal(cash + credit);
       });
   });
 });
