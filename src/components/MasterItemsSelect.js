@@ -1,4 +1,5 @@
 import { Component, PropTypes, DOM as dom } from 'react';
+import _ from 'underscore';
 
 class MasterItemsSelect extends Component {
   constructor(props) {
@@ -11,15 +12,31 @@ class MasterItemsSelect extends Component {
     this.props.onSelectMasterItem(itemId);
   }
 
+  getCategories(masterItems) {
+    return masterItems.map((item) => item.category);
+  }
+
   render() {
     return (
-      dom.p(
+      dom.div(
         null,
-        dom.select(
-          { className: 'select-items form-control input-lg', onChange: this.handleChange },
-          this.props.masterItems.map((item, i) => {
-            return dom.option({ className: 'option', value: item.id, key: i + 1 }, item.name);
-          })
+        dom.div(
+          { className: 'form-group' },
+          dom.select(
+            { className: 'categories form-control input-lg' },
+            _.uniq(this.getCategories(this.props.masterItems)).map((category, i) => {
+              return dom.option({ className: 'category', value: category, key: i }, category);
+            })
+          )
+        ),
+        dom.div(
+          { className: 'form-group' },
+          dom.select(
+            { className: 'select-items form-control input-lg', onChange: this.handleChange },
+            this.props.masterItems.map((item, i) => {
+              return dom.option({ className: 'option', value: item.id, key: i + 1 }, item.name);
+            })
+          )
         )
       )
     );

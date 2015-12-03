@@ -24,18 +24,22 @@ function setup() {
   return {
     component,
     masterItems,
-    options: scryRenderedDOMComponentsWithClass(component, 'option')
+    options: scryRenderedDOMComponentsWithClass(component, 'option'),
+    categories: scryRenderedDOMComponentsWithClass(component, 'category')
   };
 }
 
 describe('Master Items Select', () => {
   it('renders an option for items', () => {
-    const { component, options, masterItems } = setup();
+    const { options } = setup();
 
-    expect(options.length).to.equal(masterItems.length);
+    expect(options.length).to.equal(3);
   });
 
   it('renders the unique categories for the items', () => {
+    const { categories } = setup();
+
+    expect(categories.length).to.equal(3);
   });
 });
 
