@@ -26,9 +26,7 @@ class MasterItems extends Component {
     this.setState({ entries, comment: '' });
   }
 
-  selectItem(itemId) {
-    const selectedItem = _.extend({}, _.find(this.props.masterItems, (item) => item.id === itemId));
-
+  selectItem(selectedItem) {
     this.setState({ selectedItem });
   }
 

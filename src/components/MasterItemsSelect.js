@@ -9,7 +9,8 @@ class MasterItemsSelect extends Component {
 
   handleChange(e) {
     const itemId = e.target.value;
-    this.props.onSelectMasterItem(itemId);
+    const selectedItem = _.extend({}, _.find(this.props.masterItems, (item) => item.id === itemId));
+    this.props.onSelectMasterItem(selectedItem);
   }
 
   getCategories(masterItems) {
