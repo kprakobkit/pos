@@ -1,12 +1,10 @@
 import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import { connect } from 'react-redux';
-import { Link as LinkComponent } from 'react-router';
 import actions from '../action_creators';
 import constants from '../constants';
 import moment from 'moment';
 import _ from 'underscore';
 
-const Link = createFactory(LinkComponent);
 const displayMax = 6;
 
 function mapStateToProps(state) {
@@ -84,7 +82,6 @@ class Chef extends Component {
   render() {
     return dom.div(
       null,
-      dom.p(null, Link({ to: '/', className: 'orders-link' }, 'Home')),
       dom.div(
         { className: 'row open-entries list-group' },
         this.getOpenEntries().map(this.renderOpenEntry),
