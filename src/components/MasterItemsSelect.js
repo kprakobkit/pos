@@ -11,18 +11,18 @@ class MasterItemsSelect extends Component {
     };
   };
 
-  handleChange(e) {
-    const itemId = e.target.value;
-    const selectedItem = _.extend({}, _.find(this.props.masterItems, (item) => item.id === itemId));
-    this.props.onSelectMasterItem(selectedItem);
-  }
-
   getCategories(masterItems) {
     return masterItems.map((item) => item.category);
   }
 
   filterItems(category) {
     return this.props.masterItems.filter((item) => item.category === category);
+  }
+
+  handleChange(e) {
+    const itemId = e.target.value;
+    const selectedItem = _.find(this.props.masterItems, (item) => item.id === itemId);
+    this.props.onSelectMasterItem(selectedItem);
   }
 
   handleChangeCategory(e) {
@@ -39,6 +39,7 @@ class MasterItemsSelect extends Component {
         null,
         dom.div(
           { className: 'form-group' },
+          dom.label(null, 'Category'),
           dom.select(
             { className: 'categories form-control input-lg', onChange: this.handleChangeCategory },
             _.uniq(this.getCategories(this.props.masterItems)).map((category, i) => {
@@ -48,6 +49,7 @@ class MasterItemsSelect extends Component {
         ),
         dom.div(
           { className: 'form-group' },
+          dom.label(null, 'Item'),
           dom.select(
             { className: 'select-items form-control input-lg', onChange: this.handleChange },
             this.state.filteredItems.map((item, i) => {
