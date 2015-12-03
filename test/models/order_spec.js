@@ -41,7 +41,8 @@ describe('Order', () => {
     beforeEach(() => {
       return Item({
         name: 'Rice',
-        price: 1000
+        price: 1000,
+        category: 'Side'
       }).save();
     });
 
@@ -53,6 +54,7 @@ describe('Order', () => {
         expect(order.tableNumber).to.equal(tableNumber);
         expect(order.entries[0].createdAt).to.exist;
         expect(order.entries[0].name).to.equal('Rice');
+        expect(order.entries[0].category).to.equal('Side');
       });
     });
   });

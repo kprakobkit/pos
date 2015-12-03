@@ -91,7 +91,7 @@ function getEntries(orders) {
 
 function populateEntries(order) {
   return new Promise((resolve, reject) => {
-    Item.populate(order.entries, [{ path: 'item_id', model: 'Item', select: 'name price -_id' }], (err, res) => {
+    Item.populate(order.entries, [{ path: 'item_id', model: 'Item', select: 'name category price -_id' }], (err, res) => {
       if(err) {
         reject(err);
       }
@@ -133,6 +133,7 @@ function toEntry({ status, comment, item_id, _id}) {
     comment,
     name: item_id.name,
     price: item_id.price,
+    category: item_id.category,
     createdAt
   };
 }
