@@ -84,26 +84,37 @@ class MasterItems extends Component {
           { className: 'table table-striped' },
           dom.tbody(
             null,
-            this.state.entries.length > 0 ? this.state.entries.map((entry, i) => dom.tr(
-              { className: 'entries', key: i },
-              dom.td({ className: 'entry-name' }, dom.h2(null, entry.name)),
-              dom.td({ className: 'entry-comment' }, dom.h2(null, dom.small(null, entry.comment))),
-              dom.td(
-                { className: 'entry-action text-right' },
-                dom.button(
-                  {
-                    className: 'btn btn-default remove-entry',
-                    onClick: this.removeEntry.bind(this, entry)
-                  },
-                  dom.span(
+            this.state.entries.length > 0 ?
+              this.state.entries.map((entry, i) => dom.tr(
+                { className: 'entries', key: i },
+                dom.td({ className: 'entry-name' }, dom.h2(null, entry.name)),
+                dom.td({ className: 'entry-comment' }, dom.h2(null, dom.small(null, entry.comment))),
+                dom.td(
+                  { className: 'entry-action text-right' },
+                  dom.button(
                     {
-                      className: 'glyphicon glyphicon-remove',
-                      'aria-hidden': true
-                    }
+                      className: 'btn btn-default remove-entry',
+                      onClick: this.removeEntry.bind(this, entry)
+                    },
+                    dom.span(
+                      {
+                        className: 'glyphicon glyphicon-remove',
+                        'aria-hidden': true
+                      }
+                    )
                   )
                 )
-              )
-            )) : dom.tr({ className: 'no-entries' }, dom.td(null, dom.h2({ className: 'text-center text-danger lead' }, 'There is currently nothing to send to the kitchen.'))),
+              )) :
+              dom.tr(
+                { className: 'no-entries' },
+                dom.td(
+                  null,
+                  dom.h2(
+                    { className: 'text-center text-danger lead' },
+                    'There is currently nothing to send to the kitchen.'
+                  )
+                )
+              ),
           )
         )
       ),
