@@ -12,7 +12,7 @@ class MasterItemsSelect extends Component {
   };
 
   getCategories(masterItems) {
-    return masterItems.map((item) => item.category);
+    return _.uniq(masterItems.map((item) => item.category));
   }
 
   filterItems(category) {
@@ -27,7 +27,7 @@ class MasterItemsSelect extends Component {
 
   handleChangeCategory(e) {
     const selectedCategory = e.target.value;
-    const filteredItems = this.filterItems(selectedCategory);;
+    const filteredItems = this.filterItems(selectedCategory);
 
     this.props.onSelectMasterItem(filteredItems[0]);
     this.setState({ filteredItems });
@@ -42,7 +42,7 @@ class MasterItemsSelect extends Component {
           dom.label(null, 'Category'),
           dom.select(
             { className: 'categories form-control input-lg', onChange: this.handleChangeCategory },
-            _.uniq(this.getCategories(this.props.masterItems)).map((category, i) => {
+            this.getCategories(this.props.masterItems).map((category, i) => {
               return dom.option({ className: 'category', value: category, key: i }, category);
             })
           )
@@ -53,7 +53,7 @@ class MasterItemsSelect extends Component {
           dom.select(
             { className: 'select-items form-control input-lg', onChange: this.handleChange },
             this.state.filteredItems.map((item, i) => {
-              return dom.option({ className: 'option', value: item.id, key: i + 1 }, item.name);
+              return dom.option({ className: 'option', value: item.id, key: i }, item.name);
             })
           )
         )

@@ -91,7 +91,11 @@ function getEntries(orders) {
 
 function populateEntries(order) {
   return new Promise((resolve, reject) => {
-    Item.populate(order.entries, [{ path: 'item_id', model: 'Item', select: 'name category price -_id' }], (err, res) => {
+    Item.populate(order.entries, [{
+      path: 'item_id',
+      model: 'Item',
+      select: 'name category price -_id'
+    }], (err, res) => {
       if(err) {
         reject(err);
       }
