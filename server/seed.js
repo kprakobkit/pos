@@ -6,7 +6,9 @@ import mongoose from 'mongoose';
 import faker from 'faker';
 import _ from 'underscore';
 import config from '../config';
+import denodeify from 'denodeify';
 
+const read = denodeify(require('fs').readFile);
 const orderStatuses = [
   constants.OPEN
 ];
@@ -64,12 +66,14 @@ function createOrder(items) {
 }
 
 function createItems() {
-  return Promise.all([
-    createItem('Pho', 1050, 'Main'),
-    createItem('Burger', 925, 'Main'),
-    createItem('Rice', 175, 'Side'),
-    createItem('Heineken', 430, 'Beer')
-  ])
+  return read('./server/items.csv', 'utf8').then((rawItems) => {
+    const rows = rawItems.split('\n').slice(0, -1);
+    const itemsPromise = rows.map((row) => {
+      const [name, price, category] = row.split(',');
+      return createItem(name, parseInt(price), category);
+    });
+    return Promise.all(itemsPromise);
+  })
   .then((items) => {
     console.log('Successfully created all items');
     return items;
