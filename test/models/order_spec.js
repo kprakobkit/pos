@@ -7,7 +7,7 @@ import faker from 'faker';
 import constants from '../../src/constants';
 
 describe('Order', () => {
-  it ('defautls to OPEN status', () => {
+  it ('defaults to OPEN status', () => {
     return Order().save()
     .then((newOrder) => {
       expect(newOrder.status).to.equal(constants.OPEN);
@@ -39,7 +39,29 @@ describe('Order', () => {
       });
   });
 
-  describe('add order', () => {
+  describe('updateEntry', () => {
+    beforeEach(() => {
+      return Item({
+        name: 'Rice',
+        price: 1000,
+        category: 'Side'
+      }).save();
+    });
+
+    it('updates and returns the specified entry', () => {
+      const entryIndex = 1;
+      const updatedStatus = constants.DELIVERED;
+
+      return Item.findOne({ name: 'Rice' })
+        .then((item) => Order.addOrder('1', [item, item]))
+        .then((order) => Order.updateEntry(order.id, entryIndex, { status: updatedStatus }))
+        .then((order) => {
+          expect(order.entries[entryIndex].status).to.equal(updatedStatus);
+        });
+    });
+  });
+
+  describe('addOrder', () => {
     beforeEach(() => {
       return Item({
         name: 'Rice',
