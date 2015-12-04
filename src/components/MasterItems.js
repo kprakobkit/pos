@@ -110,7 +110,11 @@ class MasterItems extends Component {
       dom.p(
         null,
         dom.button(
-          { className: 'btn btn-primary submit-order btn-lg btn-block', onClick: this.handleOnClick },
+          {
+            className: 'btn btn-primary submit-order btn-lg btn-block',
+            disabled: !this.state.entries.length,
+            onClick: this.handleOnClick
+          },
           'Send to the kitchen'
         )
       )
