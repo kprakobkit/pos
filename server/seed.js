@@ -32,9 +32,9 @@ function removeData() {
   return Promise.all(removeCollectionsPromise);
 }
 
-function createItem(name, price, cb) {
+function createItem(name, price, category) {
   return new Promise((resolve, reject) => {
-    Item({ name, price }).save((err, result) => {
+    Item({ name, price, category }).save((err, result) => {
       if(err) {
         console.error(`Error creating item ${name}. ${err}`);
         reject(err);
@@ -63,12 +63,12 @@ function createOrder(items) {
   });
 }
 
-function createItems(cb) {
+function createItems() {
   return Promise.all([
-    createItem('Pho', 1050),
-    createItem('Burger', 925),
-    createItem('Rice', 175),
-    createItem('Dessert', 430)
+    createItem('Pho', 1050, 'Main'),
+    createItem('Burger', 925, 'Main'),
+    createItem('Rice', 175, 'Side'),
+    createItem('Heineken', 430, 'Beer')
   ])
   .then((items) => {
     console.log('Successfully created all items');

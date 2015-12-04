@@ -93,8 +93,8 @@ function dispatchUpdateOrder(orderId, transaction) {
   };
 }
 
-function toMasterItem({ _id, name, price }) {
-  return { id: _id, name, price };
+function toMasterItem({ _id, name, price, category }) {
+  return { id: _id, name, price, category };
 }
 
 function toOrder({ id, status, entries }) {
