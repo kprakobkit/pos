@@ -7,7 +7,7 @@ import faker from 'faker';
 import constants from '../../src/constants';
 
 describe('Order', () => {
-  it ('defautls to OPEN status', () => {
+  it ('defaults to OPEN status', () => {
     return Order().save()
     .then((newOrder) => {
       expect(newOrder.status).to.equal(constants.OPEN);
@@ -61,7 +61,7 @@ describe('Order', () => {
     });
   });
 
-  describe('add order', () => {
+  describe('addOrder', () => {
     beforeEach(() => {
       return Item({
         name: 'Rice',
