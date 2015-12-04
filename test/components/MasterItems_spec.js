@@ -101,4 +101,19 @@ describe('Master Items', () => {
     noEntriesMsg = scryRenderedDOMComponentsWithClass(component, 'no-entries');
     expect(noEntriesMsg.length).to.equal(0);
   });
+
+  it('disables submit button when no entries', () => {
+    const submitButton = findRenderedDOMComponentWithClass(component, 'submit-order');
+
+    expect(submitButton.disabled).to.be.true;
+  });
+
+  it('enables submit button there is at least one entry', () => {
+    const submitButton = findRenderedDOMComponentWithClass(component, 'submit-order');
+    const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry');
+
+    Simulate.click(addEntry);
+
+    expect(submitButton.disabled).to.be.false;
+  });
 });

@@ -12,6 +12,8 @@ class MasterItems extends Component {
     this.handleAddEntry = this.handleAddEntry.bind(this);
     this.removeEntry = this.removeEntry.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
+    this.renderSelectedEntries = this.renderSelectedEntries.bind(this);
+    this.renderNoEntries = this.renderNoEntries.bind(this);
     this.state = {
       comment: '',
       entries: []
@@ -47,6 +49,42 @@ class MasterItems extends Component {
     this.setState({ entries: [] });
   }
 
+  renderSelectedEntries() {
+    return this.state.entries.map((entry, i) => dom.tr(
+      { className: 'entries', key: i },
+      dom.td({ className: 'entry-name' }, dom.h2(null, entry.name)),
+      dom.td({ className: 'entry-comment' }, dom.h2(null, dom.small(null, entry.comment))),
+      dom.td(
+        { className: 'entry-action text-right' },
+        dom.button(
+          {
+            className: 'btn btn-default remove-entry',
+            onClick: this.removeEntry.bind(this, entry)
+          },
+          dom.span(
+            {
+              className: 'glyphicon glyphicon-remove',
+              'aria-hidden': true
+            }
+          )
+        )
+      )
+    ));
+  }
+
+  renderNoEntries() {
+    return dom.tr(
+      { className: 'no-entries' },
+      dom.td(
+        null,
+        dom.h2(
+          { className: 'text-center text-danger lead' },
+          'There is currently nothing to send to the kitchen.'
+        )
+      )
+    );
+  }
+
   render() {
     return dom.div(
       { className: 'master-items' },
@@ -68,7 +106,10 @@ class MasterItems extends Component {
       dom.p(
         null,
         dom.button(
-          { className: 'btn btn-default add-entry btn-lg btn-block', onClick: this.handleAddEntry },
+          {
+            className: 'btn btn-default add-entry btn-lg btn-block',
+            onClick: this.handleAddEntry
+          },
           dom.span(
             {
               className: 'glyphicon glyphicon-plus',
@@ -84,33 +125,18 @@ class MasterItems extends Component {
           { className: 'table table-striped' },
           dom.tbody(
             null,
-            this.state.entries.length > 0 ? this.state.entries.map((entry, i) => dom.tr(
-              { className: 'entries', key: i },
-              dom.td({ className: 'entry-name' }, dom.h2(null, entry.name)),
-              dom.td({ className: 'entry-comment' }, dom.h2(null, dom.small(null, entry.comment))),
-              dom.td(
-                { className: 'entry-action text-right' },
-                dom.button(
-                  {
-                    className: 'btn btn-default remove-entry',
-                    onClick: this.removeEntry.bind(this, entry)
-                  },
-                  dom.span(
-                    {
-                      className: 'glyphicon glyphicon-remove',
-                      'aria-hidden': true
-                    }
-                  )
-                )
-              )
-            )) : dom.tr({ className: 'no-entries' }, dom.td(null, dom.h2({ className: 'text-center text-danger lead' }, 'There is currently nothing to send to the kitchen.'))),
+            this.state.entries.length ? this.renderSelectedEntries() : this.renderNoEntries()
           )
         )
       ),
       dom.p(
         null,
         dom.button(
-          { className: 'btn btn-primary submit-order btn-lg btn-block', onClick: this.handleOnClick },
+          {
+            className: 'btn btn-primary submit-order btn-lg btn-block',
+            disabled: !this.state.entries.length,
+            onClick: this.handleOnClick
+          },
           'Send to the kitchen'
         )
       )
