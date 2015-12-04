@@ -27,6 +27,7 @@ class Orders extends Component {
 
   componentWillMount() {
     this.props.loadOrders();
+    this.props.loadItems();
   }
 
   filterOrders(filter) {

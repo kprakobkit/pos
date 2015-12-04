@@ -17,7 +17,6 @@ function mapStateToProps(state) {
 
 class NewOrder extends Component {
   componentWillMount() {
-    this.props.loadItems();
     this.setTableNumber = this.setTableNumber.bind(this);
     this.state = {
       tableNumber: 1
