@@ -12,6 +12,8 @@ class MasterItems extends Component {
     this.handleAddEntry = this.handleAddEntry.bind(this);
     this.removeEntry = this.removeEntry.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
+    this.renderSelectedEntries = this.renderSelectedEntries.bind(this);
+    this.renderNoEntries = this.renderNoEntries.bind(this);
     this.state = {
       comment: '',
       entries: []
@@ -45,6 +47,42 @@ class MasterItems extends Component {
   handleOnClick() {
     this.props.handleSubmit(this.state.entries);
     this.setState({ entries: [] });
+  }
+
+  renderSelectedEntries() {
+    return this.state.entries.map((entry, i) => dom.tr(
+      { className: 'entries', key: i },
+      dom.td({ className: 'entry-name' }, dom.h2(null, entry.name)),
+      dom.td({ className: 'entry-comment' }, dom.h2(null, dom.small(null, entry.comment))),
+      dom.td(
+        { className: 'entry-action text-right' },
+        dom.button(
+          {
+            className: 'btn btn-default remove-entry',
+            onClick: this.removeEntry.bind(this, entry)
+          },
+          dom.span(
+            {
+              className: 'glyphicon glyphicon-remove',
+              'aria-hidden': true
+            }
+          )
+        )
+      )
+    ));
+  }
+
+  renderNoEntries() {
+    return dom.tr(
+      { className: 'no-entries' },
+      dom.td(
+        null,
+        dom.h2(
+          { className: 'text-center text-danger lead' },
+          'There is currently nothing to send to the kitchen.'
+        )
+      )
+    );
   }
 
   render() {
@@ -84,37 +122,7 @@ class MasterItems extends Component {
           { className: 'table table-striped' },
           dom.tbody(
             null,
-            this.state.entries.length > 0 ?
-              this.state.entries.map((entry, i) => dom.tr(
-                { className: 'entries', key: i },
-                dom.td({ className: 'entry-name' }, dom.h2(null, entry.name)),
-                dom.td({ className: 'entry-comment' }, dom.h2(null, dom.small(null, entry.comment))),
-                dom.td(
-                  { className: 'entry-action text-right' },
-                  dom.button(
-                    {
-                      className: 'btn btn-default remove-entry',
-                      onClick: this.removeEntry.bind(this, entry)
-                    },
-                    dom.span(
-                      {
-                        className: 'glyphicon glyphicon-remove',
-                        'aria-hidden': true
-                      }
-                    )
-                  )
-                )
-              )) :
-              dom.tr(
-                { className: 'no-entries' },
-                dom.td(
-                  null,
-                  dom.h2(
-                    { className: 'text-center text-danger lead' },
-                    'There is currently nothing to send to the kitchen.'
-                  )
-                )
-              ),
+            this.state.entries.length ? this.renderSelectedEntries() : this.renderNoEntries()
           )
         )
       ),
