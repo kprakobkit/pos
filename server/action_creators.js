@@ -3,7 +3,6 @@ import constants from '../src/constants';
 import Order from '../models/order';
 import Item from '../models/item';
 import Transaction from '../models/transaction';
-import _ from 'underscore';
 
 export function setState(state) {
   return {

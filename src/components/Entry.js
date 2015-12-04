@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import actions from '../action_creators';
 import constants from '../constants';
 import $ from '../money';
-import _ from 'underscore';
+import _ from 'ramda';
 
 class Entry extends Component {
   constructor(props) {
@@ -16,7 +16,7 @@ class Entry extends Component {
   }
 
   showDelivered() {
-    return this.props.status === constants.OPEN || this.props.status === constants.COMPLETED;
+    return _.contains(this.props.status, [constants.OPEN, constants.COMPLETED]);
   }
 
   renderActionButtons() {

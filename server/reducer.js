@@ -1,22 +1,18 @@
 import constants from '../src/constants';
-import _ from 'underscore';
+import _ from 'ramda';
 
 const INITIAL_STATE = {};
 
 function setState(state, newState) {
-  return _.extend({}, state, newState);
+  return _.merge(state, newState);
 }
 
 function updateOrder(state, { orderId, order }) {
   const orders = state.orders;
-  const orderIndex = orders.findIndex((order) => order.id === orderId);
-  const updatedOrders = [
-    ...orders.slice(0, orderIndex),
-    order,
-    ...orders.slice(orderIndex + 1)
-  ];
+  const orderIndex = _.findIndex(_.propEq('id', orderId), orders);
+  const updatedOrders = _.update(orderIndex, order, state.orders);
 
-  return _.extend({}, state, { orders: updatedOrders });
+  return _.merge(state, { orders: updatedOrders });
 }
 
 export default function reducer(state = INITIAL_STATE, action) {
