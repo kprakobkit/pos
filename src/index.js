@@ -31,7 +31,7 @@ const createStoreWithMiddleware = applyMiddleware(
   remoteActionMiddleware(socket),
   loggerMiddleware({ collapsed: true })
 )(createStore);
-const store = createStoreWithMiddleware(reducer);
+const store = createStoreWithMiddleware(reducer, window.__INITIAL_STATE__);
 
 socket.on('connected', (data) => console.log(data));
 socket.on('state', (state) => store.dispatch(setState(state)));
