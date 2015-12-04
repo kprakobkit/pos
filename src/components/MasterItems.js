@@ -106,7 +106,10 @@ class MasterItems extends Component {
       dom.p(
         null,
         dom.button(
-          { className: 'btn btn-default add-entry btn-lg btn-block', onClick: this.handleAddEntry },
+          {
+            className: 'btn btn-default add-entry btn-lg btn-block',
+            onClick: this.handleAddEntry
+          },
           dom.span(
             {
               className: 'glyphicon glyphicon-plus',
