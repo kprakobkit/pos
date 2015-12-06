@@ -42,10 +42,10 @@ describe('Master Items', () => {
 
   it('adds the selected item and comment', () => {
     const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry');
-    const selectItems = findRenderedDOMComponentWithClass(component, 'select-items');
+    const selectItem = findRenderedDOMComponentWithClass(component, 'select-item');
     const addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
 
-    Simulate.change(selectItems, { target: { value: burger.id } });
+    Simulate.change(selectItem, { target: { value: burger.id } });
     Simulate.change(addCommentFld, { target: { value: 'no meat' } });
     Simulate.click(addEntry);
 
@@ -67,9 +67,9 @@ describe('Master Items', () => {
   it('calls the handle submit prop with entries', () => {
     const submitOrder = findRenderedDOMComponentWithClass(component, 'submit-order');
     const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry');
-    const selectItems = findRenderedDOMComponentWithClass(component, 'select-items');
+    const selectItem = findRenderedDOMComponentWithClass(component, 'select-item');
 
-    Simulate.change(selectItems, { target: { value: burger.id } });
+    Simulate.change(selectItem, { target: { value: burger.id } });
     Simulate.click(addEntry);
     Simulate.click(addEntry);
     Simulate.click(submitOrder);
