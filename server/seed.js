@@ -34,9 +34,9 @@ function removeData() {
   return Promise.all(removeCollectionsPromise);
 }
 
-function createItem(name, price, category) {
+function createItem(type, name, price, category) {
   return new Promise((resolve, reject) => {
-    Item({ name, price, category }).save((err, result) => {
+    Item({ type, name, price, category }).save((err, result) => {
       if(err) {
         console.error(`Error creating item ${name}. ${err}`);
         reject(err);
@@ -69,8 +69,8 @@ function createItems() {
   return read('./server/items.csv', 'utf8').then((rawItems) => {
     const rows = rawItems.split('\n').slice(0, -1);
     const itemsPromise = rows.map((row) => {
-      const [name, price, category] = row.split(',');
-      return createItem(name, parseInt(price), category);
+      const [type, name, price, category] = row.split(',');
+      return createItem(type, name, parseInt(price), category);
     });
     return Promise.all(itemsPromise);
   })
