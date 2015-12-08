@@ -21,6 +21,14 @@ class ProcessingOrder extends Component {
       .reduce((sum, entry) => sum + entry.price, 0);
   }
 
+  tax() {
+    return this.subtotal() * constants.TAX_RATE;
+  }
+
+  total() {
+    return this.subtotal() + this.tax();
+  }
+
   renderEntry(entry, i) {
     return entry.status !== constants.CANCELED ?
       Entry(
@@ -47,6 +55,18 @@ class ProcessingOrder extends Component {
               dom.td(null, dom.h2(null, 'Subtotal')),
               dom.td(),
               dom.td({ className: 'text-right' }, dom.h2(null, $.format(this.subtotal())))
+            ),
+            dom.tr(
+              { className: 'order-tax' },
+              dom.td(null, dom.h2(null, 'Tax')),
+              dom.td(),
+              dom.td({ className: 'text-right' }, dom.h2(null, $.format(this.tax())))
+            ),
+            dom.tr(
+              { className: 'order-total' },
+              dom.td(null, dom.h2(null, 'Total')),
+              dom.td(),
+              dom.td({ className: 'text-right' }, dom.h2(null, $.format(this.total())))
             )
           )
         ),
