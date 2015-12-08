@@ -28,9 +28,12 @@ class OpenEntryQueue extends Component {
   }
 
   getOpenEntries() {
+    const isOpen = _.pathEq(['entry', 'status'], constants.OPEN);
+    const filterPredicates = [isOpen].concat(this.props.filterPredicate);
+
     return _.pipe(
       _.chain(toOpenEntries),
-      _.filter(this.props.filterPredicate),
+      _.filter(_.allPass(filterPredicates)),
       _.sortBy(_.prop('createdAt')),
       _.take(this.props.displayMax)
     )(this.props.orders);

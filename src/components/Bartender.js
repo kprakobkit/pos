@@ -20,14 +20,13 @@ class Bartender extends Component {
   }
 
   render() {
-    const isOpen = _.pathEq(['entry', 'status'], constants.OPEN);
     const isDrink = _.pathEq(['entry', 'type'], constants.DRINK);
 
     return OpenEntryQueue({
       orders: this.props.orders,
       displayMax: 6,
       changeEntryStatus: this.props.changeEntryStatus,
-      filterPredicate: _.allPass([isOpen, isDrink])
+      filterPredicate: isDrink
     });
   }
 }

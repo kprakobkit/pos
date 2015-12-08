@@ -27,9 +27,8 @@ function setup({ orders, displayMax } = {}) {
   const order1 = Generator.order().id('order1').entries(entries).tableNumber('14').build();
   const order2 = Generator.order().id('order2').entries(entries).tableNumber('15').build();
   const defaultOrders = [order1, order2];
-  const isOpen = _.pathEq(['entry', 'status'], constants.OPEN);
   const isFood = _.pathEq(['entry', 'type'], constants.FOOD);
-  const component = renderIntoDocument(OpenEntryQueue({ orders: orders || defaultOrders, loadOrders, changeEntryStatus, displayMax, filterPredicate: _.allPass([isOpen, isFood]) }));
+  const component = renderIntoDocument(OpenEntryQueue({ orders: orders || defaultOrders, loadOrders, changeEntryStatus, displayMax, filterPredicate: isFood }));
 
   return {
     openEntries: scryRenderedDOMComponentsWithClass(component, 'open-entry'),
