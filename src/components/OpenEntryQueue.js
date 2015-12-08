@@ -28,12 +28,9 @@ class OpenEntryQueue extends Component {
   }
 
   getOpenEntries() {
-    const isOpen = _.pathEq(['entry', 'status'], constants.OPEN);
-    const isFood = _.pathEq(['entry', 'type'], constants.FOOD);
-
     return _.pipe(
       _.chain(toOpenEntries),
-      _.filter(_.allPass([isOpen, isFood])),
+      _.filter(this.props.filterPredicate),
       _.sortBy(_.prop('createdAt')),
       _.take(this.props.displayMax)
     )(this.props.orders);
@@ -94,7 +91,9 @@ OpenEntryQueue.propTypes = {
 };
 
 OpenEntryQueue.defaultProps = {
-  orders: []
+  orders: [],
+  filterPredicate: () => { return true; },
+  displayMax: 6
 };
 
 export default OpenEntryQueue;
