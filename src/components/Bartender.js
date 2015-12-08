@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import actions from '../action_creators';
 import constants from '../constants';
 import moment from 'moment';
-import OpenEntryQueueContainer from './OpenEntryQueue';
+import OpenEntryQueueComponent from './OpenEntryQueue';
 import _ from 'ramda';
 
-const OpenEntryQueue = createFactory(OpenEntryQueueContainer);
+const OpenEntryQueue = createFactory(OpenEntryQueueComponent);
 
 function mapStateToProps(state) {
   return {
