@@ -20,10 +20,14 @@ class Chef extends Component {
   }
 
   render() {
+    const isOpen = _.pathEq(['entry', 'status'], constants.OPEN);
+    const isFood = _.pathEq(['entry', 'type'], constants.FOOD);
+
     return OpenEntryQueue({
       orders: this.props.orders,
       displayMax: 6,
-      changeEntryStatus: this.props.changeEntryStatus
+      changeEntryStatus: this.props.changeEntryStatus,
+      filterPredicate: _.allPass([isOpen, isFood])
     });
   }
 }
