@@ -22,7 +22,7 @@ class ProcessingOrder extends Component {
   }
 
   tax() {
-    return this.subtotal() * constants.TAX_RATE;
+    return Math.round(this.subtotal() * constants.TAX_RATE);
   }
 
   total() {
