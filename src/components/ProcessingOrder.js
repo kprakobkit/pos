@@ -72,7 +72,7 @@ class ProcessingOrder extends Component {
         ),
         Payment(
           {
-            startingBalance: this.subtotal(),
+            startingBalance: this.total(),
             transaction: this.props.order.transaction,
             orderStatus: this.props.order.status,
             setClosed: this.props.setClosed,
