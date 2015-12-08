@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import actions from '../action_creators';
 import constants from '../constants';
 import moment from 'moment';
-import _ from 'underscore';
+import _ from 'ramda';
 
 const displayMax = 6;
 
@@ -35,10 +35,12 @@ class Chef extends Component {
   }
 
   getOpenEntries() {
-    const allEntries = this.props.orders.reduce((entries, order) => entries.concat(toOpenEntries(order)), []);
-    const sortedOpenEntries = _.sortBy(allEntries.filter(({ entry }) => entry.status === constants.OPEN), 'createdAt');
-
-    return sortedOpenEntries.slice(0, displayMax);
+    return _.pipe(
+      _.chain(toOpenEntries),
+      _.filter(_.pathEq(['entry', 'status'], constants.OPEN)),
+      _.sortBy(_.prop('createdAt')),
+      _.take(displayMax)
+    )(this.props.orders);
   }
 
   componentWillMount() {

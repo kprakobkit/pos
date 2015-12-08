@@ -4,7 +4,7 @@ import constants  from '../src/constants';
 import Item from './item';
 import Entry from './entry';
 import Transaction from './transaction';
-import _ from 'underscore';
+import _ from 'ramda';
 import faker from 'faker';
 
 const orderSchema = new Schema({
@@ -17,7 +17,7 @@ const orderSchema = new Schema({
 
 orderSchema.statics.getOrders = function() {
   return this.find()
-    .then((orders) => orders.map(toOrder))
+    .then(_.map(toOrder))
     .then(getEntries)
     .then(getTransactions);
 }
@@ -25,18 +25,11 @@ orderSchema.statics.getOrders = function() {
 orderSchema.statics.updateEntry = function(orderId, entryIndex, update) {
   return this.findOne({ id: orderId })
     .then((order) => {
-      const entries = order.entries;
-      const entry = entries[entryIndex];
-      const updatedEntries = [
-        ...entries.slice(0, entryIndex),
-        _.extend(entry, update),
-        ...entries.slice(entryIndex + 1)
-      ];
-
-      order.entries = updatedEntries;
+      const entries = _.map(_.invoker(0, 'toObject'), order.entries);
+      order.entries = _.adjust(_.flip(_.merge)(update), entryIndex, entries);
       return order.save();
     })
-    .then((order) => populateEntries(toOrder(order)));
+    .then(_.compose(populateEntries, toOrder));
 }
 
 orderSchema.statics.addOrder = function(tableNumber, entries) {
@@ -49,7 +42,7 @@ orderSchema.statics.addOrder = function(tableNumber, entries) {
     }))
   })
   .save()
-  .then((order) => populateEntries(toOrder(order)));
+  .then(_.compose(populateEntries, toOrder));
 }
 
 orderSchema.statics.addEntries = function(orderId, newEntries) {
@@ -64,7 +57,7 @@ orderSchema.statics.addEntries = function(orderId, newEntries) {
       order.entries = entries.concat(updatedEntries);
       return order.save();
     })
-    .then((order) => populateEntries(toOrder(order)));
+    .then(_.compose(populateEntries, toOrder));
 }
 
 orderSchema.statics.updateStatus = function(orderId, status) {
@@ -82,7 +75,7 @@ orderSchema.statics.setClosed = function(orderId, transactionId) {
     { status, transaction },
     { new: true }
   )
-    .then((order) => populateEntries(toOrder(order)))
+    .then(_.compose(populateEntries, toOrder))
     .then(populateTransaction);
 }
 

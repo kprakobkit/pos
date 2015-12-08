@@ -1,5 +1,5 @@
 import { Component, PropTypes, DOM as dom } from 'react';
-import _ from 'underscore';
+import _ from 'ramda';
 
 class MasterItemsSelect extends Component {
   constructor(props) {
@@ -14,16 +14,16 @@ class MasterItemsSelect extends Component {
   };
 
   getCategories(masterItems) {
-    return _.uniq(masterItems.map((item) => item.category));
+    return _.uniq(_.pluck('category', masterItems));
   }
 
   filterItems(category) {
-    return this.props.masterItems.filter((item) => item.category === category);
+    return _.filter(_.propEq('category', category), this.props.masterItems);
   }
 
   handleChange(e) {
     const itemId = e.target.value;
-    const selectedItem = _.find(this.props.masterItems, (item) => item.id === itemId);
+    const selectedItem = _.find(_.propEq('id', itemId), this.props.masterItems);
     this.props.onSelectMasterItem(selectedItem);
     this.setState({ selectedItemId: selectedItem.id });
   }

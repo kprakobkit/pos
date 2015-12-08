@@ -1,6 +1,5 @@
 import { Component, PropTypes, DOM as dom } from 'react';
 import constants from '../../src/constants';
-import _ from 'underscore';
 
 class CloseOrderBtn extends Component {
   render() {
