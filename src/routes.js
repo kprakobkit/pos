@@ -6,6 +6,7 @@ import { OrdersContainer } from './components/Orders';
 import { OrderDetailsContainer } from './components/OrderDetails';
 import { NewOrderContainer } from './components/NewOrder';
 import { ChefContainer } from './components/Chef';
+import { BartenderContainer } from './components/Bartender';
 
 const Route = React.createFactory(RouteComponent);
 
@@ -15,5 +16,6 @@ export default Route(
   Route({ path: '/orders/:id', component: OrderDetailsContainer }),
   Route({ path: '/orders', component: OrdersContainer }),
   Route({ path: '/chef', component: ChefContainer }),
+  Route({ path: '/bartender', component: BartenderContainer }),
   Route({ path: '/', component: Home })
 );
