@@ -16,7 +16,7 @@ const {
 const ProcessingOrder = React.createFactory(ProcessingOrderComponent);
 
 describe('ProcessingOrder', () => {
-  it('renders subtotal for all delivered entries', () => {
+  it('renders subtotal, tax, and total for all delivered entries', () => {
     const price = 1025;
     const props = {
       order: {
@@ -30,8 +30,12 @@ describe('ProcessingOrder', () => {
     };
     const component = renderIntoDocument(ProcessingOrder(props));
     const subtotal = findRenderedDOMComponentWithClass(component, 'order-subtotal');
+    const tax = findRenderedDOMComponentWithClass(component, 'order-tax');
+    const total = findRenderedDOMComponentWithClass(component, 'order-total');
 
     expect(subtotal.textContent).to.contain($.format(price));
+    expect(tax.textContent).to.contain($.format(price * constants.TAX_RATE));
+    expect(total.textContent).to.contain($.format(price * (1 + constants.TAX_RATE)));
   });
 });
 
