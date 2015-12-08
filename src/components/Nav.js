@@ -11,7 +11,8 @@ class Nav extends Component {
         dom.ul(
           { className: 'nav nav-pills pull-right' },
           dom.li(null, Link({ to: '/orders', className: 'nav-orders-link' }, dom.h4(null, 'Orders'))),
-          dom.li(null, Link({ to: '/chef', className: 'nav-chef-link' }, dom.h4(null, 'Chef')))
+          dom.li(null, Link({ to: '/chef', className: 'nav-chef-link' }, dom.h4(null, 'Chef'))),
+          dom.li(null, Link({ to: '/bartender', className: 'nav-bartender-link' }, dom.h4(null, 'Bartender')))
         )
       )
     );
