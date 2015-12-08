@@ -6,8 +6,10 @@ class MasterItemsSelect extends Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeCategory = this.handleChangeCategory.bind(this);
+    const filteredItems = this.filterItems(this.props.masterItems[0].category);
     this.state = {
-      filteredItems: this.filterItems(this.props.masterItems[0].category)
+      filteredItems,
+      selectedItemId: filteredItems[0].id
     };
   };
 
@@ -23,14 +25,17 @@ class MasterItemsSelect extends Component {
     const itemId = e.target.value;
     const selectedItem = _.find(_.propEq('id', itemId), this.props.masterItems);
     this.props.onSelectMasterItem(selectedItem);
+    this.setState({ selectedItemId: selectedItem.id });
   }
 
   handleChangeCategory(e) {
     const selectedCategory = e.target.value;
     const filteredItems = this.filterItems(selectedCategory);
-
     this.props.onSelectMasterItem(filteredItems[0]);
-    this.setState({ filteredItems });
+    this.setState({
+      filteredItems,
+      selectedItemId: filteredItems[0].id
+    });
   }
 
   render() {
@@ -41,7 +46,7 @@ class MasterItemsSelect extends Component {
           { className: 'form-group' },
           dom.label(null, 'Category'),
           dom.select(
-            { className: 'categories form-control input-lg', onChange: this.handleChangeCategory },
+            { className: 'select-category form-control input-lg', onChange: this.handleChangeCategory },
             this.getCategories(this.props.masterItems).map((category, i) => {
               return dom.option({ className: 'category', value: category, key: i }, category);
             })
@@ -51,9 +56,9 @@ class MasterItemsSelect extends Component {
           { className: 'form-group' },
           dom.label(null, 'Item'),
           dom.select(
-            { className: 'select-items form-control input-lg', onChange: this.handleChange },
+            { className: 'select-item form-control input-lg', onChange: this.handleChange, value: this.state.selectedItemId },
             this.state.filteredItems.map((item, i) => {
-              return dom.option({ className: 'option', value: item.id, key: i }, item.name);
+              return dom.option({ className: 'item', value: item.id, key: i }, item.name);
             })
           )
         )

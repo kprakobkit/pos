@@ -18,7 +18,8 @@ function setup() {
   const burger = { id: '2', name: 'burger', category: 'Main' };
   const hoegarden = { id: '3', name: 'hoegarden', category: 'Beer' };
   const heineken = { id: '4', name: 'heineken', category: 'Beer' };
-  const masterItems = [food, burger, hoegarden, heineken];
+  const fries = { id: '5', name: 'fries', category: 'Appetizer' };
+  const masterItems = [food, burger, hoegarden, heineken, fries];
   const onSelectMasterItem = spy();
   const component = renderIntoDocument(MasterItemsSelect({ masterItems, onSelectMasterItem }));
 
@@ -26,17 +27,18 @@ function setup() {
     component,
     masterItems,
     onSelectMasterItem,
-    options: scryRenderedDOMComponentsWithClass(component, 'option'),
+    items: scryRenderedDOMComponentsWithClass(component, 'item'),
     categories: scryRenderedDOMComponentsWithClass(component, 'category'),
-    selectCategory: findRenderedDOMComponentWithClass(component, 'categories')
+    selectCategory: findRenderedDOMComponentWithClass(component, 'select-category'),
+    selectItem: findRenderedDOMComponentWithClass(component, 'select-item')
   };
 }
 
 describe('Master Items Select', () => {
   it('renders an option for items in the first category', () => {
-    const { options } = setup();
+    const { items } = setup();
 
-    expect(options.length).to.equal(1);
+    expect(items.length).to.equal(2);
   });
 
   it('renders the unique categories for the items', () => {
@@ -46,17 +48,26 @@ describe('Master Items Select', () => {
   });
 
   it('filters the option based on selected category', () => {
-    const { component, categories, selectCategory } = setup();
+    const { component, selectCategory } = setup();
     Simulate.change(selectCategory, { target: { value: 'Beer' } });
-    const filteredOptions = scryRenderedDOMComponentsWithClass(component, 'option');
+    const filteredItems = scryRenderedDOMComponentsWithClass(component, 'item');
 
-    expect(filteredOptions.length).to.equal(2);
-    expect(filteredOptions[0].text).to.equal('hoegarden');
-    expect(filteredOptions[1].text).to.equal('heineken');
+    expect(filteredItems.length).to.equal(2);
+    expect(filteredItems[0].text).to.equal('hoegarden');
+    expect(filteredItems[1].text).to.equal('heineken');
+  });
+
+  it('defaults to the first item after changing category', () => {
+    const { selectCategory, items, selectItem } = setup();
+    Simulate.change(selectCategory, { target: { value: 'Beer' } });
+    Simulate.change(selectItem, { target: { value: '4' } });
+    Simulate.change(selectCategory, { target: { value: 'Appetizer' } });
+
+    expect(items[0].selected).to.be.true;
   });
 
   it('calls onSelectMasterItem with the first item when selecting a category', () => {
-    const { component, selectCategory, onSelectMasterItem } = setup();
+    const { selectCategory, onSelectMasterItem } = setup();
     Simulate.change(selectCategory, { target: { value: 'Beer' } });
 
     expect(onSelectMasterItem).to.be.called();

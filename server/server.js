@@ -65,7 +65,7 @@ app.use((req, res) => {
         </head>
         <body>
           <div id="app">${componentHTML}</div>
-          <script type="application/javascript" src="bundle.js"></script>
+          <script type="application/javascript" src="/bundle.js"></script>
         </body>
       </html>
     `;

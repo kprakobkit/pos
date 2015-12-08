@@ -42,10 +42,10 @@ describe('Master Items', () => {
 
   it('adds the selected item and comment', () => {
     const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry');
-    const selectItems = findRenderedDOMComponentWithClass(component, 'select-items');
+    const selectItem = findRenderedDOMComponentWithClass(component, 'select-item');
     const addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
 
-    Simulate.change(selectItems, { target: { value: burger.id } });
+    Simulate.change(selectItem, { target: { value: burger.id } });
     Simulate.change(addCommentFld, { target: { value: 'no meat' } });
     Simulate.click(addEntry);
 
@@ -67,9 +67,9 @@ describe('Master Items', () => {
   it('calls the handle submit prop with entries', () => {
     const submitOrder = findRenderedDOMComponentWithClass(component, 'submit-order');
     const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry');
-    const selectItems = findRenderedDOMComponentWithClass(component, 'select-items');
+    const selectItem = findRenderedDOMComponentWithClass(component, 'select-item');
 
-    Simulate.change(selectItems, { target: { value: burger.id } });
+    Simulate.change(selectItem, { target: { value: burger.id } });
     Simulate.click(addEntry);
     Simulate.click(addEntry);
     Simulate.click(submitOrder);
@@ -100,5 +100,20 @@ describe('Master Items', () => {
 
     noEntriesMsg = scryRenderedDOMComponentsWithClass(component, 'no-entries');
     expect(noEntriesMsg.length).to.equal(0);
+  });
+
+  it('disables submit button when no entries', () => {
+    const submitButton = findRenderedDOMComponentWithClass(component, 'submit-order');
+
+    expect(submitButton.disabled).to.be.true;
+  });
+
+  it('enables submit button there is at least one entry', () => {
+    const submitButton = findRenderedDOMComponentWithClass(component, 'submit-order');
+    const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry');
+
+    Simulate.click(addEntry);
+
+    expect(submitButton.disabled).to.be.false;
   });
 });

@@ -30,6 +30,7 @@
     "chai-spies": "^0.7.1",
     "classnames": "^2.2.0",
     "css-loader": "^0.18.0",
+    "denodeify": "^1.2.1",
     "express": "^4.13.3",
     "faker": "^3.0.1",
     "history": "^1.13.0",

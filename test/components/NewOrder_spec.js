@@ -25,7 +25,7 @@ function setup() {
   return {
     component,
     addEntry: findRenderedDOMComponentWithClass(component, 'add-entry'),
-    selectItems: findRenderedDOMComponentWithClass(component, 'select-items'),
+    selectItem: findRenderedDOMComponentWithClass(component, 'select-item'),
     submitOrder: findRenderedDOMComponentWithClass(component, 'submit-order'),
     selectTableNumber: findRenderedDOMComponentWithClass(component, 'table-numbers'),
     addOrder,
@@ -36,8 +36,8 @@ function setup() {
 
 describe('New Order', () => {
   it('removes an item from an order', () => {
-    const { selectItems, component, addEntry, burger } = setup();
-    Simulate.change(selectItems, { target: { value: burger.id } });
+    const { selectItem, component, addEntry, burger } = setup();
+    Simulate.change(selectItem, { target: { value: burger.id } });
     Simulate.click(addEntry);
     const removeEntry = findRenderedDOMComponentWithClass(component, 'remove-entry');
     Simulate.click(removeEntry);
@@ -47,9 +47,9 @@ describe('New Order', () => {
   });
 
   it('adds an order on submit', () => {
-    const { selectItems, component, addEntry, submitOrder, addOrder, food, selectTableNumber } = setup();
+    const { selectItem, component, addEntry, submitOrder, addOrder, food, selectTableNumber } = setup();
     Simulate.change(selectTableNumber, { target: { value: 2 } });
-    Simulate.change(selectItems, { target: { value: food.id } });
+    Simulate.change(selectItem, { target: { value: food.id } });
     Simulate.click(addEntry);
     Simulate.click(submitOrder);
 
