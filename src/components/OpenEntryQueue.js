@@ -87,7 +87,9 @@ class OpenEntryQueue extends Component {
 }
 
 OpenEntryQueue.propTypes = {
-  orders: PropTypes.array.isRequired
+  orders: PropTypes.array.isRequired,
+  filterPredicate: PropTypes.func.isRequired,
+  changeEntryStatus: PropTypes.func.isRequired
 };
 
 OpenEntryQueue.defaultProps = {
