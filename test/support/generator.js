@@ -9,6 +9,12 @@ const orderStatuses = [
   constants.READY_FOR_BILL
 ];
 
+const entryTypes = [
+  constants.FOOD,
+  constants.DRINK,
+  constants.OTHER
+];
+
 function builderFromDefault(defaultObject) {
   let builder = {
     build: () => defaultObject
@@ -42,7 +48,8 @@ function entryBuilder() {
     price: 1050,
     comment: 'brown rice',
     status: _.sample(orderStatuses),
-    createdAt: moment(constants.now)
+    createdAt: moment(constants.now),
+    type: _.sample(entryTypes)
   };
 
   return builderFromDefault(defaultEntry);;

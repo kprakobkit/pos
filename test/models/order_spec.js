@@ -66,7 +66,8 @@ describe('Order', () => {
       return Item({
         name: 'Rice',
         price: 1000,
-        category: 'Side'
+        category: 'Side',
+        type: 'TYPE'
       }).save();
     });
 
@@ -79,6 +80,7 @@ describe('Order', () => {
         expect(order.entries[0].createdAt).to.exist;
         expect(order.entries[0].name).to.equal('Rice');
         expect(order.entries[0].category).to.equal('Side');
+        expect(order.entries[0].type).to.equal('TYPE');
       });
     });
   });

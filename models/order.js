@@ -88,7 +88,7 @@ function populateEntries(order) {
     Item.populate(order.entries, [{
       path: 'item_id',
       model: 'Item',
-      select: 'name category price -_id'
+      select: 'name category price type -_id'
     }], (err, res) => {
       if(err) {
         reject(err);
@@ -132,6 +132,7 @@ function toEntry({ status, comment, item_id, _id}) {
     name: item_id.name,
     price: item_id.price,
     category: item_id.category,
+    type: item_id.type,
     createdAt
   };
 }

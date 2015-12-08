@@ -35,9 +35,12 @@ class Chef extends Component {
   }
 
   getOpenEntries() {
+    const isOpen = _.pathEq(['entry', 'status'], constants.OPEN);
+    const isFood = _.pathEq(['entry', 'type'], constants.FOOD);
+
     return _.pipe(
       _.chain(toOpenEntries),
-      _.filter(_.pathEq(['entry', 'status'], constants.OPEN)),
+      _.filter(_.allPass([isOpen, isFood])),
       _.sortBy(_.prop('createdAt')),
       _.take(displayMax)
     )(this.props.orders);

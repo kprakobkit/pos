@@ -20,9 +20,10 @@ const changeEntryStatus = spy();
 function setup({ orders } = {}) {
   const Chef = React.createFactory(ChefComponent);
   const loadOrders = () => {};
-  const entry1 = Generator.entry().status(constants.CLOSED).build();
-  const entry2 = Generator.entry().status(constants.OPEN).build();
-  const entries = [entry1, entry2];
+  const entry1 = Generator.entry().type(constants.FOOD).status(constants.CLOSED).build();
+  const entry2 = Generator.entry().type(constants.FOOD).status(constants.OPEN).build();
+  const entry3 = Generator.entry().type(constants.DRINK).status(constants.OPEN).build();
+  const entries = [entry1, entry2, entry3];
   const order1 = Generator.order().id('order1').entries(entries).tableNumber('14').build();
   const order2 = Generator.order().id('order2').entries(entries).tableNumber('15').build();
   const defaultOrders = [order1, order2];
@@ -36,7 +37,7 @@ function setup({ orders } = {}) {
 }
 
 describe('Chef', () => {
-  it('should render open entries with the table number for all orders', () => {
+  it('should render open entries of type FOOD with the table number for all orders', () => {
     const { openEntries, entries } = setup();
 
     expect(openEntries.length).to.equal(2);
@@ -45,8 +46,8 @@ describe('Chef', () => {
   });
 
   it('displays entries in order that it was created', () => {
-    const entry1 = Generator.entry().name('after').createdAt(moment(constants.NOW).add(1, 'days')).status(constants.OPEN).build();
-    const entry2 = Generator.entry().name('before').createdAt(moment(constants.NOW)).status(constants.OPEN).build();
+    const entry1 = Generator.entry().type(constants.FOOD).name('after').createdAt(moment(constants.NOW).add(1, 'days')).status(constants.OPEN).build();
+    const entry2 = Generator.entry().type(constants.FOOD).name('before').createdAt(moment(constants.NOW)).status(constants.OPEN).build();
     const order1 = Generator.order().entries([entry1]).build();
     const order2 = Generator.order().entries([entry2]).build();
     const { openEntries } = setup({ orders: [order1, order2] });
@@ -58,7 +59,7 @@ describe('Chef', () => {
   it('should display the first six entries', () => {
     const size = _.range(3);
     const orders = _.map(size, () => {
-      const entries = _.map(size, () => Generator.entry().status(constants.OPEN).build());
+      const entries = _.map(size, () => Generator.entry().status(constants.OPEN).type(constants.FOOD).build());
       return Generator.order().entries(entries).build();
     });
     const { openEntries } = setup({ orders });
@@ -67,7 +68,7 @@ describe('Chef', () => {
   });
 
   describe('on clicking an entry', () => {
-    const entry = Generator.entry().status(constants.OPEN).build();
+    const entry = Generator.entry().type(constants.FOOD).status(constants.OPEN).build();
     const order = Generator.order().id('orderId').entries([entry]).build();
 
     it('should display confirmation when an entry is clicked', () => {
