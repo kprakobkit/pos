@@ -20,6 +20,9 @@
   ],
   "author": "",
   "license": "ISC",
+  "peerDependencies": {
+    "history": "1.13.x"
+  },
   "dependencies": {
     "accounting": "^0.4.1",
     "async": "^1.5.0",
@@ -33,7 +36,7 @@
     "denodeify": "^1.2.1",
     "express": "^4.13.3",
     "faker": "^3.0.1",
-    "history": "^1.13.0",
+    "history": "1.13.x",
     "iron-node": "^1.5.32",
     "jsdom": "^3.1.2",
     "mocha": "^2.3.3",

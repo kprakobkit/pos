@@ -11,9 +11,11 @@ describe('Nav', () => {
     const component = renderIntoDocument(Nav());
     const ordersLink = findRenderedDOMComponentWithClass(component, 'nav-orders-link');
     const chefLink = findRenderedDOMComponentWithClass(component, 'nav-chef-link');
+    const bartenderLink = findRenderedDOMComponentWithClass(component, 'nav-bartender-link');
 
     expect(ordersLink.textContent).to.equal('Orders');
     expect(chefLink.textContent).to.equal('Chef');
+    expect(bartenderLink.textContent).to.equal('Bartender');
   });
 });
 

@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import actions from '../action_creators';
 import constants from '../constants';
 import moment from 'moment';
-import OpenEntryQueueContainer from './OpenEntryQueue';
+import OpenEntryQueueComponent from './OpenEntryQueue';
 import _ from 'ramda';
 
-const OpenEntryQueue = createFactory(OpenEntryQueueContainer);
+const OpenEntryQueue = createFactory(OpenEntryQueueComponent);
 
 function mapStateToProps(state) {
   return {
@@ -14,33 +14,33 @@ function mapStateToProps(state) {
   };
 }
 
-class Chef extends Component {
+class Bartender extends Component {
   componentWillMount() {
     this.props.loadOrders();
   }
 
   render() {
-    const isFood = _.pathEq(['entry', 'type'], constants.FOOD);
+    const isDrink = _.pathEq(['entry', 'type'], constants.DRINK);
 
     return OpenEntryQueue({
       orders: this.props.orders,
       displayMax: 6,
       changeEntryStatus: this.props.changeEntryStatus,
-      filterPredicate: isFood
+      filterPredicate: isDrink
     });
   }
 }
 
-Chef.propTypes = {
+Bartender.propTypes = {
   orders: PropTypes.array.isRequired
 };
 
-Chef.defaultProps = {
+Bartender.defaultProps = {
   orders: []
 };
 
-export default Chef;
-export const ChefContainer = connect(
+export default Bartender;
+export const BartenderContainer = connect(
   mapStateToProps,
   actions
-)(Chef);
+)(Bartender);
