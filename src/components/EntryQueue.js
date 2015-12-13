@@ -29,7 +29,8 @@ class EntryQueue extends Component {
 
   getEntries() {
     const isOpen = _.pathEq(['entry', 'status'], constants.OPEN);
-    const filterPredicates = [isOpen].concat(this.props.filterPredicate);
+    const isCanceled = _.pathEq(['entry', 'status'], constants.CANCELED);
+    const filterPredicates = [_.either(isCanceled, isOpen)].concat(this.props.filterPredicate);
 
     return _.pipe(
       _.chain(toEntries),
