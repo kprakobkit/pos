@@ -9,17 +9,6 @@ FOOD,Pepperoni Pizza - Personal Size,600,Appetizer
 FOOD,Shrimp and Sesame Toast,600,Appetizer
 FOOD,Chicken Wing(5),600,Appetizer
 FOOD,Spinach and Artichoke Wrap(5),600,Appetizer
-FOOD,Garlic Edamame,300,Happy Hour
-FOOD,French Fries,400,Happy Hour
-FOOD,Sweet Potato Fries,400,Happy Hour
-FOOD,Sweet Potato Fries with Garlic,500,Happy Hour
-FOOD,Spring Rolls(2),450,Happy Hour
-FOOD,Fried Calamari,450,Happy Hour
-FOOD,Imitation Crab Sticks,450,Happy Hour
-FOOD,Pepperoni Pizza - Personal Size,450,Happy Hour
-FOOD,Shrimp and Sesame Toast,450,Happy Hour
-FOOD,Chicken Wing(5),450,Happy Hour
-FOOD,Spinach and Artichoke Wrap(5),450,Happy Hour
 FOOD,Cold Cuts Cheese and Crackers,900,Entree
 FOOD,Soft Shell Crab in Garlic Butter,900,Entree
 FOOD,Double Garlic Linguini,700,Entree
@@ -105,47 +94,6 @@ DRINK,Sterling 2005,85,Wine
 DRINK,Sweet pickles,600,Drink
 DRINK,Cocktail onion,600,Drink
 DRINK,Manzanilla Olives ,600,Drink
-DRINK,Monster Energy,600,Drinks – Happy Hour
-DRINK,Asahi,500,Drinks – Happy Hour
-DRINK,Beck's,400,Drinks – Happy Hour
-DRINK,Blue Moon,450,Drinks – Happy Hour
-DRINK,Corona Ex,300,Drinks – Happy Hour
-DRINK,Corona Light,300,Drinks – Happy Hour
-DRINK,Gordon Biersch,400,Drinks – Happy Hour
-DRINK,Guinness,450,Drinks – Happy Hour
-DRINK,Guinness Blonde,450,Drinks – Happy Hour
-DRINK,Guinness Extra Stout,450,Drinks – Happy Hour
-DRINK,Heineken,300,Drinks – Happy Hour
-DRINK,Heineken light,300,Drinks – Happy Hour
-DRINK,Lagunitas IPA,500,Drinks – Happy Hour
-DRINK,Pale Ale,400,Drinks – Happy Hour
-DRINK,Samuel Adams,400,Drinks – Happy Hour
-DRINK,Samuel Adams IPA,500,Drinks – Happy Hour
-DRINK,Sapporo,500,Drinks – Happy Hour
-DRINK,Stella Artois,400,Drinks – Happy Hour
-DRINK,Tsing Tao,500,Drinks – Happy Hour
-DRINK,Budweiser,300,Drinks – Happy Hour
-DRINK,Coors,300,Drinks – Happy Hour
-DRINK,Gekkeikan – S,700,Drinks – Happy Hour
-DRINK,O zeki – S,700,Drinks – Happy Hour
-DRINK,Sho Chiku Bai – S,700,Drinks – Happy Hour
-DRINK,Yaegaki – S,700,Drinks – Happy Hour
-DRINK,Gekkeikan – L,900,Drinks – Happy Hour
-DRINK,O zeki – L,900,Drinks – Happy Hour
-DRINK,Sho Chiku Bai – L,900,Drinks – Happy Hour
-DRINK,Yaegaki – L,900,Drinks – Happy Hour
-DRINK,Cameron Hughes /lot 467 – Glass,600,Drinks – Happy Hour
-DRINK,Mobius(Sonoma County) – Glass,600,Drinks – Happy Hour
-DRINK,Old oaks. (Sonoma County) – Glass,600,Drinks – Happy Hour
-DRINK,Ravens (Sonoma County) – Glass,600,Drinks – Happy Hour
-DRINK,Unruly – Glass,600,Drinks – Happy Hour
-DRINK,Old Oaks – Glass,600,Drinks – Happy Hour
-DRINK,Cameron Hughes /lot 467 – Bottle,2800,Drinks – Happy Hour
-DRINK,Mobius(Sonoma County) – Bottle,2800,Drinks – Happy Hour
-DRINK,Old oaks. (Sonoma County) – Bottle,2800,Drinks – Happy Hour
-DRINK,Ravens (Sonoma County) – Bottle,2800,Drinks – Happy Hour
-DRINK,Unruly – Bottle,2800,Drinks – Happy Hour
-DRINK,Old Oaks – Bottle,2800,Drinks – Happy Hour
 DRINK,Asahi,650,Beer
 DRINK,Beck's,550,Beer
 DRINK,Blue Moon,600,Beer
