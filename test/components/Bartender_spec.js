@@ -27,15 +27,14 @@ function setup() {
   const component = renderIntoDocument(Bartender({ orders, loadOrders, changeEntryStatus }));
 
   return {
-    openEntries: scryRenderedDOMComponentsWithClass(component, 'open-entry'),
-    entries
+    entries: scryRenderedDOMComponentsWithClass(component, 'entry')
   };
 }
 
 describe('Bartender', () => {
-  it('should render open entries of type DRINK', () => {
-    const { openEntries, entries } = setup();
+  it('should render entries of type DRINK', () => {
+    const { entries } = setup();
 
-    expect(openEntries.length).to.equal(1);
+    expect(entries.length).to.equal(1);
   });
 });

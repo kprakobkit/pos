@@ -27,15 +27,14 @@ function setup() {
   const component = renderIntoDocument(Chef({ orders, loadOrders, changeEntryStatus }));
 
   return {
-    openEntries: scryRenderedDOMComponentsWithClass(component, 'open-entry'),
-    entries
+    entries: scryRenderedDOMComponentsWithClass(component, 'entry')
   };
 }
 
 describe('Chef', () => {
   it('should render open entries of type FOOD', () => {
-    const { openEntries, entries } = setup();
+    const { entries } = setup();
 
-    expect(openEntries.length).to.equal(1);
+    expect(entries.length).to.equal(1);
   });
 });

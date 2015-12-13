@@ -6,7 +6,7 @@ import moment from 'moment';
 import _ from 'ramda';
 
 
-function toOpenEntries({ id, entries, tableNumber }) {
+function toEntries({ id, entries, tableNumber }) {
   return entries.map((entry, entryIndex) => ({
     orderId: id,
     entry,
@@ -16,23 +16,23 @@ function toOpenEntries({ id, entries, tableNumber }) {
   }));
 }
 
-class OpenEntryQueue extends Component {
+class EntryQueue extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.unselectEntry = this.unselectEntry.bind(this);
-    this.renderOpenEntry = this.renderOpenEntry.bind(this);
+    this.renderEntry = this.renderEntry.bind(this);
     this.state = {
       selectedEntry: undefined
     };
   }
 
-  getOpenEntries() {
+  getEntries() {
     const isOpen = _.pathEq(['entry', 'status'], constants.OPEN);
     const filterPredicates = [isOpen].concat(this.props.filterPredicate);
 
     return _.pipe(
-      _.chain(toOpenEntries),
+      _.chain(toEntries),
       _.filter(_.allPass(filterPredicates)),
       _.sortBy(_.prop('createdAt')),
       _.take(this.props.displayMax)
@@ -49,27 +49,27 @@ class OpenEntryQueue extends Component {
     this.setState({ selectedEntry: undefined });
   }
 
-  getOpenEntryClass(openEntry) {
-    const classes =  'open-entry col-md-4 col-sm-4 col-xs-4 list-group-item text-center';
+  getEntryClass(entry) {
+    const classes =  'entry col-md-4 col-sm-4 col-xs-4 list-group-item text-center';
 
-    if(JSON.stringify(openEntry) === JSON.stringify(this.state.selectedEntry)) {
+    if(JSON.stringify(entry) === JSON.stringify(this.state.selectedEntry)) {
       return classes + ' list-group-item-success';
     } else {
       return classes;
     }
   }
 
-  renderOpenEntry(openEntry, i) {
+  renderEntry(entry, i) {
     return dom.div(
       {
         key: i,
-        className: this.getOpenEntryClass(openEntry),
-        onClick: () => { this.setState({ selectedEntry: openEntry }); }
+        className: this.getEntryClass(entry),
+        onClick: () => { this.setState({ selectedEntry: entry }); }
       },
-      dom.h2(null, openEntry.entry.name),
-      dom.h3(null, `Table#: ${ openEntry.tableNumber }`),
-      dom.p({ className: 'lead' }, openEntry.createdAt.fromNow()),
-      dom.p({ className: 'lead' }, openEntry.entry.comment)
+      dom.h2(null, entry.entry.name),
+      dom.h3(null, `Table#: ${ entry.tableNumber }`),
+      dom.p({ className: 'lead' }, entry.createdAt.fromNow()),
+      dom.p({ className: 'lead' }, entry.entry.comment)
     );
   }
 
@@ -77,8 +77,8 @@ class OpenEntryQueue extends Component {
     return dom.div(
       null,
       dom.div(
-        { className: 'row open-entries list-group' },
-        this.getOpenEntries().map(this.renderOpenEntry),
+        { className: 'row entries list-group' },
+        this.getEntries().map(this.renderEntry),
       ),
       this.state.selectedEntry ? dom.div(
         { className: 'confirmation' },
@@ -89,16 +89,16 @@ class OpenEntryQueue extends Component {
   }
 }
 
-OpenEntryQueue.propTypes = {
+EntryQueue.propTypes = {
   orders: PropTypes.array.isRequired,
   filterPredicate: PropTypes.func.isRequired,
   changeEntryStatus: PropTypes.func.isRequired
 };
 
-OpenEntryQueue.defaultProps = {
+EntryQueue.defaultProps = {
   orders: [],
   filterPredicate: () => { return true; },
   displayMax: 6
 };
 
-export default OpenEntryQueue;
+export default EntryQueue;
