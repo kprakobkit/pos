@@ -13,7 +13,7 @@ class Payment extends Component {
     return (
       dom.div(
         { className: 'payment-component' },
-        dom.h2({ className: 'payment-component-heading' }, 'Amounts Paid'),
+        dom.h2({ className: 'payment-component-heading' }, 'Payment Information'),
         this.props.orderStatus === constants.READY_FOR_BILL ?
           PaymentForm(_.extend({}, this.props.transaction, {
             setClosed: this.props.setClosed,
