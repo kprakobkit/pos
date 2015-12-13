@@ -20,6 +20,7 @@ class EntryQueue extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
     this.unselectEntry = this.unselectEntry.bind(this);
     this.renderEntry = this.renderEntry.bind(this);
     this.state = {
@@ -44,6 +45,12 @@ class EntryQueue extends Component {
     const { orderId, entryIndex } = this.state.selectedEntry;
     this.unselectEntry();
     this.props.changeEntryStatus(orderId, entryIndex, constants.COMPLETED);
+  }
+
+  handleRemove() {
+    const { orderId, entryIndex } = this.state.selectedEntry;
+    this.unselectEntry();
+    this.props.changeEntryStatus(orderId, entryIndex, constants.CLOSED);
   }
 
   unselectEntry() {
@@ -75,6 +82,31 @@ class EntryQueue extends Component {
     );
   }
 
+  renderConfirmation() {
+    return dom.div(
+      { className: 'confirmation' },
+      dom.button({ className: 'submit btn btn-primary btn-lg btn-block', onClick: this.handleSubmit }, 'Mark as completed'),
+      dom.button({ className: 'cancel btn btn-danger btn-lg btn-block', onClick: this.unselectEntry }, 'Cancel')
+    );
+  }
+
+  renderRemoveEntry() {
+    return dom.div(
+      { className: 'confirm-remove' },
+      dom.button({ className: 'remove-canceled-entry btn btn-danger btn-lg btn-block', onClick: this.handleRemove }, 'Remove Entry'),
+    );
+  }
+
+  renderActionButtons() {
+    const entryStatus = this.state.selectedEntry && this.state.selectedEntry.entry.status;
+
+    if(entryStatus === constants.OPEN) {
+      return this.renderConfirmation();
+    } else if (entryStatus === constants.CANCELED) {
+      return this.renderRemoveEntry();
+    }
+  }
+
   render() {
     return dom.div(
       null,
@@ -82,11 +114,7 @@ class EntryQueue extends Component {
         { className: 'row entries list-group' },
         this.getEntries().map(this.renderEntry),
       ),
-      this.state.selectedEntry ? dom.div(
-        { className: 'confirmation' },
-        dom.button({ className: 'submit btn btn-primary btn-lg btn-block', onClick: this.handleSubmit }, 'Mark as completed'),
-        dom.button({ className: 'cancel btn btn-danger btn-lg btn-block', onClick: this.unselectEntry }, 'Cancel')
-      ) : null
+      this.renderActionButtons()
     );
   }
 }

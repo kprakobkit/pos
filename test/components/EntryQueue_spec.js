@@ -15,7 +15,6 @@ const {
   Simulate
 } = TestUtils;
 
-const changeEntryStatus = spy();
 
 function setup({ orders, displayMax } = {}) {
   const EntryQueue = React.createFactory(EntryQueueComponent);
@@ -28,11 +27,13 @@ function setup({ orders, displayMax } = {}) {
   const order2 = Generator.order().id('order2').entries(entries).tableNumber('15').build();
   const defaultOrders = [order1, order2];
   const isFood = _.pathEq(['entry', 'type'], constants.FOOD);
+  const changeEntryStatus = spy();
   const component = renderIntoDocument(EntryQueue({ orders: orders || defaultOrders, loadOrders, changeEntryStatus, displayMax, filterPredicate: isFood }));
 
   return {
     entries: scryRenderedDOMComponentsWithClass(component, 'entry'),
-    component
+    component,
+    changeEntryStatus
   };
 }
 
@@ -77,7 +78,31 @@ describe('EntryQueue', () => {
     expect(entries[0].textContent).to.contain(constants.CANCELED);
   });
 
-  describe('on clicking an entry', () => {
+  describe('on clicking a canceled entry', () => {
+    const entry = Generator.entry().status(constants.CANCELED).type(constants.FOOD).build();
+    const order = Generator.order().entries([entry]).build();
+
+    it('show remove button', () => {
+      const { entries, component } = setup({ orders: [order] });
+
+      Simulate.click(entries[0]);
+
+      const remove = findRenderedDOMComponentWithClass(component, 'confirm-remove');
+    });
+
+    it('calls handle click with the entry index, order id, and "CLOSED" status', () => {
+      const { entries, component, changeEntryStatus } = setup({ orders: [order] });
+
+      Simulate.click(entries[0]);
+      const remove = findRenderedDOMComponentWithClass(component, 'remove-canceled-entry');
+      Simulate.click(remove);
+
+      expect(changeEntryStatus).to.have.been.called();
+      expect(changeEntryStatus.__spy.calls[0][2]).to.equal(constants.CLOSED);
+    });
+  });
+
+  describe('on clicking an open entry', () => {
     const entry = Generator.entry().type(constants.FOOD).status(constants.OPEN).build();
     const order = Generator.order().id('orderId').entries([entry]).build();
 
@@ -112,7 +137,7 @@ describe('EntryQueue', () => {
     });
 
     it('calls handle click with the entry index, order id, and "COMPLETED" status', () => {
-      const { entries, component } = setup({ orders: [order] });
+      const { entries, component, changeEntryStatus } = setup({ orders: [order] });
 
       Simulate.click(entries[0]);
       const submit = findRenderedDOMComponentWithClass(component, 'submit');
