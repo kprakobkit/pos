@@ -86,7 +86,7 @@ describe('EntryQueue', () => {
 
       Simulate.click(entries[0]);
 
-      const comfirmation = findRenderedDOMComponentWithClass(component, 'confirmation');
+      const confirmation = findRenderedDOMComponentWithClass(component, 'confirmation');
     });
 
     it('should hide confirmation after submit', () => {
@@ -96,8 +96,8 @@ describe('EntryQueue', () => {
       const submit = findRenderedDOMComponentWithClass(component, 'submit');
       Simulate.click(submit);
 
-      const comfirmation = scryRenderedDOMComponentsWithClass(component, 'confirmation');
-      expect(comfirmation.length).to.equal(0);
+      const confirmation = scryRenderedDOMComponentsWithClass(component, 'confirmation');
+      expect(confirmation.length).to.equal(0);
     });
 
     it('should hide confirmation on cancel', () => {
@@ -107,8 +107,8 @@ describe('EntryQueue', () => {
       const cancel = findRenderedDOMComponentWithClass(component, 'cancel');
       Simulate.click(cancel);
 
-      const comfirmation = scryRenderedDOMComponentsWithClass(component, 'confirmation');
-      expect(comfirmation.length).to.equal(0);
+      const confirmation = scryRenderedDOMComponentsWithClass(component, 'confirmation');
+      expect(confirmation.length).to.equal(0);
     });
 
     it('calls handle click with the entry index, order id, and "COMPLETED" status', () => {
