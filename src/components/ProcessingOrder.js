@@ -2,7 +2,7 @@ import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import { connect } from 'react-redux';
 import constants from '../constants';
 import $ from '../money';
-import _ from 'underscore';
+import _ from 'ramda';
 import EntryComponent from './Entry';
 import PaymentComponent from './Payment';
 
@@ -30,9 +30,9 @@ class ProcessingOrder extends Component {
   }
 
   renderEntry(entry, i) {
-    return entry.status !== constants.CANCELED ?
+    return !_.contains(entry.status, [constants.CLOSED, constants.CANCELED]) ?
       Entry(
-        _.extend({}, entry, {
+        _.merge(entry, {
           key: i,
           index: i,
           ofOpenOrder: false

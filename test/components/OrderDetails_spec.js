@@ -64,7 +64,8 @@ describe('OrderDetails', () => {
     const entries = [
       { name: 'rice', price: 1050, comment: 'brown rice', status: 'OPEN' },
       { name: 'pho', price: 850, comment: 'extra meat', status: 'CANCELED' },
-      { name: 'egg', price: 150, comment: 'sunny side up', status: 'DELIVERED' }
+      { name: 'egg', price: 150, comment: 'sunny side up', status: 'DELIVERED' },
+      { name: 'soup', price: 150, comment: 'extra hot', status: 'CLOSED' }
     ];
     const orders = [Generator.order().id(1).entries(entries).status(constants.OPEN).build()];
     const { component } = setup({ orders });
