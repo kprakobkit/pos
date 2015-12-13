@@ -5,11 +5,11 @@ function format(amount) {
 }
 
 function cents(dollars) {
-  return accounting.toFixed(dollars * 100, 0);
+  return parseInt(accounting.toFixed(dollars * 100, 0));
 }
 
 function dollars(cents) {
-  return accounting.toFixed(cents / 100, 2);
+  return parseFloat(accounting.toFixed(cents / 100, 2));
 }
 
 export default {

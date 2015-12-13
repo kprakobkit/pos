@@ -1,7 +1,7 @@
 function labelForField(field) {
   return {
-    cash: 'Cash',
-    credit: 'Credit',
+    cash: 'Paid in Cash',
+    credit: 'Paid in Credit',
     tip: 'Tip in Credit'
   }[field];
 }

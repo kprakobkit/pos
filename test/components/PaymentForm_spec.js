@@ -24,8 +24,6 @@ function setup({ cash = 0, credit = 0, tip = 0 } = {}) {
 
   return {
     component,
-    balance: findRenderedDOMComponentWithClass(component, 'payment-balance-amount'),
-    cashInput: findRenderedDOMComponentWithClass(component, 'cash-amount-input'),
     creditInput: findRenderedDOMComponentWithClass(component, 'credit-amount-input'),
     tipInput: findRenderedDOMComponentWithClass(component, 'tip-amount-input'),
     startingBalance
@@ -35,39 +33,11 @@ function setup({ cash = 0, credit = 0, tip = 0 } = {}) {
 describe('PaymentForm', () => {
   const setClosed = () => {};
 
-  it('renders balance remaining after entered amounts', () => {
-    const { component, balance, cashInput, startingBalance } = setup();
-
-    expect(balance.textContent).to.contain($.format(startingBalance));
-
-    const amount = 5;
-    cashInput.value = amount;
-    Simulate.change(cashInput);
-
-    expect(balance.textContent).to.contain($.format(startingBalance - $.cents(amount)));
-  });
-
-  it('does not include credit tip amount when calculating remaining balance', () => {
-    const { component, balance, cashInput, tipInput, startingBalance } = setup();
-
-    expect(balance.textContent).to.contain($.format(startingBalance));
-
-    const amount = 5;
-    tipInput.value = amount;
-    Simulate.change(tipInput);
-
-    cashInput.value = 0;
-    Simulate.change(cashInput);
-
-    expect(balance.textContent).to.contain($.format(startingBalance));
-  });
-
   it('prefills input fields with zero if no existing transaction amounts', () => {
-    const { component, balance, cashInput, creditInput, tipInput } = setup();
+    const { component, creditInput, tipInput } = setup();
 
-    expect(cashInput.value).to.eq($.dollars(0));
-    expect(creditInput.value).to.eq($.dollars(0));
-    expect(tipInput.value).to.eq($.dollars(0));
+    expect(creditInput.attributes.placeholder.value).to.eq('0');
+    expect(tipInput.attributes.placeholder.value).to.eq('0');
   });
 
   it('prefills input fields with existing transaction amounts', () => {
@@ -75,11 +45,10 @@ describe('PaymentForm', () => {
     const credit = 2000;
     const tip = 500;
     const existing = { cash, credit, tip };
-    const { component, balance, cashInput, creditInput, tipInput, startingBalance } = setup(existing);
+    const { component, creditInput, tipInput, startingBalance } = setup(existing);
 
-    expect(cashInput.value).to.eq($.dollars(cash));
-    expect(creditInput.value).to.eq($.dollars(credit));
-    expect(tipInput.value).to.eq($.dollars(tip));
+    expect(creditInput.attributes.placeholder.value).to.eq($.dollars(credit).toString());
+    expect(tipInput.attributes.placeholder.value).to.eq($.dollars(tip).toString());
   });
 });
 
