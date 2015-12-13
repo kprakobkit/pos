@@ -20,7 +20,6 @@ class EntryQueue extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleRemove = this.handleRemove.bind(this);
     this.unselectEntry = this.unselectEntry.bind(this);
     this.renderEntry = this.renderEntry.bind(this);
     this.state = {
@@ -41,16 +40,10 @@ class EntryQueue extends Component {
     )(this.props.orders);
   }
 
-  handleSubmit() {
+  handleSubmit(status) {
     const { orderId, entryIndex } = this.state.selectedEntry;
     this.unselectEntry();
-    this.props.changeEntryStatus(orderId, entryIndex, constants.COMPLETED);
-  }
-
-  handleRemove() {
-    const { orderId, entryIndex } = this.state.selectedEntry;
-    this.unselectEntry();
-    this.props.changeEntryStatus(orderId, entryIndex, constants.CLOSED);
+    this.props.changeEntryStatus(orderId, entryIndex, status);
   }
 
   unselectEntry() {
@@ -85,7 +78,7 @@ class EntryQueue extends Component {
   renderConfirmation() {
     return dom.div(
       { className: 'confirmation' },
-      dom.button({ className: 'submit btn btn-primary btn-lg btn-block', onClick: this.handleSubmit }, 'Mark as completed'),
+      dom.button({ className: 'submit btn btn-primary btn-lg btn-block', onClick: this.handleSubmit.bind(null, constants.COMPLETED) }, 'Mark as completed'),
       dom.button({ className: 'cancel btn btn-danger btn-lg btn-block', onClick: this.unselectEntry }, 'Cancel')
     );
   }
@@ -93,7 +86,7 @@ class EntryQueue extends Component {
   renderRemoveEntry() {
     return dom.div(
       { className: 'confirm-remove' },
-      dom.button({ className: 'remove-canceled-entry btn btn-danger btn-lg btn-block', onClick: this.handleRemove }, 'Remove Entry'),
+      dom.button({ className: 'remove-canceled-entry btn btn-danger btn-lg btn-block', onClick: this.handleSubmit.bind(null, constants.CLOSED) }, 'Remove Entry'),
     );
   }
 
