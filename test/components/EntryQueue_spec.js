@@ -70,6 +70,13 @@ describe('EntryQueue', () => {
     expect(entries.length).to.equal(1);
   });
 
+  it('Displays the status when the entry is canceled', () => {
+    const entry = Generator.entry().status(constants.CANCELED).type(constants.FOOD).build();
+    const orders = [Generator.order().entries([entry]).build()];
+    const { entries } = setup({ orders });
+    expect(entries[0].textContent).to.contain(constants.CANCELED);
+  });
+
   describe('on clicking an entry', () => {
     const entry = Generator.entry().type(constants.FOOD).status(constants.OPEN).build();
     const order = Generator.order().id('orderId').entries([entry]).build();
