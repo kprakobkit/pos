@@ -34,30 +34,23 @@ function setup({ orders } = {}) {
     setClosed
   };
   const component = renderIntoDocument(OrderDetails(props));
-  const title = findRenderedDOMComponentWithClass(component, 'order-title');
+  const orderInfo = findRenderedDOMComponentWithClass(component, 'order-information');
 
   return {
     component,
-    title,
+    orderInfo,
     id,
     setOpen
   };
 }
 
 describe('OrderDetails', () => {
-  it('renders title with correct order number from params', () => {
-    const { title, id } = setup();
+  it('renders title order information', () => {
+    const { orderInfo, id } = setup();
 
-    expect(title.textContent).to.contain(id.toString());
-  });
-
-  it('renders the order status and table number', () => {
-    const { title, component } = setup();
-    const status = findRenderedDOMComponentWithClass(component, 'order-status');
-    const tableNumber = findRenderedDOMComponentWithClass(component, 'order-table-number');
-
-    expect(status.textContent).to.contain('OPEN');
-    expect(tableNumber.textContent).to.contain('14');
+    expect(orderInfo.textContent).to.contain(id.toString());
+    expect(orderInfo.textContent).to.contain('OPEN');
+    expect(orderInfo.textContent).to.contain('14');
   });
 
   it('renders the active order entries', () => {
