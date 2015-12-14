@@ -28,9 +28,8 @@ class MasterItemsSelect extends Component {
     this.setState({ selectedItemId: selectedItem.id });
   }
 
-  handleChangeCategory(e) {
-    const selectedCategory = e.target.value;
-    const filteredItems = this.filterItems(selectedCategory);
+  handleChangeCategory(category) {
+    const filteredItems = this.filterItems(category);
     this.props.onSelectMasterItem(filteredItems[0]);
     this.setState({
       filteredItems,
@@ -44,11 +43,10 @@ class MasterItemsSelect extends Component {
         null,
         dom.div(
           { className: 'form-group' },
-          dom.label(null, 'Category'),
-          dom.select(
-            { className: 'select-category form-control input-lg', onChange: this.handleChangeCategory },
+          dom.div(
+            { className: 'select-category' },
             this.getCategories(this.props.masterItems).map((category, i) => {
-              return dom.option({ className: 'category', value: category, key: i }, category);
+              return dom.button({ className: `category category-${category}`, key: i, onClick: this.handleChangeCategory.bind(null, category) }, category);
             })
           )
         ),

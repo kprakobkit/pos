@@ -49,7 +49,8 @@ describe('Master Items Select', () => {
 
   it('filters the option based on selected category', () => {
     const { component, selectCategory } = setup();
-    Simulate.change(selectCategory, { target: { value: 'Beer' } });
+    const selectBeer = findRenderedDOMComponentWithClass(component, 'category-Beer');
+    Simulate.click(selectBeer);
     const filteredItems = scryRenderedDOMComponentsWithClass(component, 'item');
 
     expect(filteredItems.length).to.equal(2);
@@ -67,8 +68,9 @@ describe('Master Items Select', () => {
   });
 
   it('calls onSelectMasterItem with the first item when selecting a category', () => {
-    const { selectCategory, onSelectMasterItem } = setup();
-    Simulate.change(selectCategory, { target: { value: 'Beer' } });
+    const { component, onSelectMasterItem } = setup();
+    const selectBeer = findRenderedDOMComponentWithClass(component, 'category-Beer');
+    Simulate.click(selectBeer);
 
     expect(onSelectMasterItem).to.be.called();
     expect(onSelectMasterItem.__spy.calls[0][0].name).to.equal('hoegarden');
