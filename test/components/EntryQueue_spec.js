@@ -2,7 +2,7 @@ import { expect, spy } from 'chai';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
-import OpenEntryQueueComponent from '../../src/components/OpenEntryQueue';
+import EntryQueueComponent from '../../src/components/EntryQueue';
 import Generator from '../support/generator';
 import constants from '../../src/constants';
 import _ from 'ramda';
@@ -15,10 +15,9 @@ const {
   Simulate
 } = TestUtils;
 
-const changeEntryStatus = spy();
 
 function setup({ orders, displayMax } = {}) {
-  const OpenEntryQueue = React.createFactory(OpenEntryQueueComponent);
+  const EntryQueue = React.createFactory(EntryQueueComponent);
   const loadOrders = () => {};
   const entry1 = Generator.entry().type(constants.FOOD).status(constants.CLOSED).build();
   const entry2 = Generator.entry().type(constants.FOOD).status(constants.OPEN).build();
@@ -28,27 +27,28 @@ function setup({ orders, displayMax } = {}) {
   const order2 = Generator.order().id('order2').entries(entries).tableNumber('15').build();
   const defaultOrders = [order1, order2];
   const isFood = _.pathEq(['entry', 'type'], constants.FOOD);
-  const component = renderIntoDocument(OpenEntryQueue({ orders: orders || defaultOrders, loadOrders, changeEntryStatus, displayMax, filterPredicate: isFood }));
+  const changeEntryStatus = spy();
+  const component = renderIntoDocument(EntryQueue({ orders: orders || defaultOrders, loadOrders, changeEntryStatus, displayMax, filterPredicate: isFood }));
 
   return {
-    openEntries: scryRenderedDOMComponentsWithClass(component, 'open-entry'),
-    entries,
-    component
+    entries: scryRenderedDOMComponentsWithClass(component, 'entry'),
+    component,
+    changeEntryStatus
   };
 }
 
-describe('OpenEntryQueue', () => {
+describe('EntryQueue', () => {
   it('should render entries by the filter predicate with the table number for all orders', () => {
-    const { openEntries, entries } = setup();
+    const { entries } = setup();
 
-    expect(openEntries.length).to.equal(2);
+    expect(entries.length).to.equal(2);
   });
 
   it('should render entries with the table number', () => {
-    const { openEntries } = setup();
+    const { entries } = setup();
 
-    expect(openEntries[0].textContent).to.contain('14');
-    expect(openEntries[1].textContent).to.contain('15');
+    expect(entries[0].textContent).to.contain('14');
+    expect(entries[1].textContent).to.contain('15');
   });
 
   it('displays entries in order that it was created', () => {
@@ -56,10 +56,10 @@ describe('OpenEntryQueue', () => {
     const entry2 = Generator.entry().type(constants.FOOD).name('before').createdAt(moment(constants.NOW)).status(constants.OPEN).build();
     const order1 = Generator.order().entries([entry1]).build();
     const order2 = Generator.order().entries([entry2]).build();
-    const { openEntries } = setup({ orders: [order1, order2] });
+    const { entries } = setup({ orders: [order1, order2] });
 
-    expect(openEntries[0].textContent).to.contain(entry2.name);
-    expect(openEntries[1].textContent).to.contain(entry1.name);
+    expect(entries[0].textContent).to.contain(entry2.name);
+    expect(entries[1].textContent).to.contain(entry1.name);
   });
 
 
@@ -67,48 +67,79 @@ describe('OpenEntryQueue', () => {
     const entry1 = Generator.entry().status(constants.OPEN).type(constants.FOOD).build();
     const entry2 = Generator.entry().status(constants.OPEN).type(constants.FOOD).build();
     const orders = [Generator.order().entries([entry1, entry2]).build()];
-    const { openEntries } = setup({ orders, displayMax: 1 });
-    expect(openEntries.length).to.equal(1);
+    const { entries } = setup({ orders, displayMax: 1 });
+    expect(entries.length).to.equal(1);
   });
 
-  describe('on clicking an entry', () => {
+  it('Displays the status when the entry is canceled', () => {
+    const entry = Generator.entry().status(constants.CANCELED).type(constants.FOOD).build();
+    const orders = [Generator.order().entries([entry]).build()];
+    const { entries } = setup({ orders });
+    expect(entries[0].textContent).to.contain(constants.CANCELED);
+  });
+
+  describe('on clicking a canceled entry', () => {
+    const entry = Generator.entry().status(constants.CANCELED).type(constants.FOOD).build();
+    const order = Generator.order().entries([entry]).build();
+
+    it('show remove button', () => {
+      const { entries, component } = setup({ orders: [order] });
+
+      Simulate.click(entries[0]);
+
+      const remove = findRenderedDOMComponentWithClass(component, 'confirm-remove');
+    });
+
+    it('calls handle click with the entry index, order id, and "CLOSED" status', () => {
+      const { entries, component, changeEntryStatus } = setup({ orders: [order] });
+
+      Simulate.click(entries[0]);
+      const remove = findRenderedDOMComponentWithClass(component, 'remove-canceled-entry');
+      Simulate.click(remove);
+
+      expect(changeEntryStatus).to.have.been.called();
+      expect(changeEntryStatus.__spy.calls[0][2]).to.equal(constants.CLOSED);
+    });
+  });
+
+  describe('on clicking an open entry', () => {
     const entry = Generator.entry().type(constants.FOOD).status(constants.OPEN).build();
     const order = Generator.order().id('orderId').entries([entry]).build();
 
     it('should display confirmation when an entry is clicked', () => {
-      const { openEntries, component } = setup({ orders: [order] });
+      const { entries, component } = setup({ orders: [order] });
 
-      Simulate.click(openEntries[0]);
+      Simulate.click(entries[0]);
 
-      const comfirmation = findRenderedDOMComponentWithClass(component, 'confirmation');
+      const confirmation = findRenderedDOMComponentWithClass(component, 'confirmation');
     });
 
     it('should hide confirmation after submit', () => {
-      const { openEntries, component } = setup({ orders: [order] });
+      const { entries, component } = setup({ orders: [order] });
 
-      Simulate.click(openEntries[0]);
+      Simulate.click(entries[0]);
       const submit = findRenderedDOMComponentWithClass(component, 'submit');
       Simulate.click(submit);
 
-      const comfirmation = scryRenderedDOMComponentsWithClass(component, 'confirmation');
-      expect(comfirmation.length).to.equal(0);
+      const confirmation = scryRenderedDOMComponentsWithClass(component, 'confirmation');
+      expect(confirmation.length).to.equal(0);
     });
 
     it('should hide confirmation on cancel', () => {
-      const { openEntries, component } = setup({ orders: [order] });
+      const { entries, component } = setup({ orders: [order] });
 
-      Simulate.click(openEntries[0]);
+      Simulate.click(entries[0]);
       const cancel = findRenderedDOMComponentWithClass(component, 'cancel');
       Simulate.click(cancel);
 
-      const comfirmation = scryRenderedDOMComponentsWithClass(component, 'confirmation');
-      expect(comfirmation.length).to.equal(0);
+      const confirmation = scryRenderedDOMComponentsWithClass(component, 'confirmation');
+      expect(confirmation.length).to.equal(0);
     });
 
     it('calls handle click with the entry index, order id, and "COMPLETED" status', () => {
-      const { openEntries, component } = setup({ orders: [order] });
+      const { entries, component, changeEntryStatus } = setup({ orders: [order] });
 
-      Simulate.click(openEntries[0]);
+      Simulate.click(entries[0]);
       const submit = findRenderedDOMComponentWithClass(component, 'submit');
       Simulate.click(submit);
 

@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import actions from '../action_creators';
 import constants from '../constants';
 import moment from 'moment';
-import OpenEntryQueueContainer from './OpenEntryQueue';
+import EntryQueueContainer from './EntryQueue';
 import _ from 'ramda';
 
-const OpenEntryQueue = createFactory(OpenEntryQueueContainer);
+const EntryQueue = createFactory(EntryQueueContainer);
 
 function mapStateToProps(state) {
   return {
@@ -22,7 +22,7 @@ class Chef extends Component {
   render() {
     const isFood = _.pathEq(['entry', 'type'], constants.FOOD);
 
-    return OpenEntryQueue({
+    return EntryQueue({
       orders: this.props.orders,
       displayMax: 6,
       changeEntryStatus: this.props.changeEntryStatus,

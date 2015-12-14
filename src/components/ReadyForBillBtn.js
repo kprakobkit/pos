@@ -1,20 +1,19 @@
 import { Component, PropTypes, DOM as dom } from 'react';
 import constants from '../../src/constants';
-import _ from 'underscore';
+import _ from 'ramda';
 
 class ReadyForBillBtn extends Component {
-  allEntriesCanceled() {
-    return _.all(this.props.entries, (entry) => entry.status === constants.CANCELED);
-  }
-
-  openOrCompletedEntries() {
-    return _.some(this.props.entries, (entry) => {
-      return entry.status === constants.OPEN || entry.status === constants.COMPLETED;
-    });
-  }
-
   shouldBeDisabled() {
-    return this.openOrCompletedEntries() || this.allEntriesCanceled();
+    const hasOpen = _.any(_.equals(constants.OPEN));
+    const hasCompleted = _.any(_.equals(constants.COMPLETED));
+    const hasOpenOrCompleted = _.either(hasOpen, hasCompleted);
+
+    const allClosed = _.all(_.equals(constants.CLOSED));
+    const allCanceled = _.all(_.equals(constants.CANCELED));
+    const allCanceledOrClosed = _.either(allClosed, allCanceled);
+
+    const entryStatuses = _.chain(entry => entry.status)(this.props.entries);
+    return _.either(hasOpenOrCompleted, allCanceledOrClosed)(entryStatuses);
   }
 
   render() {

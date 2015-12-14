@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import actions from '../action_creators';
 import constants from '../constants';
 import moment from 'moment';
-import OpenEntryQueueComponent from './OpenEntryQueue';
+import EntryQueueComponent from './EntryQueue';
 import _ from 'ramda';
 
-const OpenEntryQueue = createFactory(OpenEntryQueueComponent);
+const EntryQueue = createFactory(EntryQueueComponent);
 
 function mapStateToProps(state) {
   return {
@@ -22,7 +22,7 @@ class Bartender extends Component {
   render() {
     const isDrink = _.pathEq(['entry', 'type'], constants.DRINK);
 
-    return OpenEntryQueue({
+    return EntryQueue({
       orders: this.props.orders,
       displayMax: 6,
       changeEntryStatus: this.props.changeEntryStatus,

@@ -21,21 +21,21 @@ function setup() {
   const Bartender = React.createFactory(BartenderComponent);
   const loadOrders = () => {};
   const food = Generator.entry().type(constants.FOOD).status(constants.OPEN).build();
-  const drink = Generator.entry().type(constants.DRINK).status(constants.OPEN).build();
-  const entries = [food, drink];
+  const drinkO = Generator.entry().type(constants.DRINK).status(constants.OPEN).build();
+  const drinkC = Generator.entry().type(constants.DRINK).status(constants.CANCELED).build();
+  const entries = [food, drinkO, drinkC];
   const orders = [Generator.order().id('order1').entries(entries).tableNumber('14').build()];
   const component = renderIntoDocument(Bartender({ orders, loadOrders, changeEntryStatus }));
 
   return {
-    openEntries: scryRenderedDOMComponentsWithClass(component, 'open-entry'),
-    entries
+    entries: scryRenderedDOMComponentsWithClass(component, 'entry')
   };
 }
 
 describe('Bartender', () => {
-  it('should render open entries of type DRINK', () => {
-    const { openEntries, entries } = setup();
+  it('should render open and closed entries of type DRINK', () => {
+    const { entries } = setup();
 
-    expect(openEntries.length).to.equal(1);
+    expect(entries.length).to.equal(2);
   });
 });

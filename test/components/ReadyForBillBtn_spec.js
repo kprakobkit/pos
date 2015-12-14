@@ -51,6 +51,15 @@ describe('Ready for Payment', () => {
     expect(btn.disabled).to.be.true;
   });
 
+  it('is disabled when all entries are closed', () => {
+    const closed = Generator.entry().status(constants.CLOSED).build();
+    const entries = [closed];
+    const component = renderIntoDocument(ReadyForBillBtn({ entries }));
+    const btn = findRenderedDOMComponentWithClass(component, 'ready-for-bill');
+
+    expect(btn.disabled).to.be.true;
+  });
+
   it('calls onClick handler', () => {
     const handleOnClick = spy();
     const delivered = Generator.entry().status(constants.DELIVERED).build();
