@@ -12,7 +12,7 @@ class ReadyForBillBtn extends Component {
     const allCanceled = _.all(_.equals(constants.CANCELED));
     const allCanceledOrClosed = _.either(allClosed, allCanceled);
 
-    const entryStatuses = _.chain(entry => entry.status)(this.props.entries);
+    const entryStatuses = _.pluck('status', this.props.entries);
     return _.either(hasOpenOrCompleted, allCanceledOrClosed)(entryStatuses);
   }
 
