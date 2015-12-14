@@ -51,11 +51,11 @@ class MasterItemsSelect extends Component {
       dom.div(
         null,
         dom.div(
-          { className: 'form-group' },
+          { className: 'text-center' },
           dom.div(
             { className: 'select-category' },
             this.getCategories(this.props.masterItems).map((category, i) => {
-              return dom.button({ className: `btn btn-default btn-lg category category-${category} ${this.isActiveCategory(category)}`, key: i, onClick: this.handleChangeCategory.bind(null, category) }, category);
+              return dom.button({ type: 'button', className: `btn btn-default btn-lg category category-${category} ${this.isActiveCategory(category)}`, key: i, onClick: this.handleChangeCategory.bind(null, category) }, category);
             })
           )
         ),
