@@ -40,9 +40,12 @@ class OpenOrder extends Component {
     return (
       dom.div(
         null,
-        dom.button(
-          { className: 'toggle-add-entry btn btn-info btn-lg btn-block', onClick: this.toggleForm },
-          this.state.showAddEntry ? 'Close' : 'Add more items'
+        dom.div(
+          { className: 'text-right' },
+          dom.button(
+            { className: 'toggle-add-entry btn btn-info', onClick: this.toggleForm },
+            this.state.showAddEntry ? 'Close' : 'Add more items'
+          ),
         ),
         dom.br(null),
         this.state.showAddEntry ? MasterItems({

@@ -46,8 +46,9 @@ class OrderDetails extends Component {
       dom.div(
         null,
         dom.h3(
-          { className: 'order-information' },
-          `Status: ${this.state.order.status} | Table #${this.state.order.tableNumber} | Order #${this.props.params.id}`,
+          { className: 'text-right order-information' },
+          `Table ${this.state.order.tableNumber} / Order ${this.props.params.id}  `,
+          dom.span({ className: 'text-info' }, `${this.state.order.status}`),
           dom.small(
             null,
             this.state.order.status === constants.READY_FOR_BILL ? dom.button({
