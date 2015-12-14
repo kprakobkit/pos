@@ -89,11 +89,14 @@ class MasterItems extends Component {
     return dom.div(
       { className: 'row' },
       dom.div(
-        { className: 'master-items col-md-6' },
+        { className: 'master-items col-md-6 col-sm-6' },
         MasterItemsSelect({
           masterItems: this.props.masterItems,
           onSelectMasterItem: this.selectItem
-        }),
+        })
+      ),
+      dom.div(
+        { className: 'col-md-6 col-sm-6' },
         dom.p(
           null,
           dom.input(
@@ -120,10 +123,7 @@ class MasterItems extends Component {
             ),
             ' Add Item',
           )
-        )
-      ),
-      dom.div(
-        { className: 'col-md-6' },
+        ),
         dom.table(
           { className: 'table table-striped' },
           dom.tbody(

@@ -60,7 +60,7 @@ class MasterItemsSelect extends Component {
           dom.div(
             { className: 'select-category' },
             this.getCategories(this.props.masterItems).map((category, i) => {
-              return dom.button({ type: 'button', className: `btn btn-default btn-lg category category-${category} ${this.isActiveCategory(category)}`, key: i, onClick: this.handleChangeCategory.bind(null, category) }, category);
+              return dom.button({ type: 'button', className: `btn btn-default category category-${category} ${this.isActiveCategory(category)}`, key: i, onClick: this.handleChangeCategory.bind(null, category) }, category);
             })
           )
         ),

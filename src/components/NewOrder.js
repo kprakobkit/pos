@@ -31,7 +31,7 @@ class NewOrder extends Component {
   render() {
     return dom.div(
       null,
-      dom.h1({ className: 'title' }, 'New Order'),
+      dom.h4({ className: 'title' }, 'New Order'),
       dom.div(
         { className: 'form-group' },
         dom.label(null, 'Table #'),
