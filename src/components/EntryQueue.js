@@ -22,9 +22,7 @@ class EntryQueue extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.unselectEntry = this.unselectEntry.bind(this);
     this.renderEntry = this.renderEntry.bind(this);
-    this.state = {
-      selectedEntry: undefined
-    };
+    this.state = {};
   }
 
   getEntries() {
@@ -51,7 +49,7 @@ class EntryQueue extends Component {
   }
 
   getEntryClass(entry) {
-    const classes =  'entry col-md-4 col-sm-4 col-xs-4 list-group-item text-center';
+    const classes = 'entry col-md-4 col-sm-4 col-xs-4 list-group-item text-center';
 
     if(JSON.stringify(entry) === JSON.stringify(this.state.selectedEntry)) {
       return classes + ' list-group-item-success';
@@ -91,7 +89,7 @@ class EntryQueue extends Component {
   }
 
   renderActionButtons() {
-    const entryStatus = this.state.selectedEntry && this.state.selectedEntry.entry.status;
+    const entryStatus = _.path(['entry', 'status'], this.state.selectedEntry);
 
     if(entryStatus === constants.OPEN) {
       return this.renderConfirmation();
@@ -119,8 +117,6 @@ EntryQueue.propTypes = {
 };
 
 EntryQueue.defaultProps = {
-  orders: [],
-  filterPredicate: () => { return true; },
   displayMax: 6
 };
 
