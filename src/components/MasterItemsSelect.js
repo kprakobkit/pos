@@ -5,11 +5,13 @@ class MasterItemsSelect extends Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.isActiveCategory = this.isActiveCategory.bind(this);
     this.handleChangeCategory = this.handleChangeCategory.bind(this);
     const filteredItems = this.filterItems(this.props.masterItems[0].category);
     this.state = {
       filteredItems,
-      selectedItemId: filteredItems[0].id
+      selectedItemId: filteredItems[0].id,
+      selectedCategory: filteredItems[0].category
     };
   };
 
@@ -33,8 +35,15 @@ class MasterItemsSelect extends Component {
     this.props.onSelectMasterItem(filteredItems[0]);
     this.setState({
       filteredItems,
-      selectedItemId: filteredItems[0].id
+      selectedItemId: filteredItems[0].id,
+      selectedCategory: category
     });
+  }
+
+  isActiveCategory(category) {
+    if(this.state.selectedCategory === category) {
+      return 'active';
+    }
   }
 
   render() {
@@ -46,7 +55,7 @@ class MasterItemsSelect extends Component {
           dom.div(
             { className: 'select-category' },
             this.getCategories(this.props.masterItems).map((category, i) => {
-              return dom.button({ className: `category category-${category}`, key: i, onClick: this.handleChangeCategory.bind(null, category) }, category);
+              return dom.button({ className: `btn btn-default btn-lg category category-${category} ${this.isActiveCategory(category)}`, key: i, onClick: this.handleChangeCategory.bind(null, category) }, category);
             })
           )
         ),
