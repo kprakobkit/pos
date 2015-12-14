@@ -23,8 +23,7 @@ class MasterItemsSelect extends Component {
     return _.filter(_.propEq('category', category), this.props.masterItems);
   }
 
-  handleChange(e) {
-    const itemId = e.target.value;
+  handleChange(itemId) {
     const selectedItem = _.find(_.propEq('id', itemId), this.props.masterItems);
     this.props.onSelectMasterItem(selectedItem);
     this.setState({ selectedItemId: selectedItem.id });
@@ -46,6 +45,12 @@ class MasterItemsSelect extends Component {
     }
   }
 
+  isActiveItem(itemId) {
+    if(this.state.selectedItemId === itemId) {
+      return 'active';
+    }
+  }
+
   render() {
     return (
       dom.div(
@@ -59,13 +64,12 @@ class MasterItemsSelect extends Component {
             })
           )
         ),
-        dom.div(
-          { className: 'form-group' },
-          dom.label(null, 'Item'),
-          dom.select(
-            { className: 'select-item form-control input-lg', onChange: this.handleChange, value: this.state.selectedItemId },
+        dom.table(
+          { className: 'table table-hover' },
+          dom.tbody(
+            { className: 'select-item' },
             this.state.filteredItems.map((item, i) => {
-              return dom.option({ className: 'item', value: item.id, key: i }, item.name);
+              return dom.tr({ className: `item item-${item.name} ${this.isActiveItem(item.id)}`, onClick: this.handleChange.bind(null, item.id), key: i }, dom.td(null, item.name));
             })
           )
         )
