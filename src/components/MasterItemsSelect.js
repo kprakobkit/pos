@@ -5,11 +5,13 @@ class MasterItemsSelect extends Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.isActiveCategory = this.isActiveCategory.bind(this);
     this.handleChangeCategory = this.handleChangeCategory.bind(this);
     const filteredItems = this.filterItems(this.props.masterItems[0].category);
     this.state = {
       filteredItems,
-      selectedItemId: filteredItems[0].id
+      selectedItemId: filteredItems[0].id,
+      selectedCategory: filteredItems[0].category
     };
   };
 
@@ -21,21 +23,32 @@ class MasterItemsSelect extends Component {
     return _.filter(_.propEq('category', category), this.props.masterItems);
   }
 
-  handleChange(e) {
-    const itemId = e.target.value;
+  handleChange(itemId) {
     const selectedItem = _.find(_.propEq('id', itemId), this.props.masterItems);
     this.props.onSelectMasterItem(selectedItem);
     this.setState({ selectedItemId: selectedItem.id });
   }
 
-  handleChangeCategory(e) {
-    const selectedCategory = e.target.value;
-    const filteredItems = this.filterItems(selectedCategory);
+  handleChangeCategory(category) {
+    const filteredItems = this.filterItems(category);
     this.props.onSelectMasterItem(filteredItems[0]);
     this.setState({
       filteredItems,
-      selectedItemId: filteredItems[0].id
+      selectedItemId: filteredItems[0].id,
+      selectedCategory: category
     });
+  }
+
+  isActiveCategory(category) {
+    if(this.state.selectedCategory === category) {
+      return 'active';
+    }
+  }
+
+  isActiveItem(itemId) {
+    if(this.state.selectedItemId === itemId) {
+      return 'active';
+    }
   }
 
   render() {
@@ -43,22 +56,20 @@ class MasterItemsSelect extends Component {
       dom.div(
         null,
         dom.div(
-          { className: 'form-group' },
-          dom.label(null, 'Category'),
-          dom.select(
-            { className: 'select-category form-control input-lg', onChange: this.handleChangeCategory },
+          { className: 'text-center' },
+          dom.div(
+            { className: 'select-category' },
             this.getCategories(this.props.masterItems).map((category, i) => {
-              return dom.option({ className: 'category', value: category, key: i }, category);
+              return dom.button({ type: 'button', className: `btn btn-default category category-${category} ${this.isActiveCategory(category)}`, key: i, onClick: this.handleChangeCategory.bind(null, category) }, category);
             })
           )
         ),
-        dom.div(
-          { className: 'form-group' },
-          dom.label(null, 'Item'),
-          dom.select(
-            { className: 'select-item form-control input-lg', onChange: this.handleChange, value: this.state.selectedItemId },
+        dom.table(
+          { className: 'table table-hover' },
+          dom.tbody(
+            { className: 'select-item' },
             this.state.filteredItems.map((item, i) => {
-              return dom.option({ className: 'item', value: item.id, key: i }, item.name);
+              return dom.tr({ className: `item item-${item.name} ${this.isActiveItem(item.id)}`, onClick: this.handleChange.bind(null, item.id), key: i }, dom.td(null, item.name));
             })
           )
         )

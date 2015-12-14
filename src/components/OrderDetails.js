@@ -45,19 +45,18 @@ class OrderDetails extends Component {
     return (
       dom.div(
         null,
-        dom.h1({ className: 'order-title' }, `Order #${this.props.params.id}`),
-        dom.h2(
-          { className: 'order-status' },
-          `Status: ${this.state.order.status}`,
+        dom.h3(
+          { className: 'text-right order-information' },
+          `Table ${this.state.order.tableNumber} / Order ${this.props.params.id}  `,
+          dom.span({ className: 'text-info' }, `${this.state.order.status}`),
           dom.small(
             null,
             this.state.order.status === constants.READY_FOR_BILL ? dom.button({
               className: 'back-to-open btn btn-link',
               onClick: this.props.setOpen.bind(null, this.props.params.id)
             }, 'Back to "Open" Status') : null
-          ),
+          )
         ),
-        dom.h2({ className: 'order-table-number' }, `Table #${this.state.order.tableNumber}`),
         this.state.order.status === constants.OPEN ?
           OpenOrder(
             {

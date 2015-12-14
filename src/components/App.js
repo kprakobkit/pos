@@ -7,7 +7,7 @@ class App extends Component {
   render() {
     return (
       dom.div(
-        { className: 'container' },
+        { className: 'container-fluid' },
         Nav(),
         this.props.children
       )

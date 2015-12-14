@@ -49,26 +49,19 @@ describe('Master Items Select', () => {
 
   it('filters the option based on selected category', () => {
     const { component, selectCategory } = setup();
-    Simulate.change(selectCategory, { target: { value: 'Beer' } });
+    const selectBeer = findRenderedDOMComponentWithClass(component, 'category-Beer');
+    Simulate.click(selectBeer);
     const filteredItems = scryRenderedDOMComponentsWithClass(component, 'item');
 
     expect(filteredItems.length).to.equal(2);
-    expect(filteredItems[0].text).to.equal('hoegarden');
-    expect(filteredItems[1].text).to.equal('heineken');
-  });
-
-  it('defaults to the first item after changing category', () => {
-    const { selectCategory, items, selectItem } = setup();
-    Simulate.change(selectCategory, { target: { value: 'Beer' } });
-    Simulate.change(selectItem, { target: { value: '4' } });
-    Simulate.change(selectCategory, { target: { value: 'Appetizer' } });
-
-    expect(items[0].selected).to.be.true;
+    expect(filteredItems[0].textContent).to.equal('hoegarden');
+    expect(filteredItems[1].textContent).to.equal('heineken');
   });
 
   it('calls onSelectMasterItem with the first item when selecting a category', () => {
-    const { selectCategory, onSelectMasterItem } = setup();
-    Simulate.change(selectCategory, { target: { value: 'Beer' } });
+    const { component, onSelectMasterItem } = setup();
+    const selectBeer = findRenderedDOMComponentWithClass(component, 'category-Beer');
+    Simulate.click(selectBeer);
 
     expect(onSelectMasterItem).to.be.called();
     expect(onSelectMasterItem.__spy.calls[0][0].name).to.equal('hoegarden');
