@@ -52,8 +52,8 @@ class MasterItems extends Component {
   renderSelectedEntries() {
     return this.state.entries.map((entry, i) => dom.tr(
       { className: 'entries', key: i },
-      dom.td({ className: 'entry-name' }, dom.h2(null, entry.name)),
-      dom.td({ className: 'entry-comment' }, dom.h2(null, dom.small(null, entry.comment))),
+      dom.td({ className: 'entry-name' }, dom.h3(null, entry.name)),
+      dom.td({ className: 'entry-comment' }, dom.p(null, dom.small(null, entry.comment))),
       dom.td(
         { className: 'entry-action text-right' },
         dom.button(
@@ -87,57 +87,60 @@ class MasterItems extends Component {
 
   render() {
     return dom.div(
-      { className: 'master-items' },
-      MasterItemsSelect({
-        masterItems: this.props.masterItems,
-        onSelectMasterItem: this.selectItem
-      }),
-      dom.p(
-        null,
-        dom.input(
-          {
-            className: 'add-comment input-lg form-control',
-            value: this.state.comment,
-            placeholder: 'e.g. No meat, extra sauce',
-            onChange: this.addComment
-          }
-        )
-      ),
-      dom.p(
-        null,
-        dom.button(
-          {
-            className: 'btn btn-default add-entry btn-lg btn-block',
-            onClick: this.handleAddEntry
-          },
-          dom.span(
+      { className: 'row' },
+      dom.div(
+        { className: 'master-items col-md-6' },
+        MasterItemsSelect({
+          masterItems: this.props.masterItems,
+          onSelectMasterItem: this.selectItem
+        }),
+        dom.p(
+          null,
+          dom.input(
             {
-              className: 'glyphicon glyphicon-plus',
-              'aria-hidden': true
+              className: 'add-comment input-lg form-control',
+              value: this.state.comment,
+              placeholder: 'e.g. No meat, extra sauce',
+              onChange: this.addComment
             }
-          ),
-          ' Add Item',
+          )
+        ),
+        dom.p(
+          null,
+          dom.button(
+            {
+              className: 'btn btn-default add-entry btn-lg btn-block',
+              onClick: this.handleAddEntry
+            },
+            dom.span(
+              {
+                className: 'glyphicon glyphicon-plus',
+                'aria-hidden': true
+              }
+            ),
+            ' Add Item',
+          )
         )
       ),
       dom.div(
-        null,
+        { className: 'col-md-6' },
         dom.table(
           { className: 'table table-striped' },
           dom.tbody(
             null,
             this.state.entries.length ? this.renderSelectedEntries() : this.renderNoEntries()
           )
-        )
-      ),
-      dom.p(
-        null,
-        dom.button(
-          {
-            className: 'btn btn-primary submit-order btn-lg btn-block',
-            disabled: !this.state.entries.length,
-            onClick: this.handleOnClick
-          },
-          'Send to the kitchen'
+        ),
+        dom.p(
+          null,
+          dom.button(
+            {
+              className: 'btn btn-primary submit-order btn-lg btn-block',
+              disabled: !this.state.entries.length,
+              onClick: this.handleOnClick
+            },
+            'Send to the kitchen'
+          )
         )
       )
     );
