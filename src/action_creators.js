@@ -7,6 +7,13 @@ export function setState(state) {
   };
 }
 
+export function setToken(token) {
+  return {
+    type: constants.SET_TOKEN,
+    token
+  };
+}
+
 export function loadOrders() {
   return {
     meta: { remote: true },
@@ -76,8 +83,18 @@ export function setClosed(orderId, transactionId, amounts) {
   };
 }
 
+export function login(username, password) {
+  return {
+    meta: { remote: true },
+    type: 'authentication',
+    username,
+    password
+  };
+}
+
 export default {
   setState,
+  setToken,
   loadOrders,
   loadItems,
   addOrder,
@@ -85,5 +102,6 @@ export default {
   addEntriesToOrder,
   setReadyForBill,
   setOpen,
-  setClosed
+  setClosed,
+  login
 };

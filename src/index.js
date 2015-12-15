@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import loggerMiddleware from 'redux-logger';
 import routes from './routes';
 import reducer from './reducer';
-import { setState } from './action_creators';
+import { setState, setToken } from './action_creators';
 import remoteActionMiddleware from './remote_action_middleware';
 import io from 'socket.io-client';
 import config from '../config';
@@ -33,8 +33,13 @@ const createStoreWithMiddleware = applyMiddleware(
 )(createStore);
 const store = createStoreWithMiddleware(reducer, window.__INITIAL_STATE__);
 
-socket.on('connected', (data) => console.log(data));
 socket.on('state', (state) => store.dispatch(setState(state)));
+socket.on('authenticated', function(data) {
+  store.dispatch(setToken(data.token)); // should also set logged in user.
+});
+socket.on('unauthorized', function(err) {
+  console.log('There was an error with the authentication: ', err.message);
+});
 
 const history = createHistory();
 

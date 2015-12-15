@@ -11,6 +11,7 @@ import makeStore from './store';
 import socketEvents from './socket_events';
 import routes from '../src/routes';
 import config from '../config';
+import socketioAuth from 'socketio-auth';
 
 const app = express();
 const isProduction = process.env.NODE_ENV === 'production';
@@ -34,12 +35,16 @@ console.log('Server running...');
 
 app.use(express.static(distPath));
 app.use((req, res) => {
+  const authToken = req.params.token;
   const location = createLocation(req.url);
 
   match({ routes, location }, (err, redirectLocation, renderProps) => {
+    debugger;
     if (err) {
       console.error(err);
       return res.status(500).end('Internal server error');
+    } else if (!authToken) {
+      return res.redirect(302, '/');
     }
 
     if (!renderProps) return res.status(404).end('Not found');
@@ -49,7 +54,7 @@ app.use((req, res) => {
       RoutingContext(renderProps)
     );
 
-    const initialState = store.getState();
+    const initialState = authToken ? store.getState() : {}; // get token from request
 
     const componentHTML = renderToString(InitialComponent);
 
@@ -79,17 +84,23 @@ const server = app.listen(port, () => {
 });
 
 const io = Server.listen(server);
-
 const attachSocketEvents = socketEvents(store);
-
-io.on('connection', (socket) => {
-  console.log('connected!');
-  socket.emit('connected', 'hello from the server');
-  socket.emit('state', store.getState());
-});
-
-io.on('connection', attachSocketEvents);
-
 store.subscribe(
   () => io.emit('state', store.getState())
 );
+io.on('connection', attachSocketEvents);
+
+socketioAuth(io, {
+  timeout: 'none',
+  authenticate: function(socket, data, callback) {
+    if(data.password === 'bar') {
+      console.log('authenticated');
+      return callback(null, { token: 'authToken' });
+    } else {
+      console.log('not authenticated');
+      return callback(new Error('FAILED'));
+    }
+  }
+});
+
+
