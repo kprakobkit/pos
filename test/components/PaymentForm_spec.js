@@ -26,6 +26,7 @@ function setup({ cash = 0, credit = 0, tip = 0 } = {}) {
     component,
     creditInput: findRenderedDOMComponentWithClass(component, 'credit-amount-input'),
     tipInput: findRenderedDOMComponentWithClass(component, 'tip-amount-input'),
+    closeOrderButton: findRenderedDOMComponentWithClass(component, 'close-order'),
     startingBalance
   };
 }
@@ -50,6 +51,11 @@ describe('PaymentForm', () => {
     expect(creditInput.attributes.placeholder.value).to.eq($.dollars(credit).toString());
     expect(tipInput.attributes.placeholder.value).to.eq($.dollars(tip).toString());
   });
+
+  it('disables close order button if credit payment exceeds order total', () => {
+    const credit = 999999;
+    const { closeOrderButton } = setup({ credit });
+
+    expect(closeOrderButton.disabled).to.be.true;
+  });
 });
-
-

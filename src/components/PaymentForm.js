@@ -9,14 +9,20 @@ const CloseOrderBtn = createFactory(CloseOrderBtnComponent);
 class PaymentForm extends Component {
   constructor(props) {
     super(props);
+    this.exceedsTotal = this.exceedsTotal.bind(this);
     this.updateAmount = this.updateAmount.bind(this);
     this.closeOrder = this.closeOrder.bind(this);
+    this.buttonText = this.buttonText.bind(this);
     this.renderAmountField = this.renderAmountField.bind(this);
     this.state = {
       cash: props.cash,
       credit: props.credit,
       tip: props.tip
     };
+  }
+
+  exceedsTotal(payment) {
+    return _.gt(payment, this.props.startingBalance);
   }
 
   updateAmount(field) {
@@ -29,6 +35,13 @@ class PaymentForm extends Component {
     const cash = _.max(this.props.startingBalance - this.state.credit, 0);
     const amounts = _.merge(this.state, { cash });
     this.props.setClosed(amounts);
+  }
+
+  buttonText() {
+    return _.cond([
+      [this.exceedsTotal, _.always('Payment Cannot Exceed Total')],
+      [_.equals(0),       _.always('All Paid in Cash')]
+    ])(this.state.credit);
   }
 
   renderAmountField(field) {
@@ -59,17 +72,10 @@ class PaymentForm extends Component {
         ),
         CloseOrderBtn(
           {
-            shouldBeDisabled: this.state.credit === 0,
-            handleClick: this.closeOrder
+            shouldBeDisabled: this.exceedsTotal(this.state.credit),
+            handleClick: this.closeOrder,
+            text: this.buttonText()
           }
-        ),
-        dom.button(
-          {
-            className: 'btn btn-success btn-lg btn-block',
-            disabled: this.state.credit !== 0,
-            onClick: this.closeOrder
-          },
-          'All Paid in Cash'
         )
       )
     );
