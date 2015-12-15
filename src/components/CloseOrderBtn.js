@@ -12,7 +12,7 @@ class CloseOrderBtn extends Component {
             disabled: this.props.shouldBeDisabled,
             onClick: this.props.handleClick
           },
-          'Close Order'
+          this.props.text
         )
       )
     );
@@ -21,8 +21,12 @@ class CloseOrderBtn extends Component {
 
 CloseOrderBtn.propTypes = {
   shouldBeDisabled: PropTypes.bool.isRequired,
-  handleClick: PropTypes.func.isRequired
+  handleClick: PropTypes.func.isRequired,
+  text: PropTypes.string
+};
+
+CloseOrderBtn.defaultProps = {
+  text: 'Close Order'
 };
 
 export default CloseOrderBtn;
-
