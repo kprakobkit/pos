@@ -11,6 +11,8 @@ export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
   case constants.SET_STATE:
     return setState(state, action.state);
+  case constants.SET_TOKEN:
+    return setState(state, { token: action.token });
   }
   return state;
 }
