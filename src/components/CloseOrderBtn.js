@@ -3,13 +3,15 @@ import constants from '../../src/constants';
 
 class CloseOrderBtn extends Component {
   render() {
-    return dom.button(
-      {
-        className: 'order-entries close-order btn btn-primary btn-lg btn-block',
-        disabled: this.props.shouldBeDisabled,
-        onClick: this.props.handleClick
-      },
-      this.props.text
+    return (
+      dom.button(
+        {
+          className: 'order-entries close-order btn btn-primary btn-lg btn-block',
+          disabled: this.props.shouldBeDisabled,
+          onClick: this.props.handleClick
+        },
+        this.props.text
+      )
     );
   }
 }
