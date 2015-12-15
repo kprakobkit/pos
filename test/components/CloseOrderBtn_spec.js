@@ -11,9 +11,9 @@ const {
 
 const CloseOrderBtn = React.createFactory(CloseOrderBtnComponent);
 
-function setup({ shouldBeDisabled } = {}) {
+function setup({ shouldBeDisabled = false, text } = {}) {
   const handleClick = spy();
-  const component = renderIntoDocument(CloseOrderBtn({ shouldBeDisabled, handleClick }));
+  const component = renderIntoDocument(CloseOrderBtn({ shouldBeDisabled, handleClick, text }));
 
   return {
     component,
@@ -42,6 +42,11 @@ describe('CloseOrderBtn', () => {
 
     expect(handleClick).to.have.been.called();
   });
+
+  it('displays received text prop', () => {
+    const text = 'Some Text';
+    const { button } = setup({ text });
+
+    expect(button.textContent).to.equal(text);
+  });
 });
-
-
