@@ -35,12 +35,16 @@ console.log('Server running...');
 
 app.use(express.static(distPath));
 app.use((req, res) => {
+  const authToken = req.params.token;
   const location = createLocation(req.url);
 
   match({ routes, location }, (err, redirectLocation, renderProps) => {
+    debugger;
     if (err) {
       console.error(err);
       return res.status(500).end('Internal server error');
+    } else if (!authToken) {
+      return res.redirect(302, '/');
     }
 
     if (!renderProps) return res.status(404).end('Not found');
@@ -50,7 +54,7 @@ app.use((req, res) => {
       RoutingContext(renderProps)
     );
 
-    const initialState = req.params.token ? store.getState() : {}; // get token from request
+    const initialState = authToken ? store.getState() : {}; // get token from request
 
     const componentHTML = renderToString(InitialComponent);
 
