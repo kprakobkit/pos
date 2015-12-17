@@ -16,8 +16,10 @@ function mapStateToProps(state) {
 };
 
 class NewOrder extends Component {
-  componentWillMount() {
+  constructor(props) {
+    super(props);
     this.setTableNumber = this.setTableNumber.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       tableNumber: 1
     };
@@ -26,6 +28,11 @@ class NewOrder extends Component {
   setTableNumber(e) {
     const value = e.target.value;
     this.setState({ tableNumber: value });
+  }
+
+  handleSubmit(entries) {
+    this.props.addOrder(this.state.tableNumber, entries);
+    this.context.history && this.context.history.pushState(null, '/orders');
   }
 
   render() {
@@ -42,7 +49,7 @@ class NewOrder extends Component {
       ),
       MasterItems({
         masterItems: this.props.masterItems,
-        handleSubmit: this.props.addOrder.bind(null, this.state.tableNumber)
+        handleSubmit: this.handleSubmit
       }),
       Link(
         { to: '/orders', className: 'orders-link' },
@@ -64,6 +71,10 @@ NewOrder.propTypes = {
 
 NewOrder.defaultProps = {
   masterItems: []
+};
+
+NewOrder.contextTypes = {
+  history: PropTypes.object
 };
 
 export default NewOrder;

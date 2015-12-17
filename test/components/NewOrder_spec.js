@@ -12,7 +12,34 @@ const {
   Simulate
 } = TestUtils;
 
-const NewOrder = React.createFactory(NewOrderComponent);
+
+const pushState = spy();
+
+function ContainerComponentFactory(childComponent) {
+  class ContainerComponent extends React.Component {
+    getChildContext() {
+      return {
+        history: {
+          pushState,
+          createHref: () => {}
+        }
+      };
+    }
+
+    render() {
+      return React.DOM.div(
+        null,
+        childComponent(this.props)
+      );
+    };
+  }
+
+  ContainerComponent.childContextTypes = {
+    history: React.PropTypes.object
+  };
+
+  return ContainerComponent;
+}
 
 function setup() {
   const food = { id: '1', name: 'food' };
@@ -20,7 +47,9 @@ function setup() {
   const masterItems = [food, burger];
   const loadItems = () => {};
   const addOrder = spy();
-  const component = renderIntoDocument(NewOrder({ masterItems, loadItems, addOrder }));
+  const NewOrder = React.createFactory(NewOrderComponent);
+  const Container = React.createFactory(ContainerComponentFactory(NewOrder));
+  const component = renderIntoDocument(Container({ masterItems, loadItems, addOrder }));
 
   return {
     component,
@@ -46,7 +75,7 @@ describe('New Order', () => {
     expect(entries.length).to.equal(0);
   });
 
-  it('adds an order on submit', () => {
+  it('adds an order on submit and redirects to orders page', () => {
     const { selectItem, component, addEntry, submitOrder, addOrder, food, selectTableNumber } = setup();
     Simulate.change(selectTableNumber, { target: { value: 2 } });
     Simulate.change(selectItem, { target: { value: food.id } });
@@ -56,5 +85,7 @@ describe('New Order', () => {
     expect(addOrder.__spy.calls[0][0]).to.equal(2);
     expect(addOrder.__spy.calls[0][1].length).to.equal(1);
     expect(addOrder.__spy.calls[0][1]).to.deep.equal([{ name: food.name, id: food.id, comment: '' }]);
+    expect(addOrder.__spy.calls[0][1]).to.deep.equal([{ name: food.name, id: food.id, comment: '' }]);
+    expect(pushState).to.have.been.called.with(null, '/orders');
   });
 });
