@@ -14,7 +14,7 @@ function mapStateToProps(state) {
   return {
     masterItems: state.items
   };
-};
+}
 
 class NewOrder extends Component {
   constructor(props) {
