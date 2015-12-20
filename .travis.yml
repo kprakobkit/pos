@@ -10,4 +10,4 @@ deploy:
   app:
     master: jadeleaf-pos
   run:
-    - "babel-node server/seed.js"
+    - "babel-node data-creation/seed.js"
