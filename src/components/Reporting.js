@@ -7,7 +7,7 @@ const ReportingNav = createFactory(ReportingNavComponent);
 
 function mapStateToProps(state) {
   return {
-    orders: state.orders
+    transactions: state.transactions
   };
 }
 
@@ -25,7 +25,7 @@ class Reporting extends Component {
   }
 
   componentWillMount() {
-    this.props.loadOrders();
+    this.props.loadTransactions();
   }
 
   render() {
@@ -39,7 +39,7 @@ class Reporting extends Component {
 }
 
 Reporting.propTypes = {
-  loadOrders: PropTypes.func.isRequired,
+  loadTransactions: PropTypes.func.isRequired,
   orders: PropTypes.array
 };
 
