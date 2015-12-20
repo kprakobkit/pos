@@ -2,17 +2,14 @@ import constants from '../src/constants';
 import Order from '../models/order';
 import Item from '../models/item';
 import Entry from '../models/entry';
-import mongoose from 'mongoose';
 import faker from 'faker';
 import _ from 'underscore';
-import config from '../config';
-import { createItems } from './seed_items';
+import createItems from './create_items';
+import mongoose from 'mongoose';
 
 const orderStatuses = [
   constants.OPEN
 ];
-
-mongoose.connect(process.env.MONGOLAB_URI || config.developmentDB);
 
 function removeData() {
   const collections = mongoose.connection.collections;
@@ -64,7 +61,14 @@ function createOrders(items) {
   });
 }
 
-function seedData() {
+function toEntry(item) {
+  return {
+    item_id: mongoose.Types.ObjectId(item.id),
+    comment: faker.lorem.sentence()
+  };
+}
+
+export function seedDev() {
   removeData()
   .then(createItems)
   .then(createOrders)
@@ -78,11 +82,14 @@ function seedData() {
   });
 }
 
-function toEntry(item) {
-  return {
-    item_id: mongoose.Types.ObjectId(item.id),
-    comment: faker.lorem.sentence()
-  };
+export function seedItems() {
+  createItems()
+  .then(() => {
+    console.log('Completed seeding items...');
+    process.exit(0);
+  })
+  .catch((err) => {
+    console.log(`Error seeding items, plese try again. ${err}`);
+    process.exit(1);
+  });
 }
-
-seedData();

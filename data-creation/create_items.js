@@ -16,7 +16,7 @@ function createItem(type, name, price, category) {
   });
 }
 
-export function createItems() {
+function createItems() {
   return read('./data-creation/items.csv', 'utf8').then((rawItems) => {
     const rows = rawItems.split('\n').slice(0, -1);
     const itemsPromise = rows.map((row) => {
@@ -30,3 +30,5 @@ export function createItems() {
     return items;
   });
 }
+
+export default createItems;
