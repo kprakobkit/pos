@@ -40,11 +40,11 @@ class Reporting extends Component {
 
 Reporting.propTypes = {
   loadTransactions: PropTypes.func.isRequired,
-  orders: PropTypes.array
+  transactions: PropTypes.array
 };
 
 Reporting.defaultProps = {
-  orders: []
+  transactions: []
 };
 
 export default Reporting;
