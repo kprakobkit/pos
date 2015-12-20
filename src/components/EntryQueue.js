@@ -65,7 +65,7 @@ class EntryQueue extends Component {
         className: this.getEntryClass(entry),
         onClick: () => { this.setState({ selectedEntry: entry }); }
       },
-      dom.h3(null, entry.entry.name),
+      dom.h4(null, entry.entry.name),
       dom.p(null, `Table#: ${ entry.tableNumber }`),
       entry.entry.status === constants.CANCELED ? dom.p({ className: 'alert alert-danger' }, `${entry.entry.status}`) : null,
       dom.p({ className: 'lead' }, entry.createdAt.fromNow()),
