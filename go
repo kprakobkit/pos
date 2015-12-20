@@ -35,9 +35,14 @@ mongo() {
   mongod --dbpath ./data/db/
 }
 
-seed() {
+seed-dev() {
   echo "Seeding database"
-  node_modules/babel/bin/babel-node.js data-creation/seed.js
+  node_modules/babel/bin/babel-node.js data-creation/dc.js seed-dev
+}
+
+seed-items() {
+  echo "Seeding database"
+  node_modules/babel/bin/babel-node.js data-creation/dc.js seed-items
 }
 
 if [ "$(type -t "$1")" == "function" ]; then
