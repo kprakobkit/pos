@@ -21,6 +21,13 @@ export function loadItems() {
   };
 }
 
+export function loadTransactions() {
+  return {
+    meta: { remote: true },
+    type: constants.LOAD_TRANSACTIONS
+  };
+}
+
 export function addOrder(tableNumber, entries) {
   return {
     meta: { remote: true },
@@ -80,6 +87,7 @@ export default {
   setState,
   loadOrders,
   loadItems,
+  loadTransactions,
   addOrder,
   changeEntryStatus,
   addEntriesToOrder,

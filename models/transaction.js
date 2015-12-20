@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
+import _ from 'ramda';
 
 const transactionSchema = new Schema({
   orderId: String,
@@ -6,6 +7,10 @@ const transactionSchema = new Schema({
   credit: Number,
   tip: Number
 });
+
+transactionSchema.statics.getTransactions = function() {
+  return this.find().then(_.map(toTransaction));
+}
 
 transactionSchema.statics.addTransaction = function(orderId, { cash, credit, tip }) {
   return this({
@@ -22,6 +27,18 @@ transactionSchema.statics.updateTransaction = function(transactionId, { cash, cr
     { cash, credit, tip },
     { new: true }
   );
+}
+
+function toTransaction({ _id, orderId, cash, credit, tip }) {
+  const createdAt = _id.getTimestamp();
+  return {
+    _id,
+    orderId,
+    cash,
+    credit,
+    tip,
+    createdAt
+  };
 }
 
 export default mongoose.model('Transaction', transactionSchema);
