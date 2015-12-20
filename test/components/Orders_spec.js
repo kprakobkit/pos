@@ -27,8 +27,8 @@ describe('Orders', () => {
   });
 
   it('renders Order component for each order in props', () => {
-    const order1 = Generator.order().build();
-    const order2 = Generator.order().build();
+    const order1 = Generator.order().status(constants.OPEN).build();
+    const order2 = Generator.order().status(constants.OPEN).build();
     const orders = [order1, order2];
     const component = renderIntoDocument(Orders({ orders, loadOrders, loadItems }));
     const children = scryRenderedDOMComponentsWithClass(component, 'order');
