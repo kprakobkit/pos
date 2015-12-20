@@ -47,7 +47,7 @@ class MasterItemsSelect extends Component {
 
   isActiveItem(itemId) {
     if(this.state.selectedItemId === itemId) {
-      return 'active';
+      return 'info';
     }
   }
 
