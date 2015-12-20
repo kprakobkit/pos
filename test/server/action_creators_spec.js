@@ -60,6 +60,24 @@ describe('server action creators', () => {
     });
   });
 
+  it('loadTransactions', (done) => {
+    let dispatched;
+    function dispatch(action) {
+      dispatched = action;
+    }
+    const expected = {
+      type: constants.SET_STATE,
+      state: {
+        transactions: []
+      }
+    };
+
+    actions.loadTransactions()(dispatch).then(() => {
+      expect(dispatched).to.deep.equal(expected);
+    }).then(done, done);
+  });
+
+
   it('addOrder', (done) => {
     let dispatched;
     function dispatch(action) {

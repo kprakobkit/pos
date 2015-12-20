@@ -28,7 +28,7 @@ class ReportingNav extends Component {
         { className: 'clearfix' },
         dom.ul(
           { className: 'nav nav-tabs' },
-          ['Dashboard', 'Sales', 'Payment'].map(this.renderTab)
+          ['Dashboard', 'Sales', 'Payments'].map(this.renderTab)
         )
       )
     );

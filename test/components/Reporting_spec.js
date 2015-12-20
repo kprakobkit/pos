@@ -12,8 +12,8 @@ const {
 const Reporting = React.createFactory(ReportingComponent);
 
 function setup() {
-  const loadOrders = () => {};
-  const component = renderIntoDocument(Reporting({ loadOrders }));
+  const loadTransactions = () => {};
+  const component = renderIntoDocument(Reporting({ loadTransactions }));
 
   return {
     salesTab: findRenderedDOMComponentWithClass(component, 'reporting-nav-sales-tab'),

@@ -41,6 +41,14 @@ export function loadItems() {
   };
 }
 
+export function loadTransactions() {
+  return (dispatch) => {
+    return Transaction.getTransactions().then((transactions) => {
+      dispatch(setState({ transactions }));
+    });
+  };
+}
+
 export function addOrder(tableNumber, entries) {
   return (dispatch, getState) => {
     return Order.addOrder(tableNumber, entries)
@@ -108,6 +116,7 @@ export default {
   setState,
   loadOrders,
   loadItems,
+  loadTransactions,
   addOrder,
   changeEntryStatus,
   addEntriesToOrder,
