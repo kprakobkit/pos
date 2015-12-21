@@ -23,9 +23,9 @@ describe('OrdersFilter', () => {
     const filters = scryRenderedDOMComponentsWithClass(component, 'orders-filter-option');
 
     expect(filters.length).to.equal(3);
-    expect(filters[0].className).to.contain('orders-filter-all');
-    expect(filters[1].className).to.contain('orders-filter-open');
-    expect(filters[2].className).to.contain('orders-filter-ready');
+    expect(filters[0].className).to.contain('orders-filter-open');
+    expect(filters[1].className).to.contain('orders-filter-ready');
+    expect(filters[2].className).to.contain('orders-filter-all');
   });
 
   it('calls handler to filter orders', () => {

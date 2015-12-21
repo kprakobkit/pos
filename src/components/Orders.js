@@ -22,7 +22,7 @@ class Orders extends Component {
     super(props);
     this.filterOrders = this.filterOrders.bind(this);
     this.renderOrder = this.renderOrder.bind(this);
-    this.state = { filter: constants.ALL };
+    this.state = { filter: constants.OPEN };
   }
 
   componentWillMount() {

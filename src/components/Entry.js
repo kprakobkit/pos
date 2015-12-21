@@ -21,13 +21,13 @@ class Entry extends Component {
 
   renderActionButtons() {
     return dom.td(
-      { key: 'enntry-actions', className: 'entry-actions col-md-2' },
+      { key: 'enntry-actions', className: 'entry-actions col-md-1' },
       this.showDelivered() ? dom.button(
         {
           className: 'btn btn-primary btn-block delivered',
           onClick: this.handleChangeStatus.bind(null, constants.DELIVERED)
         },
-        'Delivered'
+        'Mark Delivered'
       ) : dom.button(
       {
         className: 'btn btn-primary btn-block open',
@@ -51,7 +51,7 @@ class Entry extends Component {
       dom.td({ className: 'entry-name' }, dom.h3(null, this.props.name)),
       dom.td({ className: 'entry-comment' }, dom.h3(null, dom.small(null, this.props.comment))),
       this.props.ofOpenOrder ? [
-        dom.td({ key: 'entry-status', className: 'entry-status col-md-2' }, dom.h3(null, dom.small(null, this.props.status))),
+        dom.td({ key: 'entry-status', className: 'entry-status col-md-2' }, dom.h2(null, dom.small(null, this.props.status))),
         this.renderActionButtons()] :
           dom.td(
             { className: 'entry-price text-right' },
