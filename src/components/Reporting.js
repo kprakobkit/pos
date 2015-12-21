@@ -1,10 +1,15 @@
 import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import { connect } from 'react-redux';
 import actions from '../action_creators';
+import _ from 'ramda';
 import ReportingNavComponent from './ReportingNav';
+import ReportingDashboardComponent from './ReportingDashboard';
+import ReportingSalesComponent from './ReportingSales';
 import ReportingPaymentsComponent from './ReportingPayments';
 
 const ReportingNav = createFactory(ReportingNavComponent);
+const ReportingDashboard = createFactory(ReportingDashboardComponent);
+const ReportingSales = createFactory(ReportingSalesComponent);
 const ReportingPayments = createFactory(ReportingPaymentsComponent);
 
 function mapStateToProps(state) {
@@ -19,7 +24,12 @@ class Reporting extends Component {
     this.setActiveTab = this.setActiveTab.bind(this);
     this.renderActiveTab = this.renderActiveTab.bind(this);
     this.state = {
-      activeTab: 'Dashboard'
+      activeTab: 'Dashboard',
+      tabs: {
+        Dashboard: ReportingDashboard,
+        Sales: ReportingSales,
+        Payments: ReportingPayments
+      }
     };
   }
 
@@ -27,15 +37,13 @@ class Reporting extends Component {
     this.props.loadTransactions();
   }
 
-
   setActiveTab(tabName) {
     return () => this.setState({ activeTab: tabName });
   }
 
   renderActiveTab() {
-    return {
-      Payments: ReportingPayments({ transactions: this.props.transactions })
-    }[this.state.activeTab];
+    const activeTabComponent = this.state.tabs[this.state.activeTab];
+    return activeTabComponent({ transactions: this.props.transactions });
   }
 
   render() {
