@@ -1,5 +1,9 @@
 
+Master
 ![Travis CI: Status](https://travis-ci.org/kprakobkit/pos.svg?branch=master)
+
+Production
+![Travis CI: Status](https://travis-ci.org/kprakobkit/pos.svg?branch=production)
 
 # To run the app, follow these steps:
 
