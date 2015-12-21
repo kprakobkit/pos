@@ -31,12 +31,14 @@ transactionSchema.statics.updateTransaction = function(transactionId, { cash, cr
 
 function toTransaction({ _id, orderId, cash, credit, tip }) {
   const createdAt = _id.getTimestamp();
+  const total = cash + credit;
   return {
     _id,
     orderId,
     cash,
     credit,
     tip,
+    total,
     createdAt
   };
 }
