@@ -60,7 +60,9 @@ function transactionBuilder() {
     orderId: '1',
     cash: 1500,
     credit: 1000,
-    tip: 500
+    tip: 500,
+    total: 2500,
+    createdAt: moment().startOf('day')
   };
 
   return builderFromDefault(defaultTransaction);
@@ -68,5 +70,6 @@ function transactionBuilder() {
 
 export default {
   order: orderBuilder,
-  entry: entryBuilder
+  entry: entryBuilder,
+  transaction: transactionBuilder
 };
