@@ -24,12 +24,7 @@ class Reporting extends Component {
     this.setActiveTab = this.setActiveTab.bind(this);
     this.renderActiveTab = this.renderActiveTab.bind(this);
     this.state = {
-      activeTab: 'Dashboard',
-      tabs: {
-        Dashboard: ReportingDashboard,
-        Sales: ReportingSales,
-        Payments: ReportingPayments
-      }
+      activeTab: 'Dashboard'
     };
   }
 
@@ -42,7 +37,7 @@ class Reporting extends Component {
   }
 
   renderActiveTab() {
-    const activeTabComponent = this.state.tabs[this.state.activeTab];
+    const activeTabComponent = this.props.tabs[this.state.activeTab];
     return activeTabComponent({ transactions: this.props.transactions });
   }
 
@@ -53,7 +48,7 @@ class Reporting extends Component {
         ReportingNav(
           {
             activeTab: this.state.activeTab,
-            tabNames: _.keys(this.state.tabs),
+            tabNames: _.keys(this.props.tabs),
             setActiveTab: this.setActiveTab
           }
         ),
@@ -65,11 +60,17 @@ class Reporting extends Component {
 
 Reporting.propTypes = {
   loadTransactions: PropTypes.func.isRequired,
-  transactions: PropTypes.array
+  transactions: PropTypes.array,
+  tabs: PropTypes.object
 };
 
 Reporting.defaultProps = {
-  transactions: []
+  transactions: [],
+  tabs: {
+    Dashboard: ReportingDashboard,
+    Sales: ReportingSales,
+    Payments: ReportingPayments
+  }
 };
 
 export default Reporting;
