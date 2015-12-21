@@ -45,6 +45,7 @@ class Reporting extends Component {
         ReportingNav(
           {
             activeTab: this.state.activeTab,
+            tabNames: _.keys(this.state.tabs),
             setActiveTab: this.setActiveTab
           }
         ),

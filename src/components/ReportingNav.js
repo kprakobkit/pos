@@ -28,7 +28,7 @@ class ReportingNav extends Component {
         { className: 'clearfix' },
         dom.ul(
           { className: 'nav nav-tabs' },
-          ['Dashboard', 'Sales', 'Payments'].map(this.renderTab)
+          this.props.tabNames.map(this.renderTab)
         )
       )
     );
@@ -37,6 +37,7 @@ class ReportingNav extends Component {
 
 ReportingNav.propTypes = {
   activeTab: PropTypes.string.isRequired,
+  tabNames: PropTypes.array.isRequired,
   setActiveTab: PropTypes.func.isRequired
 };
 
