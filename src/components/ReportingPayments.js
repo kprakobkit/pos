@@ -50,7 +50,7 @@ class ReportingPayments extends Component {
   renderRow(row) {
     return dom.tr(
       { key: row, className: `reporting-payments-${row}` },
-      dom.td(null, row.toUpperCase()),
+      dom.td({ className: 'text-capitalize' }, row),
       this.renderPaymentsByDate(row)
     );
   }
