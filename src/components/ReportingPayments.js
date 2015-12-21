@@ -10,6 +10,7 @@ class ReportingPayments extends Component {
     this.paymentsByDate = this.paymentsByDate.bind(this);
     this.renderPaymentsByDate = this.renderPaymentsByDate.bind(this);
     this.renderHeader = this.renderHeader.bind(this);
+    this.renderRow = this.renderRow.bind(this);
   }
 
   dateRange() {
@@ -46,6 +47,14 @@ class ReportingPayments extends Component {
     });
   }
 
+  renderRow(row) {
+    return dom.tr(
+      { key: row, className: `reporting-payments-${row}` },
+      dom.td(null, row.toUpperCase()),
+      this.renderPaymentsByDate(row)
+    );
+  }
+
   render() {
     return (
       dom.div(
@@ -63,21 +72,7 @@ class ReportingPayments extends Component {
           ),
           dom.tbody(
             null,
-            dom.tr(
-              { className: 'reporting-payments-credit' },
-              dom.td(null, 'Credit'),
-              this.renderPaymentsByDate('credit')
-            ),
-            dom.tr(
-              { className: 'reporting-payments-cash' },
-              dom.td(null, 'Cash'),
-              this.renderPaymentsByDate('cash')
-            ),
-            dom.tr(
-              { className: 'reporting-payments-total active' },
-              dom.td(null, 'Total'),
-              this.renderPaymentsByDate('total')
-            )
+            ['credit', 'cash', 'total'].map(this.renderRow)
           )
         )
       )
