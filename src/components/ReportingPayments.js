@@ -64,12 +64,12 @@ class ReportingPayments extends Component {
           dom.tbody(
             null,
             dom.tr(
-              null,
+              { className: 'reporting-payments-credit' },
               dom.td(null, 'Credit'),
               this.renderPaymentsByDate('credit')
             ),
             dom.tr(
-              null,
+              { className: 'reporting-payments-cash' },
               dom.td(null, 'Cash'),
               this.renderPaymentsByDate('cash')
             ),
