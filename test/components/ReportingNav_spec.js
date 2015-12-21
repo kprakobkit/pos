@@ -13,8 +13,9 @@ const ReportingNav = React.createFactory(ReportingNavComponent);
 
 function setup() {
   const activeTab = 'Dashboard';
+  const tabNames = ['Dashboard', 'Sales', 'Payments'];
   const setActiveTab = spy();
-  const component = renderIntoDocument(ReportingNav({ activeTab, setActiveTab }));
+  const component = renderIntoDocument(ReportingNav({ activeTab, tabNames, setActiveTab }));
 
   return {
     salesTab: findRenderedDOMComponentWithClass(component, 'reporting-nav-sales-tab'),
