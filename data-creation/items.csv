@@ -20,6 +20,8 @@ FOOD,Pho,1000,Entree
 FOOD,Pho extra Meat/Meat Ball,1200,Entree
 FOOD,Homemade Yogurt,400,Dessert
 FOOD,Homemade Flan,400,Dessert
+DRINK,House Wine - Glass,900,Drink
+DRINK,House Wine - Bottle,3600,Drink
 DRINK,Bottled Water,200,Drink
 DRINK,Canned Soda,200,Drink
 DRINK,Juice,200,Drink
