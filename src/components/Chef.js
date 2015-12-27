@@ -24,7 +24,7 @@ class Chef extends Component {
 
     return EntryQueue({
       orders: this.props.orders,
-      displayMax: 6,
+      displayMax: 9,
       changeEntryStatus: this.props.changeEntryStatus,
       filterPredicate: isFood
     });
