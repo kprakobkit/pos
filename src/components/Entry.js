@@ -28,13 +28,7 @@ class Entry extends Component {
           onClick: this.handleChangeStatus.bind(null, constants.DELIVERED)
         },
         'Mark Delivered'
-      ) : dom.button(
-      {
-        className: 'btn btn-primary btn-block open',
-        onClick: this.handleChangeStatus.bind(null, constants.OPEN)
-      },
-      'Reopen'
-      ),
+      ) : null,
       dom.button(
         {
           className: 'btn btn-warning btn-block canceled',

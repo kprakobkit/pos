@@ -87,18 +87,8 @@ describe('Entry', () => {
     const deliveredEntry = Generator.entry().status(constants.DELIVERED).build();
     const { component, entry, changeEntryStatus } = setup({ entry: deliveredEntry });
 
-    it('shows open button instead of delivered', () => {
-      findRenderedDOMComponentWithClass(component, 'open');
-      const delivered = scryRenderedDOMComponentsWithClass(component, 'delivered');
-
-      expect(delivered.length).to.equal(0);
-    });
-
-    it('Open - calls changeEntryStatus with OPEN', () => {
-      const open = findRenderedDOMComponentWithClass(component, 'open');
-      Simulate.click(open);
-
-      expect(changeEntryStatus).to.have.been.called.with(constants.OPEN);
+    it('shows the cancel button', () => {
+      findRenderedDOMComponentWithClass(component, 'canceled');
     });
   });
 
@@ -106,11 +96,9 @@ describe('Entry', () => {
     const completedEntry = Generator.entry().status(constants.COMPLETED).build();
     const { component, entry, changeEntryStatus } = setup({ entry: completedEntry });
 
-    it('shows delivered button', () => {
+    it('shows delivered and cancel button', () => {
       findRenderedDOMComponentWithClass(component, 'delivered');
-      const open = scryRenderedDOMComponentsWithClass(component, 'open');
-
-      expect(open.length).to.equal(0);
+      findRenderedDOMComponentWithClass(component, 'canceled');
     });
   });
 });
