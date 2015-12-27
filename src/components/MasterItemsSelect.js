@@ -7,6 +7,7 @@ class MasterItemsSelect extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.isActiveCategory = this.isActiveCategory.bind(this);
     this.handleChangeCategory = this.handleChangeCategory.bind(this);
+    this.handleAddEntry = this.handleAddEntry.bind(this);
     const filteredItems = this.filterItems(this.props.masterItems[0].category);
     this.state = {
       filteredItems,
@@ -27,6 +28,11 @@ class MasterItemsSelect extends Component {
     const selectedItem = _.find(_.propEq('id', itemId), this.props.masterItems);
     this.props.onSelectMasterItem(selectedItem);
     this.setState({ selectedItemId: selectedItem.id });
+  }
+
+  handleAddEntry(itemId) {
+    this.handleChange(itemId);
+    this.props.onAddItem();
   }
 
   handleChangeCategory(category) {
@@ -74,10 +80,23 @@ class MasterItemsSelect extends Component {
           dom.tbody(
             { className: 'select-item' },
             this.state.filteredItems.map((item, i) => {
-              return dom.tr({
-                className: `item item-${item.name} ${this.isActiveItem(item.id)}`,
-                onClick: this.handleChange.bind(null, item.id), key: i },
-                dom.td(null, item.name));
+              return dom.tr(
+                {
+                  className: `item item-${item.name} ${this.isActiveItem(item.id)}`,
+                  onClick: this.handleChange.bind(null, item.id), key: i
+                },
+                dom.td(
+                  null,
+                  item.name
+                ),
+                dom.td(
+                  { className: 'col-md-3' },
+                  this.isActiveItem(item.id) ? dom.button({
+                    className: 'btn btn-primary',
+                    onClick: this.handleAddEntry.bind(null, item.id)
+                  }, 'add item') : null
+                )
+              );
             })
           )
         )

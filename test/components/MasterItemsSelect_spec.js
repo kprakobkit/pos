@@ -54,8 +54,8 @@ describe('Master Items Select', () => {
     const filteredItems = scryRenderedDOMComponentsWithClass(component, 'item');
 
     expect(filteredItems.length).to.equal(2);
-    expect(filteredItems[0].textContent).to.equal('hoegarden');
-    expect(filteredItems[1].textContent).to.equal('heineken');
+    expect(filteredItems[0].textContent).to.contain('hoegarden');
+    expect(filteredItems[1].textContent).to.contain('heineken');
   });
 
   it('calls onSelectMasterItem with the first item when selecting a category', () => {
@@ -65,6 +65,13 @@ describe('Master Items Select', () => {
 
     expect(onSelectMasterItem).to.be.called();
     expect(onSelectMasterItem.__spy.calls[0][0].name).to.equal('hoegarden');
+  });
+
+  it('renders button when item is selected', () => {
+    const { items, component } = setup();
+
+    expect(items[0].textContent).to.contain('add item');
+    expect(items[1].textContent).to.not.contain('add item');
   });
 });
 
