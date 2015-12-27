@@ -26,10 +26,11 @@ FOOD,Vegetable,1080,Lunch - Main
 FOOD,Side - French Fries,230,Lunch - Main
 FOOD,Side - Spring Roll,230,Lunch - Main
 FOOD,Side - Salad,230,Lunch - Main
-DRINK,Water,275,Drink
-DRINK,Soda,275,Drink
-DRINK,Juice,275,Drink
-DRINK,Tea,275,Drink
+DRINK,Water,500,Drink
+DRINK,Soda,500,Drink
+DRINK,Juice,500,Drink
+DRINK,Tea,500,Drink
+DRINK,Coffee,500,Drink
 DRINK,House Wine,900,Drink
 FOOD,Yogurt,460,Dessert
 FOOD,Flan,460,Dessert
