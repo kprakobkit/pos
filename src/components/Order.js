@@ -1,10 +1,14 @@
 import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import { Link as LinkComponent } from 'react-router';
+import constants from '../constants';
+import _ from 'ramda';
 
 const Link = createFactory(LinkComponent);
 
 class Order extends Component {
   render() {
+    const completedEntries = _.filter(_.propEq('status', constants.COMPLETED), this.props.entries).length;
+
     return (
       dom.tr(
         { className: 'order' },
@@ -15,12 +19,16 @@ class Order extends Component {
             dom.div(
               { className: 'row' },
               dom.div(
-                { className: 'table-number col-xs-6' },
+                { className: 'table-number col-xs-2' },
                 dom.h3(null, `Table# ${this.props.tableNumber}`)
               ),
               dom.div(
+                { className: 'completed-entries col-xs-1' },
+                completedEntries > 0 ? dom.h3(null, dom.span({ className: 'label label-danger' }, completedEntries)) : null
+              ),
+              dom.div(
                 {
-                  className: 'order-status col-xs-6 text-capitalize text-center'
+                  className: 'order-status col-xs-4 text-capitalize text-center'
                 },
                 dom.h3(null, this.props.printOrderStatus(this.props.status))
               )

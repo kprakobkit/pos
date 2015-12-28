@@ -60,7 +60,7 @@ describe('Master Items Select', () => {
     expect(filteredItems[1].textContent).to.contain('hoegarden');
   });
 
-  it.only('renders button when item is selected', () => {
+  it('renders button when item is selected', () => {
     const { items, component } = setup();
     const addItemBtn = scryRenderedDOMComponentsWithClass(component, 'add-item');
 
