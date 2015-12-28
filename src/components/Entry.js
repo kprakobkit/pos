@@ -39,13 +39,26 @@ class Entry extends Component {
     );
   }
 
+  labelType(status) {
+    switch (status) {
+      case constants.COMPLETED:
+        return 'success';
+      case constants.OPEN:
+        return 'default';
+      case constants.DELIVERED:
+        return 'primary';
+      default:
+        return  'default';
+    }
+  }
+
   render() {
     return dom.tr(
       { className: 'order-entry' },
       dom.td({ className: 'entry-name' }, dom.h3(null, this.props.name)),
       dom.td({ className: 'entry-comment' }, dom.h3(null, dom.small(null, this.props.comment))),
       this.props.ofOpenOrder ? [
-        dom.td({ key: 'entry-status', className: 'entry-status col-md-4 col-sm-4' }, dom.h2(null, dom.span({ className: `label label-${ this.props.status === 'COMPLETED' ? 'success' : 'primary' }` }, this.props.status))),
+        dom.td({ key: 'entry-status', className: 'entry-status col-md-4 col-sm-4' }, dom.h2(null, dom.span({ className: `label label-${this.labelType(this.props.status)}` }, this.props.status))),
         this.renderActionButtons()] :
           dom.td(
             { className: 'entry-price text-right' },
