@@ -59,7 +59,6 @@ class Orders extends Component {
     return (
       dom.div(
         null,
-        dom.h4({ className: 'orders-title' }, 'Orders'),
         Link(
           { to: '/orders/new' },
           dom.p(
