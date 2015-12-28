@@ -55,7 +55,7 @@ class OrderDetails extends Component {
           { className: 'row' },
           dom.div(
             { className: 'col-xs-6' },
-            dom.h4(
+            dom.h3(
               { className: 'text-left order-information' },
               `Table ${this.state.order.tableNumber} / Order ${this.props.params.id}  `,
               dom.span({ className: 'text-info' }, `${this.state.order.status}`),
@@ -71,8 +71,18 @@ class OrderDetails extends Component {
           dom.div(
             { className: 'col-xs-6 text-right' },
             dom.button(
-              { className: 'toggle-add-entry btn btn-info', onClick: this.toggleForm },
-              this.state.showAddEntry ? 'Close' : 'Add more items'
+              { className: `toggle-add-entry btn btn-lg btn-${ this.state.showAddEntry ? 'danger' : 'info' }`, onClick: this.toggleForm },
+              this.state.showAddEntry ?
+                [dom.span({
+                className: 'glyphicon glyphicon-remove',
+                key: 'remove',
+                'aria-hidden': true
+              }), null] :
+                [dom.span({
+                className: 'glyphicon glyphicon-plus',
+                key: 'add',
+                'aria-hidden': true
+              }), '  Add More Items']
             ),
           ),
         ),
