@@ -35,7 +35,7 @@ class PaymentSummary extends Component {
         ),
         ReadyForBillBtn({
           entries: [],
-          overrideDisable: true,
+          overrideHidden: true,
           text: 'Edit Payment Information',
           handleOnClick: this.props.setReadyForBill
         })

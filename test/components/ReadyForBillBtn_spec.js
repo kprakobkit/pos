@@ -23,7 +23,7 @@ describe('Ready for Payment', () => {
     const component = renderIntoDocument(ReadyForBillBtn({ entries }));
     const btn = findRenderedDOMComponentWithClass(component, 'ready-for-bill');
 
-    expect(btn.disabled).to.be.true;
+    expect(btn.className).to.contain('hidden');
   });
 
   it('is clickable when all entries are delivered or canceled', () => {
@@ -32,14 +32,14 @@ describe('Ready for Payment', () => {
     const component = renderIntoDocument(ReadyForBillBtn({ entries }));
     const btn = findRenderedDOMComponentWithClass(component, 'ready-for-bill');
 
-    expect(btn.disabled).to.be.false;
+    expect(btn.className).to.contain('show');
   });
 
   it('is disabled when there are no entries', () => {
     const component = renderIntoDocument(ReadyForBillBtn({ entries: [] }));
     const btn = findRenderedDOMComponentWithClass(component, 'ready-for-bill');
 
-    expect(btn.disabled).to.be.true;
+    expect(btn.className).to.contain('hidden');
   });
 
   it('is disabled when all entries are canceled', () => {
@@ -48,7 +48,7 @@ describe('Ready for Payment', () => {
     const component = renderIntoDocument(ReadyForBillBtn({ entries }));
     const btn = findRenderedDOMComponentWithClass(component, 'ready-for-bill');
 
-    expect(btn.disabled).to.be.true;
+    expect(btn.className).to.contain('hidden');
   });
 
   it('is disabled when all entries are closed', () => {
@@ -57,7 +57,7 @@ describe('Ready for Payment', () => {
     const component = renderIntoDocument(ReadyForBillBtn({ entries }));
     const btn = findRenderedDOMComponentWithClass(component, 'ready-for-bill');
 
-    expect(btn.disabled).to.be.true;
+    expect(btn.className).to.contain('hidden');
   });
 
   it('calls onClick handler', () => {
