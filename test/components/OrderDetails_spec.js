@@ -14,7 +14,7 @@ const {
 } = TestUtils;
 const OrderDetails = React.createFactory(OrderDetailsComponent);
 
-function setup({ orders } = {}) {
+function setup({ orders, masterItems } = {}) {
   const changeEntryStatus = () => {};
   const loadItems = () => {};
   const addEntriesToOrder = () => {};
@@ -31,7 +31,8 @@ function setup({ orders } = {}) {
     addEntriesToOrder,
     setReadyForBill,
     setOpen,
-    setClosed
+    setClosed,
+    masterItems
   };
   const component = renderIntoDocument(OrderDetails(props));
   const orderInfo = findRenderedDOMComponentWithClass(component, 'order-information');
@@ -92,5 +93,23 @@ describe('OrderDetails', () => {
 
       expect(setOpen).to.have.been.called.with(1);;
     });
+  });
+
+  it('toggles add entry form', () => {
+    const entries = [
+      { name: 'rice', price: 1050, comment: 'brown rice', status: 'OPEN' }
+    ];
+    const orders = [Generator.order().id(1).entries(entries).status(constants.OPEN).build()];
+    const masterItems = [Generator.item().build()];
+    const { component } = setup({ orders, masterItems });
+    const toggleForm = findRenderedDOMComponentWithClass(component, 'toggle-add-entry');
+    let masterItemsList = scryRenderedDOMComponentsWithClass(component, 'master-items');
+
+    expect(masterItemsList.length).to.equal(0);
+
+    Simulate.click(toggleForm);
+    masterItemsList = findRenderedDOMComponentWithClass(component, 'master-items');
+
+    expect(masterItems.length).to.equal(1);
   });
 });

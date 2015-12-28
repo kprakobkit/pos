@@ -12,30 +12,38 @@ const {
 } = TestUtils;
 const OpenOrder = React.createFactory(OpenOrderComponent);
 
-describe('OpenOrder', () => {
+function setup({ showAddEntry = false }) {
   const changeEntryStatus = () => {};
   const loadItems = () => {};
   const addEntriesToOrder = () => {};
   const setReadyForBill = () => {};
+  const props = {
+    order: { status: 'open', id: 1, entries: [] },
+    masterItems: [{ id: '1', name: 'burger' }],
+    addEntriesToOrder,
+    changeEntryStatus,
+    setReadyForBill,
+    showAddEntry
+  };
+  const component = renderIntoDocument(OpenOrder(props));
 
-  it('toggles add entry', () => {
-    const props = {
-      order: { status: 'open', id: 1, entries: [] },
-      masterItems: [{ id: '1', name: 'burger' }],
-      addEntriesToOrder,
-      changeEntryStatus,
-      setReadyForBill
-    };
-    const component = renderIntoDocument(OpenOrder(props));
-    const toggleForm = findRenderedDOMComponentWithClass(component, 'toggle-add-entry');
-    let masterItems = scryRenderedDOMComponentsWithClass(component, 'master-items');
+  return {
+    component,
+    masterItems: scryRenderedDOMComponentsWithClass(component, 'master-items')
+  };
+}
+
+describe('OpenOrder', () => {
+  it('hides form based on props', () => {
+    const { masterItems } = setup({ showAddEntry: false });
 
     expect(masterItems.length).to.equal(0);
+  });
 
-    Simulate.click(toggleForm);
-    masterItems = findRenderedDOMComponentWithClass(component, 'master-items');
+  it('shows form based on props', () => {
+    const { masterItems } = setup({ showAddEntry: true });
 
-    expect(masterItems).to.exist;
+    expect(masterItems.length).to.equal(1);
   });
 });
 
