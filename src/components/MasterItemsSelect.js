@@ -82,35 +82,38 @@ class MasterItemsSelect extends Component {
             })
           )
         ),
-        dom.table(
-          { className: 'table table-hover' },
-          dom.tbody(
-            { className: 'select-item' },
-            this.state.filteredItems.map((item, i) => {
-              return dom.tr(
-                {
-                  className: `item item-${item.name} ${this.isActiveItem(item.id)}`,
-                  onClick: this.handleChange.bind(null, item.id), key: i
-                },
-                dom.td(
-                  null,
-                  item.name
-                ),
-                dom.td(
-                  { className: 'col-md-3' },
-                  this.isActiveItem(item.id) ? dom.button({
-                    className: 'btn btn-primary add-item',
-                    onClick: this.handleAddEntry.bind(null, item.id)
+        dom.div(
+          { className: 'items-table' },
+          dom.table(
+            { className: 'table table-hover' },
+            dom.tbody(
+              { className: 'select-item' },
+              this.state.filteredItems.map((item, i) => {
+                return dom.tr(
+                  {
+                    className: `item item-${item.name} ${this.isActiveItem(item.id)}`,
+                    onClick: this.handleChange.bind(null, item.id), key: i
                   },
-                  dom.span(
-                    {
-                      className: 'glyphicon glyphicon-plus',
-                      'aria-hidden': true
-                    }
-                  )) : null
-                )
-              );
-            })
+                  dom.td(
+                    null,
+                    item.name
+                  ),
+                  dom.td(
+                    { className: 'col-md-3' },
+                    this.isActiveItem(item.id) ? dom.button({
+                      className: 'btn btn-primary add-item',
+                      onClick: this.handleAddEntry.bind(null, item.id)
+                    },
+                    dom.span(
+                      {
+                        className: 'glyphicon glyphicon-plus',
+                        'aria-hidden': true
+                      }
+                    )) : null
+                  )
+                );
+              })
+            )
           )
         )
       )
