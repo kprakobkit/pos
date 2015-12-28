@@ -99,9 +99,15 @@ class MasterItemsSelect extends Component {
                 dom.td(
                   { className: 'col-md-3' },
                   this.isActiveItem(item.id) ? dom.button({
-                    className: 'btn btn-primary',
+                    className: 'btn btn-primary add-item',
                     onClick: this.handleAddEntry.bind(null, item.id)
-                  }, 'add item') : null
+                  },
+                  dom.span(
+                    {
+                      className: 'glyphicon glyphicon-plus',
+                      'aria-hidden': true
+                    }
+                  )) : null
                 )
               );
             })
