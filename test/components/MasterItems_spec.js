@@ -61,7 +61,7 @@ describe('Master Items', () => {
     Simulate.click(addEntry);
 
     const entryName = findRenderedDOMComponentWithClass(component, 'entry-name');
-    expect(entryName.textContent).to.equal(food.name);
+    expect(entryName.textContent).to.equal(burger.name);
   });
 
   it('calls the handle submit prop with entries', () => {

@@ -76,16 +76,15 @@ describe('New Order', () => {
   });
 
   it('adds an order on submit and redirects to orders page', () => {
-    const { selectItem, component, addEntry, submitOrder, addOrder, food, selectTableNumber } = setup();
+    const { selectItem, component, addEntry, submitOrder, addOrder, burger, selectTableNumber } = setup();
     Simulate.change(selectTableNumber, { target: { value: 2 } });
-    Simulate.change(selectItem, { target: { value: food.id } });
+    Simulate.change(selectItem, { target: { value: burger.id } });
     Simulate.click(addEntry);
     Simulate.click(submitOrder);
 
     expect(addOrder.__spy.calls[0][0]).to.equal(2);
     expect(addOrder.__spy.calls[0][1].length).to.equal(1);
-    expect(addOrder.__spy.calls[0][1]).to.deep.equal([{ name: food.name, id: food.id, comment: '' }]);
-    expect(addOrder.__spy.calls[0][1]).to.deep.equal([{ name: food.name, id: food.id, comment: '' }]);
+    expect(addOrder.__spy.calls[0][1]).to.deep.equal([{ name: burger.name, id: burger.id, comment: '' }]);
     expect(pushState).to.have.been.called.with(null, '/orders');
   });
 });

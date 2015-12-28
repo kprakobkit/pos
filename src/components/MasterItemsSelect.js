@@ -16,12 +16,19 @@ class MasterItemsSelect extends Component {
     };
   };
 
+  componentWillMount() {
+    this.props.onSelectMasterItem(this.state.filteredItems[0]);
+  }
+
   getCategories(masterItems) {
     return _.uniq(_.pluck('category', masterItems));
   }
 
   filterItems(category) {
-    return _.filter(_.propEq('category', category), this.props.masterItems);
+    return _.pipe(
+      _.filter(_.propEq('category', category)),
+      _.sortBy(_.prop('name'))
+    )(this.props.masterItems);
   }
 
   handleChange(itemId) {
