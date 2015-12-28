@@ -58,6 +58,6 @@ input[type=number]::-webkit-outer-spin-button {
 
 .items-table {
   overflow: auto;
-  height: 400px;
+  height: 50vh;
   margin-bottom: 10px;
 }
