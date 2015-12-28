@@ -140,7 +140,7 @@ class MasterItems extends Component {
               disabled: !this.state.entries.length,
               onClick: this.handleOnClick
             },
-            'Send to the kitchen'
+            'Send'
           )
         )
       )

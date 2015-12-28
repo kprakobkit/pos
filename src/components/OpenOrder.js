@@ -58,12 +58,9 @@ class OpenOrder extends Component {
         }),
         Link(
           { to: '/orders', className: 'orders-link' },
-          dom.p(
-            null,
-            dom.button(
-              { className: 'btn btn-danger btn-lg btn-block' },
-              'Back'
-            )
+          dom.button(
+            { className: 'btn btn-danger btn-lg btn-block' },
+            'Back'
           )
         )
       )
