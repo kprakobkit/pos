@@ -7,7 +7,7 @@ import { Link as LinkComponent } from 'react-router';
 
 const MasterItems = createFactory(MasterItemsComponent);
 const Link = createFactory(LinkComponent);
-const tableNumbers = _.range(1, 41).concat('TOGO').concat('BAR');
+const tableNumbers = _.range(1, 41).concat('TOGO', 'BAR');
 
 function mapStateToProps(state) {
   return {

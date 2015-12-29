@@ -53,8 +53,8 @@ class MasterItems extends Component {
   renderSelectedEntries() {
     return this.state.entries.map((entry, i) => dom.tr(
       { className: 'entries', key: i },
-      dom.td({ className: 'entry-name col-md-4 col-sm-4' }, dom.h4(null, entry.name)),
-      dom.td({ className: 'entry-comment col-md-5 col-sm5' }, dom.input({
+      dom.td({ className: 'entry-name col-xs-4' }, dom.h4(null, entry.name)),
+      dom.td({ className: 'entry-comment col-xs-5' }, dom.input({
         className: `input form-control add-comment-${entry.name}`,
         onChange: this.addComment.bind(null, i)
       })),
