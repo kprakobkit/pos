@@ -79,7 +79,6 @@ class MasterItems extends Component {
         null,
         dom.h2(
           { className: 'text-center text-danger lead' },
-          'There is currently nothing to send to the kitchen.'
         )
       )
     );

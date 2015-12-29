@@ -99,7 +99,7 @@ class MasterItemsSelect extends Component {
                     item.name
                   ),
                   dom.td(
-                    { className: 'col-md-3' },
+                    { className: 'col-md-3 text-right' },
                     this.isActiveItem(item.id) ? dom.button({
                       className: 'btn btn-primary add-item',
                       onClick: this.handleAddEntry.bind(null, item.id)
