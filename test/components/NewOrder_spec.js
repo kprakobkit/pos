@@ -53,7 +53,7 @@ function setup() {
 
   return {
     component,
-    addEntry: findRenderedDOMComponentWithClass(component, 'add-entry'),
+    addBurger: findRenderedDOMComponentWithClass(component, 'add-entry-burger'),
     selectItem: findRenderedDOMComponentWithClass(component, 'select-item'),
     submitOrder: findRenderedDOMComponentWithClass(component, 'submit-order'),
     selectTableNumber: findRenderedDOMComponentWithClass(component, 'table-numbers'),
@@ -65,9 +65,9 @@ function setup() {
 
 describe('New Order', () => {
   it('removes an item from an order', () => {
-    const { selectItem, component, addEntry, burger } = setup();
+    const { selectItem, component, addBurger, burger } = setup();
     Simulate.change(selectItem, { target: { value: burger.id } });
-    Simulate.click(addEntry);
+    Simulate.click(addBurger);
     const removeEntry = findRenderedDOMComponentWithClass(component, 'remove-entry');
     Simulate.click(removeEntry);
     const entries = scryRenderedDOMComponentsWithClass(component, 'entries');
@@ -76,10 +76,10 @@ describe('New Order', () => {
   });
 
   it('adds an order on submit and redirects to orders page', () => {
-    const { selectItem, component, addEntry, submitOrder, addOrder, burger, selectTableNumber } = setup();
+    const { selectItem, component, addBurger, submitOrder, addOrder, burger, selectTableNumber } = setup();
     Simulate.change(selectTableNumber, { target: { value: 2 } });
     Simulate.change(selectItem, { target: { value: burger.id } });
-    Simulate.click(addEntry);
+    Simulate.click(addBurger);
     Simulate.click(submitOrder);
 
     expect(addOrder.__spy.calls[0][0]).to.equal(2);

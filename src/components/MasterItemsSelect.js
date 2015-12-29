@@ -101,7 +101,7 @@ class MasterItemsSelect extends Component {
                   dom.td(
                     { className: 'col-md-3 text-right' },
                     this.isActiveItem(item.id) ? dom.button({
-                      className: 'btn btn-primary add-item',
+                      className: `btn btn-primary add-entry-${item.name}`,
                       onClick: this.handleAddEntry.bind(null, item.id)
                     },
                     dom.span(

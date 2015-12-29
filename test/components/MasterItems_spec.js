@@ -14,8 +14,8 @@ const {
 const MasterItems = React.createFactory(MasterItemsComponent);
 
 describe('Master Items', () => {
-  const food = { id: '1', name: 'food' };
-  const burger = { id: '2', name: 'burger' };
+  const food = { id: '1', name: 'food', category: 'food' };
+  const burger = { id: '2', name: 'burger', category: 'food' };
   const masterItems = [food, burger];
   let handleSubmit;
   let handleUpdateEntries;
@@ -26,37 +26,8 @@ describe('Master Items', () => {
     component = renderIntoDocument(MasterItems({ masterItems, handleUpdateEntries, entries: [], handleSubmit }));
   });
 
-  it('should clear comment after adding an entry', () => {
-    const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry');
-    let addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
-
-    Simulate.change(addCommentFld, { target: { value: 'no meat' } });
-    addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
-
-    expect(addCommentFld.value).to.equal('no meat');
-    Simulate.click(addEntry);
-
-    addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
-    expect(addCommentFld.value).to.equal('');
-  });
-
-  it('adds the selected item and comment', () => {
-    const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry');
-    const selectBurger = findRenderedDOMComponentWithClass(component, 'item-burger');
-    const addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
-
-    Simulate.click(selectBurger);
-    Simulate.change(addCommentFld, { target: { value: 'no meat' } });
-    Simulate.click(addEntry);
-
-    const entryName = findRenderedDOMComponentWithClass(component, 'entry-name');
-    const entryComment = findRenderedDOMComponentWithClass(component, 'entry-comment');
-    expect(entryName.textContent).to.equal(burger.name);
-    expect(entryComment.textContent).to.equal('no meat');
-  });
-
   it('defaults to the first item in master items', () => {
-    const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry');
+    const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry-burger');
 
     Simulate.click(addEntry);
 
@@ -66,22 +37,24 @@ describe('Master Items', () => {
 
   it('calls the handle submit prop with entries', () => {
     const submitOrder = findRenderedDOMComponentWithClass(component, 'submit-order');
-    const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry');
     const selectBurger = findRenderedDOMComponentWithClass(component, 'item-burger');
-    const addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment');
 
     Simulate.click(selectBurger);
+    const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry-burger');
     Simulate.click(addEntry);
+    const addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment-burger');
+    Simulate.change(addCommentFld, { target: { value: 'no meat' } });
     Simulate.click(addEntry);
     Simulate.click(submitOrder);
 
     expect(handleSubmit.__spy.calls[0][0].length).to.equal(2);
     expect(handleSubmit.__spy.calls[0][0][0].name).to.equal(burger.name);
-    expect(handleSubmit).to.have.been.called();
+    expect(handleSubmit.__spy.calls[0][0][0].comment).to.equal('no meat');
+    expect(handleSubmit.__spy.calls[0][0][1].comment).to.equal('');
   });
 
   it('clears the entries list after submit', () => {
-    const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry');
+    const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry-burger');
     const submitOrder = findRenderedDOMComponentWithClass(component, 'submit-order');
 
     Simulate.click(addEntry);
@@ -94,7 +67,7 @@ describe('Master Items', () => {
 
   it('shows message when no entries', () => {
     let noEntriesMsg = scryRenderedDOMComponentsWithClass(component, 'no-entries');
-    const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry');
+    const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry-burger');
 
     expect(noEntriesMsg.length).to.be.above(0);
     Simulate.click(addEntry);
@@ -111,7 +84,7 @@ describe('Master Items', () => {
 
   it('enables submit button there is at least one entry', () => {
     const submitButton = findRenderedDOMComponentWithClass(component, 'submit-order');
-    const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry');
+    const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry-burger');
 
     Simulate.click(addEntry);
 

@@ -35,6 +35,13 @@ function setup() {
 }
 
 describe('Master Items Select', () => {
+  it('renders button when item is selected', () => {
+    const { items, component } = setup();
+    const addItemBtn = scryRenderedDOMComponentsWithClass(component, 'add-entry-apples');
+
+    expect(addItemBtn.length).to.equal(1);
+  });
+
   it('renders an option for items in the first category in alphabetical order', () => {
     const { items } = setup();
 
@@ -58,13 +65,6 @@ describe('Master Items Select', () => {
     expect(filteredItems.length).to.equal(2);
     expect(filteredItems[0].textContent).to.contain('heineken');
     expect(filteredItems[1].textContent).to.contain('hoegarden');
-  });
-
-  it('renders button when item is selected', () => {
-    const { items, component } = setup();
-    const addItemBtn = scryRenderedDOMComponentsWithClass(component, 'add-item');
-
-    expect(addItemBtn.length).to.equal(1);
   });
 });
 
