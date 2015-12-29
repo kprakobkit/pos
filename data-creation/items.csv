@@ -168,43 +168,44 @@ DRINK,Soda,500,Drink
 DRINK,Juice,500,Drink
 DRINK,Tea,500,Drink
 DRINK,Coffee,500,Drink
-DRINK,House Wine,900,Drink
+DRINK,House Wine - Glass,900,Drink
+DRINK,House Wine - Bottle,3500,Drink
 FOOD,Yogurt,460,Dessert
 FOOD,Flan,460,Dessert
-FOOD,Garlic Edammame,690,Lounge - Appetizer
-FOOD,French Fries,735,Lounge - Appetizer
-FOOD,French Fries with Garlic,850,Lounge - Appetizer
-FOOD,Sweet Potato Fries,780,Lounge - Appetizer
-FOOD,Sweet Potato Fries with Garlic,895,Lounge - Appetizer
-FOOD,Spring Roll,735,Lounge - Appetizer
-FOOD,Chicken Wing,850,Lounge - Appetizer
-FOOD,Fried Calamari,920,Lounge - Appetizer
-FOOD,Sesame Grille Crevettes,920,Lounge - Appetizer
-FOOD,Cold Cuts Cheese Crackers,1080,Lounge - Appetizer
-FOOD,Soft Shell Crab,1195,Lounge - Appetizer
-FOOD,Cube Steak,1839,Lounge - Entree
-FOOD,Salmon,1700,Lounge - Entree
-FOOD,Scallop,1700,Lounge - Entree
-FOOD,Chicken,1609,Lounge - Entree
-FOOD,Pho Beef P,645,Lounge - Entree
-FOOD,Pho Beef P extra meat,875,Lounge - Entree
-FOOD,Pho Beef R,1080,Lounge - Entree
-FOOD,Pho Beef R extra meat,1310,Lounge - Entree
-FOOD,Pho Beef L,1195,Lounge - Entree
-FOOD,Pho Beef L extra meat,1425,Lounge - Entree
-FOOD,Pho Chicken P,645,Lounge - Entree
-FOOD,Pho Chicken P extra meat,875,Lounge - Entree
-FOOD,Pho Chicken R,1080,Lounge - Entree
-FOOD,Pho Chicken R extra meat,1310,Lounge - Entree
-FOOD,Pho Chicken L,1195,Lounge - Entree
-FOOD,Pho Chicken L extra meat,1425,Lounge - Entree
-FOOD,Double Garlic Linguini,735,Lounge - Entree
-FOOD,Rice,460,Lounge - Entree
+FOOD,Garlic Edammame,690,DINNER Appetizer
+FOOD,French Fries,735,DINNER Appetizer
+FOOD,French Fries with Garlic,850,DINNER Appetizer
+FOOD,Sweet Potato Fries,780,DINNER Appetizer
+FOOD,Sweet Potato Fries with Garlic,895,DINNER Appetizer
+FOOD,Spring Roll,735,DINNER Appetizer
+FOOD,Chicken Wing,850,DINNER Appetizer
+FOOD,Fried Calamari,920,DINNER Appetizer
+FOOD,Sesame Grille Crevettes,920,DINNER Appetizer
+FOOD,Cold Cuts Cheese Crackers,1080,DINNER Appetizer
+FOOD,Soft Shell Crab,1195,DINNER Appetizer
+FOOD,Cube Steak,1839,DINNER Entree
+FOOD,Salmon,1700,DINNER Entree
+FOOD,Scallop,1700,DINNER Entree
+FOOD,Chicken,1609,DINNER Entree
+FOOD,Pho Beef P,645,DINNER Entree
+FOOD,Pho Beef P extra meat,875,DINNER Entree
+FOOD,Pho Beef R,1080,DINNER Entree
+FOOD,Pho Beef R extra meat,1310,DINNER Entree
+FOOD,Pho Beef L,1195,DINNER Entree
+FOOD,Pho Beef L extra meat,1425,DINNER Entree
+FOOD,Pho Chicken P,645,DINNER Entree
+FOOD,Pho Chicken P extra meat,875,DINNER Entree
+FOOD,Pho Chicken R,1080,DINNER Entree
+FOOD,Pho Chicken R extra meat,1310,DINNER Entree
+FOOD,Pho Chicken L,1195,DINNER Entree
+FOOD,Pho Chicken L extra meat,1425,DINNER Entree
+FOOD,Double Garlic Linguini,735,DINNER Entree
+FOOD,Rice,460,DINNER Entree
 OTHER,Togo,150,TOGO
-DRINK,Sweet pickles,600,Drink – Snack
-DRINK,Cocktail onion,600,Drink – Snack
-DRINK,Manzanilla Olives ,600,Drink – Snack
-DRINK,Monster Energy,600,Drink – Snack
+DRINK,Sweet pickles,600,Drink - Snack
+DRINK,Cocktail onion,600,Drink - Snack
+DRINK,Manzanilla Olives ,600,Drink - Snack
+DRINK,Monster Energy,600,Drink - Snack
 DRINK,Kinsen Plum,4000,Sake
 DRINK,Gekkeikan – S,900,Sake
 DRINK,Gekkeikan – L,1100,Sake
@@ -222,31 +223,31 @@ DRINK,Snow Beauty (Niguri Unfiltered),1800,Sake
 DRINK,TY Ku,6000,Sake
 DRINK,Tenranzan,6000,Sake
 DRINK,Yaegaki,4000,Sake
-FOOD,Spring Roll,530,Lunch - Appetizer
-FOOD,Tofu Roll,530,Lunch - Appetizer
-FOOD,French Fries,390,Lunch - Appetizer
-FOOD,French Fries w/ Garlic,405,Lunch - Appetizer
-FOOD,Sweet Potato Fries,460,Lunch - Appetizer
-FOOD,Sweet Potato Fries w/ Garlic,575,Lunch - Appetizer
-FOOD,Sesame Grilled Crevettes,735,Lunch - Appetizer
-FOOD,Salad with Chicken,735,Lunch - Appetizer
-FOOD,Salad with Shrimp,1080,Lunch - Appetizer
-FOOD,Salad with Cubed Steak,1609,Lunch - Appetizer
-FOOD,Pho Beef P,575,Lunch - Main
-FOOD,Pho Beef R,920,Lunch - Main
-FOOD,Pho Beef L,1080,Lunch - Main
-FOOD,Pho Chicken P,575,Lunch - Main
-FOOD,Pho Chicken R,920,Lunch - Main
-FOOD,Pho Chicken L,1080,Lunch - Main
-FOOD,Pho Vegetarian P,575,Lunch - Main
-FOOD,Pho Vegetarian R,920,Lunch - Main
-FOOD,Pho Vegetarian L,1080,Lunch - Main
-FOOD,Beef Steak over rice - New York,1609,Lunch - Main
-FOOD,Beef Steak over rice - Reb Eye,1609,Lunch - Main
-FOOD,Salmon with Linguini,1425,Lunch - Main
-FOOD,Salmon with Brown Rice,1425,Lunch - Main
-FOOD,Baked Chicken,1218,Lunch - Main
-FOOD,Vegetable,1080,Lunch - Main
-FOOD,Side - French Fries,230,Lunch - Main
-FOOD,Side - Spring Roll,230,Lunch - Main
-FOOD,Side - Salad,230,Lunch - Main
+FOOD,Spring Roll,530,LUNCH Appetizer
+FOOD,Tofu Roll,530,LUNCH Appetizer
+FOOD,French Fries,390,LUNCH Appetizer
+FOOD,French Fries w/ Garlic,405,LUNCH Appetizer
+FOOD,Sweet Potato Fries,460,LUNCH Appetizer
+FOOD,Sweet Potato Fries w/ Garlic,575,LUNCH Appetizer
+FOOD,Sesame Grilled Crevettes,735,LUNCH Appetizer
+FOOD,Salad with Chicken,735,LUNCH Appetizer
+FOOD,Salad with Shrimp,1080,LUNCH Appetizer
+FOOD,Salad with Cubed Steak,1609,LUNCH Appetizer
+FOOD,Pho Beef P,575,LUNCH Main
+FOOD,Pho Beef R,920,LUNCH Main
+FOOD,Pho Beef L,1080,LUNCH Main
+FOOD,Pho Chicken P,575,LUNCH Main
+FOOD,Pho Chicken R,920,LUNCH Main
+FOOD,Pho Chicken L,1080,LUNCH Main
+FOOD,Pho Vegetarian P,575,LUNCH Main
+FOOD,Pho Vegetarian R,920,LUNCH Main
+FOOD,Pho Vegetarian L,1080,LUNCH Main
+FOOD,Beef Steak over rice - New York,1609,LUNCH Main
+FOOD,Beef Steak over rice - Reb Eye,1609,LUNCH Main
+FOOD,Salmon with Linguini,1425,LUNCH Main
+FOOD,Salmon with Brown Rice,1425,LUNCH Main
+FOOD,Baked Chicken,1218,LUNCH Main
+FOOD,Vegetable,1080,LUNCH Main
+FOOD,Side - French Fries,230,LUNCH Main
+FOOD,Side - Spring Roll,230,LUNCH Main
+FOOD,Side - Salad,230,LUNCH Main
