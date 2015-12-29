@@ -11,7 +11,7 @@ class Order extends Component {
 
     return (
       dom.tr(
-        { className: 'order' },
+        { className: 'order text-center' },
         dom.td(
           null,
           Link(
@@ -23,14 +23,14 @@ class Order extends Component {
                 dom.h3(null, `Table# ${this.props.tableNumber}`)
               ),
               dom.div(
-                { className: 'completed-entries col-xs-1' },
-                completedEntries > 0 ? dom.h3(null, dom.span({ className: 'label label-danger' }, completedEntries)) : null
-              ),
-              dom.div(
                 {
-                  className: 'order-status col-xs-4 text-capitalize text-center'
+                  className: 'order-status col-xs-2 text-capitalize text-center'
                 },
                 dom.h3(null, this.props.printOrderStatus(this.props.status))
+              ),
+              dom.div(
+                { className: 'completed-entries col-xs-2' },
+                completedEntries > 0 ? dom.h3(null, dom.span({ className: 'label label-danger' }, `${ completedEntries } Completed`)) : null
               )
             )
           )

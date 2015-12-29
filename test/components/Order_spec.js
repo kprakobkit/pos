@@ -47,6 +47,6 @@ describe('Order', () => {
     const { component } = setup({ entries: [openEntry, completedEntry] });
     const completedEntries = findRenderedDOMComponentWithClass(component, 'completed-entries');
 
-    expect(completedEntries.textContent).to.equal('1');
+    expect(completedEntries.textContent).to.contain('1');
   });
 });

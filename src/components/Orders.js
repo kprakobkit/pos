@@ -59,32 +59,41 @@ class Orders extends Component {
     return (
       dom.div(
         null,
-        Link(
-          { to: '/orders/new' },
-          dom.p(
-            null,
-            dom.button(
-              { className: 'btn btn-success btn-lg btn-block' },
-              'New Order'
+        dom.div(
+          { className: 'row' },
+          dom.div(
+            { className: 'col-xs-6' },
+            OrdersFilter(
+              {
+                filter: this.state.filter,
+                filterOrders: this.filterOrders,
+                printOrderStatus: this.printOrderStatus
+              }
+            ),
+          ),
+          Link(
+            { to: '/orders/new', className: 'col-xs-6 text-right' },
+            dom.p(
+              null,
+              dom.button(
+                { className: 'btn btn-success btn-lg' },
+                'Add new order'
+              )
             )
           )
         ),
-        OrdersFilter(
-          {
-            filter: this.state.filter,
-            filterOrders: this.filterOrders,
-            printOrderStatus: this.printOrderStatus
-          }
-        ),
-        this.props.orders.length ?
-          dom.table(
-            { className: 'table table-hover' },
-            dom.tbody(
-              null,
-              this.getFilteredOrders().map(this.renderOrder)
-            )
+        dom.div(
+          null,
+          this.props.orders.length ?
+            dom.table(
+              { className: 'table table-hover' },
+              dom.tbody(
+                null,
+                this.getFilteredOrders().map(this.renderOrder)
+              )
           ) :
-          dom.div({ className: 'orders-message' }, 'There are currently no orders.')
+            dom.div({ className: 'orders-message' }, 'There are currently no orders.')
+        )
       )
     );
   }

@@ -16,17 +16,15 @@ class MasterItems extends Component {
     this.renderNoEntries = this.renderNoEntries.bind(this);
     this.addComment = this.addComment.bind(this);
     this.state = {
-      comment: '',
       entries: []
     };
   }
 
   handleAddEntry() {
     const selectedItem = R.merge({}, this.state.selectedItem || this.props.masterItems[0]);
-    selectedItem.comment = this.state.comment;
     const entries = this.state.entries.concat(selectedItem);
 
-    this.setState({ entries, comment: '' });
+    this.setState({ entries });
   }
 
   selectItem(selectedItem) {

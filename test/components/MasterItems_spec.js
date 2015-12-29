@@ -50,7 +50,6 @@ describe('Master Items', () => {
     expect(handleSubmit.__spy.calls[0][0].length).to.equal(2);
     expect(handleSubmit.__spy.calls[0][0][0].name).to.equal(burger.name);
     expect(handleSubmit.__spy.calls[0][0][0].comment).to.equal('no meat');
-    expect(handleSubmit.__spy.calls[0][0][1].comment).to.equal('');
   });
 
   it('clears the entries list after submit', () => {

@@ -6,12 +6,12 @@ a:hover {
   vertical-align: middle
 }
 
-.orders-filter {
-  margin-bottom: 40px;
-}
-
 .order h3 {
   color: black;
+}
+
+.orders-filter-option {
+  margin-left: 5px;
 }
 
 .payment-component {
