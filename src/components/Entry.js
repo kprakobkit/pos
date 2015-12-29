@@ -58,12 +58,25 @@ class Entry extends Component {
       dom.td({ className: 'entry-name' }, dom.h3(null, this.props.name)),
       dom.td({ className: 'entry-comment' }, dom.h3(null, this.props.comment)),
       this.props.ofOpenOrder ? [
-        dom.td({ key: 'entry-status', className: 'entry-status col-md-4 col-sm-4' }, dom.h2(null, dom.span({ className: `label label-${this.labelType(this.props.status)}` }, this.props.status))),
-        this.renderActionButtons()] :
-          dom.td(
-            { className: 'entry-price text-right' },
-            dom.h3(null, $.format(this.props.price))
-        )
+        dom.td(
+          {
+            key: 'entry-status',
+            className: 'entry-status col-md-4 col-sm-4'
+          },
+          dom.h2(
+            null,
+            dom.span(
+              { className: `label label-${this.labelType(this.props.status)}` },
+              this.props.status
+            )
+          )
+        ),
+        this.renderActionButtons()
+      ] :
+        dom.td(
+          { className: 'entry-price text-right' },
+          dom.h3(null, $.format(this.props.price))
+      )
     );
   }
 }
