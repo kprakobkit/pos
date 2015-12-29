@@ -56,7 +56,8 @@ class MasterItems extends Component {
       dom.td({ className: 'entry-name col-xs-4' }, dom.h4(null, entry.name)),
       dom.td({ className: 'entry-comment col-xs-5' }, dom.input({
         className: `input form-control add-comment-${entry.name}`,
-        onChange: this.addComment.bind(null, i)
+        onChange: this.addComment.bind(null, i),
+        value: entry.comment
       })),
       dom.td(
         { className: 'entry-action text-right' },
