@@ -21,7 +21,11 @@ class MasterItemsSelect extends Component {
   }
 
   getCategories(masterItems) {
-    return _.uniq(_.pluck('category', _.sortBy(_.prop('category'), masterItems)));
+    return _.pipe(
+      _.sortBy(_.prop('category')),
+      _.pluck('category'),
+      _.uniq,
+    )(masterItems);
   }
 
   filterItems(category) {
