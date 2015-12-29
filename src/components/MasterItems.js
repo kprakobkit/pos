@@ -1,5 +1,6 @@
 import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import MasterItemsSelectComponent from './MasterItemsSelect';
+import R from 'ramda';
 import _ from 'underscore';
 
 const MasterItemsSelect = createFactory(MasterItemsSelectComponent);
@@ -21,7 +22,7 @@ class MasterItems extends Component {
   }
 
   handleAddEntry() {
-    const selectedItem = _.extend({}, this.state.selectedItem || this.props.masterItems[0]);
+    const selectedItem = R.merge({}, this.state.selectedItem || this.props.masterItems[0]);
     selectedItem.comment = this.state.comment;
     const entries = this.state.entries.concat(selectedItem);
 
