@@ -2,7 +2,7 @@ import { Component, PropTypes, DOM as dom } from 'react';
 import actions from '../action_creators';
 import constants from '../constants';
 
-class OrdersFilter extends Component {
+class Filter extends Component {
   constructor(props) {
     super(props);
     this.renderFilter = this.renderFilter.bind(this);
@@ -39,8 +39,8 @@ class OrdersFilter extends Component {
   }
 }
 
-OrdersFilter.propTypes = {
+Filter.propTypes = {
   filterOrders: PropTypes.func.isRequired
 };
 
-export default OrdersFilter;
+export default Filter;

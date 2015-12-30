@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import constants from '../../src/constants';
-import OrdersFilterComponent from '../../src/components/OrdersFilter';
+import FilterComponent from '../../src/components/Filter';
 
 const {
   renderIntoDocument,
@@ -12,14 +12,14 @@ const {
   Simulate
 } = TestUtils;
 
-const OrdersFilter = React.createFactory(OrdersFilterComponent);
+const Filter = React.createFactory(FilterComponent);
 
-describe('OrdersFilter', () => {
+describe('Filter', () => {
   const printOrderStatus = (status) => {};
 
   it('renders three filter options', () => {
     const filterOrders = () => {};
-    const component = renderIntoDocument(OrdersFilter({ filterOrders, printOrderStatus }));
+    const component = renderIntoDocument(Filter({ filterOrders, printOrderStatus }));
     const filters = scryRenderedDOMComponentsWithClass(component, 'orders-filter-option');
 
     expect(filters.length).to.equal(3);
@@ -42,7 +42,7 @@ describe('OrdersFilter', () => {
         calledWithReady = true;
       }
     };
-    const component = renderIntoDocument(OrdersFilter({ filterOrders, printOrderStatus }));
+    const component = renderIntoDocument(Filter({ filterOrders, printOrderStatus }));
     const filters = scryRenderedDOMComponentsWithClass(component, 'orders-filter-option');
     Simulate.click(filters[0]);
     Simulate.click(filters[1]);
