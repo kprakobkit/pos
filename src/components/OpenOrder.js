@@ -13,13 +13,14 @@ const MasterItems = createFactory(MasterItemsComponent);
 const ReadyForBillBtn = createFactory(ReadyForBillBtnComponent);
 const Link = createFactory(LinkComponent);
 const Filter = createFactory(FilterComponent);
+const openAndCompleted = `${ constants.OPEN }/${ constants.COMPLETED } `;
 
 class OpenOrder extends Component {
   constructor(props) {
     super(props);
     this.renderEntry = this.renderEntry.bind(this);
     this.filterOrders = this.filterOrders.bind(this);
-    this.state = { filter: constants.OPEN };
+    this.state = { filter: openAndCompleted };
   }
 
   filterOrders(filter) {
@@ -27,7 +28,11 @@ class OpenOrder extends Component {
   }
 
   getFilteredEntries() {
-    return this.props.order.entries.filter((entry) => entry.status === this.state.filter);
+    if(this.state.filter === openAndCompleted) {
+      return this.props.order.entries.filter(({ status }) => status === constants.OPEN || status === constants.COMPLETED);
+    } else {
+      return this.props.order.entries.filter((entry) => entry.status === this.state.filter);
+    }
   }
 
   renderEntry(entry) {
@@ -64,7 +69,7 @@ class OpenOrder extends Component {
                 filter: this.state.filter,
                 filterOrders: this.filterOrders,
                 printOrderStatus: this.printOrderStatus,
-                filters: [constants.OPEN, constants.COMPLETED, constants.DELIVERED]
+                filters: [openAndCompleted, constants.DELIVERED]
               }
             ),
           )
