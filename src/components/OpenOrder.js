@@ -16,13 +16,8 @@ class OpenOrder extends Component {
   constructor(props) {
     super(props);
     this.renderEntry = this.renderEntry.bind(this);
-    this.toggleForm = this.toggleForm.bind(this);
-    this.state = { showAddEntry: false };
   }
 
-  toggleForm() {
-    this.setState({ showAddEntry: !this.state.showAddEntry });
-  }
 
   renderEntry(entry, i) {
     return !_.contains(entry.status, [constants.CLOSED, constants.CANCELED]) ?
@@ -42,17 +37,11 @@ class OpenOrder extends Component {
         null,
         dom.div(
           { className: 'text-right' },
-          dom.button(
-            { className: 'toggle-add-entry btn btn-info', onClick: this.toggleForm },
-            this.state.showAddEntry ? 'Close' : 'Add more items'
-          ),
         ),
-        dom.br(null),
-        this.state.showAddEntry ? MasterItems({
+        this.props.showAddEntry ? MasterItems({
           masterItems: this.props.masterItems,
           handleSubmit: this.props.addEntriesToOrder
         }) : null,
-        dom.br(null),
         dom.div(
           { className: 'order-entries' },
           dom.table(
@@ -69,12 +58,9 @@ class OpenOrder extends Component {
         }),
         Link(
           { to: '/orders', className: 'orders-link' },
-          dom.p(
-            null,
-            dom.button(
-              { className: 'btn btn-danger btn-lg btn-block' },
-              'Back'
-            )
+          dom.button(
+            { className: 'btn btn-danger btn-lg btn-block' },
+            'Back'
           )
         )
       )

@@ -19,13 +19,6 @@ describe('Orders', () => {
   const loadOrders = () => {};
   const loadItems = () => {};
 
-  it('renders title', () => {
-    const component = renderIntoDocument(Orders({ orders: [], loadOrders, loadItems }));
-    const title = findRenderedDOMComponentWithClass(component, 'orders-title');
-
-    expect(title.textContent).to.equal('Orders');
-  });
-
   it('renders Order component for each order in props', () => {
     const order1 = Generator.order().status(constants.OPEN).build();
     const order2 = Generator.order().status(constants.OPEN).build();

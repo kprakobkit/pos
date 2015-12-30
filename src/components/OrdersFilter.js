@@ -32,7 +32,7 @@ class OrdersFilter extends Component {
   render() {
     return (
       dom.div(
-        { className: 'orders-filter text-center' },
+        { className: 'orders-filter' },
         [constants.OPEN, constants.READY_FOR_BILL, constants.ALL].map(this.renderFilter)
       )
     );

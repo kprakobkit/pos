@@ -47,6 +47,7 @@ function entryBuilder() {
     name: 'rice',
     price: 1050,
     comment: 'brown rice',
+    category: 'main',
     status: _.sample(orderStatuses),
     createdAt: moment(constants.now),
     type: _.sample(entryTypes)
@@ -68,8 +69,18 @@ function transactionBuilder() {
   return builderFromDefault(defaultTransaction);
 }
 
+function itemBuilder() {
+  const defaultItem = {
+    id: '1',
+    name: 'burger'
+  };
+
+  return builderFromDefault(defaultItem);
+}
+
 export default {
   order: orderBuilder,
   entry: entryBuilder,
-  transaction: transactionBuilder
+  transaction: transactionBuilder,
+  item: itemBuilder
 };

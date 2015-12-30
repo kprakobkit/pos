@@ -5,6 +5,7 @@ import TestUtils from 'react-addons-test-utils';
 import constants from '../../src/constants';
 import tableComponentFactory from './table_component_factory';
 import OrderComponent from '../../src/components/Order';
+import Generator from '../support/generator';
 
 const {
   renderIntoDocument,
@@ -14,9 +15,9 @@ const {
 const Order = createFactory(OrderComponent);
 const Table = createFactory(tableComponentFactory(Order));
 
-function setup({ tableNumber = '10', status = 'open' }) {
+function setup({ tableNumber = '10', status = 'open', entries = [] }) {
   const printOrderStatus = (status) => status;
-  const props = { status, printOrderStatus, tableNumber };
+  const props = { status, printOrderStatus, tableNumber, entries };
   const component = renderIntoDocument(Table(props));
 
   return {
@@ -25,7 +26,6 @@ function setup({ tableNumber = '10', status = 'open' }) {
 }
 
 describe('Order', () => {
-
   it('renders table number', () => {
     const { component } = setup({ tableNumber: '14' });
     const tableNumber = findRenderedDOMComponentWithClass(component, 'table-number');
@@ -39,5 +39,14 @@ describe('Order', () => {
     const orderStatus = findRenderedDOMComponentWithClass(component, 'order-status');
 
     expect(orderStatus.textContent).to.contain(status);
+  });
+
+  it('renders number of completed entries', () => {
+    const completedEntry = Generator.entry().status(constants.COMPLETED).build();
+    const openEntry = Generator.entry().status(constants.OPEN).build();
+    const { component } = setup({ entries: [openEntry, completedEntry] });
+    const completedEntries = findRenderedDOMComponentWithClass(component, 'completed-entries');
+
+    expect(completedEntries.textContent).to.contain('1');
   });
 });

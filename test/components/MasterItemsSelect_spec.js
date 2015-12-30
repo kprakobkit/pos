@@ -18,7 +18,7 @@ function setup() {
   const burger = { id: '2', name: 'burger', category: 'Main' };
   const hoegarden = { id: '3', name: 'hoegarden', category: 'Beer' };
   const heineken = { id: '4', name: 'heineken', category: 'Beer' };
-  const fries = { id: '5', name: 'fries', category: 'Appetizer' };
+  const fries = { id: '5', name: 'apples', category: 'Appetizer' };
   const masterItems = [food, burger, hoegarden, heineken, fries];
   const onSelectMasterItem = spy();
   const component = renderIntoDocument(MasterItemsSelect({ masterItems, onSelectMasterItem }));
@@ -35,10 +35,19 @@ function setup() {
 }
 
 describe('Master Items Select', () => {
-  it('renders an option for items in the first category', () => {
+  it('renders button when item is selected', () => {
+    const { items, component } = setup();
+    const addItemBtn = scryRenderedDOMComponentsWithClass(component, 'add-entry-apples');
+
+    expect(addItemBtn.length).to.equal(1);
+  });
+
+  it('renders an option for items in the first category in alphabetical order', () => {
     const { items } = setup();
 
     expect(items.length).to.equal(2);
+    expect(items[0].textContent).to.contain('apple');
+    expect(items[1].textContent).to.contain('food');
   });
 
   it('renders the unique categories for the items', () => {
@@ -54,17 +63,8 @@ describe('Master Items Select', () => {
     const filteredItems = scryRenderedDOMComponentsWithClass(component, 'item');
 
     expect(filteredItems.length).to.equal(2);
-    expect(filteredItems[0].textContent).to.equal('hoegarden');
-    expect(filteredItems[1].textContent).to.equal('heineken');
-  });
-
-  it('calls onSelectMasterItem with the first item when selecting a category', () => {
-    const { component, onSelectMasterItem } = setup();
-    const selectBeer = findRenderedDOMComponentWithClass(component, 'category-Beer');
-    Simulate.click(selectBeer);
-
-    expect(onSelectMasterItem).to.be.called();
-    expect(onSelectMasterItem.__spy.calls[0][0].name).to.equal('hoegarden');
+    expect(filteredItems[0].textContent).to.contain('heineken');
+    expect(filteredItems[1].textContent).to.contain('hoegarden');
   });
 });
 

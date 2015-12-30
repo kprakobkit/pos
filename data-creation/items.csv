@@ -1,73 +1,3 @@
-FOOD,Spring Roll,530,Lunch - Appetizer
-FOOD,Tofu Roll,530,Lunch - Appetizer
-FOOD,French Fries,390,Lunch - Appetizer
-FOOD,French Fries w/ Garlic,405,Lunch - Appetizer
-FOOD,Sweet Potato Fries,460,Lunch - Appetizer
-FOOD,Sweet Potato Fries w/ Garlic,575,Lunch - Appetizer
-FOOD,Sesame Grilled Crevettes,735,Lunch - Appetizer
-FOOD,Salad with Chicken,735,Lunch - Appetizer
-FOOD,Salad with Shrimp,1080,Lunch - Appetizer
-FOOD,Salad with Cubed Steak,1609,Lunch - Appetizer
-FOOD,Pho Beef P,575,Lunch - Main
-FOOD,Pho Beef R,920,Lunch - Main
-FOOD,Pho Beef L,1080,Lunch - Main
-FOOD,Pho Chicken P,575,Lunch - Main
-FOOD,Pho Chicken R,920,Lunch - Main
-FOOD,Pho Chicken L,1080,Lunch - Main
-FOOD,Pho Vegetarian P,575,Lunch - Main
-FOOD,Pho Vegetarian R,920,Lunch - Main
-FOOD,Pho Vegetarian L,1080,Lunch - Main
-FOOD,Beef Steak over rice - New York,1609,Lunch - Main
-FOOD,Beef Steak over rice - Reb Eye,1609,Lunch - Main
-FOOD,Salmon with Linguini,1425,Lunch - Main
-FOOD,Salmon with Brown Rice,1425,Lunch - Main
-FOOD,Baked Chicken,1218,Lunch - Main
-FOOD,Vegetable,1080,Lunch - Main
-FOOD,Side - French Fries,230,Lunch - Main
-FOOD,Side - Spring Roll,230,Lunch - Main
-FOOD,Side - Salad,230,Lunch - Main
-DRINK,Water,500,Drink
-DRINK,Soda,500,Drink
-DRINK,Juice,500,Drink
-DRINK,Tea,500,Drink
-DRINK,Coffee,500,Drink
-DRINK,House Wine,900,Drink
-FOOD,Yogurt,460,Dessert
-FOOD,Flan,460,Dessert
-FOOD,Garlic Edammame,690,Lounge - Appetizer
-FOOD,French Fries,735,Lounge - Appetizer
-FOOD,French Fries with Garlic,850,Lounge - Appetizer
-FOOD,Sweet Potato Fries,780,Lounge - Appetizer
-FOOD,Sweet Potato Fries with Garlic,895,Lounge - Appetizer
-FOOD,Spring Roll,735,Lounge - Appetizer
-FOOD,Chicken Wing,850,Lounge - Appetizer
-FOOD,Fried Calamari,920,Lounge - Appetizer
-FOOD,Sesame Grille Crevettes,920,Lounge - Appetizer
-FOOD,Cold Cuts Cheese Crackers,1080,Lounge - Appetizer
-FOOD,Soft Shell Crab,1195,Lounge - Appetizer
-FOOD,Cube Steak,1839,Lounge - Entree
-FOOD,Salmon,1700,Lounge - Entree
-FOOD,Scallop,1700,Lounge - Entree
-FOOD,Chicken,1609,Lounge - Entree
-FOOD,Pho Beef P,645,Lounge - Entree
-FOOD,Pho Beef P extra meat,875,Lounge - Entree
-FOOD,Pho Beef R,1080,Lounge - Entree
-FOOD,Pho Beef R extra meat,1310,Lounge - Entree
-FOOD,Pho Beef L,1195,Lounge - Entree
-FOOD,Pho Beef L extra meat,1425,Lounge - Entree
-FOOD,Pho Chicken P,645,Lounge - Entree
-FOOD,Pho Chicken P extra meat,875,Lounge - Entree
-FOOD,Pho Chicken R,1080,Lounge - Entree
-FOOD,Pho Chicken R extra meat,1310,Lounge - Entree
-FOOD,Pho Chicken L,1195,Lounge - Entree
-FOOD,Pho Chicken L extra meat,1425,Lounge - Entree
-FOOD,Double Garlic Linguini,735,Lounge - Entree
-FOOD,Rice,460,Lounge - Entree
-OTHER,Togo,150,TOGO
-DRINK,Sweet pickles,600,Drink – Snack
-DRINK,Cocktail onion,600,Drink – Snack
-DRINK,Manzanilla Olives ,600,Drink – Snack
-DRINK,Monster Energy,600,Drink – Snack
 DRINK,Apocalypse IPA (Oregon),650,Beer
 DRINK,Asahi – S,650,Beer
 DRINK,Asahi – L,1200,Beer
@@ -99,16 +29,183 @@ DRINK,Samuel Adams (Boston Lager),650,Beer
 DRINK,Samuel Adams (Chololate Bock),650,Beer
 DRINK,Samuel Adams (Feziwig Ale),650,Beer
 DRINK,Samuel Adams IPA ,650,Beer
-DRINK,Samuel Adams (…….. Porter),650,Beer
+DRINK,Samuel Adams (Porter),650,Beer
 DRINK,Samuel Adams (Sparkling Ale),650,Beer
 DRINK,Samuel Adams IPA (Wietz Lager),650,Beer
 DRINK,Sapporo – S,650,Beer
 DRINK,Sapporo – L,1200,Beer
-DRINK,Stella Artois (Belgium),650,Beer
-DRINK,Singha (Thailand),1200,Beer
-DRINK,Tsing Tao (China),650,Beer
+DRINK,Stella Artois,650,Beer
+DRINK,Singha,1200,Beer
+DRINK,Tsing Tao,650,Beer
 DRINK,Budweiser,500,Beer
 DRINK,Coors,500,Beer
+DRINK,Andre Blush-,2500,Wine - Bottle
+DRINK,Barefoot Bubly (187ml),1200,Wine - Bottle
+DRINK,Cooks (187 ml),1200,Wine - Bottle
+DRINK,Cooks (187 ml),3000,Wine - Bottle
+DRINK,Moët Chandon Imperial,15000,Wine - Bottle
+DRINK,Veure Chequot Brutt,15000,Wine - Bottle
+DRINK,Wolf Blass,4000,Wine - Bottle
+DRINK,Rosa Regale / Italy,10000,Wine - Bottle
+DRINK,Veuve du Vernay /France,4500,Wine - Bottle
+DRINK,Duckhorn,9000,Wine - Bottle
+DRINK,Vidal (1/2 bottle),18000,Wine - Bottle
+DRINK,Beringer,4000,Wine - Bottle
+DRINK,Chalk Hill,12000,Wine - Bottle
+DRINK,Chateau Ste Michelle,3500,Wine - Bottle
+DRINK,Far Niente (Napa Valley),16000,Wine - Bottle
+DRINK,Gallo (Sonoma),7000,Wine - Bottle
+DRINK,Grgich Hills (Napa Valley),12500,Wine - Bottle
+DRINK,Groth,9000,Wine - Bottle
+DRINK,J.Lohr  (Pasorobles),4000,Wine - Bottle
+DRINK,Old Oaks (Sonoma County),3500,Wine - Bottle
+DRINK,Stag Leap (Karia - Napa),9000,Wine - Bottle
+DRINK,Testarosa,9000,Wine - Bottle
+DRINK,V.Sattuiwinery,4000,Wine - Bottle
+DRINK,Goldeneye (Anderson Valley),15000,Wine - Bottle
+DRINK,Martinelli (Russian River Valley),20000,Wine - Bottle
+DRINK,La Crema (Sonoma),6500,Wine - Bottle
+DRINK,Kendall Jackson (Santa Rosa),5000,Wine - Bottle
+DRINK,Brassfield (High Valley),5500,Wine - Bottle
+DRINK,Clos Du Bois (Sonoma County),5000,Wine - Bottle
+DRINK,Cuvaison (Napa),9000,Wine - Bottle
+DRINK,Fire Fly Ridge (Central Coast),4000,Wine - Bottle
+DRINK,Firestone (Santa Ynez Valley),5000,Wine - Bottle
+DRINK,Glen Ellen (Sonoma),3000,Wine - Bottle
+DRINK,Grgich Hills (Napa Valley),15000,Wine - Bottle
+DRINK,Guillermo (Santa Clara),6000,Wine - Bottle
+DRINK,Keenan (Napa),12000,Wine - Bottle
+DRINK,Kencall Jackson Grand Reserve ( Santa Rosa),9000,Wine - Bottle
+DRINK,Marylin Monroe (Oakville),8000,Wine - Bottle
+DRINK,Matanzas Creek (Sonoma),9000,Wine - Bottle
+DRINK,Ridge 2003 (Santa Cruz),10000,Wine - Bottle
+DRINK,Stags Leap (Napa),9000,Wine - Bottle
+DRINK,Sterling 2005 (Napa),8500,Wine - Bottle
+DRINK,(House Wine) Old Oaks,3500,Wine - Bottle
+DRINK,Wynns (Australia),4000,Wine - Bottle
+DRINK,Grgich Hills (Napa),10000,Wine - Bottle
+DRINK,Clos Du Bois (North Coast),4500,Wine - Bottle
+DRINK,Coppola (California),3500,Wine - Bottle
+DRINK,Talus (California),3500,Wine - Bottle
+DRINK,Kendall Jackson,5000,Wine - Bottle
+DRINK,Angeline,3500,Wine - Bottle
+DRINK,Beringer  ,3500,Wine - Bottle
+DRINK,Burgess,7500,Wine - Bottle
+DRINK,BV,4000,Wine - Bottle
+DRINK,Cardinale,10000,Wine - Bottle
+DRINK,Franciscan,7500,Wine - Bottle
+DRINK,Hess 19 Block Cuvee,9000,Wine - Bottle
+DRINK,Lrefethen (Napa Valley),10000,Wine - Bottle
+DRINK,Beringer 1991 Private Reserve,50000,Wine - Bottle
+DRINK,BV Clone 4,55000,Wine - Bottle
+DRINK,BV George de la Tour,24000,Wine - Bottle
+DRINK,BV Tapestry,12000,Wine - Bottle
+DRINK,Caymus,21000,Wine - Bottle
+DRINK,Caymus 40th Anniversary,40000,Wine - Bottle
+DRINK,Caymus Special Selection,33000,Wine - Bottle
+DRINK,Chimney Rock,18000,Wine - Bottle
+DRINK,Far Niente 2000 (Napa Valley),39000,Wine - Bottle
+DRINK,Frank Family,13000,Wine - Bottle
+DRINK,Free Mark Abbey,12000,Wine - Bottle
+DRINK,Gott 11,18000,Wine - Bottle
+DRINK,Grgich Hills,18000,Wine - Bottle
+DRINK,Groth,14000,Wine - Bottle
+DRINK,Hess Collection,15000,Wine - Bottle
+DRINK,Mario Perelli Minette,12000,Wine - Bottle
+DRINK,Mount Veeds,9000,Wine - Bottle
+DRINK,Rutherford,4500,Wine - Bottle
+DRINK,Starmont,4500,Wine - Bottle
+DRINK,Sterling,5000,Wine - Bottle
+DRINK,Sterling 2000,10000,Wine - Bottle
+DRINK,Terra Valentine (Napa Valley),7500,Wine - Bottle
+DRINK,Opus1 - 1999,50000,Wine - Bottle
+DRINK,Opus1 - 2001,47500,Wine - Bottle
+DRINK,Opus1 - 2007,45000,Wine - Bottle
+DRINK,Pine Ridge (Napa Valley),18000,Wine - Bottle
+DRINK,Ramey (Napa Valley) ,15000,Wine - Bottle
+DRINK,Robert Mondavi 1996 - 30th Anniversary,40000,Wine - Bottle
+DRINK,ShowKet,15000,Wine - Bottle
+DRINK,Silverado (Napa Valley),12000,Wine - Bottle
+DRINK,Stags Leaps,12000,Wine - Bottle
+DRINK,Stags Leaps Artemis,15000,Wine - Bottle
+DRINK,Stags Leaps Cask 23,75000,Wine - Bottle
+DRINK,Sterling Reserve 1992,12000,Wine - Bottle
+DRINK,Text Book,18000,Wine - Bottle
+DRINK,Viader,21000,Wine - Bottle
+DRINK,William Hills (Napa Valley),12000,Wine - Bottle
+DRINK,B.R. Cohn 1994,4000,Wine - Bottle
+DRINK,Gallo Reserve 2003,4500,Wine - Bottle
+DRINK,Jordan,3500,Wine - Bottle
+DRINK,Katherine Goldschmidt,7500,Wine - Bottle
+DRINK,Old Oak (House Wine),9000,Wine - Bottle
+DRINK,Rodney Strong 2007,7500,Wine - Bottle
+DRINK,Rodney Strong Reserve 1993,10000,Wine - Bottle
+DRINK,Souverain,4500,Wine - Bottle
+DRINK,St. Francis,4500,Wine - Bottle
+DRINK,Rodney Strong 2012,4500,Wine - Bottle
+DRINK,Justin Isosceles,20000,Wine - Bottle
+DRINK,Robert Mondavie,3500,Wine - Bottle
+DRINK,Smith ,6000,Wine - Bottle
+DRINK,Sterling Collection,5000,Wine - Bottle
+DRINK,Belle Ambience (California),3000,Wine - Bottle
+DRINK,Ernest & Julio Gallo (Modesto),6000,Wine - Bottle
+DRINK,Kendall Jackson (Santa Rosa),4500,Wine - Bottle
+DRINK,Kendall Jackson Grand Reserve(Santa Rosa),7500,Wine - Bottle
+DRINK,Layer Cake (California),4000,Wine - Bottle
+DRINK,Mr. Kirland (Columbia Valley),7500,Wine - Bottle
+DRINK,Robert Mondavi (Oakville),7500,Wine - Bottle
+DRINK,Robert Mondavi Private Selection (Oakville),15000,Wine - Bottle
+DRINK,Silver Oaks (Alexander Valley),18000,Wine - Bottle
+DRINK,Hess Select (North Coast),4500,Wine - Bottle
+DRINK,Don Melchor (Chile / Cabernet Sauvignon),31500,Wine - Bottle
+DRINK,Ruffino Reserve du Sale (Italy),8000,Wine - Bottle
+DRINK,Colosi (Sicilia),4500,Wine - Bottle
+DRINK,Montes (Chile),3500,Wine - Bottle
+DRINK,Goat Rotri (South Africa),4000,Wine - Bottle
+DRINK,Santa Cristine (Tuscany / Italy),3500,Wine - Bottle
+DRINK,Water,500,Drink
+DRINK,Soda,500,Drink
+DRINK,Juice,500,Drink
+DRINK,Tea,500,Drink
+DRINK,Coffee,500,Drink
+DRINK,House Wine - Glass,900,Drink
+DRINK,House Wine - Bottle,3500,Drink
+FOOD,Yogurt,460,Dessert
+FOOD,Flan,460,Dessert
+FOOD,Garlic Edammame,690,DINNER Appetizer
+FOOD,French Fries,735,DINNER Appetizer
+FOOD,French Fries with Garlic,850,DINNER Appetizer
+FOOD,Sweet Potato Fries,780,DINNER Appetizer
+FOOD,Sweet Potato Fries with Garlic,895,DINNER Appetizer
+FOOD,Spring Roll,735,DINNER Appetizer
+FOOD,Chicken Wing,850,DINNER Appetizer
+FOOD,Fried Calamari,920,DINNER Appetizer
+FOOD,Sesame Grille Crevettes,920,DINNER Appetizer
+FOOD,Cold Cuts Cheese Crackers,1080,DINNER Appetizer
+FOOD,Soft Shell Crab,1195,DINNER Appetizer
+FOOD,Cube Steak,1839,DINNER Entree
+FOOD,Salmon,1700,DINNER Entree
+FOOD,Scallop,1700,DINNER Entree
+FOOD,Chicken,1609,DINNER Entree
+FOOD,Pho Beef P,645,DINNER Entree
+FOOD,Pho Beef P extra meat,875,DINNER Entree
+FOOD,Pho Beef R,1080,DINNER Entree
+FOOD,Pho Beef R extra meat,1310,DINNER Entree
+FOOD,Pho Beef L,1195,DINNER Entree
+FOOD,Pho Beef L extra meat,1425,DINNER Entree
+FOOD,Pho Chicken P,645,DINNER Entree
+FOOD,Pho Chicken P extra meat,875,DINNER Entree
+FOOD,Pho Chicken R,1080,DINNER Entree
+FOOD,Pho Chicken R extra meat,1310,DINNER Entree
+FOOD,Pho Chicken L,1195,DINNER Entree
+FOOD,Pho Chicken L extra meat,1425,DINNER Entree
+FOOD,Double Garlic Linguini,735,DINNER Entree
+FOOD,Rice,460,DINNER Entree
+OTHER,Togo,150,TOGO
+DRINK,Sweet pickles,600,Drink - Snack
+DRINK,Cocktail onion,600,Drink - Snack
+DRINK,Manzanilla Olives ,600,Drink - Snack
+DRINK,Monster Energy,600,Drink - Snack
 DRINK,Kinsen Plum,4000,Sake
 DRINK,Gekkeikan – S,900,Sake
 DRINK,Gekkeikan – L,1100,Sake
@@ -126,127 +223,31 @@ DRINK,Snow Beauty (Niguri Unfiltered),1800,Sake
 DRINK,TY Ku,6000,Sake
 DRINK,Tenranzan,6000,Sake
 DRINK,Yaegaki,4000,Sake
-DRINK,Andre Blush-,2500,Bottle
-DRINK,Barefoot Bubly (187ml),1200,Bottle
-DRINK,Cooks (187 ml),1200,Bottle
-DRINK,Cooks (187 ml),3000,Bottle
-DRINK,Moët Chandon Imperial,15000,Bottle
-DRINK,Veure Chequot Brutt,15000,Bottle
-DRINK,Wolf Blass,4000,Bottle
-DRINK,Rosa Regale / Italy,10000,Bottle
-DRINK,Veuve du Vernay /France,4500,Bottle
-DRINK,Duckhorn,9000,Bottle
-DRINK,Vidal (1/2 bottle),18000,Bottle
-DRINK,Beringer,4000,Bottle
-DRINK,Chalk Hill,12000,Bottle
-DRINK,Chateau Ste Michelle,3500,Bottle
-DRINK,Far Niente (Napa Valley),16000,Bottle
-DRINK,Gallo (Sonoma),7000,Bottle
-DRINK,Grgich Hills (Napa Valley),12500,Bottle
-DRINK,Groth,9000,Bottle
-DRINK,J.Lohr  (Pasorobles),4000,Bottle
-DRINK,Old Oaks (Sonoma County),3500,Bottle
-DRINK,Stag Leap (Karia - Napa),9000,Bottle
-DRINK,Testarosa,9000,Bottle
-DRINK,V.Sattuiwinery,4000,Bottle
-DRINK,Goldeneye (Anderson Valley),15000,Bottle
-DRINK,Martinelli (Russian River Valley),20000,Bottle
-DRINK,La Crema (Sonoma),6500,Bottle
-DRINK,Kendall Jackson (Santa Rosa),5000,Bottle
-DRINK,Brassfield (High Valley),5500,Bottle
-DRINK,Clos Du Bois (Sonoma County),5000,Bottle
-DRINK,Cuvaison (Napa),9000,Bottle
-DRINK,Fire Fly Ridge (Central Coast),4000,Bottle
-DRINK,Firestone (Santa Ynez Valley),5000,Bottle
-DRINK,Glen Ellen (Sonoma),3000,Bottle
-DRINK,Grgich Hills (Napa Valley),15000,Bottle
-DRINK,Guillermo (Santa Clara),6000,Bottle
-DRINK,Keenan (Napa),12000,Bottle
-DRINK,Kencall Jackson Grand Reserve ( Santa Rosa),9000,Bottle
-DRINK,Marylin Monroe (Oakville),8000,Bottle
-DRINK,Matanzas Creek (Sonoma),9000,Bottle
-DRINK,Ridge 2003 (Santa Cruz),10000,Bottle
-DRINK,Stags Leap (Napa),9000,Bottle
-DRINK,Sterling 2005 (Napa),8500,Bottle
-DRINK,(House Wine) Old Oaks,3500,Bottle
-DRINK,Wynns (Australia),4000,Bottle
-DRINK,Grgich Hills (Napa),10000,Bottle
-DRINK,Clos Du Bois (North Coast),4500,Bottle
-DRINK,Coppola (California),3500,Bottle
-DRINK,Talus (California),3500,Bottle
-DRINK,Kendall Jackson,5000,Bottle
-DRINK,Angeline,3500,Bottle
-DRINK,Beringer  ,3500,Bottle
-DRINK,Burgess,7500,Bottle
-DRINK,BV,4000,Bottle
-DRINK,Cardinale,10000,Bottle
-DRINK,Franciscan,7500,Bottle
-DRINK,Hess 19 Block Cuvee,9000,Bottle
-DRINK,Lrefethen (Napa Valley),10000,Bottle
-DRINK,Beringer 1991 Private Reserve,50000,Bottle
-DRINK,BV Clone 4,55000,Bottle
-DRINK,BV George de la Tour,24000,Bottle
-DRINK,BV Tapestry,12000,Bottle
-DRINK,Caymus,21000,Bottle
-DRINK,Caymus 40th Anniversary,40000,Bottle
-DRINK,Caymus Special Selection,33000,Bottle
-DRINK,Chimney Rock,18000,Bottle
-DRINK,Far Niente 2000 (Napa Valley),39000,Bottle
-DRINK,Frank Family,13000,Bottle
-DRINK,Free Mark Abbey,12000,Bottle
-DRINK,Gott 11,18000,Bottle
-DRINK,Grgich Hills,18000,Bottle
-DRINK,Groth,14000,Bottle
-DRINK,Hess Collection,15000,Bottle
-DRINK,Mario Perelli Minette,12000,Bottle
-DRINK,Mount Veeds,9000,Bottle
-DRINK,Rutherford,4500,Bottle
-DRINK,Starmont,4500,Bottle
-DRINK,Sterling,5000,Bottle
-DRINK,Sterling 2000,10000,Bottle
-DRINK,Terra Valentine (Napa Valley),7500,Bottle
-DRINK,Opus1 - 1999,50000,Bottle
-DRINK,Opus1 - 2001,47500,Bottle
-DRINK,Opus1 - 2007,45000,Bottle
-DRINK,Pine Ridge (Napa Valley),18000,Bottle
-DRINK,Ramey (Napa Valley) ,15000,Bottle
-DRINK,Robert Mondavi 1996 - 30th Anniversary,40000,Bottle
-DRINK,ShowKet,15000,Bottle
-DRINK,Silverado (Napa Valley),12000,Bottle
-DRINK,Stags Leaps,12000,Bottle
-DRINK,Stags Leaps Artemis,15000,Bottle
-DRINK,Stags Leaps Cask 23,75000,Bottle
-DRINK,Sterling Reserve 1992,12000,Bottle
-DRINK,Text Book,18000,Bottle
-DRINK,Viader,21000,Bottle
-DRINK,William Hills (Napa Valley),12000,Bottle
-DRINK,B.R. Cohn 1994,4000,Bottle
-DRINK,Gallo Reserve 2003,4500,Bottle
-DRINK,Jordan,3500,Bottle
-DRINK,Katherine Goldschmidt,7500,Bottle
-DRINK,Old Oak (House Wine),9000,Bottle
-DRINK,Rodney Strong 2007,7500,Bottle
-DRINK,Rodney Strong Reserve 1993,10000,Bottle
-DRINK,Souverain,4500,Bottle
-DRINK,St. Francis,4500,Bottle
-DRINK,Rodney Strong 2012,4500,Bottle
-DRINK,Justin Isosceles,20000,Bottle
-DRINK,Robert Mondavie,3500,Bottle
-DRINK,Smith ,6000,Bottle
-DRINK,Sterling Collection,5000,Bottle
-DRINK,Belle Ambience (California),3000,Bottle
-DRINK,Ernest & Julio Gallo (Modesto),6000,Bottle
-DRINK,Kendall Jackson (Santa Rosa),4500,Bottle
-DRINK,Kendall Jackson Grand Reserve(Santa Rosa),7500,Bottle
-DRINK,Layer Cake (California),4000,Bottle
-DRINK,Mr. Kirland (Columbia Valley),7500,Bottle
-DRINK,Robert Mondavi (Oakville),7500,Bottle
-DRINK,Robert Mondavi Private Selection (Oakville),15000,Bottle
-DRINK,Silver Oaks (Alexander Valley),18000,Bottle
-DRINK,Hess Select (North Coast),4500,Bottle
-DRINK,Don Melchor (Chile / Cabernet Sauvignon),31500,Bottle
-DRINK,Ruffino Reserve du Sale (Italy),8000,Bottle
-DRINK,Colosi (Sicilia),4500,Bottle
-DRINK,Montes (Chile),3500,Bottle
-DRINK,Goat Rotri (South Africa),4000,Bottle
-DRINK,Santa Cristine (Tuscany / Italy),3500,Bottle
+FOOD,Spring Roll,530,LUNCH Appetizer
+FOOD,Tofu Roll,530,LUNCH Appetizer
+FOOD,French Fries,390,LUNCH Appetizer
+FOOD,French Fries w/ Garlic,405,LUNCH Appetizer
+FOOD,Sweet Potato Fries,460,LUNCH Appetizer
+FOOD,Sweet Potato Fries w/ Garlic,575,LUNCH Appetizer
+FOOD,Sesame Grilled Crevettes,735,LUNCH Appetizer
+FOOD,Salad with Chicken,735,LUNCH Appetizer
+FOOD,Salad with Shrimp,1080,LUNCH Appetizer
+FOOD,Salad with Cubed Steak,1609,LUNCH Appetizer
+FOOD,Pho Beef P,575,LUNCH Main
+FOOD,Pho Beef R,920,LUNCH Main
+FOOD,Pho Beef L,1080,LUNCH Main
+FOOD,Pho Chicken P,575,LUNCH Main
+FOOD,Pho Chicken R,920,LUNCH Main
+FOOD,Pho Chicken L,1080,LUNCH Main
+FOOD,Pho Vegetarian P,575,LUNCH Main
+FOOD,Pho Vegetarian R,920,LUNCH Main
+FOOD,Pho Vegetarian L,1080,LUNCH Main
+FOOD,Beef Steak over rice - New York,1609,LUNCH Main
+FOOD,Beef Steak over rice - Reb Eye,1609,LUNCH Main
+FOOD,Salmon with Linguini,1425,LUNCH Main
+FOOD,Salmon with Brown Rice,1425,LUNCH Main
+FOOD,Baked Chicken,1218,LUNCH Main
+FOOD,Vegetable,1080,LUNCH Main
+FOOD,Side - French Fries,230,LUNCH Main
+FOOD,Side - Spring Roll,230,LUNCH Main
+FOOD,Side - Salad,230,LUNCH Main

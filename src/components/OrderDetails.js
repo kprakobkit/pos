@@ -23,11 +23,17 @@ function mapStateToProps(state) {
 class OrderDetails extends Component {
   constructor(props) {
     super(props);
+    this.toggleForm = this.toggleForm.bind(this);
     this.state = {
       order: {
         entries: []
-      }
+      },
+      showAddEntry: false
     };
+  }
+
+  toggleForm() {
+    this.setState({ showAddEntry: !this.state.showAddEntry });
   }
 
   componentWillMount() {
@@ -45,17 +51,40 @@ class OrderDetails extends Component {
     return (
       dom.div(
         null,
-        dom.h3(
-          { className: 'text-right order-information' },
-          `Table ${this.state.order.tableNumber} / Order ${this.props.params.id}  `,
-          dom.span({ className: 'text-info' }, `${this.state.order.status}`),
-          dom.small(
-            null,
-            this.state.order.status === constants.READY_FOR_BILL ? dom.button({
-              className: 'back-to-open btn btn-link',
-              onClick: this.props.setOpen.bind(null, this.props.params.id)
-            }, 'Back to "Open" Status') : null
-          )
+        dom.div(
+          { className: 'row' },
+          dom.div(
+            { className: 'col-xs-6' },
+            dom.h3(
+              { className: 'text-left order-information' },
+              `Table ${this.state.order.tableNumber} / Order ${this.props.params.id}  `,
+              dom.span({ className: 'text-info' }, `${this.state.order.status}`),
+              dom.small(
+                null,
+                this.state.order.status === constants.READY_FOR_BILL ? dom.button({
+                  className: 'back-to-open btn btn-link',
+                  onClick: this.props.setOpen.bind(null, this.props.params.id)
+                }, 'Back to "Open" Status') : null
+              )
+            )
+          ),
+          dom.div(
+            { className: 'col-xs-6 text-right' },
+            dom.button(
+              { className: `toggle-add-entry btn btn-lg btn-${ this.state.showAddEntry ? 'danger' : 'info' }`, onClick: this.toggleForm },
+              this.state.showAddEntry ?
+                [dom.span({
+                className: 'glyphicon glyphicon-remove',
+                key: 'remove',
+                'aria-hidden': true
+              }), null] :
+                [dom.span({
+                className: 'glyphicon glyphicon-plus',
+                key: 'add',
+                'aria-hidden': true
+              }), '  Add More Items']
+            ),
+          ),
         ),
         this.state.order.status === constants.OPEN ?
           OpenOrder(
@@ -64,9 +93,10 @@ class OrderDetails extends Component {
               masterItems: this.props.masterItems,
               addEntriesToOrder: this.props.addEntriesToOrder.bind(null, this.props.params.id),
               changeEntryStatus: this.props.changeEntryStatus.bind(null, this.props.params.id),
-              setReadyForBill: this.props.setReadyForBill.bind(null, this.props.params.id)
+              setReadyForBill: this.props.setReadyForBill.bind(null, this.props.params.id),
+              showAddEntry: this.state.showAddEntry
             }
-          ) :
+        ) :
           ProcessingOrder(
             {
               order: this.state.order,
@@ -77,7 +107,7 @@ class OrderDetails extends Component {
               ),
               setReadyForBill: this.props.setReadyForBill.bind(null, this.props.params.id)
             }
-          )
+        )
       )
     );
   }

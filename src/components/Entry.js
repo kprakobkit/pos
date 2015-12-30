@@ -21,36 +21,62 @@ class Entry extends Component {
 
   renderActionButtons() {
     return dom.td(
-      { key: 'enntry-actions', className: 'entry-actions col-md-1' },
+      { key: 'enntry-actions', className: 'entry-actions col-xs-1' },
       this.showDelivered() ? dom.button(
         {
-          className: 'btn btn-primary btn-block delivered',
+          className: 'btn btn-primary btn-lg delivered',
           onClick: this.handleChangeStatus.bind(null, constants.DELIVERED)
         },
         'Mark Delivered'
       ) : null,
       dom.button(
         {
-          className: 'btn btn-warning btn-block canceled',
+          className: 'btn btn-link btn-lg canceled',
           onClick: this.handleChangeStatus.bind(null, constants.CANCELED)
         },
-        'Cancel'
+        'Cancel Entry'
       )
     );
+  }
+
+  labelType(status) {
+    switch (status) {
+      case constants.COMPLETED:
+        return 'success';
+      case constants.OPEN:
+        return 'default';
+      case constants.DELIVERED:
+        return 'primary';
+      default:
+        return  'default';
+    }
   }
 
   render() {
     return dom.tr(
       { className: 'order-entry' },
       dom.td({ className: 'entry-name' }, dom.h3(null, this.props.name)),
-      dom.td({ className: 'entry-comment' }, dom.h3(null, dom.small(null, this.props.comment))),
+      dom.td({ className: 'entry-comment' }, dom.h3(null, this.props.comment)),
       this.props.ofOpenOrder ? [
-        dom.td({ key: 'entry-status', className: 'entry-status col-md-2' }, dom.h2(null, dom.small(null, this.props.status))),
-        this.renderActionButtons()] :
-          dom.td(
-            { className: 'entry-price text-right' },
-            dom.h3(null, $.format(this.props.price))
-        )
+        dom.td(
+          {
+            key: 'entry-status',
+            className: 'entry-status col-md-4 col-sm-4'
+          },
+          dom.h2(
+            null,
+            dom.span(
+              { className: `label label-${this.labelType(this.props.status)}` },
+              this.props.status
+            )
+          )
+        ),
+        this.renderActionButtons()
+      ] :
+        dom.td(
+          { className: 'entry-price text-right' },
+          dom.h3(null, $.format(this.props.price))
+      )
     );
   }
 }

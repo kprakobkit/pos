@@ -17,14 +17,14 @@ require('./style.css');
 const router   = React.createFactory(Router);
 const provider = React.createFactory(Provider);
 
-const thisDocument = window.document;
+const { protocol, hostname } = window.document.location;
 let port = '';
 
-if (config.demoMode || thisDocument.location.hostname === 'localhost') {
+if (config.demoMode || hostname.indexOf('local') > -1) {
   port = ':3210';
 }
 
-const location = `${thisDocument.location.protocol}//${thisDocument.location.hostname}${port}`;
+const location = `${protocol}//${hostname}${port}`;
 const socket = io.connect(location);
 
 const createStoreWithMiddleware = applyMiddleware(
