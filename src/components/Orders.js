@@ -91,8 +91,7 @@ class Orders extends Component {
                 null,
                 this.getFilteredOrders().map(this.renderOrder)
               )
-          ) :
-            dom.div({ className: 'orders-message' }, 'There are currently no orders.')
+          ) : dom.div({ className: 'orders-message' }, 'There are currently no orders.')
         )
       )
     );
