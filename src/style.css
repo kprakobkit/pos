@@ -10,8 +10,9 @@ a:hover {
   color: black;
 }
 
-.orders-filter-option {
+.filter-option {
   margin-left: 5px;
+  margin-bottom: 10px;
 }
 
 .payment-component {

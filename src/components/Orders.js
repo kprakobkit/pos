@@ -67,7 +67,8 @@ class Orders extends Component {
               {
                 filter: this.state.filter,
                 filterOrders: this.filterOrders,
-                printOrderStatus: this.printOrderStatus
+                printOrderStatus: this.printOrderStatus,
+                filters: [constants.OPEN, constants.READY_FOR_BILL, constants.ALL]
               }
             ),
           ),

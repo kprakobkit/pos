@@ -16,16 +16,17 @@ const Filter = React.createFactory(FilterComponent);
 
 describe('Filter', () => {
   const printOrderStatus = (status) => {};
+  const filters = [constants.OPEN, constants.READY_FOR_BILL, constants.ALL];
 
-  it('renders three filter options', () => {
+  it('renders filter options from props', () => {
     const filterOrders = () => {};
-    const component = renderIntoDocument(Filter({ filterOrders, printOrderStatus }));
-    const filters = scryRenderedDOMComponentsWithClass(component, 'orders-filter-option');
+    const component = renderIntoDocument(Filter({ filterOrders, printOrderStatus, filters }));
+    const filterOptions = scryRenderedDOMComponentsWithClass(component, 'filter-option');
 
-    expect(filters.length).to.equal(3);
-    expect(filters[0].className).to.contain('orders-filter-open');
-    expect(filters[1].className).to.contain('orders-filter-ready');
-    expect(filters[2].className).to.contain('orders-filter-all');
+    expect(filterOptions.length).to.equal(3);
+    expect(filterOptions[0].className).to.contain('filter-open');
+    expect(filterOptions[1].className).to.contain('filter-ready');
+    expect(filterOptions[2].className).to.contain('filter-all');
   });
 
   it('calls handler to filter orders', () => {
@@ -42,11 +43,11 @@ describe('Filter', () => {
         calledWithReady = true;
       }
     };
-    const component = renderIntoDocument(Filter({ filterOrders, printOrderStatus }));
-    const filters = scryRenderedDOMComponentsWithClass(component, 'orders-filter-option');
-    Simulate.click(filters[0]);
-    Simulate.click(filters[1]);
-    Simulate.click(filters[2]);
+    const component = renderIntoDocument(Filter({ filterOrders, printOrderStatus, filters }));
+    const filterOptions = scryRenderedDOMComponentsWithClass(component, 'filter-option');
+    Simulate.click(filterOptions[0]);
+    Simulate.click(filterOptions[1]);
+    Simulate.click(filterOptions[2]);
 
     expect(calledWithAll).to.be.true;
     expect(calledWithOpen).to.be.true;

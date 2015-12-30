@@ -19,7 +19,7 @@ class Filter extends Component {
         {
           key: filter,
           className: [
-            `orders-filter-option orders-filter-${normalized}`,
+            `filter-option filter-${normalized}`,
             `btn ${this.isSelectedFilter(filter)} text-capitalize`
           ].join(' '),
           onClick: () => this.props.filterOrders(filter)
@@ -32,15 +32,16 @@ class Filter extends Component {
   render() {
     return (
       dom.div(
-        { className: 'orders-filter' },
-        [constants.OPEN, constants.READY_FOR_BILL, constants.ALL].map(this.renderFilter)
+        { className: 'filter' },
+        this.props.filters.map(this.renderFilter)
       )
     );
   }
 }
 
 Filter.propTypes = {
-  filterOrders: PropTypes.func.isRequired
+  filterOrders: PropTypes.func.isRequired,
+  filters: PropTypes.array.isRequired
 };
 
 export default Filter;

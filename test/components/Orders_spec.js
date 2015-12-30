@@ -41,7 +41,7 @@ describe('Orders', () => {
     const order2 = Generator.order().status(constants.CLOSED).build();
     const orders = [order1, order2];
     const component = renderIntoDocument(Orders({ orders, loadOrders, loadItems }));
-    const filter = findRenderedDOMComponentWithClass(component, 'orders-filter-open');
+    const filter = findRenderedDOMComponentWithClass(component, 'filter-open');
     Simulate.click(filter);
     const children = scryRenderedDOMComponentsWithClass(component, 'order');
     const expectedStatus = constants.OPEN.toLowerCase();
