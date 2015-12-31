@@ -34,7 +34,7 @@ class Entry extends Component {
           className: 'btn btn-link btn-lg canceled',
           onClick: this.handleChangeStatus.bind(null, constants.CANCELED)
         },
-        'Cancel Entry'
+        dom.span({ className: 'text-danger' }, 'Cancel Entry')
       )
     );
   }
