@@ -3,7 +3,7 @@ import constants from '../../src/constants';
 import _ from 'ramda';
 
 class ReadyForBillBtn extends Component {
-  shouldBeHidden() {
+  shouldBeDisabled() {
     const hasOpen = _.any(_.equals(constants.OPEN));
     const hasCompleted = _.any(_.equals(constants.COMPLETED));
     const hasOpenOrCompleted = _.either(hasOpen, hasCompleted);
@@ -13,7 +13,7 @@ class ReadyForBillBtn extends Component {
     const allCanceledOrClosed = _.either(allClosed, allCanceled);
 
     const entryStatuses = _.pluck('status', this.props.entries);
-    return !this.props.overrideHidden && _.either(hasOpenOrCompleted, allCanceledOrClosed)(entryStatuses);
+    return _.either(hasOpenOrCompleted, allCanceledOrClosed)(entryStatuses);
   }
 
   render() {
@@ -22,7 +22,8 @@ class ReadyForBillBtn extends Component {
         null,
         dom.button(
           {
-            className: `order-entries ready-for-bill btn btn-primary btn-lg btn-block ${ this.shouldBeHidden() ? 'hidden' : 'show' }`,
+            className: 'order-entries ready-for-bill btn btn-primary btn-lg btn-block',
+            disabled: !this.props.overrideDisable && this.shouldBeDisabled(),
             onClick: this.props.handleOnClick
           },
           this.props.text
@@ -34,13 +35,13 @@ class ReadyForBillBtn extends Component {
 
 ReadyForBillBtn.propTypes = {
   entries: PropTypes.array.isRequired,
-  overrideHidden: PropTypes.bool,
+  overrideDisable: PropTypes.bool,
   text: PropTypes.string
 };
 
 ReadyForBillBtn.defaultProps = {
   entries: [],
-  overrideHidden: false,
+  overrideDisable: false,
   text: 'Ready for Bill'
 };
 
