@@ -24,10 +24,10 @@ class Entry extends Component {
 
   renderActionButtons() {
     return dom.td(
-      { key: 'enntry-actions', className: 'entry-actions col-xs-1' },
+      { key: 'enntry-actions', className: 'entry-actions col-xs-3' },
       this.showDelivered() ? dom.button(
         {
-          className: 'btn btn-primary btn-lg delivered',
+          className: 'btn btn-primary btn-lg mark-delivered btn-block',
           onClick: this.handleChangeStatus.bind(null, constants.DELIVERED)
         },
         'Mark Delivered'

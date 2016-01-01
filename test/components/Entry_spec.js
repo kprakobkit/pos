@@ -64,19 +64,21 @@ describe('Entry', () => {
     const { component, entry, changeEntryStatus } = setup();
 
     it('shows delivered and cancel button', () => {
-      findRenderedDOMComponentWithClass(component, 'delivered');
-      findRenderedDOMComponentWithClass(component, 'canceled');
+      findRenderedDOMComponentWithClass(component, 'mark-delivered');
+      findRenderedDOMComponentWithClass(component, 'cancel-entry');
     });
 
     it('canceled - calls changeEntryStatus with CANCELED', () => {
-      const canceled = findRenderedDOMComponentWithClass(component, 'canceled');
+      const canceled = findRenderedDOMComponentWithClass(component, 'cancel-entry');
       Simulate.click(canceled);
+      const confirmCancel = findRenderedDOMComponentWithClass(component, 'confirm-cancel');
+      Simulate.click(confirmCancel);
 
       expect(changeEntryStatus).to.have.been.called.with(constants.CANCELED);
     });
 
     it('delivered - calls changeEntryStatus with DELIVERED', () => {
-      const delivered = findRenderedDOMComponentWithClass(component, 'delivered');
+      const delivered = findRenderedDOMComponentWithClass(component, 'mark-delivered');
       Simulate.click(delivered);
 
       expect(changeEntryStatus).to.have.been.called.with(constants.DELIVERED);
@@ -88,7 +90,7 @@ describe('Entry', () => {
     const { component, entry, changeEntryStatus } = setup({ entry: deliveredEntry });
 
     it('shows the cancel button', () => {
-      findRenderedDOMComponentWithClass(component, 'canceled');
+      findRenderedDOMComponentWithClass(component, 'cancel-entry');
     });
   });
 
@@ -97,8 +99,8 @@ describe('Entry', () => {
     const { component, entry, changeEntryStatus } = setup({ entry: completedEntry });
 
     it('shows delivered and cancel button', () => {
-      findRenderedDOMComponentWithClass(component, 'delivered');
-      findRenderedDOMComponentWithClass(component, 'canceled');
+      findRenderedDOMComponentWithClass(component, 'mark-delivered');
+      findRenderedDOMComponentWithClass(component, 'cancel-entry');
     });
   });
 });
