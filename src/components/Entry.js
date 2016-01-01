@@ -1,9 +1,12 @@
-import { Component, PropTypes, DOM as dom } from 'react';
+import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import { connect } from 'react-redux';
 import actions from '../action_creators';
 import constants from '../constants';
 import $ from '../money';
 import _ from 'ramda';
+import CancelEntryContainer from './CancelEntry';
+
+const CancelEntry = createFactory(CancelEntryContainer);
 
 class Entry extends Component {
   constructor(props) {
@@ -29,13 +32,9 @@ class Entry extends Component {
         },
         'Mark Delivered'
       ) : null,
-      dom.button(
-        {
-          className: 'btn btn-link btn-lg canceled',
-          onClick: this.handleChangeStatus.bind(null, constants.CANCELED)
-        },
-        dom.span({ className: 'text-danger' }, 'Cancel Entry')
-      )
+      CancelEntry({
+        onCancel: this.handleChangeStatus.bind(null, constants.CANCELED)
+      })
     );
   }
 
