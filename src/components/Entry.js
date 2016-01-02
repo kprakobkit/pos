@@ -24,10 +24,10 @@ class Entry extends Component {
 
   renderActionButtons() {
     return dom.td(
-      { key: 'enntry-actions', className: 'entry-actions col-xs-3' },
+      { key: 'entry-actions', className: 'entry-actions col-xs-5 col-sm-4 col-md-3' },
       this.showDelivered() ? dom.button(
         {
-          className: 'btn btn-primary btn-lg mark-delivered btn-block',
+          className: 'btn btn-primary mark-delivered btn-lg btn-block',
           onClick: this.handleChangeStatus.bind(null, constants.DELIVERED)
         },
         'Mark Delivered'
@@ -60,7 +60,7 @@ class Entry extends Component {
         dom.td(
           {
             key: 'entry-status',
-            className: 'entry-status col-md-4 col-sm-4'
+            className: 'entry-status col-xs-2'
           },
           dom.h2(
             null,

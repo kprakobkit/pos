@@ -17,7 +17,7 @@ class CancelEntry extends Component {
   render() {
     return (
       dom.div(
-        null,
+        { className: 'text-center' },
         this.state.showConfirmation ?
           [dom.button(
             {
@@ -37,7 +37,7 @@ class CancelEntry extends Component {
         )] :
           dom.button(
             {
-              className: 'btn btn-link btn-lg btn-block cancel-entry',
+              className: 'btn btn-link btn-block btn-lg cancel-entry',
               onClick: this.toggleConfirmation
             },
             dom.span({ className: 'text-danger' }, 'Cancel Entry')
