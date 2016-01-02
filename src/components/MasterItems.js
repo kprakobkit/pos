@@ -29,7 +29,7 @@ class MasterItems extends Component {
   }
 
   selectItem(selectedItem) {
-    this.setState({ selectedItem });
+    this.setState({ selectedItem }, this.handleAddEntry);
   }
 
   removeEntry(entry) {

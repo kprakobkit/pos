@@ -40,14 +40,11 @@ describe('Master Items', () => {
     const selectBurger = findRenderedDOMComponentWithClass(component, 'item-burger');
 
     Simulate.click(selectBurger);
-    const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry-burger');
-    Simulate.click(addEntry);
     const addCommentFld = findRenderedDOMComponentWithClass(component, 'add-comment-burger');
     Simulate.change(addCommentFld, { target: { value: 'no meat' } });
-    Simulate.click(addEntry);
     Simulate.click(submitOrder);
 
-    expect(handleSubmit.__spy.calls[0][0].length).to.equal(2);
+    expect(handleSubmit.__spy.calls[0][0].length).to.equal(1);
     expect(handleSubmit.__spy.calls[0][0][0].name).to.equal(burger.name);
     expect(handleSubmit.__spy.calls[0][0][0].comment).to.equal('no meat');
   });
