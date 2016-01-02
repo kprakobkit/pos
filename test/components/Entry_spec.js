@@ -37,8 +37,8 @@ describe('Entry', () => {
     const entryName = findRenderedDOMComponentWithClass(component, 'entry-name');
     const entryComment = findRenderedDOMComponentWithClass(component, 'entry-comment');
 
-    expect(entryName.textContent).to.equal(entry.name);
-    expect(entryComment.textContent).to.equal(entry.comment);
+    expect(entryName.textContent).to.contain(entry.name);
+    expect(entryComment.textContent).to.contain(entry.comment);
   });
 
   it('renders status and not price if under open order', () => {

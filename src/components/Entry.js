@@ -4,6 +4,7 @@ import actions from '../action_creators';
 import constants from '../constants';
 import $ from '../money';
 import _ from 'ramda';
+import moment from 'moment';
 import CancelEntryContainer from './CancelEntry';
 
 const CancelEntry = createFactory(CancelEntryContainer);
@@ -52,11 +53,17 @@ class Entry extends Component {
   }
 
   render() {
+    const { name, createdAt, comment, ofOpenOrder, status, price } = this.props;
+
     return dom.tr(
       { className: 'order-entry' },
-      dom.td({ className: 'entry-name' }, dom.h3(null, this.props.name)),
-      dom.td({ className: 'entry-comment' }, dom.h3(null, this.props.comment)),
-      this.props.ofOpenOrder ? [
+      dom.td(
+        { className: 'entry-name' },
+        dom.h3(null, name),
+        ofOpenOrder ? dom.p(null, `Added ${ moment(createdAt).fromNow() }`) : null
+      ),
+      dom.td({ className: 'entry-comment' }, dom.h3(null, comment)),
+      ofOpenOrder ? [
         dom.td(
           {
             key: 'entry-status',
@@ -65,8 +72,8 @@ class Entry extends Component {
           dom.h2(
             null,
             dom.span(
-              { className: `label label-${this.labelType(this.props.status)}` },
-              this.props.status
+              { className: `label label-${this.labelType(status)}` },
+              status
             )
           )
         ),
@@ -74,7 +81,7 @@ class Entry extends Component {
       ] :
         dom.td(
           { className: 'entry-price text-right' },
-          dom.h3(null, $.format(this.props.price))
+          dom.h3(null, $.format(price))
       )
     );
   }
