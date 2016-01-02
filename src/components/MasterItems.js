@@ -91,7 +91,7 @@ class MasterItems extends Component {
       dom.td(
         null,
         dom.h2(
-          { className: 'text-center text-danger lead' },
+          { className: 'text-center text-danger lead' }, 'There are no entries'
         )
       )
     );
