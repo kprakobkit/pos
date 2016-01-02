@@ -62,7 +62,7 @@ class Entry extends Component {
         dom.h3(null, name),
         ofOpenOrder ? dom.p(null, `Added ${ moment(createdAt).fromNow() }`) : null
       ),
-      dom.td({ className: 'entry-comment' }, dom.h3(null, comment)),
+      dom.td({ className: 'entry-comment' }, dom.h2(null, dom.small(null, comment))),
       ofOpenOrder ? [
         dom.td(
           {
