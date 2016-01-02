@@ -15,6 +15,7 @@ class MasterItems extends Component {
     this.renderSelectedEntries = this.renderSelectedEntries.bind(this);
     this.renderNoEntries = this.renderNoEntries.bind(this);
     this.addComment = this.addComment.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
     this.state = {
       entries: []
     };
@@ -50,6 +51,12 @@ class MasterItems extends Component {
     this.setState({ entries: updatedEntries });
   }
 
+  handleKeyPress(e) {
+    if(e.which === 13) {
+      document.activeElement.blur();
+    }
+  }
+
   renderSelectedEntries() {
     return this.state.entries.map((entry, i) => dom.tr(
       { className: 'entries', key: i },
@@ -57,6 +64,7 @@ class MasterItems extends Component {
       dom.td({ className: 'entry-comment col-xs-5' }, dom.input({
         className: `input form-control add-comment-${entry.name}`,
         onChange: this.addComment.bind(null, i),
+        onKeyPress: this.handleKeyPress,
         value: entry.comment
       })),
       dom.td(
