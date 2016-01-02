@@ -49,7 +49,7 @@ class EntryQueue extends Component {
   }
 
   getEntryClass(entry) {
-    const classes = 'entry col-md-4 col-sm-4 col-xs-4 list-group-item text-center';
+    const classes = 'entry col-sm-4 col-xs-4 list-group-item text-center';
 
     if(JSON.stringify(entry) === JSON.stringify(this.state.selectedEntry)) {
       return classes + ' list-group-item-success';
@@ -66,18 +66,27 @@ class EntryQueue extends Component {
         onClick: () => { this.setState({ selectedEntry: entry }); }
       },
       dom.h4(null, entry.entry.name),
-      dom.p(null, `Table#: ${ entry.tableNumber }`),
-      entry.entry.status === constants.CANCELED ? dom.p({ className: 'alert alert-danger' }, `${entry.entry.status}`) : null,
-      dom.p({ className: 'lead' }, entry.createdAt.fromNow()),
-      dom.p(null, entry.entry.comment)
+      dom.p(null, `Table ${ entry.tableNumber }, ${ entry.createdAt.fromNow()}`),
+      entry.entry.status === constants.CANCELED ? dom.div({ className: 'label label-danger status' }, `${entry.entry.status}`) : null,
+      dom.p({ className: 'lead comment' }, entry.entry.comment)
     );
   }
 
   renderConfirmation() {
     return dom.div(
       { className: 'confirmation' },
-      dom.button({ className: 'submit btn btn-primary btn-lg btn-block', onClick: this.handleSubmit.bind(null, constants.COMPLETED) }, 'Mark as completed'),
-      dom.button({ className: 'cancel btn btn-danger btn-lg btn-block', onClick: this.unselectEntry }, 'Cancel')
+      dom.button(
+        {
+          className: 'submit btn btn-primary btn-lg btn-block',
+          onClick: this.handleSubmit.bind(null, constants.COMPLETED)
+        }, 'Mark as completed'
+      ),
+      dom.button(
+        { className: 'cancel btn btn-danger btn-lg btn-block',
+          onClick: this.unselectEntry
+        },
+        'Cancel'
+      )
     );
   }
 

@@ -46,7 +46,15 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .entry {
-  height: 30vh;
+  height: 22vh;
+}
+
+.entry .comment {
+  margin-top: 5px;
+}
+
+.entry .status {
+  font-size: 1.2em;
 }
 
 .category {
