@@ -68,7 +68,7 @@ class EntryQueue extends Component {
       dom.h4(null, entry.entry.name),
       dom.p(null, `Table ${ entry.tableNumber }, ${ entry.createdAt.fromNow()}`),
       entry.entry.status === constants.CANCELED ? dom.div({ className: 'label label-danger status' }, `${entry.entry.status}`) : null,
-      dom.p({ className: 'lead comment' }, entry.entry.comment)
+      dom.p({ className: 'comment' }, entry.entry.comment)
     );
   }
 
