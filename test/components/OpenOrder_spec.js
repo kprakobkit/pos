@@ -45,5 +45,17 @@ describe('OpenOrder', () => {
 
     expect(masterItems.length).to.equal(1);
   });
+
+  it('shows no entries message with filter when there are no entries', () => {
+    const { component } = setup({ showAddEntry: false });
+    const noEntriesMessage = findRenderedDOMComponentWithClass(component, 'no-entries-message');
+    const filters = scryRenderedDOMComponentsWithClass(component, 'filter-option');
+
+    expect(noEntriesMessage.textContent).to.contain('There are no OPEN/COMPLETED entries');
+
+    Simulate.click(filters[1]);
+
+    expect(noEntriesMessage.textContent).to.contain('There are no DELIVERED entries');
+  });
 });
 

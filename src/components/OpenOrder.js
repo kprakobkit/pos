@@ -13,7 +13,7 @@ const MasterItems = createFactory(MasterItemsComponent);
 const ReadyForBillBtn = createFactory(ReadyForBillBtnComponent);
 const Link = createFactory(LinkComponent);
 const Filter = createFactory(FilterComponent);
-const openAndCompleted = `${ constants.OPEN }/${ constants.COMPLETED } `;
+const openAndCompleted = `${ constants.OPEN }/${ constants.COMPLETED }`;
 
 class OpenOrder extends Component {
   constructor(props) {
@@ -50,6 +50,8 @@ class OpenOrder extends Component {
   }
 
   render() {
+    const filteredEntries = this.getFilteredEntries();
+
     return (
       dom.div(
         null,
@@ -80,7 +82,14 @@ class OpenOrder extends Component {
             { className: 'table table-striped' },
             dom.tbody(
               null,
-              this.getFilteredEntries().map(this.renderEntry)
+              filteredEntries.length ?
+                filteredEntries.map(this.renderEntry) : dom.tr(
+                  { className: 'no-entries-message lead text-center' },
+                  dom.td(
+                    null,
+                    `There are no ${ this.state.filter } entries.`
+                  )
+              )
             )
           )
         ),
