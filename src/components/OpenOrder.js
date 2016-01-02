@@ -6,29 +6,47 @@ import EntryComponent from './Entry';
 import MasterItemsComponent from './MasterItems';
 import ReadyForBillBtnComponent from './ReadyForBillBtn';
 import { Link as LinkComponent } from 'react-router';
+import FilterComponent from './Filter';
 
 const Entry = createFactory(EntryComponent);
 const MasterItems = createFactory(MasterItemsComponent);
 const ReadyForBillBtn = createFactory(ReadyForBillBtnComponent);
 const Link = createFactory(LinkComponent);
+const Filter = createFactory(FilterComponent);
+const openAndCompleted = `${ constants.OPEN }/${ constants.COMPLETED } `;
 
 class OpenOrder extends Component {
   constructor(props) {
     super(props);
     this.renderEntry = this.renderEntry.bind(this);
+    this.filterOrders = this.filterOrders.bind(this);
+    this.state = { filter: openAndCompleted };
   }
 
+  filterOrders(filter) {
+    this.setState({ filter });
+  }
 
-  renderEntry(entry, i) {
-    return !_.contains(entry.status, [constants.CLOSED, constants.CANCELED]) ?
-      Entry(
-        _.merge(entry, {
-          key: i,
-          index: i,
-          changeEntryStatus: this.props.changeEntryStatus
-        })
-      ) :
-      null;
+  getFilteredEntries() {
+    if(this.state.filter === openAndCompleted) {
+      return this.props.order.entries.filter(({ status }) => status === constants.OPEN || status === constants.COMPLETED);
+    } else {
+      return this.props.order.entries.filter((entry) => entry.status === this.state.filter);
+    }
+  }
+
+  renderEntry(entry) {
+    const entryIndex = this.props.order.entries.indexOf(entry);
+
+    return Entry(_.merge(entry, {
+      key: entryIndex,
+      index: entryIndex,
+      changeEntryStatus: this.props.changeEntryStatus
+    }));
+  }
+
+  printOrderStatus(status) {
+    return status.replace(/_/g, ' ').toLowerCase();
   }
 
   render() {
@@ -43,12 +61,26 @@ class OpenOrder extends Component {
           handleSubmit: this.props.addEntriesToOrder
         }) : null,
         dom.div(
+          { className: 'row' },
+          dom.div(
+            { className: 'col-xs-6' },
+            Filter(
+              {
+                filter: this.state.filter,
+                filterOrders: this.filterOrders,
+                printOrderStatus: this.printOrderStatus,
+                filters: [openAndCompleted, constants.DELIVERED]
+              }
+            ),
+          )
+        ),
+        dom.div(
           { className: 'order-entries' },
           dom.table(
             { className: 'table table-striped' },
             dom.tbody(
               null,
-              this.props.order.entries.map(this.renderEntry)
+              this.getFilteredEntries().map(this.renderEntry)
             )
           )
         ),

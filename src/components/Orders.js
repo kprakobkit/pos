@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import actions from '../action_creators';
 import constants from '../constants';
 import OrderComponent from './Order';
-import OrdersFilterComponent from './OrdersFilter';
+import FilterComponent from './Filter';
 import { Link as LinkComponent } from 'react-router';
 import _ from 'underscore';
 
 const Order = createFactory(OrderComponent);
-const OrdersFilter = createFactory(OrdersFilterComponent);
+const Filter = createFactory(FilterComponent);
 const Link = createFactory(LinkComponent);
 
 function mapStateToProps(state) {
@@ -63,11 +63,12 @@ class Orders extends Component {
           { className: 'row' },
           dom.div(
             { className: 'col-xs-6' },
-            OrdersFilter(
+            Filter(
               {
                 filter: this.state.filter,
                 filterOrders: this.filterOrders,
-                printOrderStatus: this.printOrderStatus
+                printOrderStatus: this.printOrderStatus,
+                filters: [constants.OPEN, constants.READY_FOR_BILL, constants.ALL]
               }
             ),
           ),
@@ -91,8 +92,7 @@ class Orders extends Component {
                 null,
                 this.getFilteredOrders().map(this.renderOrder)
               )
-          ) :
-            dom.div({ className: 'orders-message' }, 'There are currently no orders.')
+          ) : dom.div({ className: 'orders-message' }, 'There are currently no orders.')
         )
       )
     );

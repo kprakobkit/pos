@@ -2,7 +2,7 @@ import { Component, PropTypes, DOM as dom } from 'react';
 import actions from '../action_creators';
 import constants from '../constants';
 
-class OrdersFilter extends Component {
+class Filter extends Component {
   constructor(props) {
     super(props);
     this.renderFilter = this.renderFilter.bind(this);
@@ -19,7 +19,7 @@ class OrdersFilter extends Component {
         {
           key: filter,
           className: [
-            `orders-filter-option orders-filter-${normalized}`,
+            `filter-option filter-${normalized}`,
             `btn ${this.isSelectedFilter(filter)} text-capitalize`
           ].join(' '),
           onClick: () => this.props.filterOrders(filter)
@@ -32,15 +32,16 @@ class OrdersFilter extends Component {
   render() {
     return (
       dom.div(
-        { className: 'orders-filter' },
-        [constants.OPEN, constants.READY_FOR_BILL, constants.ALL].map(this.renderFilter)
+        { className: 'filter' },
+        this.props.filters.map(this.renderFilter)
       )
     );
   }
 }
 
-OrdersFilter.propTypes = {
-  filterOrders: PropTypes.func.isRequired
+Filter.propTypes = {
+  filterOrders: PropTypes.func.isRequired,
+  filters: PropTypes.array.isRequired
 };
 
-export default OrdersFilter;
+export default Filter;

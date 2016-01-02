@@ -10,8 +10,9 @@ a:hover {
   color: black;
 }
 
-.orders-filter-option {
+.filter-option {
   margin-left: 5px;
+  margin-bottom: 10px;
 }
 
 .payment-component {
@@ -45,7 +46,16 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .entry {
-  height: 30vh;
+  height: 22vh;
+}
+
+.entry .comment {
+  margin-top: 5px;
+  font-size: 1.2em;
+}
+
+.entry .status {
+  font-size: 1.2em;
 }
 
 .category {
@@ -60,4 +70,8 @@ input[type=number]::-webkit-outer-spin-button {
   overflow: auto;
   height: 50vh;
   margin-bottom: 10px;
+}
+
+.mark-delivered {
+  margin-bottom: 3px;
 }
