@@ -104,8 +104,7 @@ class MasterItems extends Component {
         { className: 'master-items col-md-6 col-sm-6' },
         MasterItemsSelect({
           masterItems: this.props.masterItems,
-          onSelectMasterItem: this.selectItem,
-          onAddItem: this.handleAddEntry
+          onSelectMasterItem: this.selectItem
         })
       ),
       dom.div(

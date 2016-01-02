@@ -32,8 +32,8 @@ class MasterItemsSelect extends Component {
 
   handleAddEntry(itemId) {
     const selectedItem = _.find(_.propEq('id', itemId), this.props.masterItems);
-    this.props.onSelectMasterItem(selectedItem);
     this.setState({ selectedItemId: selectedItem.id });
+    this.props.onSelectMasterItem(selectedItem);
   }
 
   handleChangeCategory(category) {

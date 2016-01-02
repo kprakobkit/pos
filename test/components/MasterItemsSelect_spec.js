@@ -35,13 +35,6 @@ function setup() {
 }
 
 describe('Master Items Select', () => {
-  it('renders button when item is selected', () => {
-    const { items, component } = setup();
-    const addItemBtn = scryRenderedDOMComponentsWithClass(component, 'add-entry-apples');
-
-    expect(addItemBtn.length).to.equal(1);
-  });
-
   it('renders an option for items in the first category in alphabetical order', () => {
     const { items } = setup();
 
