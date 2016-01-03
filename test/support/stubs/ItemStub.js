@@ -1,6 +1,10 @@
 const Item = {
   find: () => {
-    return Promise.resolve([]);
+    return {
+      sort: () => {
+        return Promise.resolve([]);
+      }
+    };
   }
 };
 

@@ -31,7 +31,7 @@ export function loadOrders() {
 
 export function loadItems() {
   return (dispatch) => {
-    return Item.find().then((response) => {
+    return Item.find().sort('category').then((response) => {
       const items = response.map(toMasterItem);
 
       dispatch(setState({
