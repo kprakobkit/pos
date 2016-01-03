@@ -46,7 +46,7 @@ class MasterItems extends Component {
     this.setState({ selectedItem }, this.handleAddEntry);
   }
 
-  removeEntry(entry, i) {
+  removeEntry(entry) {
     const entries = _.without(this.state.entries, entry);
 
     this.setState({ entries });
@@ -103,7 +103,7 @@ class MasterItems extends Component {
         dom.button(
           {
             className: 'btn btn-default remove-entry',
-            onClick: this.removeEntry.bind(this, entry, i)
+            onClick: this.removeEntry.bind(this, entry)
           },
           dom.span(
             {
