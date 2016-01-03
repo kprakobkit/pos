@@ -12,7 +12,7 @@ function entriesByQuantity(entries) {
 
     R.times(() => {
       memo = R.append(entry, memo);
-    }, quantity);
+    }, quantity || 1);
 
     return memo;
   }, []);

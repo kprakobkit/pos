@@ -71,6 +71,17 @@ describe('Master Items', () => {
 
       expect(addQuantityFld.value).to.equal('1');
     });
+
+    it('defaults quantity to 1 if blank', function() {
+      const submitOrder = findRenderedDOMComponentWithClass(component, 'submit-order');
+      const selectBurger = findRenderedDOMComponentWithClass(component, 'item-burger');
+      Simulate.click(selectBurger);
+      const addQuantityFld = findRenderedDOMComponentWithClass(component, 'add-quantity-burger');
+      Simulate.change(addQuantityFld, { target: { value: '' } });
+      Simulate.click(submitOrder);
+
+      expect(handleSubmit.__spy.calls[0][0].length).to.equal(1);
+    });
   });
 
   it('clears the entries list after submit', () => {
