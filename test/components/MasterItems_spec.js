@@ -49,6 +49,30 @@ describe('Master Items', () => {
     expect(handleSubmit.__spy.calls[0][0][0].comment).to.equal('no meat');
   });
 
+  describe('Quantity', () => {
+    it('calls handle submit prop with the quantity for each entry', () => {
+      const submitOrder = findRenderedDOMComponentWithClass(component, 'submit-order');
+      const selectBurger = findRenderedDOMComponentWithClass(component, 'item-burger');
+
+      Simulate.click(selectBurger);
+      const addQuantityFld = findRenderedDOMComponentWithClass(component, 'add-quantity-burger');
+      Simulate.change(addQuantityFld, { target: { value: '3' } });
+      Simulate.click(submitOrder);
+
+      expect(handleSubmit.__spy.calls[0][0].length).to.equal(3);
+      expect(handleSubmit.__spy.calls[0][0][0].name).to.equal(burger.name);
+    });
+
+    it('defaults quantity to 1', function() {
+      const submitOrder = findRenderedDOMComponentWithClass(component, 'submit-order');
+      const selectBurger = findRenderedDOMComponentWithClass(component, 'item-burger');
+      Simulate.click(selectBurger);
+      const addQuantityFld = findRenderedDOMComponentWithClass(component, 'add-quantity-burger');
+
+      expect(addQuantityFld.value).to.equal('1');
+    });
+  });
+
   it('clears the entries list after submit', () => {
     const addEntry = findRenderedDOMComponentWithClass(component, 'add-entry-burger');
     const submitOrder = findRenderedDOMComponentWithClass(component, 'submit-order');
