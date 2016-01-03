@@ -163,9 +163,9 @@ DRINK,Colosi (Sicilia),4500,Wine - Bottle
 DRINK,Montes (Chile),3500,Wine - Bottle
 DRINK,Goat Rotri (South Africa),4000,Wine - Bottle
 DRINK,Santa Cristine (Tuscany / Italy),3500,Wine - Bottle
-DRINK,Water,500,Drink
-DRINK,Soda,500,Drink
-DRINK,Juice,500,Drink
+DRINK,Water,700,Drink
+DRINK,Soda,700,Drink
+DRINK,Juice,700,Drink
 DRINK,Tea,500,Drink
 DRINK,Coffee,500,Drink
 DRINK,House Wine - Glass,900,Drink
@@ -251,3 +251,4 @@ FOOD,Vegetable,1080,LUNCH Main
 FOOD,Side - French Fries,230,LUNCH Main
 FOOD,Side - Spring Roll,230,LUNCH Main
 FOOD,Side - Salad,230,LUNCH Main
+DRINK,Corkage Fee,2000,Drink
