@@ -5,19 +5,17 @@ import _ from 'underscore';
 
 const MasterItemsSelect = createFactory(MasterItemsSelectComponent);
 
-function addEntriesByQuantity(entries) {
-  let entriesWithQuantity = [];
-
-  entries.forEach((entry) => {
+function entriesByQuantity(entries) {
+  return entries.reduce((memo, entry) => {
     let { quantity } = entry;
     delete entry.quantity;
 
     R.times(() => {
-      entriesWithQuantity = R.append(entry, entriesWithQuantity);
+      memo = R.append(entry, memo);
     }, quantity);
-  });
 
-  return entriesWithQuantity;
+    return memo;
+  }, []);
 }
 
 class MasterItems extends Component {
@@ -55,9 +53,7 @@ class MasterItems extends Component {
   }
 
   handleOnClick() {
-    const entriesWithQuantity = addEntriesByQuantity(this.state.entries);
-
-    this.props.handleSubmit(entriesWithQuantity);
+    this.props.handleSubmit(entriesByQuantity(this.state.entries));
     this.setState({ entries: [] });
   }
 
