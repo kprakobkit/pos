@@ -28,12 +28,13 @@ export function loadTransactions() {
   };
 }
 
-export function addOrder(tableNumber, entries) {
+export function addOrder(tableNumber, entries, onSuccess) {
   return {
     meta: { remote: true },
     type: constants.ADD_ORDER,
     entries,
-    tableNumber
+    tableNumber,
+    onSuccess
   };
 }
 

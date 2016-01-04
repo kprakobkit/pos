@@ -8,7 +8,12 @@ export default (store) => (socket) => {
 
   socket.on(constants.LOAD_TRANSACTIONS, (action) => store.dispatch(actions.loadTransactions()));
 
-  socket.on(constants.ADD_ORDER, (action) => store.dispatch(actions.addOrder(action.tableNumber, action.entries)));
+  socket.on(constants.ADD_ORDER, (action) => {
+    const onSuccess = (orderId) => {
+      socket.emit(constants.ADD_ORDER_SUCCESS, orderId);
+    };
+    store.dispatch(actions.addOrder(action.tableNumber, action.entries, onSuccess));
+  });
 
   socket.on(constants.CHANGE_ENTRY_STATUS, (action) => store.dispatch(actions.changeEntryStatus(action.orderId, action.entryIndex, action.status)));
 

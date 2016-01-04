@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { expect, spy } from 'chai';
 import proxyquire from 'proxyquire';
 import constants from '../../src/constants';
 import Order from '../support/stubs/OrderStub';
@@ -87,6 +87,7 @@ describe('server action creators', () => {
       return { orders: []  };
     };
     const entries = [{ name: 'food' }];
+    const onSuccess = spy();
     const expected = {
       type: constants.SET_STATE,
       state: {
@@ -96,8 +97,9 @@ describe('server action creators', () => {
       }
     };
 
-    actions.addOrder('14', entries)(dispatch, getState).then(() => {
+    actions.addOrder('14', entries, onSuccess)(dispatch, getState).then(() => {
       expect(dispatched).to.deep.equal(expected);
+      expect(onSuccess).to.have.been.called();
     }).then(done, done);
   });
 
