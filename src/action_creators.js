@@ -83,6 +83,14 @@ export function setClosed(orderId, transactionId, amounts) {
   };
 }
 
+export function removeOrder(orderId) {
+  return {
+    meta: { remote: true },
+    type: constants.REMOVE_ORDER,
+    orderId
+  };
+}
+
 export default {
   setState,
   loadOrders,
@@ -93,5 +101,6 @@ export default {
   addEntriesToOrder,
   setReadyForBill,
   setOpen,
-  setClosed
+  setClosed,
+  removeOrder
 };

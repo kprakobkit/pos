@@ -22,5 +22,6 @@ export default {
   TAX_RATE: 0.0875,
   FOOD: 'FOOD',
   DRINK: 'DRINK',
-  OTHER: 'OTHER'
+  OTHER: 'OTHER',
+  REMOVE_ORDER: 'REMOVE_ORDER'
 };
