@@ -7,11 +7,15 @@ import EntryComponent from './Entry';
 import MasterItemsComponent from './MasterItems';
 import OpenOrderComponent from './OpenOrder';
 import ProcessingOrderComponent from './ProcessingOrder';
+import ModalComponent from 'react-modal';
+import EditOrderComponent from './EditOrder';
 
 const Entry = createFactory(EntryComponent);
 const MasterItems = createFactory(MasterItemsComponent);
 const OpenOrder = createFactory(OpenOrderComponent);
 const ProcessingOrder = createFactory(ProcessingOrderComponent);
+const Modal = createFactory(ModalComponent);
+const EditOrder = createFactory(EditOrderComponent);
 
 function mapStateToProps(state) {
   return {
@@ -24,11 +28,16 @@ class OrderDetails extends Component {
   constructor(props) {
     super(props);
     this.toggleForm = this.toggleForm.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
+    this.handleReopen = this.handleReopen.bind(this);
     this.state = {
       order: {
         entries: []
       },
-      showAddEntry: false
+      showAddEntry: false,
+      modalIsOpen: false
     };
   }
 
@@ -47,6 +56,25 @@ class OrderDetails extends Component {
     this.setState({ order });
   }
 
+  openModal() {
+    this.setState({ modalIsOpen: true });
+  }
+
+  closeModal() {
+    this.setState({ modalIsOpen: false });
+  }
+
+  handleRemove(orderId) {
+    this.props.removeOrder(orderId);
+    this.closeModal();
+    this.context.history && this.context.history.pushState(null, '/orders');
+  }
+
+  handleReopen(orderId) {
+    this.props.setOpen(orderId);
+    this.closeModal();
+  }
+
   renderOrderInformation() {
     return (
       dom.div(
@@ -54,14 +82,27 @@ class OrderDetails extends Component {
         dom.h3(
           { className: 'text-left order-information' },
           `Table ${this.state.order.tableNumber} / Order ${this.props.params.id}  `,
-          dom.span({ className: 'text-info' }, `${this.state.order.status}`),
-          dom.small(
-            null,
-            this.state.order.status === constants.READY_FOR_BILL ? dom.button({
-              className: 'back-to-open btn btn-link',
-              onClick: this.props.setOpen.bind(null, this.props.params.id)
-            }, 'Back to "Open" Status') : null
-          )
+          dom.span({ className: 'text-info' }, `${this.state.order.status}`)
+        ),
+        dom.button({ onClick: this.openModal, className: 'edit-order btn btn-link' }, dom.span({ className: 'glyphicon glyphicon-chevron-down' })),
+        Modal(
+          {
+            isOpen: this.state.modalIsOpen,
+            onRequestClose: this.closeModal,
+            style: {
+              content: {
+                top: '15%',
+                bottom: '15%',
+                left: '15%',
+                right: '15%'
+              }
+            }
+          },
+          EditOrder({
+            status: this.state.order.status,
+            handleReopen: this.handleReopen.bind(null, this.props.params.id),
+            handleRemove: this.handleRemove.bind(null, this.props.params.id)
+          })
         )
       )
     );
@@ -140,6 +181,10 @@ OrderDetails.propTypes = {
 OrderDetails.defaultProps = {
   orders: [],
   masterItems: []
+};
+
+OrderDetails.contextTypes = {
+  history: PropTypes.object
 };
 
 export default OrderDetails;

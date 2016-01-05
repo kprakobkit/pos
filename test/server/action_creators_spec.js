@@ -101,6 +101,31 @@ describe('server action creators', () => {
     }).then(done, done);
   });
 
+  it('removeOrder', (done) => {
+    let dispatched;
+    function dispatch(action) {
+      dispatched = action;
+    }
+    const getState = () => {
+      return {
+        orders: [
+          { id: 'orderId', entries, tableNumber: '14' }
+        ]
+      };
+    };
+    const entries = [{ name: 'food' }];
+    const expected = {
+      type: constants.SET_STATE,
+      state: {
+        orders: []
+      }
+    };
+
+    actions.removeOrder('orderId')(dispatch, getState).then(() => {
+      expect(dispatched).to.deep.equal(expected);
+    }).then(done, done);
+  });
+
   it('changeEntryStatus', (done) => {
     let dispatched;
     const orders = [

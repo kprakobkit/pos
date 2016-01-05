@@ -20,6 +20,10 @@ const OrderStub = {
     return Promise.resolve([]);
   },
 
+  remove: () => {
+    return Promise.resolve([]);
+  },
+
   findOneAndUpdate: ({ id }, { status }) => {
     return Promise.resolve({ id, status });
   },
