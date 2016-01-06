@@ -80,28 +80,28 @@ class OrderDetails extends Component {
       dom.div(
         { className: 'col-xs-6' },
         dom.h3(
-          { className: 'text-left order-information' },
+          { className: 'text-left order-information inline' },
           `Table ${this.state.order.tableNumber} / Order ${this.props.params.id}  `,
           dom.span({ className: 'text-info' }, `${this.state.order.status}`)
         ),
         dom.button({ onClick: this.openModal, className: 'edit-order btn btn-link' }, dom.span({ className: 'glyphicon glyphicon-chevron-down' })),
         Modal(
           {
+            className: 'modal-dialog',
             isOpen: this.state.modalIsOpen,
             onRequestClose: this.closeModal,
             style: {
               content: {
-                top: '15%',
-                bottom: '15%',
-                left: '15%',
-                right: '15%'
+                border: 0,
+                background: 'none'
               }
             }
           },
           EditOrder({
             status: this.state.order.status,
             handleReopen: this.handleReopen.bind(null, this.props.params.id),
-            handleRemove: this.handleRemove.bind(null, this.props.params.id)
+            handleRemove: this.handleRemove.bind(null, this.props.params.id),
+            closeModal: this.closeModal
           })
         )
       )
