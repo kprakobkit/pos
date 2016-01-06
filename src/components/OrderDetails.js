@@ -78,7 +78,7 @@ class OrderDetails extends Component {
   renderOrderInformation() {
     return (
       dom.div(
-        { className: 'col-xs-6' },
+        { className: 'col-xs-8 col-sm-8' },
         dom.h3(
           { className: 'text-left order-information inline' },
           `Table ${this.state.order.tableNumber} / Order ${this.props.params.id}  `,
@@ -111,7 +111,7 @@ class OrderDetails extends Component {
   renderAddEntriesButton() {
     return (
       dom.div(
-        { className: 'col-xs-6 text-right' },
+        { className: 'col-xs-4 col-sm-4 text-right' },
         dom.button(
           { className: `toggle-add-entry btn btn-lg btn-${ this.state.showAddEntry ? 'danger' : 'info' }`, onClick: this.toggleForm },
           this.state.showAddEntry ?
