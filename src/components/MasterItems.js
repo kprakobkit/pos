@@ -6,16 +6,8 @@ import _ from 'underscore';
 const MasterItemsSelect = createFactory(MasterItemsSelectComponent);
 
 function entriesByQuantity(entries) {
-  return entries.reduce((memo, entry) => {
-    let { quantity } = entry;
-    delete entry.quantity;
-
-    R.times(() => {
-      memo = R.append(entry, memo);
-    }, quantity || 1);
-
-    return memo;
-  }, []);
+    const duplicate = entry => R.repeat(R.dissoc('quantity', entry), entry.quantity || 1);
+    return R.chain(duplicate, entries);
 }
 
 class MasterItems extends Component {
@@ -58,16 +50,14 @@ class MasterItems extends Component {
   }
 
   addComment(entryIndex, e) {
-    const updatedEntry = this.state.entries[entryIndex];
-    updatedEntry.comment = e.target.value;
+    const updatedEntry = R.assoc('comment', e.target.value, this.state.entries[entryIndex]);
     const updatedEntries = R.update(entryIndex, updatedEntry, this.state.entries);
 
     this.setState({ entries: updatedEntries });
   }
 
   setQuantity(entryIndex, e) {
-    const updatedEntry = this.state.entries[entryIndex];
-    updatedEntry.quantity = e.target.value;
+    const updatedEntry = R.assoc('quantity', e.target.value, this.state.entries[entryIndex]);
     const updatedEntries = R.update(entryIndex, updatedEntry, this.state.entries);
 
     this.setState({ entries: updatedEntries });
