@@ -5,8 +5,10 @@ export default (socket) => (store) => (next) => (action) => {
     socket.emit(action.type, action);
   }
 
-  if(action.type === constants.ADD_ORDER) {
-    socket.on(constants.ADD_ORDER_SUCCESS, action.onSuccess);
+  if(action.onSuccess) {
+    const { type, onSuccess } = action.onSuccess;
+
+    socket.on(type, onSuccess);
   }
 
   return next(action);

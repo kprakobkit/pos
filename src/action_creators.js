@@ -34,7 +34,10 @@ export function addOrder(tableNumber, entries, onSuccess) {
     type: constants.ADD_ORDER,
     entries,
     tableNumber,
-    onSuccess
+    onSuccess: {
+      type: constants.ADD_ORDER_SUCCESS,
+      onSuccess
+    }
   };
 }
 
