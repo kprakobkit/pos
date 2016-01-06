@@ -30,7 +30,7 @@ function setup({ status }) {
   };
 }
 
-describe.only('EditOrder', () => {
+describe('EditOrder', () => {
   it('shows reopen button when an order is READY FOR BILL', () => {
     const { component } = setup({ status: constants.READY_FOR_BILL });
     const reopen = findRenderedDOMComponentWithClass(component, 'reopen-order');
