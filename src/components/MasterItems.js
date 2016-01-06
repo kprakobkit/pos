@@ -5,6 +5,11 @@ import _ from 'underscore';
 
 const MasterItemsSelect = createFactory(MasterItemsSelectComponent);
 
+function entriesByQuantity(entries) {
+    const duplicate = entry => R.repeat(R.dissoc('quantity', entry), entry.quantity || 1);
+    return R.chain(duplicate, entries);
+}
+
 class MasterItems extends Component {
   constructor(props) {
     super(props);
@@ -16,13 +21,14 @@ class MasterItems extends Component {
     this.renderNoEntries = this.renderNoEntries.bind(this);
     this.addComment = this.addComment.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.setQuantity = this.setQuantity.bind(this);
     this.state = {
       entries: []
     };
   }
 
   handleAddEntry() {
-    const selectedItem = R.merge({}, this.state.selectedItem || this.props.masterItems[0]);
+    const selectedItem = R.merge({ quantity: 1 }, this.state.selectedItem || this.props.masterItems[0]);
     const entries = this.state.entries.concat(selectedItem);
 
     this.setState({ entries });
@@ -33,19 +39,25 @@ class MasterItems extends Component {
   }
 
   removeEntry(entry) {
-    const updatedEntries = _.without(this.state.entries, entry);
+    const entries = _.without(this.state.entries, entry);
 
-    this.setState({ entries: updatedEntries });
+    this.setState({ entries });
   }
 
   handleOnClick() {
-    this.props.handleSubmit(this.state.entries);
+    this.props.handleSubmit(entriesByQuantity(this.state.entries));
     this.setState({ entries: [] });
   }
 
   addComment(entryIndex, e) {
-    const updatedEntry = this.state.entries[entryIndex];
-    updatedEntry.comment = e.target.value;
+    const updatedEntry = R.assoc('comment', e.target.value, this.state.entries[entryIndex]);
+    const updatedEntries = R.update(entryIndex, updatedEntry, this.state.entries);
+
+    this.setState({ entries: updatedEntries });
+  }
+
+  setQuantity(entryIndex, e) {
+    const updatedEntry = R.assoc('quantity', e.target.value, this.state.entries[entryIndex]);
     const updatedEntries = R.update(entryIndex, updatedEntry, this.state.entries);
 
     this.setState({ entries: updatedEntries });
@@ -60,12 +72,21 @@ class MasterItems extends Component {
   renderSelectedEntries() {
     return this.state.entries.map((entry, i) => dom.tr(
       { className: 'entries', key: i },
-      dom.td({ className: 'entry-name col-xs-4' }, dom.h4(null, entry.name)),
+      dom.td({ className: 'entry-name col-xs-5' }, dom.h5(null, entry.name)),
       dom.td({ className: 'entry-comment col-xs-5' }, dom.input({
         className: `input form-control add-comment-${entry.name}`,
         onChange: this.addComment.bind(null, i),
+        placeholder: 'Comment',
         onKeyPress: this.handleKeyPress,
         value: entry.comment
+      })),
+      dom.td({ className: 'entry-quantity col-xs-2' }, dom.input({
+        className: `input form-control add-quantity-${entry.name}`,
+        type: 'number',
+        max: '50',
+        onChange: this.setQuantity.bind(null, i),
+        onKeyPress: this.handleKeyPress,
+        value: entry.quantity
       })),
       dom.td(
         { className: 'entry-action text-right' },

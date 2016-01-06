@@ -78,7 +78,7 @@ class OrderDetails extends Component {
             className: 'glyphicon glyphicon-remove',
             key: 'remove',
             'aria-hidden': true
-          }), null] :
+          }), '  Done Adding Items'] :
             [dom.span({
             className: 'glyphicon glyphicon-plus',
             key: 'add',
