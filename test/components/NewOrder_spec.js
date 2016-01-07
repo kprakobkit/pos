@@ -56,7 +56,7 @@ function setup() {
     addBurger: findRenderedDOMComponentWithClass(component, 'add-entry-burger'),
     selectItem: findRenderedDOMComponentWithClass(component, 'select-item'),
     submitOrder: findRenderedDOMComponentWithClass(component, 'submit-order'),
-    selectTableNumber: findRenderedDOMComponentWithClass(component, 'table-numbers'),
+    selectTableNumber: findRenderedDOMComponentWithClass(component, 'table-number-select'),
     addOrder,
     burger,
     food

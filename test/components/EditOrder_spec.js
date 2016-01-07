@@ -62,7 +62,7 @@ describe('EditOrder', () => {
 
   it('calls update table number', () => {
     const { component, updateTableNumber } = setup({ status: constants.OPEN });
-    const selectTableNumber = findRenderedDOMComponentWithClass(component, 'table-numbers');
+    const selectTableNumber = findRenderedDOMComponentWithClass(component, 'table-number-select');
     Simulate.change(selectTableNumber, { target: { value: '2' } });
 
     expect(updateTableNumber).to.have.been.called();

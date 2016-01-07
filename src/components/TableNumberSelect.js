@@ -8,7 +8,7 @@ class TableNumberSelect extends Component {
   render() {
     return (
       dom.select(
-        { className: 'table-numbers input-lg form-control', value: this.props.tableNumber, onChange: this.props.handleOnChange },
+        { className: 'table-number-select input-lg form-control', value: this.props.tableNumber, onChange: this.props.handleOnChange },
         tableNumbers.map((num) => dom.option({ key: num, className: 'table-number', value: num }, num))
       )
     );
