@@ -84,7 +84,7 @@ class OrderDetails extends Component {
           `Table ${this.state.order.tableNumber} / Order ${this.props.params.id}  `,
           dom.span({ className: 'text-info' }, `${this.state.order.status}`)
         ),
-        dom.button({ onClick: this.openModal, className: 'edit-order btn btn-link' }, dom.span({ className: 'glyphicon glyphicon-chevron-down' })),
+        dom.button({ onClick: this.openModal, className: 'edit-order btn btn-link btn-lg' }, dom.span({ className: 'glyphicon glyphicon-edit' })),
         Modal(
           {
             className: 'modal-dialog',
