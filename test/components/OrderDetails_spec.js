@@ -20,6 +20,7 @@ function setup({ orders, masterItems } = {}) {
   const addEntriesToOrder = () => {};
   const setReadyForBill = () => {};
   const setClosed = () => {};
+  const updateTableNumber = () => {};
   const setOpen = spy();
   const id = 1;
   const params = { id };
@@ -32,7 +33,8 @@ function setup({ orders, masterItems } = {}) {
     setReadyForBill,
     setOpen,
     setClosed,
-    masterItems
+    masterItems,
+    updateTableNumber
   };
   const component = renderIntoDocument(OrderDetails(props));
   const orderInfo = findRenderedDOMComponentWithClass(component, 'order-information');

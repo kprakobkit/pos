@@ -76,13 +76,14 @@ class OrderDetails extends Component {
   }
 
   renderOrderInformation() {
+    const { tableNumber, status } = this.state.order;
     return (
       dom.div(
         { className: 'col-xs-8 col-sm-8' },
         dom.h3(
           { className: 'text-left order-information inline' },
-          `Table ${this.state.order.tableNumber} / Order ${this.props.params.id}  `,
-          dom.span({ className: 'text-info' }, `${this.state.order.status}`)
+          `Table ${tableNumber} / Order ${this.props.params.id}  `,
+          dom.span({ className: 'text-info' }, `${status}`)
         ),
         dom.button({ onClick: this.openModal, className: 'edit-order btn btn-link btn-lg' }, dom.span({ className: 'glyphicon glyphicon-edit' })),
         Modal(
@@ -98,10 +99,12 @@ class OrderDetails extends Component {
             }
           },
           EditOrder({
-            status: this.state.order.status,
+            status,
+            tableNumber,
             handleReopen: this.handleReopen.bind(null, this.props.params.id),
             handleRemove: this.handleRemove.bind(null, this.props.params.id),
-            closeModal: this.closeModal
+            closeModal: this.closeModal,
+            updateTableNumber: this.props.updateTableNumber.bind(null, this.props.params.id)
           })
         )
       )

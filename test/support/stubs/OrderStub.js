@@ -24,6 +24,14 @@ const OrderStub = {
     return Promise.resolve([]);
   },
 
+  updateTableNumber: (orderId, tableNumber) => {
+    return Promise.resolve({
+      id: orderId,
+      tableNumber,
+      entries: []
+    });
+  },
+
   findOneAndUpdate: ({ id }, { status }) => {
     return Promise.resolve({ id, status });
   },
