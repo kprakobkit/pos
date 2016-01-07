@@ -16,7 +16,7 @@ class TableNumberSelect extends Component {
 }
 
 TableNumberSelect.propTypes = {
-  tableNumber: PropTypes.number.isRequired,
+  tableNumber: PropTypes.string.isRequired,
   handleOnChange: PropTypes.func.isRequired
 };
 

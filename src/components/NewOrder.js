@@ -22,7 +22,7 @@ class NewOrder extends Component {
     this.setTableNumber = this.setTableNumber.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      tableNumber: 1
+      tableNumber: '1'
     };
   }
 

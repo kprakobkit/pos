@@ -17,6 +17,7 @@ function setup({ status }) {
   const handleRemove = spy();
   const props = {
     status,
+    tableNumber: '1',
     handleReopen,
     handleRemove
   };
