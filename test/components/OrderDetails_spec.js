@@ -56,24 +56,23 @@ describe('OrderDetails', () => {
     expect(orderInfo.textContent).to.contain('14');
   });
 
-  it('renders two filter options', () => {
+  it('renders three filter options', () => {
     const { component } = setup();
     const filters = scryRenderedDOMComponentsWithClass(component, 'filter-option');
 
-    expect(filters.length).to.equal(2);
+    expect(filters.length).to.equal(3);
   });
 
   describe('renders the active order entries', () => {
     const entries = [
-      { name: 'rice', price: 1050, comment: 'brown rice', status: 'OPEN' },
-      { name: 'pho', price: 850, comment: 'extra meat', status: 'CANCELED' },
-      { name: 'egg', price: 150, comment: 'sunny side up', status: 'DELIVERED' },
-      { name: 'steak', price: 150, comment: 'medium rare', status: 'COMPLETED' },
-      { name: 'soup', price: 150, comment: 'extra hot', status: 'CLOSED' }
+      { name: 'rice', price: 1050, comment: 'brown rice', status: 'OPEN', type: 'FOOD' },
+      { name: 'pho', price: 850, comment: 'extra meat', status: 'CANCELED', type: 'FOOD' },
+      { name: 'beer', price: 150, comment: 'cold', status: 'DELIVERED', type: 'DRINK' },
+      { name: 'steak', price: 150, comment: 'medium rare', status: 'COMPLETED', type: 'FOOD' }
     ];
     const orders = [Generator.order().id(1).entries(entries).status(constants.OPEN).build()];
 
-    it('defaults to open and completed entries', () => {
+    it('defaults to All non-canceled entries', () => {
       const { component } = setup({ orders });
       const entryNames = scryRenderedDOMComponentsWithClass(component, 'entry-name');
       const entryComments = scryRenderedDOMComponentsWithClass(component, 'entry-comment');
@@ -81,13 +80,7 @@ describe('OrderDetails', () => {
       const filters = scryRenderedDOMComponentsWithClass(component, 'filter-option');
       const orderEntries = scryRenderedDOMComponentsWithClass(component, 'order-entry');
 
-      expect(orderEntries.length).to.equal(2);
-      expect(entryNames[0].textContent).to.contain('rice');
-      expect(entryComments[0].textContent).to.contain('brown rice');
-      expect(entryStatuses[0].textContent).to.contain('OPEN');
-      expect(entryNames[1].textContent).to.contain('steak');
-      expect(entryComments[1].textContent).to.contain('medium rare');
-      expect(entryStatuses[1].textContent).to.contain('COMPLETED');
+      expect(orderEntries.length).to.equal(3);
     });
 
     it('renders by filter', () => {
@@ -99,10 +92,10 @@ describe('OrderDetails', () => {
       const entryComments = scryRenderedDOMComponentsWithClass(component, 'entry-comment');
       const entryStatuses = scryRenderedDOMComponentsWithClass(component, 'entry-status');
 
-      expect(orderEntries.length).to.equal(1);
-      expect(entryNames[0].textContent).to.contain('egg');
-      expect(entryComments[0].textContent).to.contain('sunny side up');
-      expect(entryStatuses[0].textContent).to.contain('DELIVERED');
+      expect(orderEntries.length).to.equal(2);
+      expect(entryNames[0].textContent).to.contain('rice');
+      expect(entryComments[0].textContent).to.contain('brown rice');
+      expect(entryStatuses[0].textContent).to.contain('OPEN');
     });
   });
 

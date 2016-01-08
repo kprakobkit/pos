@@ -20,7 +20,7 @@ class OpenOrder extends Component {
     super(props);
     this.renderEntry = this.renderEntry.bind(this);
     this.filterOrders = this.filterOrders.bind(this);
-    this.state = { filter: openAndCompleted };
+    this.state = { filter: constants.ALL };
   }
 
   filterOrders(filter) {
@@ -28,10 +28,12 @@ class OpenOrder extends Component {
   }
 
   getFilteredEntries() {
-    if(this.state.filter === openAndCompleted) {
-      return this.props.order.entries.filter(({ status }) => status === constants.OPEN || status === constants.COMPLETED);
+    const entries = this.props.order.entries.filter(entry => entry.status != constants.CANCELED);
+
+    if(this.state.filter === constants.ALL) {
+      return entries;
     } else {
-      return this.props.order.entries.filter((entry) => entry.status === this.state.filter);
+      return entries.filter(entry => entry.type === this.state.filter);
     }
   }
 
@@ -51,6 +53,7 @@ class OpenOrder extends Component {
 
   render() {
     const filteredEntries = this.getFilteredEntries();
+    const { filter } = this.state;
 
     return (
       dom.div(
@@ -71,7 +74,7 @@ class OpenOrder extends Component {
                 filter: this.state.filter,
                 filterOrders: this.filterOrders,
                 printOrderStatus: this.printOrderStatus,
-                filters: [openAndCompleted, constants.DELIVERED]
+                filters: [constants.ALL, constants.FOOD, constants.DRINK]
               }
             ),
           )
@@ -87,7 +90,7 @@ class OpenOrder extends Component {
                   { className: 'no-entries-message lead text-center' },
                   dom.td(
                     null,
-                    `There are no ${ this.state.filter } entries.`
+                    `There are no ${ filter === 'ALL' ? '' : filter } entries.`
                   )
               )
             )

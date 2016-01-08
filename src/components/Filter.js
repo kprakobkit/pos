@@ -33,6 +33,7 @@ class Filter extends Component {
     return (
       dom.div(
         { className: 'filter' },
+        'Show: ',
         this.props.filters.map(this.renderFilter)
       )
     );
