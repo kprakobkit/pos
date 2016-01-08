@@ -79,7 +79,7 @@ class OpenOrder extends Component {
         dom.div(
           { className: 'order-entries' },
           dom.table(
-            { className: 'table table-striped' },
+            { className: 'table table-striped table-condensed' },
             dom.tbody(
               null,
               filteredEntries.length ?
@@ -100,7 +100,7 @@ class OpenOrder extends Component {
         Link(
           { to: '/orders', className: 'orders-link' },
           dom.button(
-            { className: 'btn btn-danger btn-lg btn-block' },
+            { className: 'btn btn-danger btn-block' },
             'Back'
           )
         )

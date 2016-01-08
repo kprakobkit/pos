@@ -80,8 +80,8 @@ class OrderDetails extends Component {
     return (
       dom.div(
         { className: 'col-xs-8 col-sm-8' },
-        dom.h3(
-          { className: 'text-left order-information inline' },
+        dom.p(
+          { className: 'text-left order-information inline lead' },
           `Table ${tableNumber} / Order ${this.props.params.id}  `,
           dom.span({ className: 'text-info' }, `${status}`)
         ),
@@ -116,7 +116,7 @@ class OrderDetails extends Component {
       dom.div(
         { className: 'col-xs-4 col-sm-4 text-right' },
         dom.button(
-          { className: `toggle-add-entry btn btn-lg btn-${ this.state.showAddEntry ? 'danger' : 'info' }`, onClick: this.toggleForm },
+          { className: `toggle-add-entry btn btn-${ this.state.showAddEntry ? 'danger' : 'info' }`, onClick: this.toggleForm },
           this.state.showAddEntry ?
             [dom.span({
             className: 'glyphicon glyphicon-remove',

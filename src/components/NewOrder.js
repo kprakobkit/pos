@@ -53,7 +53,7 @@ class NewOrder extends Component {
         dom.p(
           null,
           dom.button(
-            { className: 'btn btn-danger btn-lg btn-block' },
+            { className: 'btn btn-danger btn-block' },
             'Back'
           )
         )

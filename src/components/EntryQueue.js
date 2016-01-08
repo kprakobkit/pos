@@ -77,12 +77,12 @@ class EntryQueue extends Component {
       { className: 'confirmation' },
       dom.button(
         {
-          className: 'submit btn btn-primary btn-lg btn-block',
+          className: 'submit btn btn-primary btn-block',
           onClick: this.handleSubmit.bind(null, constants.COMPLETED)
         }, 'Mark as completed'
       ),
       dom.button(
-        { className: 'cancel btn btn-danger btn-lg btn-block',
+        { className: 'cancel btn btn-danger btn-block',
           onClick: this.unselectEntry
         },
         'Cancel'
@@ -93,7 +93,7 @@ class EntryQueue extends Component {
   renderRemoveEntry() {
     return dom.div(
       { className: 'confirm-remove' },
-      dom.button({ className: 'remove-canceled-entry btn btn-danger btn-lg btn-block', onClick: this.handleSubmit.bind(null, constants.CLOSED) }, 'Remove Entry'),
+      dom.button({ className: 'remove-canceled-entry btn btn-danger btn-block', onClick: this.handleSubmit.bind(null, constants.CLOSED) }, 'Remove Entry'),
     );
   }
 

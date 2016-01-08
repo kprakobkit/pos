@@ -25,10 +25,10 @@ class Entry extends Component {
 
   renderActionButtons() {
     return dom.td(
-      { key: 'entry-actions', className: 'entry-actions col-xs-5 col-sm-4 col-md-3' },
+      { key: 'entry-actions', className: 'entry-actions col-xs-4 col-sm-3 col-md-3' },
       this.showDelivered() ? dom.button(
         {
-          className: 'btn btn-primary mark-delivered btn-lg btn-block',
+          className: 'btn btn-primary mark-delivered btn-block btn-sm',
           onClick: this.handleChangeStatus.bind(null, constants.DELIVERED)
         },
         'Mark Delivered'
@@ -58,18 +58,18 @@ class Entry extends Component {
     return dom.tr(
       { className: 'order-entry' },
       dom.td(
-        { className: 'entry-name' },
-        dom.h3(null, name),
-        ofOpenOrder ? dom.p(null, `Added ${ moment(createdAt).fromNow() }`) : null
+        { className: 'entry-name col-xs-3' },
+        dom.p(null, dom.strong(null, name)),
+        ofOpenOrder ? dom.small(null, `Added ${ moment(createdAt).fromNow() }`) : null
       ),
-      dom.td({ className: 'entry-comment' }, dom.h2(null, dom.small(null, comment))),
+      dom.td({ className: 'entry-comment' }, dom.p(null, comment)),
       ofOpenOrder ? [
         dom.td(
           {
             key: 'entry-status',
             className: 'entry-status col-xs-2'
           },
-          dom.h2(
+          dom.p(
             null,
             dom.span(
               { className: `label label-${this.labelType(status)}` },
@@ -81,7 +81,7 @@ class Entry extends Component {
       ] :
         dom.td(
           { className: 'entry-price text-right' },
-          dom.h3(null, $.format(price))
+          dom.p(null, $.format(price))
       )
     );
   }

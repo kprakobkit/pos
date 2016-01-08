@@ -68,7 +68,7 @@ class MasterItemsSelect extends Component {
             this.getCategories(this.props.masterItems).map((category, i) => {
               return dom.button({
                 type: 'button',
-                className: `btn btn-default category category-${category} ${this.isActiveCategory(category)}`,
+                className: `btn btn-default btn-sm category category-${category} ${this.isActiveCategory(category)}`,
                 key: i,
                 onClick: this.handleChangeCategory.bind(null, category)
               }, category);
@@ -78,7 +78,7 @@ class MasterItemsSelect extends Component {
         dom.div(
           { className: 'items-table' },
           dom.table(
-            { className: 'table table-hover' },
+            { className: 'table table-hover table-condensed' },
             dom.tbody(
               { className: 'select-item' },
               this.state.filteredItems.map((item, i) => {
@@ -89,7 +89,7 @@ class MasterItemsSelect extends Component {
                   },
                   dom.td(
                     null,
-                    item.name
+                    dom.small(null, item.name)
                   )
                 );
               })

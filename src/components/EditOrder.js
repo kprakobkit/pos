@@ -21,7 +21,7 @@ class EditOrder extends Component {
         { className: 'modal-content' },
         dom.div(
           { className: 'modal-header' },
-          dom.h2({ className: 'modal-title inline' }, 'Edit Order'),
+          dom.h4({ className: 'modal-title inline' }, 'Edit Order'),
           dom.button({
             className: 'close',
             type: 'button',
@@ -32,7 +32,7 @@ class EditOrder extends Component {
           { className: 'modal-body' },
           this.props.status === constants.READY_FOR_BILL ? dom.button(
             {
-              className: 'btn btn-warning btn-lg btn-block reopen-order',
+              className: 'btn btn-warning btn-block reopen-order',
               onClick: this.props.handleReopen
             },
             'Reopen this Order'
@@ -46,7 +46,14 @@ class EditOrder extends Component {
               handleOnChange: this.handleOnChange
             }))
           ),
-          dom.button({ className: 'btn btn-danger btn-lg btn-block remove-order', onClick: this.props.handleRemove }, 'Remove this order')
+          dom.button({
+            className: 'btn btn-danger btn-block remove-order',
+            onClick: this.props.handleRemove
+          }, dom.span({
+            className: 'glyphicon glyphicon-trash',
+            key: 'remove',
+            'aria-hidden': true
+          }), '  Remove this order')
         )
       )
     );

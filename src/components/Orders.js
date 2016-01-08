@@ -77,7 +77,7 @@ class Orders extends Component {
             dom.p(
               null,
               dom.button(
-                { className: 'btn btn-success btn-lg' },
+                { className: 'btn btn-success' },
                 'Add new order'
               )
             )
