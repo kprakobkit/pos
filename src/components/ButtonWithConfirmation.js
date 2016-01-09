@@ -37,10 +37,10 @@ class ButtonWithConfirmation extends Component {
         )] :
           dom.button(
             {
-              className: 'btn btn-link btn-block btn-sm button-action',
+              className: 'btn btn-danger btn-block btn-sm button-action',
               onClick: this.toggleConfirmation
             },
-            dom.span({ className: 'text-danger' }, this.props.actionText)
+            dom.span(null, this.props.actionText)
         )
       )
     );
