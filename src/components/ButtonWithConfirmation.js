@@ -25,7 +25,7 @@ class ButtonWithConfirmation extends Component {
               className: 'btn btn-danger btn-sm confirm',
               onClick: this.props.onConfirmation
             },
-            dom.span(null, this.props.confirmationText)
+            this.props.confirmationText
         ),
         dom.button(
           {
@@ -40,7 +40,7 @@ class ButtonWithConfirmation extends Component {
               className: 'btn btn-danger btn-block btn-sm button-action',
               onClick: this.toggleConfirmation
             },
-            dom.span(null, this.props.actionText)
+            this.props.actionText
         )
       )
     );
