@@ -20,16 +20,16 @@ class Order extends Component {
               { className: 'row' },
               dom.div(
                 { className: 'table-number col-xs-2' },
-                dom.h3(null, `Table# ${this.props.tableNumber}`)
+                dom.h5(null, `Table# ${this.props.tableNumber}`)
               ),
               dom.div(
                 { className: 'order-status col-xs-2 text-capitalize text-center' },
-                dom.h3(null, this.props.printOrderStatus(this.props.status))
+                dom.h5(null, this.props.printOrderStatus(this.props.status))
               ),
               dom.div(
                 { className: 'completed-entries col-xs-2' },
                 completedEntries > 0 ?
-                  dom.h3(
+                  dom.h5(
                     null,
                     dom.span(
                       { className: 'label label-danger' },

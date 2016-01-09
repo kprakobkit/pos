@@ -22,7 +22,7 @@ class CancelEntry extends Component {
           [dom.button(
             {
               key: 'confirm-cancel',
-              className: 'btn btn-danger btn-lg confirm-cancel',
+              className: 'btn btn-danger btn-sm confirm-cancel',
               onClick: this.props.onCancel
             },
             dom.span(null, 'Confirm Cancel Entry')
@@ -30,14 +30,14 @@ class CancelEntry extends Component {
         dom.button(
           {
             key: 'back',
-            className: 'btn btn-link btn-lg back',
+            className: 'btn btn-link btn-sm back',
             onClick: this.toggleConfirmation
           },
           dom.span(null, 'Back')
         )] :
           dom.button(
             {
-              className: 'btn btn-link btn-block btn-lg cancel-entry',
+              className: 'btn btn-link btn-block btn-sm cancel-entry',
               onClick: this.toggleConfirmation
             },
             dom.span({ className: 'text-danger' }, 'Cancel Entry')

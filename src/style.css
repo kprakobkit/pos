@@ -2,11 +2,7 @@ a:hover {
   text-decoration: none;
 }
 
-.order-entry td, .entries td {
-  vertical-align: middle
-}
-
-.order h3 {
+.order h5 {
   color: black;
 }
 

@@ -6,7 +6,7 @@ class CloseOrderBtn extends Component {
     return (
       dom.button(
         {
-          className: 'order-entries close-order btn btn-primary btn-lg btn-block',
+          className: 'order-entries close-order btn btn-primary btn-block',
           disabled: this.props.shouldBeDisabled,
           onClick: this.props.handleClick
         },

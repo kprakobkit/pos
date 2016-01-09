@@ -72,7 +72,7 @@ class MasterItems extends Component {
   renderSelectedEntries() {
     return this.state.entries.map((entry, i) => dom.tr(
       { className: 'entries', key: i },
-      dom.td({ className: 'entry-name col-xs-5' }, dom.h5(null, entry.name)),
+      dom.td({ className: 'entry-name col-xs-5' }, dom.p(null, entry.name)),
       dom.td({ className: 'entry-comment col-xs-5' }, dom.input({
         className: `input form-control add-comment-${entry.name}`,
         onChange: this.addComment.bind(null, i),
@@ -141,7 +141,7 @@ class MasterItems extends Component {
           null,
           dom.button(
             {
-              className: 'btn btn-primary submit-order btn-lg btn-block',
+              className: 'btn btn-primary submit-order btn-block',
               disabled: !this.state.entries.length,
               onClick: this.handleOnClick
             },
