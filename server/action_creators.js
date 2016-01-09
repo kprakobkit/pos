@@ -49,7 +49,7 @@ export function loadTransactions() {
   };
 }
 
-export function addOrder(tableNumber, entries) {
+export function addOrder(tableNumber, entries, onSuccess) {
   return (dispatch, getState) => {
     return Order.addOrder(tableNumber, entries)
     .then((order) => {
@@ -58,6 +58,8 @@ export function addOrder(tableNumber, entries) {
       dispatch(setState({
         orders: updatedOrders
       }));
+
+      onSuccess(order.id);
     });
   };
 }
