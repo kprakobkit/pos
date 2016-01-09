@@ -32,8 +32,9 @@ class NewOrder extends Component {
   }
 
   handleSubmit(entries) {
-    this.props.addOrder(this.state.tableNumber, entries);
-    this.context.history && this.context.history.pushState(null, '/orders');
+    this.props.addOrder(this.state.tableNumber, entries, (orderId) => {
+      this.context.history.pushState(null, `/orders/${orderId}`);
+    });
   }
 
   render() {
