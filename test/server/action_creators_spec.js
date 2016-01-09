@@ -231,6 +231,33 @@ describe('server action creators', () => {
     }).then(done, done);
   });
 
+  it('updateTableNumber', (done) => {
+    let dispatched;
+    const orders = [{
+      id: 1,
+      tableNumber: '2'
+    }];
+    function dispatch(action) {
+      dispatched = action;
+    }
+    function getState() {
+      return { orders };
+    }
+    const expected = {
+      type: constants.UPDATE_ORDER,
+      orderId: 1,
+      order: {
+        tableNumber: '20',
+        entries: [],
+        id: 1
+      }
+    };
+
+    actions.updateTableNumber(1, '20')(dispatch, getState).then(() => {
+      expect(dispatched).to.deep.equal(expected);
+    }).then(done, done);
+  });
+
   it('setClosed', (done) => {
     let dispatched;
 

@@ -4,10 +4,11 @@ import MasterItemsComponent from './MasterItems';
 import * as actions from '../action_creators';
 import _ from 'underscore';
 import { Link as LinkComponent } from 'react-router';
+import TableNumberSelectComponent from './TableNumberSelect';
 
 const MasterItems = createFactory(MasterItemsComponent);
 const Link = createFactory(LinkComponent);
-const tableNumbers = _.range(1, 41).concat('TOGO', 'BAR');
+const TableNumberSelect = createFactory(TableNumberSelectComponent);
 
 function mapStateToProps(state) {
   return {
@@ -21,7 +22,7 @@ class NewOrder extends Component {
     this.setTableNumber = this.setTableNumber.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      tableNumber: 1
+      tableNumber: '1'
     };
   }
 
@@ -42,10 +43,7 @@ class NewOrder extends Component {
       dom.div(
         { className: 'form-group' },
         dom.label(null, 'Table #'),
-        dom.select(
-          { className: 'table-numbers input-lg form-control', value: this.state.tableNumber, onChange: this.setTableNumber },
-          tableNumbers.map((num) => dom.option({ key: num, className: 'table-number', value: num }, num))
-        )
+        TableNumberSelect({ handleOnChange: this.setTableNumber, tableNumber: this.state.tableNumber })
       ),
       MasterItems({
         masterItems: this.props.masterItems,

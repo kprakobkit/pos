@@ -94,6 +94,15 @@ describe('Order', () => {
     });
   });
 
+  it ('updateTableNumber', () => {
+    return Order({ id: 1 }).save()
+    .then(() => Order.updateTableNumber(1, '20'))
+    .then(() => Order.findOne({ id: 1 }))
+    .then((order) => {
+      expect(order.tableNumber).to.equal('20');
+    });
+  });
+
   it ('setClosed', () => {
     const amounts = {
       cash: 1500,

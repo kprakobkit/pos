@@ -15,10 +15,15 @@ const EditOrder = React.createFactory(EditOrderComponent);
 function setup({ status }) {
   const handleReopen = spy();
   const handleRemove = spy();
+  const updateTableNumber = spy();
+  const closeModal = spy();
   const props = {
     status,
+    tableNumber: '1',
     handleReopen,
-    handleRemove
+    handleRemove,
+    updateTableNumber,
+    closeModal
   };
 
   const component = renderIntoDocument(EditOrder(props));
@@ -26,7 +31,8 @@ function setup({ status }) {
   return {
     component,
     handleReopen,
-    handleRemove
+    handleRemove,
+    updateTableNumber
   };
 }
 
@@ -52,5 +58,13 @@ describe('EditOrder', () => {
     Simulate.click(remove);
 
     expect(handleRemove).to.have.been.called();
+  });
+
+  it('calls update table number', () => {
+    const { component, updateTableNumber } = setup({ status: constants.OPEN });
+    const selectTableNumber = findRenderedDOMComponentWithClass(component, 'table-number-select');
+    Simulate.change(selectTableNumber, { target: { value: '2' } });
+
+    expect(updateTableNumber).to.have.been.called();
   });
 });

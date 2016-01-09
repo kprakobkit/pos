@@ -56,7 +56,7 @@ function setup() {
     addBurger: findRenderedDOMComponentWithClass(component, 'add-entry-burger'),
     selectItem: findRenderedDOMComponentWithClass(component, 'select-item'),
     submitOrder: findRenderedDOMComponentWithClass(component, 'submit-order'),
-    selectTableNumber: findRenderedDOMComponentWithClass(component, 'table-numbers'),
+    selectTableNumber: findRenderedDOMComponentWithClass(component, 'table-number-select'),
     addOrder,
     burger,
     food
@@ -77,12 +77,12 @@ describe('New Order', () => {
 
   it('adds an order on submit and redirects to orders page', () => {
     const { selectItem, component, addBurger, submitOrder, addOrder, burger, selectTableNumber } = setup();
-    Simulate.change(selectTableNumber, { target: { value: 2 } });
+    Simulate.change(selectTableNumber, { target: { value: '2' } });
     Simulate.change(selectItem, { target: { value: burger.id } });
     Simulate.click(addBurger);
     Simulate.click(submitOrder);
 
-    expect(addOrder.__spy.calls[0][0]).to.equal(2);
+    expect(addOrder.__spy.calls[0][0]).to.equal('2');
     expect(addOrder.__spy.calls[0][1].length).to.equal(1);
     expect(addOrder.__spy.calls[0][1]).to.deep.equal([{ name: burger.name, id: burger.id }]);
   });

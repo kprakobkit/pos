@@ -67,6 +67,13 @@ orderSchema.statics.updateStatus = function(orderId, status) {
   });
 }
 
+orderSchema.statics.updateTableNumber = function(orderId, tableNumber) {
+  return this.findOneAndUpdate({ id: orderId }, { tableNumber }, { new: true }).then((order) => {
+    return populateEntries(toOrder(order))
+      .then(populateTransaction);
+  });
+}
+
 orderSchema.statics.setClosed = function(orderId, transactionId) {
   const status = constants.CLOSED;
   const transaction = transactionId;

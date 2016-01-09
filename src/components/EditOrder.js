@@ -1,7 +1,20 @@
-import { Component, PropTypes, DOM as dom } from 'react';
+import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import constants from '../../src/constants';
+import TableNumberSelectComponent from './TableNumberSelect';
+
+const TableNumberSelect = createFactory(TableNumberSelectComponent);
 
 class EditOrder extends Component {
+  constructor(props) {
+    super(props);
+    this.handleOnChange = this.handleOnChange.bind(this);
+  }
+
+  handleOnChange(e) {
+    this.props.updateTableNumber(e.target.value);
+    this.props.closeModal();
+  }
+
   render() {
     return (
       dom.div(
@@ -23,7 +36,16 @@ class EditOrder extends Component {
               onClick: this.props.handleReopen
             },
             'Reopen this Order'
-          ) : null,
+          ) : dom.form(
+          { className: 'edit-order form-horizontal' },
+          dom.div(
+            { className: 'form-group' },
+            dom.label(null, 'Table #'),
+            TableNumberSelect({
+              tableNumber: this.props.tableNumber,
+              handleOnChange: this.handleOnChange
+            }))
+          ),
           dom.button({ className: 'btn btn-danger btn-lg btn-block remove-order', onClick: this.props.handleRemove }, 'Remove this order')
         )
       )
@@ -35,7 +57,9 @@ EditOrder.propTypes = {
   handleReopen: PropTypes.func.isRequired,
   handleRemove: PropTypes.func.isRequired,
   status: PropTypes.string.isRequired,
-  closeModal: PropTypes.func
+  tableNumber: PropTypes.string.isRequired,
+  updateTableNumber: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired
 };
 
 export default EditOrder;

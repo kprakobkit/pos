@@ -95,6 +95,15 @@ export function removeOrder(orderId) {
   };
 }
 
+export function updateTableNumber(orderId, tableNumber) {
+  return {
+    meta: { remote: true },
+    type: constants.UPDATE_TABLE_NUMBER,
+    orderId,
+    tableNumber
+  };
+}
+
 export default {
   setState,
   loadOrders,
@@ -106,5 +115,6 @@ export default {
   setReadyForBill,
   setOpen,
   setClosed,
-  removeOrder
+  removeOrder,
+  updateTableNumber
 };
