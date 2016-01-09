@@ -38,16 +38,12 @@ class EditOrder extends Component {
               onClick: this.props.handleReopen
             },
             'Reopen this Order'
-          )) : dom.form(
-          { className: 'edit-order form-horizontal' },
-          dom.div(
-            { className: 'form-group' },
-            dom.label(null, 'Table #'),
-            TableNumberSelect({
-              tableNumber: this.props.tableNumber,
-              handleOnChange: this.handleOnChange
-            }))
-          ),
+          )) : dom.form({ className: 'edit-order form-horizontal' },
+          dom.label(null, 'Table #'),
+          TableNumberSelect({
+            tableNumber: this.props.tableNumber,
+            handleOnChange: this.handleOnChange
+          })),
           ButtonWithConfirmation({
             onConfirmation: this.props.handleRemove,
             actionText: 'Remove this order',
