@@ -1,7 +1,7 @@
 import { expect, spy } from 'chai';
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';
-import CancelEntryComponent from '../../src/components/CancelEntry';
+import ButtonWithConfirmationComponent from '../../src/components/ButtonWithConfirmation';
 
 const {
   renderIntoDocument,
@@ -9,45 +9,47 @@ const {
   Simulate
 } = TestUtils;
 
-const CancelEntry = React.createFactory(CancelEntryComponent);
+const ButtonWithConfirmation = React.createFactory(ButtonWithConfirmationComponent);
 
 function setup() {
-  const onCancel = spy();
-  const component = renderIntoDocument(CancelEntry({ onCancel }));
-  const cancelEntry = findRenderedDOMComponentWithClass(component, 'cancel-entry');
-  Simulate.click(cancelEntry);
-  const confirmCancel = findRenderedDOMComponentWithClass(component, 'confirm-cancel');
+  const onConfirmation = spy();
+  const actionText = 'Button Action';
+  const confirmationText = 'Confirm Action';
+  const component = renderIntoDocument(ButtonWithConfirmation({ onConfirmation, actionText, confirmationText }));
+  const buttonAction = findRenderedDOMComponentWithClass(component, 'button-action');
+  Simulate.click(buttonAction);
+  const confirm = findRenderedDOMComponentWithClass(component, 'confirm');
   const back = findRenderedDOMComponentWithClass(component, 'back');
 
   return {
-    confirmCancel,
+    confirm,
     back,
-    onCancel,
+    onConfirmation,
     component
   };
 }
 
-describe('CancelEntry', () => {
-  it('shows confirm cancel and back button after clicking on cancel entry', () => {
-    const { back, confirmCancel } = setup();
+describe('ButtonWithConfirmation', () => {
+  it('shows confirm action and back button after clicking on button action', () => {
+    const { back, confirm } = setup();
 
-    expect(confirmCancel.textContent).to.equal('Confirm Cancel Entry');
+    expect(confirm.textContent).to.equal('Confirm Action');
     expect(back.textContent).to.equal('Back');
   });
 
-  it('clicking on confirm cancel calls onCancel prop ', () => {
-    const { confirmCancel, onCancel } = setup();
+  it('clicking on confirm calls onConfirmation prop ', () => {
+    const { confirm, onConfirmation } = setup();
 
-    Simulate.click(confirmCancel);
+    Simulate.click(confirm);
 
-    expect(onCancel).to.have.been.called();
+    expect(onConfirmation).to.have.been.called();
   });
 
-  it('clicking back brings show cancel entry button', () => {
+  it('clicking back shows action button', () => {
     const { component, back } = setup();
     Simulate.click(back);
-    const cancelEntry = findRenderedDOMComponentWithClass(component, 'cancel-entry');
+    const buttonAction = findRenderedDOMComponentWithClass(component, 'button-action');
 
-    expect(cancelEntry.textContent).to.equal('Cancel Entry');
+    expect(buttonAction.textContent).to.equal('Button Action');
   });
 });
