@@ -85,6 +85,5 @@ describe('New Order', () => {
     expect(addOrder.__spy.calls[0][0]).to.equal(2);
     expect(addOrder.__spy.calls[0][1].length).to.equal(1);
     expect(addOrder.__spy.calls[0][1]).to.deep.equal([{ name: burger.name, id: burger.id }]);
-    expect(pushState).to.have.been.called.with(null, '/orders');
   });
 });
