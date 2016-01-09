@@ -14,7 +14,7 @@ const {
 } = TestUtils;
 const OrderDetails = React.createFactory(OrderDetailsComponent);
 
-function setup({ orders, masterItems } = {}) {
+function setup({ orders, masterItems, location = {} } = {}) {
   const changeEntryStatus = () => {};
   const loadItems = () => {};
   const addEntriesToOrder = () => {};
@@ -34,7 +34,8 @@ function setup({ orders, masterItems } = {}) {
     setOpen,
     setClosed,
     masterItems,
-    updateTableNumber
+    updateTableNumber,
+    location
   };
   const component = renderIntoDocument(OrderDetails(props));
   const orderInfo = findRenderedDOMComponentWithClass(component, 'order-information');
@@ -107,13 +108,26 @@ describe('OrderDetails', () => {
     const masterItems = [Generator.item().build()];
     const { component } = setup({ orders, masterItems });
     const toggleForm = findRenderedDOMComponentWithClass(component, 'toggle-add-entry');
-    let masterItemsList = scryRenderedDOMComponentsWithClass(component, 'master-items');
+    let items = scryRenderedDOMComponentsWithClass(component, 'item');
 
-    expect(masterItemsList.length).to.equal(0);
+    expect(items.length).to.equal(0);
 
     Simulate.click(toggleForm);
-    masterItemsList = findRenderedDOMComponentWithClass(component, 'master-items');
+    items = scryRenderedDOMComponentsWithClass(component, 'item');
 
-    expect(masterItems.length).to.equal(1);
+    expect(items.length).to.equal(1);
+  });
+
+  it('shows entry form when passed in as query param', () => {
+    const entries = [
+      { name: 'rice', price: 1050, comment: 'brown rice', status: 'OPEN' }
+    ];
+    const orders = [Generator.order().id(1).entries(entries).status(constants.OPEN).build()];
+    const masterItems = [Generator.item().build()];
+    const location = { query: { showAddEntry: 'true' } };
+    const { component } = setup({ orders, masterItems, location });
+    const items = scryRenderedDOMComponentsWithClass(component, 'item');
+
+    expect(items.length).to.equal(1);
   });
 });
