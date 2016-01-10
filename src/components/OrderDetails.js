@@ -36,7 +36,7 @@ class OrderDetails extends Component {
       order: {
         entries: []
       },
-      showAddEntry: false,
+      showAddEntry: this.props.location.query && this.props.location.query.showAddEntry,
       modalIsOpen: false
     };
   }
