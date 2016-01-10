@@ -1,8 +1,10 @@
 import { Component, PropTypes, DOM as dom, createFactory } from 'react';
 import constants from '../../src/constants';
 import TableNumberSelectComponent from './TableNumberSelect';
+import ButtonWithConfirmationComponent from './ButtonWithConfirmation';
 
 const TableNumberSelect = createFactory(TableNumberSelectComponent);
+const ButtonWithConfirmation = createFactory(ButtonWithConfirmationComponent);
 
 class EditOrder extends Component {
   constructor(props) {
@@ -30,30 +32,23 @@ class EditOrder extends Component {
         ),
         dom.div(
           { className: 'modal-body' },
-          this.props.status === constants.READY_FOR_BILL ? dom.button(
+          this.props.status === constants.READY_FOR_BILL ? dom.p(null, dom.button(
             {
-              className: 'btn btn-warning btn-block reopen-order',
+              className: 'btn btn-warning btn-block btn-sm reopen-order',
               onClick: this.props.handleReopen
             },
             'Reopen this Order'
-          ) : dom.form(
-          { className: 'edit-order form-horizontal' },
-          dom.div(
-            { className: 'form-group' },
-            dom.label(null, 'Table #'),
-            TableNumberSelect({
-              tableNumber: this.props.tableNumber,
-              handleOnChange: this.handleOnChange
-            }))
-          ),
-          dom.button({
-            className: 'btn btn-danger btn-block remove-order',
-            onClick: this.props.handleRemove
-          }, dom.span({
-            className: 'glyphicon glyphicon-trash',
-            key: 'remove',
-            'aria-hidden': true
-          }), '  Remove this order')
+          )) : dom.form({ className: 'edit-order form-horizontal' },
+          dom.label(null, 'Table #'),
+          TableNumberSelect({
+            tableNumber: this.props.tableNumber,
+            handleOnChange: this.handleOnChange
+          })),
+          ButtonWithConfirmation({
+            onConfirmation: this.props.handleRemove,
+            actionText: 'Remove this order',
+            confirmationText: 'Confirm delete order'
+          })
         )
       )
     );

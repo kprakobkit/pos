@@ -1,7 +1,7 @@
 import { Component, PropTypes, DOM as dom } from 'react';
 import constants from '../constants';
 
-class CancelEntry extends Component {
+class ButtonWithConfirmation extends Component {
   constructor(props) {
     super(props);
     this.toggleConfirmation = this.toggleConfirmation.bind(this);
@@ -22,10 +22,10 @@ class CancelEntry extends Component {
           [dom.button(
             {
               key: 'confirm-cancel',
-              className: 'btn btn-danger btn-sm confirm-cancel',
-              onClick: this.props.onCancel
+              className: 'btn btn-danger btn-sm confirm',
+              onClick: this.props.onConfirmation
             },
-            dom.span(null, 'Confirm Cancel Entry')
+            this.props.confirmationText
         ),
         dom.button(
           {
@@ -37,18 +37,20 @@ class CancelEntry extends Component {
         )] :
           dom.button(
             {
-              className: 'btn btn-link btn-block btn-sm cancel-entry',
+              className: 'btn btn-danger btn-block btn-sm button-action',
               onClick: this.toggleConfirmation
             },
-            dom.span({ className: 'text-danger' }, 'Cancel Entry')
+            this.props.actionText
         )
       )
     );
   }
 }
 
-CancelEntry.propTypes = {
-  onCancel: PropTypes.func.isRequired
+ButtonWithConfirmation.propTypes = {
+  onConfirmation: PropTypes.func.isRequired,
+  confirmationText: PropTypes.string.isRequired,
+  actionText: PropTypes.string.isRequired
 };
 
-export default CancelEntry;
+export default ButtonWithConfirmation;

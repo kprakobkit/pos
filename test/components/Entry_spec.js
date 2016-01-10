@@ -65,13 +65,13 @@ describe('Entry', () => {
 
     it('shows delivered and cancel button', () => {
       findRenderedDOMComponentWithClass(component, 'mark-delivered');
-      findRenderedDOMComponentWithClass(component, 'cancel-entry');
+      findRenderedDOMComponentWithClass(component, 'button-action');
     });
 
     it('canceled - calls changeEntryStatus with CANCELED', () => {
-      const canceled = findRenderedDOMComponentWithClass(component, 'cancel-entry');
+      const canceled = findRenderedDOMComponentWithClass(component, 'button-action');
       Simulate.click(canceled);
-      const confirmCancel = findRenderedDOMComponentWithClass(component, 'confirm-cancel');
+      const confirmCancel = findRenderedDOMComponentWithClass(component, 'confirm');
       Simulate.click(confirmCancel);
 
       expect(changeEntryStatus).to.have.been.called.with(constants.CANCELED);
@@ -90,7 +90,7 @@ describe('Entry', () => {
     const { component, entry, changeEntryStatus } = setup({ entry: deliveredEntry });
 
     it('shows the cancel button', () => {
-      findRenderedDOMComponentWithClass(component, 'cancel-entry');
+      findRenderedDOMComponentWithClass(component, 'button-action');
     });
   });
 
@@ -100,7 +100,7 @@ describe('Entry', () => {
 
     it('shows delivered and cancel button', () => {
       findRenderedDOMComponentWithClass(component, 'mark-delivered');
-      findRenderedDOMComponentWithClass(component, 'cancel-entry');
+      findRenderedDOMComponentWithClass(component, 'button-action');
     });
   });
 });
