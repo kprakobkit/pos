@@ -172,35 +172,44 @@ DRINK,House Wine - Glass,900,Drink
 DRINK,House Wine - Bottle,3500,Drink
 FOOD,Yogurt,460,Dessert
 FOOD,Flan,460,Dessert
-FOOD,Garlic Edammame,690,DINNER Appetizer
-FOOD,French Fries,735,DINNER Appetizer
-FOOD,French Fries with Garlic,850,DINNER Appetizer
-FOOD,Sweet Potato Fries,780,DINNER Appetizer
-FOOD,Sweet Potato Fries with Garlic,895,DINNER Appetizer
-FOOD,Spring Roll,735,DINNER Appetizer
-FOOD,Chicken Wing,850,DINNER Appetizer
-FOOD,Fried Calamari,920,DINNER Appetizer
-FOOD,Sesame Grille Crevettes,920,DINNER Appetizer
-FOOD,Cold Cuts Cheese Crackers,1080,DINNER Appetizer
-FOOD,Soft Shell Crab,1195,DINNER Appetizer
-FOOD,Cube Steak,1839,DINNER Entree
-FOOD,Salmon,1700,DINNER Entree
-FOOD,Scallop,1700,DINNER Entree
-FOOD,Chicken,1609,DINNER Entree
-FOOD,Pho Beef P,645,DINNER Entree
-FOOD,Pho Beef P extra meat,875,DINNER Entree
-FOOD,Pho Beef R,1080,DINNER Entree
-FOOD,Pho Beef R extra meat,1310,DINNER Entree
-FOOD,Pho Beef L,1195,DINNER Entree
-FOOD,Pho Beef L extra meat,1425,DINNER Entree
-FOOD,Pho Chicken P,645,DINNER Entree
-FOOD,Pho Chicken P extra meat,875,DINNER Entree
-FOOD,Pho Chicken R,1080,DINNER Entree
-FOOD,Pho Chicken R extra meat,1310,DINNER Entree
-FOOD,Pho Chicken L,1195,DINNER Entree
-FOOD,Pho Chicken L extra meat,1425,DINNER Entree
-FOOD,Double Garlic Linguini,735,DINNER Entree
-FOOD,Rice,460,DINNER Entree
+FOOD,Garlic Edammame,690,Appetizer
+FOOD,French Fries,735,Appetizer
+FOOD,French Fries with Garlic,850,Appetizer
+FOOD,Sweet Potato Fries,780,Appetizer
+FOOD,Sweet Potato Fries with Garlic,895,Appetizer
+FOOD,Spring Roll,735,Appetizer
+FOOD,Chicken Wing,850,Appetizer
+FOOD,Fried Calamari,920,Appetizer
+FOOD,Sesame Grille Crevettes,920,Appetizer
+FOOD,Cold Cuts Cheese Crackers,1080,Appetizer
+FOOD,Soft Shell Crab,1195,Appetizer
+FOOD,Cube Steak,1839,Entree
+FOOD,Salmon,1700,Entree
+FOOD,Scallop,1700,Entree
+FOOD,Chicken,1609,Entree
+FOOD,Pho Beef Bo Vien Petite,645,Entree
+FOOD,Pho Beef Dac Biet Petite,645,Entree
+FOOD,Pho Beef Tai Petite,645,Entree
+FOOD,Pho Beef Nam Petite,645,Entree
+FOOD,Pho Beef Petite extra meat,875,Entree
+FOOD,Pho Beef Bo Vien Regular,1080,Entree
+FOOD,Pho Beef Dac Biet Regular,1080,Entree
+FOOD,Pho Beef Tai Regular,1080,Entree
+FOOD,Pho Beef Nam Regular,1080,Entree
+FOOD,Pho Beef Regular extra meat,1310,Entree
+FOOD,Pho Beef Bo Vien Large,1195,Entree
+FOOD,Pho Beef Dac Biet Large,1195,Entree
+FOOD,Pho Beef Tai Large,1195,Entree
+FOOD,Pho Beef Nam Large,1195,Entree
+FOOD,Pho Beef Large extra meat,1425,Entree
+FOOD,Pho Chicken P,645,Entree
+FOOD,Pho Chicken P extra meat,875,Entree
+FOOD,Pho Chicken R,1080,Entree
+FOOD,Pho Chicken R extra meat,1310,Entree
+FOOD,Pho Chicken L,1195,Entree
+FOOD,Pho Chicken L extra meat,1425,Entree
+FOOD,Double Garlic Linguini,735,Entree
+FOOD,Rice,460,Entree
 OTHER,Togo,150,TOGO
 DRINK,Sweet pickles,600,Drink - Snack
 DRINK,Cocktail onion,600,Drink - Snack
@@ -223,32 +232,4 @@ DRINK,Snow Beauty (Niguri Unfiltered),1800,Sake
 DRINK,TY Ku,6000,Sake
 DRINK,Tenranzan,6000,Sake
 DRINK,Yaegaki,4000,Sake
-FOOD,Spring Roll,530,LUNCH Appetizer
-FOOD,Tofu Roll,530,LUNCH Appetizer
-FOOD,French Fries,390,LUNCH Appetizer
-FOOD,French Fries w/ Garlic,405,LUNCH Appetizer
-FOOD,Sweet Potato Fries,460,LUNCH Appetizer
-FOOD,Sweet Potato Fries w/ Garlic,575,LUNCH Appetizer
-FOOD,Sesame Grilled Crevettes,735,LUNCH Appetizer
-FOOD,Salad with Chicken,735,LUNCH Appetizer
-FOOD,Salad with Shrimp,1080,LUNCH Appetizer
-FOOD,Salad with Cubed Steak,1609,LUNCH Appetizer
-FOOD,Pho Beef P,575,LUNCH Main
-FOOD,Pho Beef R,920,LUNCH Main
-FOOD,Pho Beef L,1080,LUNCH Main
-FOOD,Pho Chicken P,575,LUNCH Main
-FOOD,Pho Chicken R,920,LUNCH Main
-FOOD,Pho Chicken L,1080,LUNCH Main
-FOOD,Pho Vegetarian P,575,LUNCH Main
-FOOD,Pho Vegetarian R,920,LUNCH Main
-FOOD,Pho Vegetarian L,1080,LUNCH Main
-FOOD,Beef Steak over rice - New York,1609,LUNCH Main
-FOOD,Beef Steak over rice - Rib Eye,1609,LUNCH Main
-FOOD,Salmon with Linguini,1425,LUNCH Main
-FOOD,Salmon with Brown Rice,1425,LUNCH Main
-FOOD,Baked Chicken,1218,LUNCH Main
-FOOD,Vegetable,1080,LUNCH Main
-FOOD,Side - French Fries,230,LUNCH Main
-FOOD,Side - Spring Roll,230,LUNCH Main
-FOOD,Side - Salad,230,LUNCH Main
 DRINK,Corkage Fee,2000,Drink
