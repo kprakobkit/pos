@@ -5,9 +5,9 @@ import constants from '../constants';
 import $ from '../money';
 import _ from 'ramda';
 import moment from 'moment';
-import CancelEntryContainer from './CancelEntry';
+import ButtonWithConfirmationComponent from './ButtonWithConfirmation';
 
-const CancelEntry = createFactory(CancelEntryContainer);
+const ButtonWithConfirmation = createFactory(ButtonWithConfirmationComponent);
 
 class Entry extends Component {
   constructor(props) {
@@ -33,8 +33,10 @@ class Entry extends Component {
         },
         'Mark Delivered'
       ) : null,
-      CancelEntry({
-        onCancel: this.handleChangeStatus.bind(null, constants.CANCELED)
+      ButtonWithConfirmation({
+        onConfirmation: this.handleChangeStatus.bind(null, constants.CANCELED),
+        confirmationText: 'Confirm Cancel Entry',
+        actionText: 'Cancel Entry'
       })
     );
   }

@@ -71,7 +71,7 @@ class OpenOrder extends Component {
             { className: 'col-xs-6' },
             Filter(
               {
-                filter: this.state.filter,
+                filter,
                 filterOrders: this.filterOrders,
                 printOrderStatus: this.printOrderStatus,
                 filters: [constants.ALL, constants.FOOD, constants.DRINK]

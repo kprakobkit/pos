@@ -53,9 +53,10 @@ describe('EditOrder', () => {
 
   it('calls remove handler', () => {
     const { component, handleRemove } = setup({ status: constants.READY_FOR_BILL });
-    const remove = findRenderedDOMComponentWithClass(component, 'remove-order');
-
+    const remove = findRenderedDOMComponentWithClass(component, 'button-action');
     Simulate.click(remove);
+    const confirm = findRenderedDOMComponentWithClass(component, 'confirm');
+    Simulate.click(confirm);
 
     expect(handleRemove).to.have.been.called();
   });
