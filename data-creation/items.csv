@@ -35,6 +35,7 @@ DRINK,Samuel Adams IPA (Wietz Lager),650,Beer
 DRINK,Sapporo – S,650,Beer
 DRINK,Sapporo – L,1200,Beer
 DRINK,Stella Artois,650,Beer
+DRINK,Stella Artois - Small,400,Beer
 DRINK,Singha,1200,Beer
 DRINK,Tsing Tao,650,Beer
 DRINK,Budweiser,500,Beer
@@ -233,3 +234,4 @@ DRINK,TY Ku,6000,Sake
 DRINK,Tenranzan,6000,Sake
 DRINK,Yaegaki,4000,Sake
 DRINK,Corkage Fee,2000,Drink
+DRINK,Comp Drink,0,Drink
