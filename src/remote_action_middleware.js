@@ -1,4 +1,4 @@
-import constants from '../src/constants';
+import constants from './constants';
 
 export default (socket) => (store) => (next) => (action) => {
   const { meta, onReceipt } = action;
