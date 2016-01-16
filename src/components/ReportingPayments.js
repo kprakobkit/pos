@@ -72,7 +72,7 @@ class ReportingPayments extends Component {
           ),
           dom.tbody(
             null,
-            ['credit', 'cash', 'total'].map(this.renderRow)
+            ['credit', 'cash', 'tip', 'total'].map(this.renderRow)
           )
         )
       )
