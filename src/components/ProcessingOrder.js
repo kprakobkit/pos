@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import constants from '../constants';
 import $ from '../money';
 import _ from 'ramda';
-import EntryComponent from './Entry';
+import EntryBillComponent from './EntryBill';
 import PaymentComponent from './Payment';
 
-const Entry = createFactory(EntryComponent);
+const EntryBill = createFactory(EntryBillComponent);
 const Payment = createFactory(PaymentComponent);
 
 class ProcessingOrder extends Component {
@@ -31,11 +31,10 @@ class ProcessingOrder extends Component {
 
   renderEntry(entry, i) {
     return !_.contains(entry.status, [constants.CLOSED, constants.CANCELED]) ?
-      Entry(
+      EntryBill(
         _.merge(entry, {
           key: i,
-          index: i,
-          ofOpenOrder: false
+          index: i
         })
       ) :
       null;
