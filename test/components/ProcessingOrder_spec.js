@@ -21,6 +21,8 @@ describe('ProcessingOrder', () => {
     order: {
       status: 'open', id: 1, entries: [
         Generator.entry().name('delivered').status(constants.DELIVERED).price(price).build(),
+        Generator.entry().name('delivered').status(constants.DELIVERED).price(price).build(),
+        Generator.entry().name('delivered').status(constants.CANCELED).price(price).build(),
         Generator.entry().status(constants.CLOSED).price(price).build(),
         Generator.entry().status(constants.CANCELED).price(100).build()
       ]
@@ -42,9 +44,18 @@ describe('ProcessingOrder', () => {
   });
 
   it('renders subtotal, tax, and total for all delivered entries', () => {
-    expect(subtotal.textContent).to.contain($.format(price));
-    expect(tax.textContent).to.contain($.format(price * constants.TAX_RATE));
-    expect(total.textContent).to.contain($.format(price * (1 + constants.TAX_RATE)));
+    const expectedSubtotal = price * 2;
+    expect(subtotal.textContent).to.contain($.format(expectedSubtotal));
+    expect(tax.textContent).to.contain($.format(expectedSubtotal * constants.TAX_RATE));
+    expect(total.textContent).to.contain($.format(expectedSubtotal * (1 + constants.TAX_RATE)));
+  });
+
+  it('quantiy and total for each uniq entry', () => {
+    const quantities = scryRenderedDOMComponentsWithClass(component, 'entry-quantity');
+    const entryTotal = scryRenderedDOMComponentsWithClass(component, 'entry-total');
+
+    expect(quantities[0].textContent).to.contain('2');
+    expect(entryTotal[0].textContent).to.equal($.format(2 * price));
   });
 });
 
