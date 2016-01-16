@@ -2,7 +2,8 @@ import { Component, PropTypes, DOM as dom } from 'react';
 import constants from '../../src/constants';
 import _ from 'underscore';
 
-const tableNumbers = _.range(1, 41).concat('TOGO', 'BAR');
+const barTables = _.range(1, 7).map((num) => `BAR${num}`);
+const tableNumbers = _.range(1, 41).concat('TOGO', barTables);
 
 class TableNumberSelect extends Component {
   render() {
