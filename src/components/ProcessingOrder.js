@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import constants from '../constants';
 import $ from '../money';
 import _ from 'ramda';
-import EntryComponent from './Entry';
+import EntryBillComponent from './EntryBill';
 import PaymentComponent from './Payment';
 
-const Entry = createFactory(EntryComponent);
+const EntryBill = createFactory(EntryBillComponent);
 const Payment = createFactory(PaymentComponent);
 
 class ProcessingOrder extends Component {
@@ -30,18 +30,31 @@ class ProcessingOrder extends Component {
   }
 
   renderEntry(entry, i) {
-    return !_.contains(entry.status, [constants.CLOSED, constants.CANCELED]) ?
-      Entry(
-        _.merge(entry, {
-          key: i,
-          index: i,
-          ofOpenOrder: false
-        })
-      ) :
-      null;
+    return EntryBill(
+      _.merge(entry, {
+        key: i,
+        index: i
+      })
+    );
+  }
+
+  groupEntries(entries) {
+    const uniqEntries = _.uniqBy((entry) => entry.name, entries);
+    const count = _.countBy((entry) => entry.name, entries);
+
+    const groupedEntries = uniqEntries.map(({ name, price }) => ({
+      name,
+      quantity: count[name],
+      price
+    }));
+
+    return groupedEntries;
   }
 
   render() {
+    const isClosedOrCanceled = entry => entry.status != constants.CANCELED && entry.status != constants.CLOSED;
+    const groupedEntries = this.groupEntries(_.filter(isClosedOrCanceled, this.props.order.entries));
+
     return (
       dom.div(
         { className: 'order-entries' },
@@ -49,7 +62,7 @@ class ProcessingOrder extends Component {
           { className: 'table table-striped' },
           dom.tbody(
             null,
-            this.props.order.entries.map(this.renderEntry),
+            groupedEntries.map(this.renderEntry),
             dom.tr(
               { className: 'order-subtotal' },
               dom.td(null, dom.h2(null, 'Subtotal')),
