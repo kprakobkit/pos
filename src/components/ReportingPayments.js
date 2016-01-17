@@ -19,7 +19,7 @@ class ReportingPayments extends Component {
   }
 
   appendTransaction(transactions, transaction) {
-    const date = moment(transaction).startOf('day');
+    const date = moment(transaction.createdAt).format('L');
     const existing = transactions[date] || [];
     return _.assoc(date, _.append(transaction, existing), transactions);
   }
@@ -30,7 +30,7 @@ class ReportingPayments extends Component {
 
   paymentsByDate(type) {
     return this.dateRange().map((date) => {
-      const transactionsForDate = _.prop(date, this.transactionsByDate());
+      const transactionsForDate = _.prop(date.format('L'), this.transactionsByDate());
       return transactionsForDate ? _.sum(_.pluck(type, transactionsForDate)) : 0;
     });
   }
