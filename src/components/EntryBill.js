@@ -20,7 +20,7 @@ class EntryBill extends Component {
         { className: 'entry-name col-xs-3' },
         dom.p(null, dom.strong(null, name))
       ),
-      dom.td({ className: 'entry-quantity' }, dom.p(null, ` x ${ quantity }`)),
+      dom.td({ className: 'entry-quantity' }, dom.p(null, ` x ${ quantity } (${ $.format(price) })`)),
       dom.td(
         { className: 'entry-total text-right' },
         dom.p(null, $.format(total))
