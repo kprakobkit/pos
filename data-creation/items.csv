@@ -116,7 +116,7 @@ DRINK,Mario Perelli Minette,12000,Wine - Bottle
 DRINK,Mount Veeds,9000,Wine - Bottle
 DRINK,Rutherford,4500,Wine - Bottle
 DRINK,Starmont,4500,Wine - Bottle
-DRINK,Sterling,5000,Wine - Bottle
+DRINK,Sterling 2012,5000,Wine - Bottle
 DRINK,Sterling 2000,10000,Wine - Bottle
 DRINK,Terra Valentine (Napa Valley),7500,Wine - Bottle
 DRINK,Opus1 - 1999,50000,Wine - Bottle
@@ -167,8 +167,8 @@ DRINK,Santa Cristine (Tuscany / Italy),3500,Wine - Bottle
 DRINK,Water,700,Drink
 DRINK,Soda,700,Drink
 DRINK,Juice,700,Drink
-DRINK,Tea,500,Drink
-DRINK,Coffee,500,Drink
+DRINK,Tea,700,Drink
+DRINK,Coffee,700,Drink
 DRINK,House Wine - Glass,900,Drink
 DRINK,House Wine - Bottle,3500,Drink
 FOOD,Yogurt,460,Dessert
