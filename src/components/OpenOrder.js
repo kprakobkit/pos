@@ -28,7 +28,7 @@ class OpenOrder extends Component {
   }
 
   getFilteredEntries() {
-    const entries = this.props.order.entries.filter(entry => entry.status != constants.CANCELED);
+    const entries = this.props.order.entries.filter(entry => entry.status != constants.CANCELED && entry.status != constants.CLOSED);
 
     if(this.state.filter === constants.ALL) {
       return entries;

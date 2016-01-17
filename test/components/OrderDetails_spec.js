@@ -69,11 +69,12 @@ describe('OrderDetails', () => {
       { name: 'rice', price: 1050, comment: 'brown rice', status: 'OPEN', type: 'FOOD' },
       { name: 'pho', price: 850, comment: 'extra meat', status: 'CANCELED', type: 'FOOD' },
       { name: 'beer', price: 150, comment: 'cold', status: 'DELIVERED', type: 'DRINK' },
-      { name: 'steak', price: 150, comment: 'medium rare', status: 'COMPLETED', type: 'FOOD' }
+      { name: 'steak', price: 150, comment: 'medium rare', status: 'COMPLETED', type: 'FOOD' },
+      { name: 'steak', price: 150, comment: 'closed item', status: 'CLOSED', type: 'FOOD' }
     ];
     const orders = [Generator.order().id(1).entries(entries).status(constants.OPEN).build()];
 
-    it('defaults to All non-canceled entries', () => {
+    it('defaults to All non-canceled or closed entries', () => {
       const { component } = setup({ orders });
       const entryNames = scryRenderedDOMComponentsWithClass(component, 'entry-name');
       const entryComments = scryRenderedDOMComponentsWithClass(component, 'entry-comment');
