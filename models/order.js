@@ -12,7 +12,8 @@ const orderSchema = new Schema({
   status: { type: String, default: constants.OPEN },
   transaction: { type: Schema.ObjectId, ref: 'Transaction' },
   tableNumber: String,
-  entries: [Entry.schema]
+  entries: [Entry.schema],
+  discounts: [{ type: Schema.ObjectId, ref: 'Discount' }]
 });
 
 orderSchema.statics.getOrders = function() {
