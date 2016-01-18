@@ -3,6 +3,7 @@ import constants from '../src/constants';
 import Order from '../models/order';
 import Item from '../models/item';
 import Transaction from '../models/transaction';
+import Discount from '../models/discount';
 
 export function setState(state) {
   return {
@@ -36,6 +37,16 @@ export function loadItems() {
 
       dispatch(setState({
         items
+      }));
+    });
+  };
+}
+
+export function loadDiscounts() {
+  return (dispatch) => {
+    return Discount.find().then((discounts) => {
+      dispatch(setState({
+        discounts
       }));
     });
   };
@@ -135,6 +146,7 @@ export default {
   setState,
   loadOrders,
   loadItems,
+  loadDiscounts,
   loadTransactions,
   addOrder,
   changeEntryStatus,

@@ -6,6 +6,8 @@ export default (store) => (socket) => {
 
   socket.on(constants.LOAD_ITEMS, (action) => store.dispatch(actions.loadItems()));
 
+  socket.on(constants.LOAD_DISCOUNTS, (action) => store.dispatch(actions.loadDiscounts()));
+
   socket.on(constants.LOAD_TRANSACTIONS, (action) => store.dispatch(actions.loadTransactions()));
 
   socket.on(constants.ADD_ORDER, (action) => {

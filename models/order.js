@@ -127,7 +127,7 @@ function populateDiscount(order) {
     Discount.populate(order, [{
       path: 'discounts',
       model: 'Discount',
-      select: 'description value type -_id'
+      select: 'description value type'
     }], (err, res) => {
       if(err) {
         reject(err);
@@ -198,11 +198,12 @@ function toOrder({_id, id, status, transaction, entries, tableNumber, discounts 
   };
 }
 
-function toDiscount({ type, value, description }) {
+function toDiscount({ type, value, description, _id }) {
   return {
     value,
     description,
-    type
+    type,
+    _id
   };
 }
 

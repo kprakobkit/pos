@@ -69,9 +69,7 @@ function createOrders(itemsAndDiscounts) {
 
   return Promise.all([
     createOrder(_.sample(items, 2), discounts),
-    createOrder(_.sample(items, 2)),
-    createOrder(_.sample(items, 2), discounts),
-    createOrder(_.sample(items, 2))
+    createOrder(_.sample(items, 2), discounts)
   ])
   .then(() => {
     console.log('Successfully created all orders');

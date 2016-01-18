@@ -21,6 +21,13 @@ export function loadItems() {
   };
 }
 
+export function loadDiscounts() {
+  return {
+    meta: { remote: true },
+    type: constants.LOAD_DISCOUNTS
+  };
+}
+
 export function loadTransactions() {
   return {
     meta: { remote: true },
@@ -108,6 +115,7 @@ export default {
   setState,
   loadOrders,
   loadItems,
+  loadDiscounts,
   loadTransactions,
   addOrder,
   changeEntryStatus,
