@@ -31,17 +31,20 @@ class ProcessingOrder extends Component {
   }
 
   tax() {
-    return Math.round(this.subtotal() * constants.TAX_RATE);
+    return Math.round((this.subtotal() - this.discount()) * constants.TAX_RATE);
   }
 
   discount() {
+    if (this.props.order.discounts.length < 1) {
+      return 0;
+    }
+
     const percentage = this.props.order.discounts.reduce((sum, discount) => sum + discount.value, 0);
     return this.subtotal() * percentage;
   }
 
   total() {
-    const discount = this.props.order.discounts.length > 0 ? this.discount() : 0;
-    return this.subtotal() - discount + this.tax();
+    return this.subtotal() - this.discount() + this.tax();
   }
 
   renderEntry(entry, i) {
@@ -86,7 +89,20 @@ class ProcessingOrder extends Component {
           { className: 'table table-striped' },
           dom.tbody(
             null,
+            dom.tr(
+              null,
+              dom.th(null, 'Item'),
+              dom.th(null, 'Quantity'),
+              dom.th({ className: 'text-right' }, dom.button({ className: 'btn btn-default', onClick: this.openModal }, 'Discount'))
+            ),
             groupedEntries.map(this.renderEntry),
+            discounts.length > 0 ?
+              dom.tr(
+                { className: 'order-discount' },
+                dom.td(null, dom.p(null, dom.strong(null, 'Discount'))),
+                dom.td(),
+                dom.td({ className: 'text-right' }, dom.p(null, dom.strong(null, $.format(this.discount()))))
+            ) : null,
             dom.tr(
               { className: 'order-subtotal' },
               dom.td(null, dom.h2(null, 'Subtotal')),
@@ -94,15 +110,8 @@ class ProcessingOrder extends Component {
               dom.td(
                 { className: 'text-right' },
                 dom.h2(null, $.format(this.subtotal())),
-                dom.button({ className: 'btn btn-default', onClick: this.openModal }, 'Discount')
               )
             ),
-            discounts.length > 0 ? dom.tr(
-              { className: 'order-discount' },
-              dom.td(null, dom.h2(null, 'Discount')),
-              dom.td(),
-              dom.td({ className: 'text-right' }, dom.h2(null, $.format(this.discount())))
-            ) : null,
             dom.tr(
               { className: 'order-tax' },
               dom.td(null, dom.h2(null, 'Tax')),
@@ -139,7 +148,10 @@ class ProcessingOrder extends Component {
             }
           },
           ApplyDiscount({
-            closeModal: this.closeModal
+            closeModal: this.closeModal,
+            appliedDiscounts: this.props.order.discounts,
+            masterDiscounts: this.props.discounts,
+            saveDiscounts: this.props.saveDiscounts
           })
         )
       )
@@ -150,7 +162,8 @@ class ProcessingOrder extends Component {
 ProcessingOrder.propTypes = {
   order: PropTypes.object.isRequired,
   setClosed: PropTypes.func.isRequired,
-  setReadyForBill: PropTypes.func.isRequired
+  setReadyForBill: PropTypes.func.isRequired,
+  discounts: PropTypes.array.isRequired
 };
 
 export default ProcessingOrder;

@@ -258,6 +258,27 @@ describe('server action creators', () => {
     }).then(done, done);
   });
 
+  it('saveDiscounts', (done) => {
+    let dispatched;
+    const discounts = [{ value: 0.5 }];
+    function dispatch(action) {
+      dispatched = action;
+    }
+    const expected = {
+      type: constants.UPDATE_ORDER,
+      order: {
+        id: 1,
+        discounts,
+        entries: []
+      },
+      orderId: 1
+    };
+
+    actions.saveDiscounts(1, discounts)(dispatch).then(() => {
+      expect(dispatched).to.deep.equal(expected);
+    }).then(done, done);
+  });
+
   it('setClosed', (done) => {
     let dispatched;
 

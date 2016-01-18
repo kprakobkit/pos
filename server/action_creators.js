@@ -108,6 +108,10 @@ export function updateTableNumber(orderId, tableNumber) {
   return dispatchUpdateOrder(orderId, Order.updateTableNumber(orderId, tableNumber));
 }
 
+export function saveDiscounts(orderId, discounts) {
+  return dispatchUpdateOrder(orderId, Order.saveDiscounts(orderId, discounts));
+}
+
 export function setClosed(orderId, transactionId, amounts) {
   const addOrUpdateTransaction = transactionId ?
     Transaction.findOneAndUpdate(transactionId, amounts, { new: true }) :
@@ -155,5 +159,6 @@ export default {
   setOpen,
   setClosed,
   removeOrder,
-  updateTableNumber
+  updateTableNumber,
+  saveDiscounts
 };

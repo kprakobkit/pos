@@ -111,6 +111,15 @@ export function updateTableNumber(orderId, tableNumber) {
   };
 }
 
+export function saveDiscounts(orderId, discounts) {
+  return {
+    meta: { remote: true },
+    type: constants.SAVE_DISCOUNTS,
+    orderId,
+    discounts
+  };
+}
+
 export default {
   setState,
   loadOrders,
@@ -124,5 +133,6 @@ export default {
   setOpen,
   setClosed,
   removeOrder,
-  updateTableNumber
+  updateTableNumber,
+  saveDiscounts
 };

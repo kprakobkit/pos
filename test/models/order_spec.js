@@ -1,6 +1,7 @@
 import utils from '../utils';
 import Order from '../../models/order';
 import Item from '../../models/item';
+import Discount from '../../models/discount';
 import Transaction from '../../models/transaction';
 import { expect } from 'chai';
 import faker from 'faker';
@@ -100,6 +101,17 @@ describe('Order', () => {
     .then(() => Order.findOne({ id: 1 }))
     .then((order) => {
       expect(order.tableNumber).to.equal('20');
+    });
+  });
+
+  it.only('saveDiscounts', () => {
+    return Discount({ value: 0.5 }).save()
+    .then(() => Order({ id: 1 }).save())
+    .then(() => Discount.findOne({ value: 0.5 }))
+    .then((discount) => Order.saveDiscounts(1, discount))
+    .then(() => Order.getOrders())
+    .then(([order]) => {
+      expect(order.discounts[0].value).to.equal(0.5);
     });
   });
 
