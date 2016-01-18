@@ -5,14 +5,23 @@ import $ from '../money';
 import _ from 'ramda';
 import EntryBillComponent from './EntryBill';
 import PaymentComponent from './Payment';
+import ApplyDiscountComponent from './ApplyDiscount';
+import ModalComponent from 'react-modal';
 
 const EntryBill = createFactory(EntryBillComponent);
 const Payment = createFactory(PaymentComponent);
+const Modal = createFactory(ModalComponent);
+const ApplyDiscount = createFactory(ApplyDiscountComponent);
 
 class ProcessingOrder extends Component {
   constructor(props) {
     super(props);
     this.renderEntry = this.renderEntry.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.state = {
+      modalIsOpen: false
+    };
   }
 
   subtotal() {
@@ -57,6 +66,14 @@ class ProcessingOrder extends Component {
     return groupedEntries;
   }
 
+  openModal() {
+    this.setState({ modalIsOpen: true });
+  }
+
+  closeModal() {
+    this.setState({ modalIsOpen: false });
+  }
+
   render() {
     const { entries, discounts } = this.props.order;
     const isClosedOrCanceled = entry => entry.status != constants.CANCELED && entry.status != constants.CLOSED;
@@ -74,7 +91,11 @@ class ProcessingOrder extends Component {
               { className: 'order-subtotal' },
               dom.td(null, dom.h2(null, 'Subtotal')),
               dom.td(),
-              dom.td({ className: 'text-right' }, dom.h2(null, $.format(this.subtotal())))
+              dom.td(
+                { className: 'text-right' },
+                dom.h2(null, $.format(this.subtotal())),
+                dom.button({ className: 'btn btn-default', onClick: this.openModal }, 'Discount')
+              )
             ),
             discounts.length > 0 ? dom.tr(
               { className: 'order-discount' },
@@ -104,6 +125,22 @@ class ProcessingOrder extends Component {
             setClosed: this.props.setClosed,
             setReadyForBill: this.props.setReadyForBill
           }
+        ),
+        Modal(
+          {
+            className: 'modal-dialog',
+            isOpen: this.state.modalIsOpen,
+            onRequestClose: this.closeModal,
+            style: {
+              content: {
+                border: 0,
+                background: 'none'
+              }
+            }
+          },
+          ApplyDiscount({
+            closeModal: this.closeModal
+          })
         )
       )
     );
