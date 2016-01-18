@@ -32,14 +32,14 @@ function removeData() {
 }
 
 
-function createOrder(items, discount) {
+function createOrder(items, discounts) {
   return new Promise((resolve, reject) => {
     Order({
       id: faker.random.number(),
       status: _.sample(orderStatuses),
       tableNumber: faker.random.number().toString().slice(0, 2),
       entries: items.map(toEntry),
-      discounts: [discount]
+      discounts
     }).save((err, result) => {
       if(err) {
         console.error(`Error creating order. ${error}`);
@@ -65,12 +65,12 @@ function createDiscount(discount) {
 }
 
 function createOrders(itemsAndDiscounts) {
-  const [items, [discount]] = itemsAndDiscounts;
+  const [items, discounts] = itemsAndDiscounts;
 
   return Promise.all([
-    createOrder(_.sample(items, 2), discount),
+    createOrder(_.sample(items, 2), discounts),
     createOrder(_.sample(items, 2)),
-    createOrder(_.sample(items, 2)),
+    createOrder(_.sample(items, 2), discounts),
     createOrder(_.sample(items, 2))
   ])
   .then(() => {
