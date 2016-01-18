@@ -32,6 +32,14 @@ const OrderStub = {
     });
   },
 
+  saveDiscounts: (orderId, discounts) => {
+    return Promise.resolve({
+      id: orderId,
+      discounts,
+      entries: []
+    });
+  },
+
   findOneAndUpdate: ({ id }, { status }) => {
     return Promise.resolve({ id, status });
   },

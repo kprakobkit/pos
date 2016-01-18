@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { expect, spy } from 'chai';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
@@ -28,9 +28,12 @@ function setup(discounts = []) {
       ],
       discounts
     },
-    setClosed: () => {},
-      setReadyForBill: () => {}
+    setClosed: spy(),
+    setReadyForBill: spy(),
+    saveDiscounts: spy(),
+    discounts: []
   };
+
   const component = renderIntoDocument(ProcessingOrder(props));
 
   return {

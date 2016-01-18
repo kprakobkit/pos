@@ -82,6 +82,7 @@ function itemBuilder() {
 function discountBuilder() {
   const defaultDiscount = {
     value: 0.5,
+    _id: 'id',
     type: constants.PERCENTAGE,
     description: 'discount'
   };

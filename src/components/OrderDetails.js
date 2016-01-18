@@ -20,7 +20,8 @@ const EditOrder = createFactory(EditOrderComponent);
 function mapStateToProps(state) {
   return {
     orders: state.orders,
-    masterItems: state.items
+    masterItems: state.items,
+    discounts: state.discounts
   };
 }
 
@@ -157,6 +158,8 @@ class OrderDetails extends Component {
           ProcessingOrder(
             {
               order: this.state.order,
+              discounts: this.props.discounts,
+              saveDiscounts: this.props.saveDiscounts.bind(null, this.props.params.id),
               setClosed: this.props.setClosed.bind(
                 null,
                 this.props.params.id,
