@@ -4,6 +4,7 @@ import constants  from '../src/constants';
 import Item from './item';
 import Entry from './entry';
 import Transaction from './transaction';
+import Discount from './discount';
 import _ from 'ramda';
 import faker from 'faker';
 
@@ -20,7 +21,8 @@ orderSchema.statics.getOrders = function() {
   return this.find()
     .then(_.map(toOrder))
     .then(getEntries)
-    .then(getTransactions);
+    .then(getTransactions)
+    .then(getDiscounts);
 }
 
 orderSchema.statics.updateEntry = function(orderId, entryIndex, update) {
@@ -64,14 +66,16 @@ orderSchema.statics.addEntries = function(orderId, newEntries) {
 orderSchema.statics.updateStatus = function(orderId, status) {
   return this.findOneAndUpdate({ id: orderId }, { status }, { new: true }).then((order) => {
     return populateEntries(toOrder(order))
-      .then(populateTransaction);
+      .then(populateTransaction)
+      .then(populateDiscount);
   });
 }
 
 orderSchema.statics.updateTableNumber = function(orderId, tableNumber) {
   return this.findOneAndUpdate({ id: orderId }, { tableNumber }, { new: true }).then((order) => {
     return populateEntries(toOrder(order))
-      .then(populateTransaction);
+    .then(populateTransaction)
+    .then(populateDiscount);
   });
 }
 
@@ -84,7 +88,8 @@ orderSchema.statics.setClosed = function(orderId, transactionId) {
     { new: true }
   )
     .then(_.compose(populateEntries, toOrder))
-    .then(populateTransaction);
+    .then(populateTransaction)
+    .then(populateDiscount);
 }
 
 function getEntries(orders) {
@@ -110,6 +115,31 @@ function populateEntries(order) {
 
 function getTransactions(orders) {
   return Promise.all(orders.map(populateTransaction));
+}
+
+function getDiscounts(orders) {
+  return Promise.all(orders.map(populateDiscount));
+}
+
+function populateDiscount(order) {
+  return new Promise((resolve, reject) => {
+    if(order.discounts.length > 0) {
+    Discount.populate(order, [{
+      path: 'discounts',
+      model: 'Discount',
+      select: 'description value type -_id'
+    }], (err, res) => {
+      if(err) {
+        reject(err);
+      }
+      order.discounts = res.discounts;
+
+      resolve(order);
+    });
+    } else {
+      resolve(order);
+    }
+  });
 }
 
 function populateTransaction(order) {
@@ -154,7 +184,7 @@ function toTransaction({ _id, cash, credit, tip }) {
   };
 }
 
-function toOrder({ _id, id, status, transaction, entries, tableNumber }) {
+function toOrder({_id, id, status, transaction, entries, tableNumber, discounts }) {
   const createdAt = _id.getTimestamp();
 
   return {
@@ -164,6 +194,15 @@ function toOrder({ _id, id, status, transaction, entries, tableNumber }) {
     entries,
     tableNumber,
     createdAt
+    discounts
+  };
+}
+
+function toDiscount({ type, value, description }) {
+  return {
+    value,
+    description,
+    type
   };
 }
 

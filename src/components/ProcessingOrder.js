@@ -25,8 +25,14 @@ class ProcessingOrder extends Component {
     return Math.round(this.subtotal() * constants.TAX_RATE);
   }
 
+  discount() {
+    const percentage = this.props.order.discounts.reduce((sum, discount) => sum + discount.value, 0);
+    return this.subtotal() * percentage;
+  }
+
   total() {
-    return this.subtotal() + this.tax();
+    const discount = this.props.order.discounts.length > 0 ? this.discount() : 0;
+    return this.subtotal() - discount + this.tax();
   }
 
   renderEntry(entry, i) {
@@ -52,8 +58,9 @@ class ProcessingOrder extends Component {
   }
 
   render() {
+    const { entries, discounts } = this.props.order;
     const isClosedOrCanceled = entry => entry.status != constants.CANCELED && entry.status != constants.CLOSED;
-    const groupedEntries = this.groupEntries(_.filter(isClosedOrCanceled, this.props.order.entries));
+    const groupedEntries = this.groupEntries(_.filter(isClosedOrCanceled, entries));
 
     return (
       dom.div(
@@ -69,6 +76,12 @@ class ProcessingOrder extends Component {
               dom.td(),
               dom.td({ className: 'text-right' }, dom.h2(null, $.format(this.subtotal())))
             ),
+            discounts.length > 0 ? dom.tr(
+              { className: 'order-discount' },
+              dom.td(null, dom.h2(null, 'Discount')),
+              dom.td(),
+              dom.td({ className: 'text-right' }, dom.h2(null, $.format(this.discount())))
+            ) : null,
             dom.tr(
               { className: 'order-tax' },
               dom.td(null, dom.h2(null, 'Tax')),

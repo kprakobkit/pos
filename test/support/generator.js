@@ -79,9 +79,20 @@ function itemBuilder() {
   return builderFromDefault(defaultItem);
 }
 
+function discountBuilder() {
+  const defaultDiscount = {
+    value: 0.5,
+    type: constants.PERCENTAGE,
+    description: 'discount'
+  };
+
+  return builderFromDefault(defaultDiscount);
+}
+
 export default {
   order: orderBuilder,
   entry: entryBuilder,
   transaction: transactionBuilder,
-  item: itemBuilder
+  item: itemBuilder,
+  discount: discountBuilder
 };
