@@ -88,6 +88,17 @@ export function removeOrder(id) {
   };
 }
 
+export function setClosed(orderId, transactionId, amounts) {
+  const addOrUpdateTransaction = transactionId ?
+    Transaction.findOneAndUpdate(transactionId, amounts, { new: true }) :
+    Transaction.addTransaction(orderId, amounts);
+
+  const transaction = addOrUpdateTransaction
+    .then((transaction) => Order.setClosed(orderId, transaction._id));
+
+  return dispatchUpdateOrder(orderId, transaction);
+}
+
 export function changeEntryStatus(orderId, entryIndex, status) {
   return dispatchUpdateOrder(orderId, Order.updateEntry(orderId, entryIndex, { status }));
 }
@@ -110,17 +121,6 @@ export function updateTableNumber(orderId, tableNumber) {
 
 export function saveDiscounts(orderId, discounts) {
   return dispatchUpdateOrder(orderId, Order.saveDiscounts(orderId, discounts));
-}
-
-export function setClosed(orderId, transactionId, amounts) {
-  const addOrUpdateTransaction = transactionId ?
-    Transaction.findOneAndUpdate(transactionId, amounts, { new: true }) :
-    Transaction.addTransaction(orderId, amounts);
-
-  const transaction = addOrUpdateTransaction
-    .then((transaction) => Order.setClosed(orderId, transaction._id));
-
-  return dispatchUpdateOrder(orderId, transaction);
 }
 
 function dispatchUpdateOrder(orderId, transaction) {
