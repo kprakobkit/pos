@@ -15,12 +15,13 @@ const {
 const Filter = React.createFactory(FilterComponent);
 
 describe('Filter', () => {
+  const filter = constants.ALL;
   const printFilterName = (status) => {};
   const filters = [constants.OPEN, constants.READY_FOR_BILL, constants.ALL];
 
   it('renders filter options from props', () => {
     const applyFilter = () => {};
-    const component = renderIntoDocument(Filter({ applyFilter, printFilterName, filters }));
+    const component = renderIntoDocument(Filter({ filter, applyFilter, printFilterName, filters }));
     const filterOptions = scryRenderedDOMComponentsWithClass(component, 'filter-option');
 
     expect(filterOptions.length).to.equal(3);
@@ -43,7 +44,7 @@ describe('Filter', () => {
         calledWithReady = true;
       }
     };
-    const component = renderIntoDocument(Filter({ applyFilter, printFilterName, filters }));
+    const component = renderIntoDocument(Filter({ filter, applyFilter, printFilterName, filters }));
     const filterOptions = scryRenderedDOMComponentsWithClass(component, 'filter-option');
     Simulate.click(filterOptions[0]);
     Simulate.click(filterOptions[1]);

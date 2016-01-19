@@ -42,6 +42,7 @@ class Filter extends Component {
 }
 
 Filter.propTypes = {
+  filter: PropTypes.string.isRequired,
   filters: PropTypes.array.isRequired,
   applyFilter: PropTypes.func.isRequired,
   printFilterName: PropTypes.func
