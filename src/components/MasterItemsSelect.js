@@ -1,5 +1,6 @@
 import { Component, PropTypes, DOM as dom } from 'react';
 import _ from 'ramda';
+import $ from '../money';
 
 class MasterItemsSelect extends Component {
   constructor(props) {
@@ -89,7 +90,7 @@ class MasterItemsSelect extends Component {
                   },
                   dom.td(
                     null,
-                    dom.small(null, item.name)
+                    dom.small(null, `${ item.name } - ${ $.format(item.price) }`)
                   )
                 );
               })
