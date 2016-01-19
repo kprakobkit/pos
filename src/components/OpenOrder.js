@@ -72,9 +72,9 @@ class OpenOrder extends Component {
             Filter(
               {
                 filter,
-                filterOrders: this.filterOrders,
-                printOrderStatus: this.printOrderStatus,
-                filters: [constants.ALL, constants.FOOD, constants.DRINK]
+                filters: [constants.ALL, constants.FOOD, constants.DRINK],
+                applyFilter: this.filterOrders,
+                printFilterName: this.printOrderStatus
               }
             ),
           )
