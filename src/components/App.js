@@ -5,10 +5,11 @@ const Nav = createFactory(NavComponent);
 
 class App extends Component {
   render() {
+    const { location } = this.props;
     return (
       dom.div(
         { className: 'container-fluid' },
-        Nav(),
+        location.pathname === '/' ? null : Nav(),
         this.props.children
       )
     );
