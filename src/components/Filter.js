@@ -1,6 +1,7 @@
 import { Component, PropTypes, DOM as dom } from 'react';
 import actions from '../action_creators';
 import constants from '../constants';
+import _ from 'ramda';
 
 class Filter extends Component {
   constructor(props) {
@@ -22,9 +23,9 @@ class Filter extends Component {
             `filter-option filter-${normalized}`,
             `btn ${this.isSelectedFilter(filter)} text-capitalize`
           ].join(' '),
-          onClick: () => this.props.filterOrders(filter)
+          onClick: () => this.props.applyFilter(filter)
         },
-        this.props.printOrderStatus(filter)
+        this.props.printFilterName(filter)
       )
     );
   }
@@ -41,8 +42,13 @@ class Filter extends Component {
 }
 
 Filter.propTypes = {
-  filterOrders: PropTypes.func.isRequired,
-  filters: PropTypes.array.isRequired
+  filters: PropTypes.array.isRequired,
+  applyFilter: PropTypes.func.isRequired,
+  printFilterName: PropTypes.func
+};
+
+Filter.defaultProps = {
+  printFilterName: _.identity
 };
 
 export default Filter;
