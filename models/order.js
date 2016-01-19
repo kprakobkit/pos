@@ -125,6 +125,25 @@ function getTransactions(orders) {
   return Promise.all(orders.map(populateTransaction));
 }
 
+function populateTransaction(order) {
+  return new Promise((resolve, reject) => {
+    if (order.transaction) {
+      Transaction.populate(order, {
+        path: 'transaction',
+        model: 'Transaction',
+        select: '_id cash credit tip'
+      }, (err, res) => {
+        if (err) reject(err);
+
+        order.transaction = toTransaction(res.transaction);
+        resolve(order);
+      });
+    } else {
+      resolve(order);
+    }
+  });
+}
+
 function getDiscounts(orders) {
   return Promise.all(orders.map(populateDiscount));
 }
@@ -150,24 +169,6 @@ function populateDiscount(order) {
   });
 }
 
-function populateTransaction(order) {
-  return new Promise((resolve, reject) => {
-    if (order.transaction) {
-      Transaction.populate(order, {
-        path: 'transaction',
-        model: 'Transaction',
-        select: '_id cash credit tip'
-      }, (err, res) => {
-        if (err) reject(err);
-
-        order.transaction = toTransaction(res.transaction);
-        resolve(order);
-      });
-    } else {
-      resolve(order);
-    }
-  });
-}
 
 function toEntry({ status, comment, item_id, _id}) {
   const createdAt = _id.getTimestamp();
