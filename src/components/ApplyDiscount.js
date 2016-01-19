@@ -66,7 +66,7 @@ class ApplyDiscount extends Component {
               this.props.masterDiscounts.map(this.renderDiscounts)
             )
           ),
-          dom.button({ className: 'btn btn-primary save-discounts', onClick: this.handleSave }, 'Save')
+          dom.button({ className: 'btn btn-primary btn-block save-discounts', onClick: this.handleSave }, 'Save')
         )
       )
     );
