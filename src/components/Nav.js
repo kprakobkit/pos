@@ -10,11 +10,11 @@ class Nav extends Component {
         { className: 'clearfix' },
         dom.ul(
           { className: 'nav nav-pills pull-right' },
-          dom.li(null, Link({ to: '/', className: 'nav-home-link' }, dom.span(null, 'Home'))),
           this.context.location.pathname.indexOf('/orders') > -1 ?
             dom.li(
               null, Link({ to: '/orders', className: 'nav-orders-link' }, dom.span(null, 'Orders'))
-          ) : null
+          ) : null,
+          dom.li(null, Link({ to: '/', className: 'nav-home-link' }, dom.span(null, 'Home')))
         )
       )
     );
