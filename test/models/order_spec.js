@@ -104,7 +104,7 @@ describe('Order', () => {
     });
   });
 
-  it.only('saveDiscounts', () => {
+  it('saveDiscounts', () => {
     return Discount({ value: 0.5 }).save()
     .then(() => Order({ id: 1 }).save())
     .then(() => Discount.findOne({ value: 0.5 }))

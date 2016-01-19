@@ -78,7 +78,7 @@ class ProcessingOrder extends Component {
   }
 
   render() {
-    const { entries, discounts } = this.props.order;
+    const { entries, discounts, status } = this.props.order;
     const isClosedOrCanceled = entry => entry.status != constants.CANCELED && entry.status != constants.CLOSED;
     const groupedEntries = this.groupEntries(_.filter(isClosedOrCanceled, entries));
 
@@ -93,7 +93,7 @@ class ProcessingOrder extends Component {
               null,
               dom.th(null, 'Item'),
               dom.th(null, 'Quantity'),
-              dom.th({ className: 'text-right' }, dom.button({ className: 'btn btn-default', onClick: this.openModal }, 'Discount'))
+              dom.th({ className: 'text-right' }, status === constants.READY_FOR_BILL ? dom.button({ className: 'btn btn-default apply-discount', onClick: this.openModal }, 'Discount') : null)
             ),
             groupedEntries.map(this.renderEntry),
             discounts.length > 0 ?

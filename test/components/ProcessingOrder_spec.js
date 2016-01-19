@@ -15,11 +15,11 @@ const {
 } = TestUtils;
 const ProcessingOrder = React.createFactory(ProcessingOrderComponent);
 
-function setup(discounts = []) {
+function setup({ discounts = [], status = 'READY_FOR_BILL' } = {}) {
   const price = 1025;
   const props = {
     order: {
-      status: 'open', id: 1, entries: [
+      status, id: 1, entries: [
         Generator.entry().name('delivered').status(constants.DELIVERED).price(price).build(),
         Generator.entry().name('delivered').status(constants.DELIVERED).price(price).build(),
         Generator.entry().name('delivered').status(constants.CANCELED).price(price).build(),
@@ -73,6 +73,20 @@ describe('ProcessingOrder', () => {
   });
 
   describe('discounts', () => {
+    it('shows the discount button', () => {
+      const { component } = setup();
+      const applyDiscount = scryRenderedDOMComponentsWithClass(component, 'apply-discount');
+
+      expect(applyDiscount.length).to.equal(1);
+    });
+
+    it('does not show the discount button when order is closed', () => {
+      const { component } = setup({ status: constants.CLOSED });
+      const applyDiscount = scryRenderedDOMComponentsWithClass(component, 'apply-discount');
+
+      expect(applyDiscount.length).to.equal(0);
+    });
+
     it('does not show discount when there is none', () => {
       const { component } = setup();
       const discount = scryRenderedDOMComponentsWithClass(component, 'order-discount');
@@ -81,7 +95,7 @@ describe('ProcessingOrder', () => {
 
     it('displays the total discount', () => {
       const discounts = [Generator.discount().value(0.5).build()];
-      const { component, subtotal, price } = setup(discounts);
+      const { component, subtotal, price } = setup({ discounts });
       const discount = findRenderedDOMComponentWithClass(component, 'order-discount');
       const expectedDiscount = price * 2 * 0.5;
 
