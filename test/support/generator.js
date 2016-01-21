@@ -36,7 +36,8 @@ function orderBuilder() {
     status: _.sample(orderStatuses),
     transaction: transactionBuilder().build(),
     entries: [entryBuilder().build()],
-    tableNumber: faker.random.number().toString().slice(0, 1)
+    tableNumber: faker.random.number().toString().slice(0, 1),
+    createdAt: moment()
   };
 
   return builderFromDefault(defaultOrder);
