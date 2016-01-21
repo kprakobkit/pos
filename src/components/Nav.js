@@ -1,22 +1,31 @@
-import { Component, DOM as dom, createFactory } from 'react';
+import { Component, DOM as dom, createFactory, PropTypes } from 'react';
 import { Link as LinkComponent } from 'react-router';
+import _ from 'ramda';
 
 const Link = createFactory(LinkComponent);
 
 class Nav extends Component {
   render() {
+    const { location } = this.context;
+
     return (
       dom.div(
         { className: 'clearfix' },
         dom.ul(
           { className: 'nav nav-pills pull-right' },
-          dom.li(null, Link({ to: '/orders', className: 'nav-orders-link' }, dom.span(null, 'Orders'))),
-          dom.li(null, Link({ to: '/chef', className: 'nav-chef-link' }, dom.span(null, 'Chef'))),
-          dom.li(null, Link({ to: '/bartender', className: 'nav-bartender-link' }, dom.span(null, 'Bartender')))
+          _.contains('/orders', location.pathname) ?
+            dom.li(
+              null, Link({ to: '/orders', className: 'nav-orders-link' }, dom.span(null, 'Orders'))
+          ) : null,
+          dom.li(null, Link({ to: '/', className: 'nav-home-link' }, dom.span(null, 'Home')))
         )
       )
     );
   }
 }
+
+Nav.contextTypes = {
+  location: PropTypes.object
+};
 
 export default Nav;
