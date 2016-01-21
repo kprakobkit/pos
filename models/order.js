@@ -153,13 +153,16 @@ function toTransaction({ _id, cash, credit, tip }) {
   };
 }
 
-function toOrder({ id, status, transaction, entries, tableNumber }) {
+function toOrder({ _id, id, status, transaction, entries, tableNumber }) {
+  const createdAt = _id.getTimestamp();
+
   return {
     id,
     status,
     transaction,
     entries,
-    tableNumber
+    tableNumber,
+    createdAt
   };
 }
 

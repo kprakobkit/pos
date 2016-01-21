@@ -5,6 +5,7 @@ import TestUtils from 'react-addons-test-utils';
 import constants from '../../src/constants';
 import OrdersComponent from '../../src/components/Orders';
 import Generator from '../support/generator';
+import moment from 'moment';
 
 const {
   renderIntoDocument,
@@ -48,5 +49,15 @@ describe('Orders', () => {
 
     expect(children.length).to.equal(1);
     expect(children[0].textContent).to.contain(expectedStatus);
+  });
+
+  it('only displays today\'s orders', () => {
+    const order1 = Generator.order().status(constants.OPEN).createdAt(moment()).build();
+    const order2 = Generator.order().status(constants.OPEN).createdAt(moment().add(1, 'days')).build();
+    const orders = [order1, order2];
+    const component = renderIntoDocument(Orders({ orders, loadOrders, loadItems }));
+    const children = scryRenderedDOMComponentsWithClass(component, 'order');
+
+    expect(children.length).to.equal(1);
   });
 });
