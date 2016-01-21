@@ -93,13 +93,15 @@ describe('ProcessingOrder', () => {
       expect(discount.length).to.equal(0);
     });
 
-    it('displays the total discount', () => {
-      const discounts = [Generator.discount().value(0.5).build()];
+    it('renders discount, subtotal, and total', () => {
+      const discounts = [Generator.discount().value(0.4).build()];
       const { component, subtotal, price } = setup({ discounts });
       const discount = findRenderedDOMComponentWithClass(component, 'order-discount');
-      const expectedDiscount = price * 2 * 0.5;
+      const expectedDiscount = price * 2 * 0.4;
+      const expectedSubtotal = price * 2 * 0.6;
 
       expect(discount.textContent).to.contain($.format(expectedDiscount));
+      expect(subtotal.textContent).to.contain($.format(expectedSubtotal));
     });
   });
 });

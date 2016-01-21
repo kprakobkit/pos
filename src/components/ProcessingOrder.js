@@ -24,23 +24,27 @@ class ProcessingOrder extends Component {
     };
   }
 
-  subtotal() {
+  totalSales() {
     return this.props.order.entries
       .filter((entry) => entry.status === constants.DELIVERED)
       .reduce((sum, entry) => sum + entry.price, 0);
   }
 
   tax() {
-    return Math.round((this.subtotal() - this.discount()) * constants.TAX_RATE);
+    return Math.round(this.subtotal() * constants.TAX_RATE);
+  }
+
+  subtotal() {
+    return this.totalSales() - this.discount();
   }
 
   discount() {
     const percentage = _.sum(_.pluck('value', this.props.order.discounts));
-    return this.subtotal() * percentage;
+    return this.totalSales() * percentage;
   }
 
   total() {
-    return this.subtotal() - this.discount() + this.tax();
+    return this.subtotal() + this.tax();
   }
 
   renderEntry(entry, i) {
@@ -106,7 +110,7 @@ class ProcessingOrder extends Component {
                 { className: 'order-discount' },
                 dom.td(null, dom.p(null, dom.strong(null, 'Discount'))),
                 dom.td(),
-                dom.td({ className: 'text-right' }, dom.p(null, dom.strong(null, $.format(this.discount()))))
+                dom.td({ className: 'text-right' }, dom.p(null, null, `- ${ $.format(this.discount()) }`))
             ) : null,
             dom.tr(
               { className: 'order-subtotal' },
