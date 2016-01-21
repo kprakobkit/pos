@@ -202,7 +202,7 @@ function toOrder({_id, id, status, transaction, entries, tableNumber, discounts 
     transaction,
     entries,
     tableNumber,
-    createdAt
+    createdAt,
     discounts
   };
 }

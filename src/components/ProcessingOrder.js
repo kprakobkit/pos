@@ -35,11 +35,7 @@ class ProcessingOrder extends Component {
   }
 
   discount() {
-    if (this.props.order.discounts.length < 1) {
-      return 0;
-    }
-
-    const percentage = this.props.order.discounts.reduce((sum, discount) => sum + discount.value, 0);
+    const percentage = _.sum(_.pluck('value', this.props.order.discounts));
     return this.subtotal() * percentage;
   }
 
@@ -93,7 +89,16 @@ class ProcessingOrder extends Component {
               null,
               dom.th(null, 'Item'),
               dom.th(null, 'Quantity'),
-              dom.th({ className: 'text-right' }, status === constants.READY_FOR_BILL ? dom.button({ className: 'btn btn-default apply-discount', onClick: this.openModal }, 'Discount') : null)
+              dom.th(
+                { className: 'text-right' },
+                status === constants.READY_FOR_BILL ?
+                  dom.button(
+                    {
+                      className: 'btn btn-default apply-discount',
+                      onClick: this.openModal
+                    }, 'Discount'
+                ) : null
+              )
             ),
             groupedEntries.map(this.renderEntry),
             discounts.length > 0 ?
