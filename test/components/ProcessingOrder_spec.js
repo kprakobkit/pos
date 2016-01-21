@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { expect, spy } from 'chai';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
@@ -15,27 +15,39 @@ const {
 } = TestUtils;
 const ProcessingOrder = React.createFactory(ProcessingOrderComponent);
 
-describe('ProcessingOrder', () => {
+function setup({ discounts = [], status = 'READY_FOR_BILL' } = {}) {
   const price = 1025;
   const props = {
     order: {
-      status: 'open', id: 1, entries: [
+      status, id: 1, entries: [
         Generator.entry().name('delivered').status(constants.DELIVERED).price(price).build(),
         Generator.entry().name('delivered').status(constants.DELIVERED).price(price).build(),
         Generator.entry().name('delivered').status(constants.CANCELED).price(price).build(),
         Generator.entry().status(constants.CLOSED).price(price).build(),
         Generator.entry().status(constants.CANCELED).price(100).build()
-      ]
+      ],
+      discounts
     },
-    setClosed: () => {},
-      setReadyForBill: () => {}
+    setClosed: spy(),
+    setReadyForBill: spy(),
+    saveDiscounts: spy(),
+    discounts: []
   };
-  const component = renderIntoDocument(ProcessingOrder(props));
-  const subtotal = findRenderedDOMComponentWithClass(component, 'order-subtotal');
-  const tax = findRenderedDOMComponentWithClass(component, 'order-tax');
-  const total = findRenderedDOMComponentWithClass(component, 'order-total');
 
+  const component = renderIntoDocument(ProcessingOrder(props));
+
+  return {
+    subtotal: findRenderedDOMComponentWithClass(component, 'order-subtotal'),
+    tax: findRenderedDOMComponentWithClass(component, 'order-tax'),
+    total:  findRenderedDOMComponentWithClass(component, 'order-total'),
+    price,
+    component
+  };
+}
+
+describe('ProcessingOrder', () => {
   it('renders only delivered entries', () => {
+    const { component } = setup();
     const orderEntries = scryRenderedDOMComponentsWithClass(component, 'order-entry');
     const entryNames = scryRenderedDOMComponentsWithClass(component, 'entry-name');
 
@@ -44,6 +56,7 @@ describe('ProcessingOrder', () => {
   });
 
   it('renders subtotal, tax, and total for all delivered entries', () => {
+    const { component, price, tax, subtotal, total } = setup();
     const expectedSubtotal = price * 2;
     expect(subtotal.textContent).to.contain($.format(expectedSubtotal));
     expect(tax.textContent).to.contain($.format(expectedSubtotal * constants.TAX_RATE));
@@ -51,11 +64,43 @@ describe('ProcessingOrder', () => {
   });
 
   it('quantiy and total for each uniq entry', () => {
+    const { component, price } = setup();
     const quantities = scryRenderedDOMComponentsWithClass(component, 'entry-quantity');
     const entryTotal = scryRenderedDOMComponentsWithClass(component, 'entry-total');
 
     expect(quantities[0].textContent).to.contain('2');
     expect(entryTotal[0].textContent).to.equal($.format(2 * price));
+  });
+
+  describe('discounts', () => {
+    it('shows the discount button', () => {
+      const { component } = setup();
+      const applyDiscount = scryRenderedDOMComponentsWithClass(component, 'apply-discount');
+
+      expect(applyDiscount.length).to.equal(1);
+    });
+
+    it('does not show the discount button when order is closed', () => {
+      const { component } = setup({ status: constants.CLOSED });
+      const applyDiscount = scryRenderedDOMComponentsWithClass(component, 'apply-discount');
+
+      expect(applyDiscount.length).to.equal(0);
+    });
+
+    it('does not show discount when there is none', () => {
+      const { component } = setup();
+      const discount = scryRenderedDOMComponentsWithClass(component, 'order-discount');
+      expect(discount.length).to.equal(0);
+    });
+
+    it('displays the total discount', () => {
+      const discounts = [Generator.discount().value(0.5).build()];
+      const { component, subtotal, price } = setup({ discounts });
+      const discount = findRenderedDOMComponentWithClass(component, 'order-discount');
+      const expectedDiscount = price * 2 * 0.5;
+
+      expect(discount.textContent).to.contain($.format(expectedDiscount));
+    });
   });
 });
 

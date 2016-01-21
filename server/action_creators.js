@@ -3,6 +3,7 @@ import constants from '../src/constants';
 import Order from '../models/order';
 import Item from '../models/item';
 import Transaction from '../models/transaction';
+import Discount from '../models/discount';
 
 export function setState(state) {
   return {
@@ -36,6 +37,16 @@ export function loadItems() {
 
       dispatch(setState({
         items
+      }));
+    });
+  };
+}
+
+export function loadDiscounts() {
+  return (dispatch) => {
+    return Discount.find().then((discounts) => {
+      dispatch(setState({
+        discounts
       }));
     });
   };
@@ -77,6 +88,17 @@ export function removeOrder(id) {
   };
 }
 
+export function setClosed(orderId, transactionId, amounts) {
+  const addOrUpdateTransaction = transactionId ?
+    Transaction.findOneAndUpdate(transactionId, amounts, { new: true }) :
+    Transaction.addTransaction(orderId, amounts);
+
+  const transaction = addOrUpdateTransaction
+    .then((transaction) => Order.setClosed(orderId, transaction._id));
+
+  return dispatchUpdateOrder(orderId, transaction);
+}
+
 export function changeEntryStatus(orderId, entryIndex, status) {
   return dispatchUpdateOrder(orderId, Order.updateEntry(orderId, entryIndex, { status }));
 }
@@ -97,15 +119,8 @@ export function updateTableNumber(orderId, tableNumber) {
   return dispatchUpdateOrder(orderId, Order.updateTableNumber(orderId, tableNumber));
 }
 
-export function setClosed(orderId, transactionId, amounts) {
-  const addOrUpdateTransaction = transactionId ?
-    Transaction.findOneAndUpdate(transactionId, amounts, { new: true }) :
-    Transaction.addTransaction(orderId, amounts);
-
-  const transaction = addOrUpdateTransaction
-    .then((transaction) => Order.setClosed(orderId, transaction._id));
-
-  return dispatchUpdateOrder(orderId, transaction);
+export function saveDiscounts(orderId, discounts) {
+  return dispatchUpdateOrder(orderId, Order.saveDiscounts(orderId, discounts));
 }
 
 function dispatchUpdateOrder(orderId, transaction) {
@@ -135,6 +150,7 @@ export default {
   setState,
   loadOrders,
   loadItems,
+  loadDiscounts,
   loadTransactions,
   addOrder,
   changeEntryStatus,
@@ -143,5 +159,6 @@ export default {
   setOpen,
   setClosed,
   removeOrder,
-  updateTableNumber
+  updateTableNumber,
+  saveDiscounts
 };
