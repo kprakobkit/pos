@@ -13,7 +13,7 @@ class Nav extends Component {
         { className: 'clearfix' },
         dom.ul(
           { className: 'nav nav-pills pull-right' },
-          _.contains('/orders', location.pathname) ?
+          location.pathname.indexOf('/orders') > -1 ?
             dom.li(
               null, Link({ to: '/orders', className: 'nav-orders-link' }, dom.span(null, 'Orders'))
           ) : null,
