@@ -21,6 +21,13 @@ export function loadItems() {
   };
 }
 
+export function loadDiscounts() {
+  return {
+    meta: { remote: true },
+    type: constants.LOAD_DISCOUNTS
+  };
+}
+
 export function loadTransactions() {
   return {
     meta: { remote: true },
@@ -104,10 +111,20 @@ export function updateTableNumber(orderId, tableNumber) {
   };
 }
 
+export function saveDiscounts(orderId, discounts) {
+  return {
+    meta: { remote: true },
+    type: constants.SAVE_DISCOUNTS,
+    orderId,
+    discounts
+  };
+}
+
 export default {
   setState,
   loadOrders,
   loadItems,
+  loadDiscounts,
   loadTransactions,
   addOrder,
   changeEntryStatus,
@@ -116,5 +133,6 @@ export default {
   setOpen,
   setClosed,
   removeOrder,
-  updateTableNumber
+  updateTableNumber,
+  saveDiscounts
 };

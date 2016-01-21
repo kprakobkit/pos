@@ -2,6 +2,7 @@ import constants from '../src/constants';
 import Order from '../models/order';
 import Item from '../models/item';
 import Entry from '../models/entry';
+import Discount from '../models/discount';
 import faker from 'faker';
 import _ from 'underscore';
 import createItems from './create_items';
@@ -31,13 +32,14 @@ function removeData() {
 }
 
 
-function createOrder(items) {
+function createOrder(items, discounts) {
   return new Promise((resolve, reject) => {
     Order({
       id: faker.random.number(),
       status: _.sample(orderStatuses),
       tableNumber: faker.random.number().toString().slice(0, 2),
-      entries: items.map(toEntry)
+      entries: items.map(toEntry),
+      discounts
     }).save((err, result) => {
       if(err) {
         console.error(`Error creating order. ${error}`);
@@ -49,10 +51,23 @@ function createOrder(items) {
   });
 }
 
-function createOrders(items) {
+function createDiscount(discount) {
+  return new Promise((resolve, reject) => {
+    Discount(discount).save((err, result) => {
+      if(err) {
+        console.error(`Error creating discount. ${error}`);
+        reject(err);
+      }
+
+      resolve(result);
+    });
+  });
+}
+
+function createOrders(itemsAndDiscounts) {
+  const [items, discounts] = itemsAndDiscounts;
+
   return Promise.all([
-    createOrder(_.sample(items, 2)),
-    createOrder(_.sample(items, 2)),
     createOrder(_.sample(items, 2)),
     createOrder(_.sample(items, 2))
   ])
@@ -68,9 +83,29 @@ function toEntry(item) {
   };
 }
 
+function createDiscounts() {
+  return Promise.all([
+    createDiscount({
+      value: 0.5,
+      type: constants.PERCENTAGE,
+      description: 'Band discount (50%)'
+    })
+  ])
+  .then((discounts) => {
+    console.log('Successfully created all discounts');
+    return discounts;
+  });
+}
+
+function createItemsAndDiscounts() {
+  return Promise.all([
+    createItems(),
+    createDiscounts()
+  ]);
+}
 export function seedDev() {
   removeData()
-  .then(createItems)
+  .then(createItemsAndDiscounts)
   .then(createOrders)
   .then(() => {
     console.log('Completed seeding database...');

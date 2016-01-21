@@ -6,6 +6,8 @@ export default (store) => (socket) => {
 
   socket.on(constants.LOAD_ITEMS, (action) => store.dispatch(actions.loadItems()));
 
+  socket.on(constants.LOAD_DISCOUNTS, (action) => store.dispatch(actions.loadDiscounts()));
+
   socket.on(constants.LOAD_TRANSACTIONS, (action) => store.dispatch(actions.loadTransactions()));
 
   socket.on(constants.ADD_ORDER, (action) => {
@@ -30,4 +32,6 @@ export default (store) => (socket) => {
   socket.on(constants.REMOVE_ORDER, (action) => store.dispatch(actions.removeOrder(action.orderId)));
 
   socket.on(constants.UPDATE_TABLE_NUMBER, (action) => store.dispatch(actions.updateTableNumber(action.orderId, action.tableNumber)));
+
+  socket.on(constants.SAVE_DISCOUNTS, (action) => store.dispatch(actions.saveDiscounts(action.orderId, action.discounts)));
 };

@@ -19,19 +19,20 @@ const Orders = React.createFactory(OrdersComponent);
 describe('Orders', () => {
   const loadOrders = () => {};
   const loadItems = () => {};
+  const loadDiscounts = () => {};
 
   it('renders Order component for each order in props', () => {
     const order1 = Generator.order().status(constants.OPEN).build();
     const order2 = Generator.order().status(constants.OPEN).build();
     const orders = [order1, order2];
-    const component = renderIntoDocument(Orders({ orders, loadOrders, loadItems }));
+    const component = renderIntoDocument(Orders({ orders, loadOrders, loadItems, loadDiscounts }));
     const children = scryRenderedDOMComponentsWithClass(component, 'order');
 
     expect(children.length).to.equal(2);
   });
 
   it('renders message if there are no orders', () => {
-    const component = renderIntoDocument(Orders({ orders: [], loadOrders, loadItems }));
+    const component = renderIntoDocument(Orders({ orders: [], loadOrders, loadItems, loadDiscounts }));
     const ordersComponent = findRenderedDOMComponentWithClass(component, 'orders-message');
 
     expect(ordersComponent.textContent).to.equal('There are currently no orders.');
@@ -41,7 +42,7 @@ describe('Orders', () => {
     const order1 = Generator.order().status(constants.OPEN).build();
     const order2 = Generator.order().status(constants.CLOSED).build();
     const orders = [order1, order2];
-    const component = renderIntoDocument(Orders({ orders, loadOrders, loadItems }));
+    const component = renderIntoDocument(Orders({ orders, loadOrders, loadItems, loadDiscounts }));
     const filter = findRenderedDOMComponentWithClass(component, 'filter-open');
     Simulate.click(filter);
     const children = scryRenderedDOMComponentsWithClass(component, 'order');
@@ -55,7 +56,7 @@ describe('Orders', () => {
     const order1 = Generator.order().status(constants.OPEN).createdAt(moment()).build();
     const order2 = Generator.order().status(constants.OPEN).createdAt(moment().add(1, 'days')).build();
     const orders = [order1, order2];
-    const component = renderIntoDocument(Orders({ orders, loadOrders, loadItems }));
+    const component = renderIntoDocument(Orders({ orders, loadOrders, loadItems, loadDiscounts }));
     const children = scryRenderedDOMComponentsWithClass(component, 'order');
 
     expect(children.length).to.equal(1);
