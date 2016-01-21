@@ -40,7 +40,7 @@ class ProcessingOrder extends Component {
 
   discount() {
     const percentage = _.sum(_.pluck('value', this.props.order.discounts));
-    return this.totalSales() * percentage;
+    return Math.round(this.totalSales() * percentage);
   }
 
   total() {
