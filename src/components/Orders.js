@@ -6,6 +6,7 @@ import OrderComponent from './Order';
 import FilterComponent from './Filter';
 import { Link as LinkComponent } from 'react-router';
 import _ from 'underscore';
+import moment from 'moment';
 
 const Order = createFactory(OrderComponent);
 const Filter = createFactory(FilterComponent);
@@ -34,11 +35,13 @@ class Orders extends Component {
     this.setState({ filter });
   }
 
-  getFilteredOrders() {
+  filteredOrders() {
+    const todaysOrders = this.props.orders.filter((order) => moment(order.createdAt).isSame(moment(), 'day'));
+
     if (this.state.filter === constants.ALL) {
-      return this.props.orders;
+      return todaysOrders;
     } else {
-      return this.props.orders.filter((order) => order.status === this.state.filter);
+      return todaysOrders.filter((order) => order.status === this.state.filter);
     }
   }
 
@@ -90,7 +93,7 @@ class Orders extends Component {
               { className: 'table table-hover' },
               dom.tbody(
                 null,
-                this.getFilteredOrders().map(this.renderOrder)
+                this.filteredOrders().map(this.renderOrder)
               )
           ) : dom.div({ className: 'orders-message' }, 'There are currently no orders.')
         )
