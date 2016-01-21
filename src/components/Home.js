@@ -11,9 +11,9 @@ class Home extends Component {
         dom.h1({ className: 'text-center' }, 'pos.'),
         dom.div(
           { className: 'row menu' },
-          Link({ to: '/orders', className: 'col-xs-4 col-sm-4 menu-option orders-link' }, 'Orders'),
-          Link({ to: '/chef', className: 'col-xs-4 col-sm-4 menu-option chef-link' }, 'Chef'),
-          Link({ to: '/reporting', className: 'col-xs-4 col-sm-4 menu-option chef-link' }, 'Reporting')
+          Link({ to: '/orders', className: 'col-xs-4 menu-option orders-link' }, 'Orders'),
+          Link({ to: '/chef', className: 'col-xs-4 menu-option chef-link' }, 'Chef'),
+          Link({ to: '/reporting', className: 'col-xs-4 menu-option chef-link' }, 'Reporting')
         )
       )
     );

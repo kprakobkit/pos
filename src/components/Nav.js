@@ -1,16 +1,19 @@
 import { Component, DOM as dom, createFactory, PropTypes } from 'react';
 import { Link as LinkComponent } from 'react-router';
+import _ from 'ramda';
 
 const Link = createFactory(LinkComponent);
 
 class Nav extends Component {
   render() {
+    const { location } = this.context;
+
     return (
       dom.div(
         { className: 'clearfix' },
         dom.ul(
           { className: 'nav nav-pills pull-right' },
-          this.context.location.pathname.indexOf('/orders') > -1 ?
+          _.contains('/orders', location.pathname) ?
             dom.li(
               null, Link({ to: '/orders', className: 'nav-orders-link' }, dom.span(null, 'Orders'))
           ) : null,
