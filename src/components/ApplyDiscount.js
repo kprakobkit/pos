@@ -5,7 +5,7 @@ import _ from 'ramda';
 class ApplyDiscount extends Component {
   constructor(props) {
     super(props);
-    this.renderDiscounts = this.renderDiscounts.bind(this);
+    this.renderDiscount = this.renderDiscount.bind(this);
     this.handleAddDiscount = this.handleAddDiscount.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.state = {
@@ -28,7 +28,7 @@ class ApplyDiscount extends Component {
     this.props.closeModal();
   }
 
-  renderDiscounts(discount) {
+  renderDiscount(discount) {
     const { description, _id } = discount;
     const isSelected = _.find(_.propEq('_id', _id))(this.state.discounts);
 
@@ -63,7 +63,7 @@ class ApplyDiscount extends Component {
             { className: 'table table-hover' },
             dom.tbody(
               null,
-              this.props.masterDiscounts.map(this.renderDiscounts)
+              this.props.masterDiscounts.map(this.renderDiscount)
             )
           ),
           dom.button({ className: 'btn btn-primary btn-block save-discounts', onClick: this.handleSave }, 'Save')
