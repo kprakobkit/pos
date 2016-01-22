@@ -6,16 +6,26 @@ import moment from 'moment';
 class ReportingPayments extends Component {
   constructor(props) {
     super(props);
+    this.dateRange = this.dateRange.bind(this);
+    this.setLookback = this.setLookback.bind(this);
     this.transactionsByDate = this.transactionsByDate.bind(this);
     this.paymentsByDate = this.paymentsByDate.bind(this);
     this.renderPaymentsByDate = this.renderPaymentsByDate.bind(this);
     this.renderHeader = this.renderHeader.bind(this);
     this.renderRow = this.renderRow.bind(this);
+    this.state = {
+      lookback: 7
+    };
   }
 
   dateRange() {
     const today = moment().startOf('day');
-    return _.map((days) => moment(today).subtract(days, 'days'), _.reverse(_.range(0, 7)));
+    return _.map((days) => moment(today).subtract(days, 'days'), _.reverse(_.range(0, this.state.lookback)));
+  }
+
+  setLookback(e) {
+    const lookback = parseInt(e.target.value);
+    this.setState({ lookback });
   }
 
   appendTransaction(transactions, transaction) {
@@ -58,8 +68,15 @@ class ReportingPayments extends Component {
   render() {
     return (
       dom.div(
-        null,
+        { onChange: this.setLookback },
         dom.h2(null, 'Payments'),
+        dom.select(
+          null,
+          dom.option({ value: 7 }, '1 Week'),
+          dom.option({ value: 14 }, '2 Weeks'),
+          dom.option({ value: 21 }, '3 Weeks'),
+          dom.option({ value: 30 }, '1 Month')
+        ),
         dom.table(
           { className: 'table' },
           dom.thead(
