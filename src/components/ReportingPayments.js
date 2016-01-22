@@ -20,7 +20,10 @@ class ReportingPayments extends Component {
 
   dateRange() {
     const today = moment().startOf('day');
-    return _.map((days) => moment(today).subtract(days, 'days'), _.reverse(_.range(0, this.state.lookback)));
+    return _.map(
+      (days) => moment(today).subtract(days, 'days'),
+        _.reverse(_.range(0, this.state.lookback))
+    );
   }
 
   setLookback(e) {
@@ -53,7 +56,10 @@ class ReportingPayments extends Component {
 
   renderHeader() {
     return this.dateRange().map((date) => {
-      return dom.th({ key: date }, date.format('M/D'));
+      return dom.th(
+        { key: date, className: 'reporting-payments-date-header' },
+        date.format('M/D')
+      );
     });
   }
 
@@ -70,8 +76,9 @@ class ReportingPayments extends Component {
       dom.div(
         { onChange: this.setLookback },
         dom.h2(null, 'Payments'),
+        dom.span(null, 'Show: '),
         dom.select(
-          null,
+          { className: 'reporting-payments-lookback-select' },
           dom.option({ value: 7 }, '1 Week'),
           dom.option({ value: 14 }, '2 Weeks'),
           dom.option({ value: 21 }, '3 Weeks'),

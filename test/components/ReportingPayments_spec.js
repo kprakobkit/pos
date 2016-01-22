@@ -10,6 +10,7 @@ import ReportingPaymentsComponent from '../../src/components/ReportingPayments';
 const {
   renderIntoDocument,
   findRenderedDOMComponentWithClass,
+  scryRenderedDOMComponentsWithClass,
   Simulate
 } = TestUtils;
 
@@ -26,6 +27,7 @@ function setup() {
     creditRow: findRenderedDOMComponentWithClass(component, 'reporting-payments-credit'),
     cashRow: findRenderedDOMComponentWithClass(component, 'reporting-payments-cash'),
     totalRow: findRenderedDOMComponentWithClass(component, 'reporting-payments-total'),
+    lookbackSelect: findRenderedDOMComponentWithClass(component, 'reporting-payments-lookback-select'),
     transaction,
     component
   };
@@ -46,5 +48,19 @@ describe('ReportingPayments', () => {
     const expectedTotal = transaction.total * 2;
 
     expect(totalRow.textContent).to.contain($.format(expectedTotal));
+  });
+
+  it('displays the correct lookback period based on selection', () => {
+    const { lookbackSelect, component } = setup();
+    const lookbackDays = 14;
+    let dateHeaders = scryRenderedDOMComponentsWithClass(component, 'reporting-payments-date-header');
+
+    expect(dateHeaders.length).to.equal(7);
+
+    Simulate.change(lookbackSelect, { target: { value: lookbackDays } });
+
+    dateHeaders = scryRenderedDOMComponentsWithClass(component, 'reporting-payments-date-header');
+
+    expect(dateHeaders.length).to.equal(lookbackDays);
   });
 });
