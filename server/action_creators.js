@@ -90,7 +90,7 @@ export function removeOrder(id) {
 
 export function setClosed(orderId, transactionId, amounts) {
   const addOrUpdateTransaction = transactionId ?
-    Transaction.findOneAndUpdate(transactionId, amounts, { new: true }) :
+    Transaction.findOneAndUpdate({ _id: transactionId, orderId }, amounts, { new: true }) :
     Transaction.addTransaction(orderId, amounts);
 
   const transaction = addOrUpdateTransaction
