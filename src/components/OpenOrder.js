@@ -99,14 +99,7 @@ class OpenOrder extends Component {
         ReadyForBillBtn({
           entries: this.props.order.entries,
           handleOnClick: this.props.setReadyForBill
-        }),
-        Link(
-          { to: '/orders', className: 'orders-link' },
-          dom.button(
-            { className: 'btn btn-danger btn-block' },
-            'Back'
-          )
-        )
+        })
       )
     );
   }
