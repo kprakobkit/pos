@@ -10,7 +10,7 @@ class Nav extends Component {
 
     return (
       dom.div(
-        { className: 'clearfix' },
+        null,
         dom.ul(
           { className: 'nav nav-pills pull-right' },
           location.pathname.indexOf('/orders') > -1 ?

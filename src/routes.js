@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route as RouteComponent } from 'react-router';
-import App from './components/App';
+import { AppContainer } from './components/App';
 import Home from './components/Home';
 import { OrdersContainer } from './components/Orders';
 import { OrderDetailsContainer } from './components/OrderDetails';
@@ -12,7 +12,7 @@ import { ReportingContainer } from './components/Reporting';
 const Route = React.createFactory(RouteComponent);
 
 export default Route(
-  { component: App },
+  { component: AppContainer },
   Route({ path: '/orders/new', component: NewOrderContainer }),
   Route({ path: '/orders/:id', component: OrderDetailsContainer }),
   Route({ path: '/orders', component: OrdersContainer }),

@@ -3,6 +3,7 @@ import Order from '../models/order';
 import Item from '../models/item';
 import Entry from '../models/entry';
 import Discount from '../models/discount';
+import User from '../models/user';
 import faker from 'faker';
 import _ from 'underscore';
 import createItems from './create_items';
@@ -63,6 +64,19 @@ function createDiscount(discount) {
     });
   });
 }
+function createUser(name, pin) {
+  return new Promise((resolve, reject) => {
+    User({ name, pin }).save((err, result) => {
+      if(err) {
+        console.error(`Error creating user. ${error}`);
+        reject(err);
+      }
+
+      console.log(`Successfully created ${name} user`);
+      resolve();
+    });
+  });
+}
 
 function createOrders(itemsAndDiscounts) {
   const [items, discounts] = itemsAndDiscounts;
@@ -107,6 +121,7 @@ export function seedDev() {
   removeData()
   .then(createItemsAndDiscounts)
   .then(createOrders)
+  .then(createUser.bind(null, 'Awesome Server', 1234))
   .then(() => {
     console.log('Completed seeding database...');
     process.exit(0);

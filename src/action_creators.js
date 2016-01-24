@@ -120,6 +120,27 @@ export function saveDiscounts(orderId, discounts) {
   };
 }
 
+export function login(pin) {
+  return {
+    type: constants.LOGIN,
+    pin
+  };
+}
+
+export function logout() {
+  return {
+    type: constants.LOGOUT
+  };
+}
+
+export function setUser({ user, token }) {
+  return {
+    type: constants.SET_USER,
+    user,
+    token
+  };
+}
+
 export default {
   setState,
   loadOrders,
@@ -134,5 +155,8 @@ export default {
   setClosed,
   removeOrder,
   updateTableNumber,
-  saveDiscounts
+  saveDiscounts,
+  login,
+  setUser,
+  logout
 };
