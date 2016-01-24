@@ -37,7 +37,7 @@ class Orders extends Component {
   }
 
   filteredOrders() {
-    const todaysOrders = this.props.orders.filter((order) => moment(order.createdAt).isBefore(moment().endOf('day').add(2, 'hours')));
+    const todaysOrders = this.props.orders.filter((order) => moment(order.createdAt).isSame(moment(), 'day'));
 
     if (this.state.filter === constants.ALL) {
       return todaysOrders;
