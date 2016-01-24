@@ -54,7 +54,7 @@ describe('Orders', () => {
 
   it('only displays today\'s orders', () => {
     const order1 = Generator.order().status(constants.OPEN).createdAt(moment()).build();
-    const order2 = Generator.order().status(constants.OPEN).createdAt(moment().add(1, 'days')).build();
+    const order2 = Generator.order().status(constants.OPEN).createdAt(moment().subtract(2, 'days')).build();
     const orders = [order1, order2];
     const component = renderIntoDocument(Orders({ orders, loadOrders, loadItems, loadDiscounts }));
     const children = scryRenderedDOMComponentsWithClass(component, 'order');
