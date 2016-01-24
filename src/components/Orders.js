@@ -37,8 +37,7 @@ class Orders extends Component {
   }
 
   filteredOrders() {
-    const cutOff = moment().endOf('day').add(2, 'hours');
-    const todaysOrders = this.props.orders.filter((order) => moment(order.createdAt).endOf('day').add(2, 'hours').isSame(cutOff));
+    const todaysOrders = this.props.orders.filter((order) => moment(order.createdAt).isSame(moment(), 'day'));
 
     if (this.state.filter === constants.ALL) {
       return todaysOrders;
