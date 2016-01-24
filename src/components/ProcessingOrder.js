@@ -24,29 +24,6 @@ class ProcessingOrder extends Component {
     };
   }
 
-  totalSales() {
-    return this.props.order.entries
-      .filter((entry) => entry.status === constants.DELIVERED)
-      .reduce((sum, entry) => sum + entry.price, 0);
-  }
-
-  tax() {
-    return Math.round(this.subtotal() * constants.TAX_RATE);
-  }
-
-  subtotal() {
-    return this.totalSales() - this.discount();
-  }
-
-  discount() {
-    const percentage = _.sum(_.pluck('value', this.props.order.discounts));
-    return Math.round(this.totalSales() * percentage);
-  }
-
-  total() {
-    return this.subtotal() + this.tax();
-  }
-
   renderEntry(entry, i) {
     return EntryBill(
       _.merge(entry, {
@@ -110,7 +87,14 @@ class ProcessingOrder extends Component {
                 { className: 'order-discount' },
                 dom.td(null, dom.p(null, dom.strong(null, 'Discount'))),
                 dom.td(),
-                dom.td({ className: 'text-right' }, dom.p(null, null, `- ${ $.format(this.discount()) }`))
+                dom.td(
+                  { className: 'text-right' },
+                  dom.p(
+                    null,
+                    null,
+                    `- ${ $.format($.discount(this.props.order)) }`
+                  )
+                )
             ) : null,
             dom.tr(
               { className: 'order-subtotal' },
@@ -118,26 +102,26 @@ class ProcessingOrder extends Component {
               dom.td(),
               dom.td(
                 { className: 'text-right' },
-                dom.h2(null, $.format(this.subtotal())),
+                dom.h2(null, $.format($.subtotal(this.props.order))),
               )
             ),
             dom.tr(
               { className: 'order-tax' },
               dom.td(null, dom.h2(null, 'Tax')),
               dom.td(),
-              dom.td({ className: 'text-right' }, dom.h2(null, $.format(this.tax())))
+              dom.td({ className: 'text-right' }, dom.h2(null, $.format($.tax(this.props.order))))
             ),
             dom.tr(
               { className: 'order-total' },
               dom.td(null, dom.h2(null, 'Total')),
               dom.td(),
-              dom.td({ className: 'text-right' }, dom.h2(null, $.format(this.total())))
+              dom.td({ className: 'text-right' }, dom.h2(null, $.format($.total(this.props.order))))
             )
           )
         ),
         Payment(
           {
-            startingBalance: this.total(),
+            startingBalance: $.total(this.props.order),
             transaction: this.props.order.transaction,
             orderStatus: this.props.order.status,
             setClosed: this.props.setClosed,
