@@ -52,9 +52,9 @@ describe('Orders', () => {
     expect(children[0].textContent).to.contain(expectedStatus);
   });
 
-  it('only displays today\'s orders', () => {
+  it('only displays today\'s (plus two hours) orders', () => {
     const order1 = Generator.order().status(constants.OPEN).createdAt(moment()).build();
-    const order2 = Generator.order().status(constants.OPEN).createdAt(moment().add(2, 'days')).build();
+    const order2 = Generator.order().status(constants.OPEN).createdAt(moment().endOf('day').add(1, 'hour')).build();
     const orders = [order1, order2];
     const component = renderIntoDocument(Orders({ orders, loadOrders, loadItems, loadDiscounts }));
     const children = scryRenderedDOMComponentsWithClass(component, 'order');
