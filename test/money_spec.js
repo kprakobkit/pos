@@ -9,7 +9,7 @@ describe('money', () => {
     { status: constants.OPEN, price: 999 }
   ];
   const discounts = [
-    { value: 0.3 },
+    { value: 0.2 },
     { value: 0.2 }
   ];
   const order = { entries, discounts };
@@ -19,6 +19,10 @@ describe('money', () => {
   });
 
   it('discount', () => {
-    expect($.discount(order)).to.equal(15);
+    expect($.discount(order)).to.equal(12);
+  });
+
+  it('subtotal', () => {
+    expect($.subtotal(order)).to.equal(18);
   });
 });

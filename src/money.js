@@ -25,12 +25,15 @@ function discount({ entries, discounts }) {
   return Math.round(totalSales(entries) * percentage);
 }
 
-
+function subtotal(order) {
+  return totalSales(order.entries) - discount(order);
+}
 
 export default {
   format,
   cents,
   dollars,
   totalSales,
-  discount
+  discount,
+  subtotal
 };

@@ -25,15 +25,11 @@ class ProcessingOrder extends Component {
   }
 
   tax() {
-    return Math.round(this.subtotal() * constants.TAX_RATE);
-  }
-
-  subtotal() {
-    return $.totalSales(this.props.order.entries) - $.discount(this.props.order);
+    return Math.round($.subtotal(this.props.order) * constants.TAX_RATE);
   }
 
   total() {
-    return this.subtotal() + this.tax();
+    return $.subtotal(this.props.order) + this.tax();
   }
 
   renderEntry(entry, i) {
@@ -114,7 +110,7 @@ class ProcessingOrder extends Component {
               dom.td(),
               dom.td(
                 { className: 'text-right' },
-                dom.h2(null, $.format(this.subtotal())),
+                dom.h2(null, $.format($.subtotal(this.props.order))),
               )
             ),
             dom.tr(
