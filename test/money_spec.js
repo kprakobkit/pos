@@ -29,4 +29,8 @@ describe('money', () => {
   it('tax', () => {
     expect($.tax(order)).to.equal(Math.round(157.5));
   });
+
+  it('total', () => {
+    expect($.total(order)).to.equal(1800 + Math.round(157.5));
+  });
 });

@@ -33,6 +33,9 @@ function tax(order) {
   return Math.round(subtotal(order) * constants.TAX_RATE);
 }
 
+function total(order) {
+  return subtotal(order) + tax(order);
+}
 
 export default {
   format,
@@ -41,5 +44,6 @@ export default {
   totalSales,
   discount,
   subtotal,
-  tax
+  tax,
+  total
 };

@@ -24,10 +24,6 @@ class ProcessingOrder extends Component {
     };
   }
 
-  total() {
-    return $.subtotal(this.props.order) + $.tax(this.props.order);
-  }
-
   renderEntry(entry, i) {
     return EntryBill(
       _.merge(entry, {
@@ -119,13 +115,13 @@ class ProcessingOrder extends Component {
               { className: 'order-total' },
               dom.td(null, dom.h2(null, 'Total')),
               dom.td(),
-              dom.td({ className: 'text-right' }, dom.h2(null, $.format(this.total())))
+              dom.td({ className: 'text-right' }, dom.h2(null, $.format($.total(this.props.order))))
             )
           )
         ),
         Payment(
           {
-            startingBalance: this.total(),
+            startingBalance: $.total(this.props.order),
             transaction: this.props.order.transaction,
             orderStatus: this.props.order.status,
             setClosed: this.props.setClosed,
