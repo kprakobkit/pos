@@ -29,11 +29,17 @@ function subtotal(order) {
   return totalSales(order.entries) - discount(order);
 }
 
+function tax(order) {
+  return Math.round(subtotal(order) * constants.TAX_RATE);
+}
+
+
 export default {
   format,
   cents,
   dollars,
   totalSales,
   discount,
-  subtotal
+  subtotal,
+  tax
 };
