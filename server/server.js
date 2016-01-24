@@ -105,7 +105,7 @@ socketioAuth(io, {
 
         if(user) {
           const { name } = user;
-          const token = jwtoken.sign({ user: { name } }, 'secret', { expiresIn: '24h' });
+          const token = jwtoken.sign({ user: { name } }, 'secret', { expiresIn: '7d' });
 
           return callback(null, { token, user: { name } });
         } else {
