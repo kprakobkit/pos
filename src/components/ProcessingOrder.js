@@ -24,23 +24,17 @@ class ProcessingOrder extends Component {
     };
   }
 
-  totalSales() {
-    return this.props.order.entries
-      .filter((entry) => entry.status === constants.DELIVERED)
-      .reduce((sum, entry) => sum + entry.price, 0);
-  }
-
   tax() {
     return Math.round(this.subtotal() * constants.TAX_RATE);
   }
 
   subtotal() {
-    return this.totalSales() - this.discount();
+    return $.totalSales(this.props.order.entries) - this.discount();
   }
 
   discount() {
     const percentage = _.sum(_.pluck('value', this.props.order.discounts));
-    return Math.round(this.totalSales() * percentage);
+    return Math.round($.totalSales(this.props.order.entries) * percentage);
   }
 
   total() {
