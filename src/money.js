@@ -1,3 +1,4 @@
+import _ from 'ramda';
 import accounting from 'accounting';
 import constants from './constants';
 
@@ -19,10 +20,17 @@ function totalSales(entries) {
     .reduce((sum, entry) => sum + entry.price, 0);
 }
 
+function discount({ entries, discounts }) {
+  const percentage = _.sum(_.pluck('value', discounts));
+  return Math.round(totalSales(entries) * percentage);
+}
+
+
 
 export default {
   format,
   cents,
   dollars,
-  totalSales
+  totalSales,
+  discount
 };

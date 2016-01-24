@@ -29,12 +29,7 @@ class ProcessingOrder extends Component {
   }
 
   subtotal() {
-    return $.totalSales(this.props.order.entries) - this.discount();
-  }
-
-  discount() {
-    const percentage = _.sum(_.pluck('value', this.props.order.discounts));
-    return Math.round($.totalSales(this.props.order.entries) * percentage);
+    return $.totalSales(this.props.order.entries) - $.discount(this.props.order);
   }
 
   total() {
@@ -104,7 +99,14 @@ class ProcessingOrder extends Component {
                 { className: 'order-discount' },
                 dom.td(null, dom.p(null, dom.strong(null, 'Discount'))),
                 dom.td(),
-                dom.td({ className: 'text-right' }, dom.p(null, null, `- ${ $.format(this.discount()) }`))
+                dom.td(
+                  { className: 'text-right' },
+                  dom.p(
+                    null,
+                    null,
+                    `- ${ $.format($.discount(this.props.order)) }`
+                  )
+                )
             ) : null,
             dom.tr(
               { className: 'order-subtotal' },
