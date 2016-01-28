@@ -77,7 +77,7 @@ class MasterItems extends Component {
   renderSelectedEntries() {
     return this.state.entries.map((entry, i) => dom.tr(
       { className: 'entries', key: i },
-      dom.td({ className: 'entry-name col-xs-5' }, dom.p(null, entry.name)),
+      dom.td({ className: 'entry-name col-xs-4' }, dom.p(null, entry.name)),
       dom.td(
         { className: 'entry-comment col-xs-4' },
         dom.input(
@@ -91,7 +91,7 @@ class MasterItems extends Component {
         )
       ),
       dom.td(
-        { className: 'entry-quantity col-xs-3 row' },
+        { className: 'entry-quantity col-xs-4 row' },
         dom.button(
           {
             className: 'entry-quantity-decrease btn btn-default col-xs-4',
@@ -99,7 +99,7 @@ class MasterItems extends Component {
           },
           dom.span({ className: 'glyphicon glyphicon-minus', 'aria-hidden': true })
         ),
-        dom.span({ className: 'entry-quantity-value col-xs-4 text-center' }, entry.quantity),
+        dom.span({ className: 'entry-quantity-value col-xs-2 text-center' }, entry.quantity),
         dom.button(
           {
             className: 'entry-quantity-increase btn btn-default col-xs-4',
