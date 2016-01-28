@@ -6,8 +6,8 @@ import _ from 'underscore';
 const MasterItemsSelect = createFactory(MasterItemsSelectComponent);
 
 function entriesByQuantity(entries) {
-    const duplicate = entry => R.repeat(R.dissoc('quantity', entry), entry.quantity || 1);
-    return R.chain(duplicate, entries);
+  const duplicate = entry => R.repeat(R.dissoc('quantity', entry), entry.quantity || 1);
+  return R.chain(duplicate, entries);
 }
 
 class MasterItems extends Component {
