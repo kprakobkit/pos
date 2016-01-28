@@ -97,29 +97,16 @@ class MasterItems extends Component {
             className: 'entry-quantity-decrease btn btn-default col-xs-4',
             onClick: this.setQuantity.bind(this, i, -1)
           },
-          dom.span(
-            {
-              className: 'glyphicon glyphicon-minus',
-              'aria-hidden': true
-            }
-          )
+          dom.span({ className: 'glyphicon glyphicon-minus', 'aria-hidden': true })
         ),
-        dom.span(
-          { className: 'entry-quantity-value col-xs-4 text-center' },
-          entry.quantity
-        ),
+        dom.span({ className: 'entry-quantity-value col-xs-4 text-center' }, entry.quantity),
         dom.button(
           {
             className: 'entry-quantity-increase btn btn-default col-xs-4',
             onClick: this.setQuantity.bind(this, i, 1)
           },
           null,
-          dom.span(
-            {
-              className: 'glyphicon glyphicon-plus',
-              'aria-hidden': true
-            }
-          )
+          dom.span({ className: 'glyphicon glyphicon-plus', 'aria-hidden': true })
         ),
       ),
       dom.td(
@@ -129,12 +116,7 @@ class MasterItems extends Component {
             className: 'btn btn-default remove-entry',
             onClick: this.removeEntry.bind(this, entry)
           },
-          dom.span(
-            {
-              className: 'glyphicon glyphicon-remove',
-              'aria-hidden': true
-            }
-          )
+          dom.span({ className: 'glyphicon glyphicon-remove', 'aria-hidden': true })
         )
       )
     ));
