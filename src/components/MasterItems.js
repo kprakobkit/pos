@@ -56,8 +56,13 @@ class MasterItems extends Component {
     this.setState({ entries: updatedEntries });
   }
 
-  setQuantity(entryIndex, e) {
-    const updatedEntry = R.assoc('quantity', e.target.value, this.state.entries[entryIndex]);
+  setQuantity(entryIndex, change) {
+    const entry = this.state.entries[entryIndex];
+    const newQuantity = entry.quantity + change;
+
+    if (newQuantity < 1) return;
+
+    const updatedEntry = R.assoc('quantity', newQuantity, entry);
     const updatedEntries = R.update(entryIndex, updatedEntry, this.state.entries);
 
     this.setState({ entries: updatedEntries });

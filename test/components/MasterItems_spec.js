@@ -55,8 +55,11 @@ describe('Master Items', () => {
       const selectBurger = findRenderedDOMComponentWithClass(component, 'item-burger');
 
       Simulate.click(selectBurger);
-      const addQuantityFld = findRenderedDOMComponentWithClass(component, 'add-quantity-burger');
-      Simulate.change(addQuantityFld, { target: { value: '3' } });
+
+      const increaseQuantityButton = findRenderedDOMComponentWithClass(component, 'entry-quantity-increase');
+
+      Simulate.click(increaseQuantityButton);
+      Simulate.click(increaseQuantityButton);
       Simulate.click(submitOrder);
 
       expect(handleSubmit.__spy.calls[0][0].length).to.equal(3);
@@ -66,18 +69,22 @@ describe('Master Items', () => {
     it('defaults quantity to 1', function() {
       const submitOrder = findRenderedDOMComponentWithClass(component, 'submit-order');
       const selectBurger = findRenderedDOMComponentWithClass(component, 'item-burger');
-      Simulate.click(selectBurger);
-      const addQuantityFld = findRenderedDOMComponentWithClass(component, 'add-quantity-burger');
 
-      expect(addQuantityFld.value).to.equal('1');
+      Simulate.click(selectBurger);
+
+      const entryQuantity = findRenderedDOMComponentWithClass(component, 'entry-quantity-value');
+
+      expect(entryQuantity.textContent).to.equal('1');
     });
 
     it('defaults quantity to 1 if blank', function() {
       const submitOrder = findRenderedDOMComponentWithClass(component, 'submit-order');
       const selectBurger = findRenderedDOMComponentWithClass(component, 'item-burger');
+
       Simulate.click(selectBurger);
-      const addQuantityFld = findRenderedDOMComponentWithClass(component, 'add-quantity-burger');
-      Simulate.change(addQuantityFld, { target: { value: '' } });
+
+      const entryQuantity = findRenderedDOMComponentWithClass(component, 'entry-quantity-value');
+
       Simulate.click(submitOrder);
 
       expect(handleSubmit.__spy.calls[0][0].length).to.equal(1);
