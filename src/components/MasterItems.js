@@ -73,21 +73,50 @@ class MasterItems extends Component {
     return this.state.entries.map((entry, i) => dom.tr(
       { className: 'entries', key: i },
       dom.td({ className: 'entry-name col-xs-5' }, dom.p(null, entry.name)),
-      dom.td({ className: 'entry-comment col-xs-5' }, dom.input({
-        className: `input form-control add-comment-${entry.name}`,
-        onChange: this.addComment.bind(null, i),
-        placeholder: 'Comment',
-        onKeyPress: this.handleKeyPress,
-        value: entry.comment
-      })),
-      dom.td({ className: 'entry-quantity col-xs-2' }, dom.input({
-        className: `input form-control add-quantity-${entry.name}`,
-        type: 'number',
-        max: '50',
-        onChange: this.setQuantity.bind(null, i),
-        onKeyPress: this.handleKeyPress,
-        value: entry.quantity
-      })),
+      dom.td(
+        { className: 'entry-comment col-xs-4' },
+        dom.input(
+          {
+            className: `input form-control add-comment-${entry.name}`,
+            onChange: this.addComment.bind(null, i),
+            placeholder: 'Comment',
+            onKeyPress: this.handleKeyPress,
+            value: entry.comment
+          }
+        )
+      ),
+      dom.td(
+        { className: 'entry-quantity col-xs-3 row' },
+        dom.button(
+          {
+            className: 'entry-quantity-decrease btn btn-default col-xs-4',
+            onClick: this.setQuantity.bind(this, i, -1)
+          },
+          dom.span(
+            {
+              className: 'glyphicon glyphicon-minus',
+              'aria-hidden': true
+            }
+          )
+        ),
+        dom.span(
+          { className: 'entry-quantity-value col-xs-4 text-center' },
+          entry.quantity
+        ),
+        dom.button(
+          {
+            className: 'entry-quantity-increase btn btn-default col-xs-4',
+            onClick: this.setQuantity.bind(this, i, 1)
+          },
+          null,
+          dom.span(
+            {
+              className: 'glyphicon glyphicon-plus',
+              'aria-hidden': true
+            }
+          )
+        ),
+      ),
       dom.td(
         { className: 'entry-action text-right' },
         dom.button(
