@@ -75,6 +75,31 @@ describe('Master Items', () => {
       const entryQuantity = findRenderedDOMComponentWithClass(component, 'entry-quantity-value');
 
       expect(entryQuantity.textContent).to.equal('1');
+
+      Simulate.click(submitOrder);
+
+      expect(handleSubmit.__spy.calls[0][0].length).to.equal(1);
+    });
+
+    it('ensures quantity is at least 1', function() {
+      const submitOrder = findRenderedDOMComponentWithClass(component, 'submit-order');
+      const selectBurger = findRenderedDOMComponentWithClass(component, 'item-burger');
+
+      Simulate.click(selectBurger);
+
+      const decreaseQuantityButton = findRenderedDOMComponentWithClass(component, 'entry-quantity-decrease');
+
+      Simulate.click(decreaseQuantityButton);
+      Simulate.click(decreaseQuantityButton);
+      Simulate.click(decreaseQuantityButton);
+
+      const entryQuantity = findRenderedDOMComponentWithClass(component, 'entry-quantity-value');
+
+      expect(entryQuantity.textContent).to.equal('1');
+
+      Simulate.click(submitOrder);
+
+      expect(handleSubmit.__spy.calls[0][0].length).to.equal(1);
     });
 
     it('defaults quantity to 1 if blank', function() {
