@@ -6,8 +6,8 @@ import _ from 'underscore';
 const MasterItemsSelect = createFactory(MasterItemsSelectComponent);
 
 function entriesByQuantity(entries) {
-    const duplicate = entry => R.repeat(R.dissoc('quantity', entry), entry.quantity || 1);
-    return R.chain(duplicate, entries);
+  const duplicate = entry => R.repeat(R.dissoc('quantity', entry), entry.quantity || 1);
+  return R.chain(duplicate, entries);
 }
 
 class MasterItems extends Component {
@@ -56,8 +56,13 @@ class MasterItems extends Component {
     this.setState({ entries: updatedEntries });
   }
 
-  setQuantity(entryIndex, e) {
-    const updatedEntry = R.assoc('quantity', e.target.value, this.state.entries[entryIndex]);
+  setQuantity(entryIndex, change) {
+    const entry = this.state.entries[entryIndex];
+    const newQuantity = entry.quantity + change;
+
+    if (newQuantity < 1) return;
+
+    const updatedEntry = R.assoc('quantity', newQuantity, entry);
     const updatedEntries = R.update(entryIndex, updatedEntry, this.state.entries);
 
     this.setState({ entries: updatedEntries });
@@ -72,22 +77,38 @@ class MasterItems extends Component {
   renderSelectedEntries() {
     return this.state.entries.map((entry, i) => dom.tr(
       { className: 'entries', key: i },
-      dom.td({ className: 'entry-name col-xs-5' }, dom.p(null, entry.name)),
-      dom.td({ className: 'entry-comment col-xs-5' }, dom.input({
-        className: `input form-control add-comment-${entry.name}`,
-        onChange: this.addComment.bind(null, i),
-        placeholder: 'Comment',
-        onKeyPress: this.handleKeyPress,
-        value: entry.comment
-      })),
-      dom.td({ className: 'entry-quantity col-xs-2' }, dom.input({
-        className: `input form-control add-quantity-${entry.name}`,
-        type: 'number',
-        max: '50',
-        onChange: this.setQuantity.bind(null, i),
-        onKeyPress: this.handleKeyPress,
-        value: entry.quantity
-      })),
+      dom.td({ className: 'entry-name col-xs-4' }, dom.p(null, entry.name)),
+      dom.td(
+        { className: 'entry-comment col-xs-4' },
+        dom.input(
+          {
+            className: `input form-control add-comment-${entry.name}`,
+            onChange: this.addComment.bind(null, i),
+            placeholder: 'Comment',
+            onKeyPress: this.handleKeyPress,
+            value: entry.comment
+          }
+        )
+      ),
+      dom.td(
+        { className: 'entry-quantity col-xs-4 row' },
+        dom.button(
+          {
+            className: 'entry-quantity-decrease btn btn-default col-xs-4',
+            onClick: this.setQuantity.bind(this, i, -1)
+          },
+          dom.span({ className: 'glyphicon glyphicon-minus', 'aria-hidden': true })
+        ),
+        dom.span({ className: 'entry-quantity-value col-xs-2 text-center' }, entry.quantity),
+        dom.button(
+          {
+            className: 'entry-quantity-increase btn btn-default col-xs-4',
+            onClick: this.setQuantity.bind(this, i, 1)
+          },
+          null,
+          dom.span({ className: 'glyphicon glyphicon-plus', 'aria-hidden': true })
+        ),
+      ),
       dom.td(
         { className: 'entry-action text-right' },
         dom.button(
@@ -95,12 +116,7 @@ class MasterItems extends Component {
             className: 'btn btn-default remove-entry',
             onClick: this.removeEntry.bind(this, entry)
           },
-          dom.span(
-            {
-              className: 'glyphicon glyphicon-remove',
-              'aria-hidden': true
-            }
-          )
+          dom.span({ className: 'glyphicon glyphicon-remove', 'aria-hidden': true })
         )
       )
     ));
