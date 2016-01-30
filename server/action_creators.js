@@ -29,18 +29,16 @@ export function updateOrder(orderId, order) {
 export function getInitialState() {
   return (dispatch, getState) => {
     dispatch(isLoading());
+    const getItems = () => Item.find().sort('category');
+    const getDiscounts = () => Discount.find();
 
-    return Order.getOrders().then((orders) => {
-      Item.find().sort('category').then((items) => {
-        Discount.find().then((discounts) => {
-          dispatch(setState({
-            orders,
-            items,
-            discounts,
-            isLoading: false
-          }));
-        });
-      });
+    return Promise.all([Order.getOrders(), getItems(), getDiscounts()]).then(([orders, items, discounts]) => {
+      dispatch(setState({
+        orders,
+        items,
+        discounts,
+        isLoading: false
+      }));
     });
   };
 }
