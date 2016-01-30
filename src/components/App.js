@@ -1,9 +1,11 @@
 import { connect } from 'react-redux';
 import { Component, DOM as dom, PropTypes, createFactory } from 'react';
 import NavComponent from './Nav';
+import LoginComponent from './Login';
 import { login, logout } from '../action_creators';
 
 const Nav = createFactory(NavComponent);
+const Login = createFactory(LoginComponent);
 
 function mapStateToProps(state) {
   return {
@@ -13,43 +15,6 @@ function mapStateToProps(state) {
 }
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.handleLogin = this.handleLogin.bind(this);
-  }
-
-  handleLogin(e) {
-    e.preventDefault();
-    const pin = this.refs.pin.value;
-    this.props.login(pin);
-  }
-
-  login() {
-    return (
-      dom.div(
-        { className: 'login-form' },
-        dom.form(
-          { className: 'col-xs-4 col-xs-offset-4 col-sm-4 col-sm-offset-4' },
-          dom.h1(null, 'pos.'),
-          dom.div(
-            { className: 'form-group' },
-            dom.input({
-              className: 'form-control',
-              type: 'number',
-              ref: 'pin',
-              placeholder: 'PIN'
-            }),
-          ),
-          dom.button({
-            className: 'btn btn-primary',
-            type: 'submit',
-            onClick: this.handleLogin
-          }, 'Log In')
-        )
-      )
-    );
-  }
-
   renderHeader() {
     const { location } = this.props;
 
@@ -81,11 +46,13 @@ class App extends Component {
   }
 
   render() {
+    const { login, isLoading, user } = this.props;
+
     return (
       dom.div(
         { className: 'container-fluid' },
-        this.props.user ?
-          (!this.props.isLoading ? this.main() : dom.h1(null, 'loading...')) : this.login()
+        user ?
+          (!isLoading ? this.main() : dom.h1(null, 'loading...')) : Login({ login })
       )
     );
   }
