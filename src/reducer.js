@@ -1,7 +1,9 @@
 import constants from '../src/constants';
 import _ from 'underscore';
 
-const INITIAL_STATE = {};
+const INITIAL_STATE = {
+  isLoading: true
+};
 
 function setState(state, newState) {
   return _.extend({}, state, newState);

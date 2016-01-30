@@ -1,7 +1,9 @@
 import constants from '../src/constants';
 import _ from 'ramda';
 
-const INITIAL_STATE = {};
+const INITIAL_STATE = {
+  isLoading: true
+};
 
 function setState(state, newState) {
   return _.merge(state, newState);
@@ -17,10 +19,14 @@ function updateOrder(state, { orderId, order }) {
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case constants.GET_INITIAL_STATE:
+      return updateOrder(state, action);
     case constants.SET_STATE:
       return setState(state, action.state);
     case constants.UPDATE_ORDER:
       return updateOrder(state, action);
+    case constants.IS_LOADING:
+      return setState(state, { isLoading: true });
     default:
       return state;
   }

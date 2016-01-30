@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import loggerMiddleware from 'redux-logger';
 import routes from './routes';
 import reducer from './reducer';
-import { setState, setUser } from './action_creators';
+import { setState, setUser, getInitialState } from './action_creators';
 import remoteActionMiddleware from './remote_action_middleware';
 import authenticationMiddleware from './authentication_middleware';
 import io from 'socket.io-client';
@@ -39,6 +39,7 @@ const store = createStoreWithMiddleware(reducer, window.__INITIAL_STATE__);
 socket.on('authenticated', ({ user, token }) => {
   Cookies.set('_posToken', token);
   store.dispatch(setUser({ user, token }));
+  store.dispatch(getInitialState());
 });
 
 const posToken = Cookies.get('_posToken');

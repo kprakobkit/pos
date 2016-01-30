@@ -7,6 +7,13 @@ export function setState(state) {
   };
 }
 
+export function getInitialState() {
+  return {
+    meta: { remote: true },
+    type: constants.GET_INITIAL_STATE
+  };
+}
+
 export function loadOrders() {
   return {
     meta: { remote: true },
@@ -158,5 +165,6 @@ export default {
   saveDiscounts,
   login,
   setUser,
-  logout
+  logout,
+  getInitialState
 };

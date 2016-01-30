@@ -7,7 +7,8 @@ const Nav = createFactory(NavComponent);
 
 function mapStateToProps(state) {
   return {
-    user: state.user
+    user: state.user,
+    isLoading: state.isLoading
   };
 }
 
@@ -83,7 +84,8 @@ class App extends Component {
     return (
       dom.div(
         { className: 'container-fluid' },
-        this.props.user ? this.main() : this.login()
+        this.props.user ?
+          (!this.props.isLoading ? this.main() : dom.h1(null, 'loading...')) : this.login()
       )
     );
   }
