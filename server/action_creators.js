@@ -32,11 +32,14 @@ export function getInitialState() {
 
     return Order.getOrders().then((orders) => {
       Item.find().sort('category').then((items) => {
-        dispatch(setState({
-          orders,
-          items,
-          isLoading: false
-        }));
+        Discount.find().then((discounts) => {
+          dispatch(setState({
+            orders,
+            items,
+            discounts,
+            isLoading: false
+          }));
+        });
       });
     });
   };
