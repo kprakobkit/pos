@@ -5,6 +5,12 @@ import Item from '../models/item';
 import Transaction from '../models/transaction';
 import Discount from '../models/discount';
 
+function isLoading() {
+  return {
+    type: constants.IS_LOADING
+  };
+}
+
 export function setState(state) {
   return {
     type: constants.SET_STATE,
@@ -17,6 +23,23 @@ export function updateOrder(orderId, order) {
     type: constants.UPDATE_ORDER,
     orderId,
     order
+  };
+}
+
+export function getInitialState() {
+  return (dispatch, getState) => {
+    dispatch(isLoading());
+    const getItems = () => Item.find().sort('category');
+    const getDiscounts = () => Discount.find();
+
+    return Promise.all([Order.getOrders(), getItems(), getDiscounts()]).then(([orders, items, discounts]) => {
+      dispatch(setState({
+        orders,
+        items,
+        discounts,
+        isLoading: false
+      }));
+    });
   };
 }
 
@@ -160,5 +183,6 @@ export default {
   setClosed,
   removeOrder,
   updateTableNumber,
-  saveDiscounts
+  saveDiscounts,
+  getInitialState
 };

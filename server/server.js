@@ -92,9 +92,6 @@ const attachSocketEvents = socketEvents(store);
 store.subscribe(
   () => io.emit('state', store.getState())
 );
-io.on('connection', (socket) => {
-  socket.emit('state', store.getState());
-});
 
 io.on('connection', attachSocketEvents);
 socketioAuth(io, {

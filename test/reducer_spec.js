@@ -25,6 +25,7 @@ describe('reducer', () => {
 
     it('handles SET_STATE without initial state', () => {
       const newState = {
+        isLoading: true,
         vote: {
           pair:  [item1, item2],
           tally: { Trainspotting: 1 }
