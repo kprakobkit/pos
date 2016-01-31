@@ -19,8 +19,6 @@ function updateOrder(state, { orderId, order }) {
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case constants.GET_INITIAL_STATE:
-      return updateOrder(state, action);
     case constants.SET_STATE:
       return setState(state, action.state);
     case constants.UPDATE_ORDER:

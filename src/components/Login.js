@@ -21,7 +21,7 @@ class Login extends Component {
       dom.div(
         { className: 'login-form' },
         dom.form(
-          { className: 'col-xs-4 col-xs-offset-4 col-sm-4 col-sm-offset-4' },
+          { className: 'col-xs-4 col-xs-offset-4' },
           dom.h1(null, 'pos.'),
           dom.div(
             { className: 'form-group' },
