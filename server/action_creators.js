@@ -28,7 +28,6 @@ export function updateOrder(orderId, order) {
 
 export function getInitialState() {
   return (dispatch, getState) => {
-    dispatch(isLoading());
     const getItems = () => Item.find().sort('category');
     const getDiscounts = () => Discount.find();
 
