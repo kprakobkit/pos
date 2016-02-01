@@ -13,6 +13,8 @@ export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
   case constants.SET_STATE:
     return setState(state, action.state);
+  case constants.GET_INITIAL_STATE:
+    return setState(state, { isLoading: true });
   case constants.SET_USER:
     const { user, token } = action;
     return setState(state, { user, token });
