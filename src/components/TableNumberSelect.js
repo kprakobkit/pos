@@ -3,7 +3,8 @@ import constants from '../../src/constants';
 import _ from 'underscore';
 
 const barTables = _.range(1, 7).map((num) => `BAR${num}`);
-const tableNumbers = _.range(1, 41).concat('TOGO', barTables);
+const adhocTables = _.range(1, 10).map((num) => `*${num}`);
+const tableNumbers = _.range(1, 41).concat('TOGO', barTables, adhocTables);
 
 class TableNumberSelect extends Component {
   render() {
