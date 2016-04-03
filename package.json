@@ -12,7 +12,7 @@
     "postinstall": "./node_modules/webpack/bin/webpack.js --config ./webpack-prod.config.js --progress --color"
   },
   "engines": {
-    "node": "5.x"
+    "node": "5.2"
   },
   "pre-commit": [
     "lint",
