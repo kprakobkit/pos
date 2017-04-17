@@ -104,24 +104,6 @@ describe('OrderDetails', () => {
     });
   });
 
-  describe('Orders - Ready for Bill', () => {
-    it('renders back to open status button', () => {
-      const orders = [Generator.order().id(1).status(constants.READY_FOR_BILL).build()];
-      const { component } = setup({ orders });
-
-      const backToOpen = findRenderedDOMComponentWithClass(component, 'back-to-open');
-    });
-
-    it('calls setOpen wit orderId', () => {
-      const orders = [Generator.order().id(1).status(constants.READY_FOR_BILL).build()];
-      const { component, setOpen } = setup({ orders });
-      const backToOpen = findRenderedDOMComponentWithClass(component, 'back-to-open');
-      Simulate.click(backToOpen);
-
-      expect(setOpen).to.have.been.called.with(1);;
-    });
-  });
-
   it('toggles add entry form', () => {
     const entries = [
       { name: 'rice', price: 1050, comment: 'brown rice', status: 'OPEN' }

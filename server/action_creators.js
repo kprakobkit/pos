@@ -62,6 +62,19 @@ export function addOrder(tableNumber, entries) {
   };
 }
 
+export function removeOrder(id) {
+  return (dispatch, getState) => {
+    return Order.remove({ id })
+    .then(() => {
+      const updatedOrders = getState().orders.filter((order) => order.id != id);
+
+      dispatch(setState({
+        orders: updatedOrders
+      }));
+    });
+  };
+}
+
 export function changeEntryStatus(orderId, entryIndex, status) {
   return dispatchUpdateOrder(orderId, Order.updateEntry(orderId, entryIndex, { status }));
 }
@@ -122,5 +135,6 @@ export default {
   addEntriesToOrder,
   setReadyForBill,
   setOpen,
-  setClosed
+  setClosed,
+  removeOrder
 };

@@ -21,4 +21,6 @@ export default (store) => (socket) => {
   socket.on(constants.SET_CLOSED, (action) => {
     store.dispatch(actions.setClosed(action.orderId, action.transactionId, action.amounts));
   });
+
+  socket.on(constants.REMOVE_ORDER, (action) => store.dispatch(actions.removeOrder(action.orderId)));
 };
